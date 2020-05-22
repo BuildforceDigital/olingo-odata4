@@ -66,43 +66,38 @@
   <modules>
     <module>lib</module>
     <module>ext</module>
-    <module>fit</module>
+    <!--<module>fit</module>-->
     <module>dist</module>
-    <module>samples</module>
+    <!--<module>samples</module>-->
   </modules>
 
   <properties>
+    <aalto-xml.version>0.9.11</aalto-xml.version>
+    <android.platform.version>4.1.1.4</android.platform.version>
     <commons.codec.version>1.12</commons.codec.version>
     <commons.io.version>2.6</commons.io.version>
     <commons.lang3.version>3.9</commons.lang3.version>
-
     <commons.logging.version>1.2</commons.logging.version>
     <commons.vfs.version>2.0</commons.vfs.version>
-    <esigate.version>4.4</esigate.version>
-    <servlet.version>3.1.0</servlet.version>
     <cxf.version>3.0.0</cxf.version>
-    <spring.version>4.0.6.RELEASE</spring.version>
-    <netty.version>4.1.45.Final</netty.version>
-
-    <velocity.version>1.7</velocity.version>
-    <maven.plugin.api.version>3.2.2</maven.plugin.api.version>
-    <maven.plugin.tools.version>3.3</maven.plugin.tools.version>
-    <maven.bundle.plugin.version>2.5.3</maven.bundle.plugin.version>
-    <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
+    <esigate.version>4.4</esigate.version>
     <hc.client.version>4.5.8</hc.client.version>
     <hc.core.version>4.4.11</hc.core.version>
-    <jackson.version>2.10.0</jackson.version>
     <jackson-databind.version>2.10.0</jackson-databind.version>
-    <aalto-xml.version>0.9.11</aalto-xml.version>
-
-    <android.platform.version>4.1.1.4</android.platform.version>
-    <stax.api.version>1.0-2</stax.api.version>
-    <woodstox.stax2-api.version>3.1.4</woodstox.stax2-api.version>
-
+    <jackson.version>2.10.0</jackson.version>
+    <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
+    <maven.bundle.plugin.version>2.5.3</maven.bundle.plugin.version>
+    <maven.plugin.api.version>3.2.2</maven.plugin.api.version>
+    <maven.plugin.tools.version>3.3</maven.plugin.tools.version>
+    <netty.version>4.1.45.Final</netty.version>
+    <servlet.version>3.1.0</servlet.version>
     <sl4j.version>1.7.7</sl4j.version>
-
+    <spring.version>4.0.6.RELEASE</spring.version>
+    <stax.api.version>1.0-2</stax.api.version>
     <tomcat.servlet.port>9080</tomcat.servlet.port>
     <tomcat.version>7.0.55</tomcat.version>
+    <velocity.version>1.7</velocity.version>
+    <woodstox.stax2-api.version>3.1.4</woodstox.stax2-api.version>
 
     <!-- for osgi integration testing -->
     <osgi.version>4.2.0</osgi.version>
@@ -560,7 +555,7 @@
           <aggregate>true</aggregate>
         </configuration>
       </plugin>
-      <plugin>
+      <!--<plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
         <executions>
@@ -600,7 +595,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
     </plugins>
   </build>
 

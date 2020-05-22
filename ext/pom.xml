@@ -52,9 +52,9 @@
   </build>
 
   <modules>
-    <module>pojogen-maven-plugin</module>
-    <module>client-proxy</module>
-    <module>client-android</module>
+    <!--<module>pojogen-maven-plugin</module>-->
+    <!--<module>client-proxy</module>-->
+    <!--<module>client-android</module>-->
   </modules>
 
   <profiles>

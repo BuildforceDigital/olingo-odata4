@@ -36,11 +36,11 @@
   </parent>
 
   <modules>
-    <module>android-lib</module>
-    <module>client-lib</module>
-    <module>server-lib</module>
-	<module>server-lib-ext</module>
-    <module>javadoc</module>
+    <!--<module>android-lib</module>-->
+    <!--<module>client-lib</module>-->
+    <!--<module>server-lib</module>-->
+	<!--<module>server-lib-ext</module>-->
+    <!--<module>javadoc</module>-->
   </modules>
 
   <build>

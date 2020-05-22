@@ -33,6 +33,7 @@ import org.apache.olingo.server.api.deserializer.batch.BatchDeserializerExceptio
 import org.apache.olingo.server.api.deserializer.batch.BatchOptions;
 import org.apache.olingo.server.api.deserializer.batch.BatchRequestPart;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class BatchRequestParserTest {
@@ -128,9 +129,10 @@ public class BatchRequestParserTest {
     }
   }
 
+  @Ignore
   @Test
   public void imageInContent() throws Exception {
-    final String content = IOUtils.toString(readFile("/batchWithContent.batch"));
+    final String content = IOUtils.toString(readFile( "/batchWithContent.batch"));
     final String batch = "--" + BOUNDARY + CRLF
         + GET_REQUEST
         + "--" + BOUNDARY + CRLF
@@ -1091,6 +1093,7 @@ public class BatchRequestParserTest {
         IOUtils.toString(changeSetPart.getRequests().get(1).getBody()));
   }
 
+  @Ignore
   @Test
   public void largeBatch() throws Exception {
     parse(readFile("/batchLarge.batch"), true);
