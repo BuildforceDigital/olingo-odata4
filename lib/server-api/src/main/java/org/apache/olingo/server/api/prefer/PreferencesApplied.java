@@ -63,7 +63,7 @@ public final class PreferencesApplied {
         final boolean safe = isSafe(key);
         result.append('=')
         .append(safe ? "" : '"')
-        .append(entry.getValue().replaceAll("\\\\|\"", "\\\\$0"))
+        .append(entry.getValue().replaceAll("[\\\\\"]", "\\\\$0"))
         .append(safe ? "" : '"');
       }
     }

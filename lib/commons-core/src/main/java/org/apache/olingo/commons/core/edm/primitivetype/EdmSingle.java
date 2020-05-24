@@ -30,7 +30,7 @@ import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeException;
 public final class EdmSingle extends SingletonPrimitiveType {
 
   private static final Pattern PATTERN = Pattern.compile(
-      "(?:\\+|-)?\\p{Digit}{1,9}(?:\\.\\p{Digit}{1,9})?(?:(?:E|e)(?:\\+|-)?\\p{Digit}{1,2})?");
+      "[+-]?\\p{Digit}{1,9}(?:\\.\\p{Digit}{1,9})?(?:[Ee][+-]?\\p{Digit}{1,2})?");
 
   private static final EdmSingle INSTANCE = new EdmSingle();
 

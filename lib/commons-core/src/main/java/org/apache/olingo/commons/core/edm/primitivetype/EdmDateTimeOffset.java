@@ -36,7 +36,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
-import static java.time.temporal.ChronoField.*;
+import static java.time.temporal.ChronoField.HOUR_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
+import static java.time.temporal.ChronoField.NANO_OF_SECOND;
+import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 
 /**
  * Implementation of the EDM primitive type DateTimeOffset.
@@ -50,6 +53,9 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
             + "(Z|([-+]\\p{Digit}{2}:\\p{Digit}{2}))?");
 
     private static final EdmDateTimeOffset INSTANCE = new EdmDateTimeOffset();
+    private static final DateTimeFormatter isoLocalTimeCommon = new DateTimeFormatterBuilder()
+            .appendValue(HOUR_OF_DAY, 2).appendLiteral(':').appendValue(MINUTE_OF_HOUR, 2)
+            .optionalStart().appendLiteral(':').appendValue(SECOND_OF_MINUTE, 2).toFormatter();
 
     public static EdmDateTimeOffset getInstance() {
         return INSTANCE;
@@ -84,36 +90,7 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
         }
     }
 
-    private static <T> OffsetDateTime createOffsetDateTime(final T value) throws EdmPrimitiveTypeException {
-        if (value instanceof OffsetDateTime) {
-            return (OffsetDateTime) value;
-        }
-
-        if (value instanceof Instant) {
-            return OffsetDateTime.ofInstant((Instant) value, ZULU);
-        }
-
-        /*if (value instanceof GregorianCalendar) {
-            GregorianCalendar calendar = (GregorianCalendar) value;
-            ZonedDateTime zdt = calendar.toZonedDateTime();
-            ZoneId normalizedZoneId = calendar.getTimeZone().toZoneId().normalized();
-            return zdt.withZoneSameInstant(normalizedZoneId);
-        }*/
-
-            if (!((value instanceof Time) || (value instanceof java.sql.Date)) && (value instanceof java.util.Date)) {
-                OffsetDateTime odt = Instant.ofEpochMilli(((java.util.Date) value).getTime()).atOffset(ZULU);
-
-                return  (value instanceof Timestamp) ? odt.withNano(((Timestamp) value).getNanos()) : odt;
-            }
-            else if (value instanceof Long) {
-                return Instant.ofEpochMilli((Long) value).atOffset(ZULU);
-            } else {
-                throw new EdmPrimitiveTypeException("The value type " + value.getClass() + " is not supported.");
-            }
-    }
-
-/*
-    private static <T> ZonedDateTime createZonedDateTime(final T value) throws EdmPrimitiveTypeException {
+/*  private static <T> ZonedDateTime createZonedDateTime(final T value) throws EdmPrimitiveTypeException {
         if (value instanceof ZonedDateTime) {
             return (ZonedDateTime) value;
         }
@@ -131,53 +108,7 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
 
 
         return convertToInstant(value).atZone(ZULU);
-    }*/
-
-    private static String format(OffsetDateTime dateTime, Integer _precision) {
-        int precision= _precision == null? 0 : _precision;
-
-        DateTimeFormatter isoLocalTime = (precision == 0) ?
-
-                new DateTimeFormatterBuilder()
-                        .appendValue(HOUR_OF_DAY, 2)
-                        .appendLiteral(':')
-                        .appendValue(MINUTE_OF_HOUR, 2)
-                        .optionalStart()
-                        .appendLiteral(':')
-                        .appendValue(SECOND_OF_MINUTE, 2)
-                        .optionalStart()
-                        .toFormatter()
-                :
-                new DateTimeFormatterBuilder()
-                        .appendValue(HOUR_OF_DAY, 2)
-                        .appendLiteral(':')
-                        .appendValue(MINUTE_OF_HOUR, 2)
-                        .optionalStart()
-                        .appendLiteral(':')
-                        .appendValue(SECOND_OF_MINUTE, 2)
-                        .optionalStart()
-                        .appendFraction(NANO_OF_SECOND, 0, precision, true)
-                        .toFormatter();
-
-        DateTimeFormatter isoLocalDateTime = new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .append(ISO_LOCAL_DATE)
-                    .appendLiteral('T')
-                    .append(isoLocalTime)
-                    .toFormatter();
-
-        DateTimeFormatter isoOffsetDateTime = new DateTimeFormatterBuilder()
-                .parseCaseInsensitive()
-                .append(isoLocalDateTime)
-                .parseLenient()
-                .appendOffsetId()
-                .parseStrict()
-                .toFormatter();
-
-        return dateTime.format(isoOffsetDateTime);
     }
-
-    /*
      * Creates an {@link Instant} from the given value.
      *
      * @param value the value as {@link Instant}, {@link java.util.Date},
@@ -185,8 +116,8 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
      *              {@link GregorianCalendar}
      * @return the value as {@link Instant}
      * @throws EdmPrimitiveTypeException if the type of the value is not supported
-     */
-/*    private static <T> Instant convertToInstant(final T value) throws EdmPrimitiveTypeException {
+     *
+     private static <T> Instant convertToInstant(final T value) throws EdmPrimitiveTypeException {
         if (value instanceof OffsetDateTime) {
             return ((OffsetDateTime) value).toInstant();}
         else if (value instanceof Timestamp) {
@@ -200,10 +131,59 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
         }
     }*/
 
+    protected <T> String internalValueToString(final T value,
+                                               final Boolean isNullable,
+                                               final Integer maxLength,
+                                               final Integer precision,
+                                               final Integer scale,
+                                               final Boolean isUnicode) throws EdmPrimitiveTypeException {
+        OffsetDateTime odt = createOffsetDateTime(value);
+
+        return format(odt, precision);
+    }
+
+    private static <T> OffsetDateTime createOffsetDateTime(final T value) throws EdmPrimitiveTypeException {
+        if (value instanceof OffsetDateTime) {
+            return (OffsetDateTime) value;
+        }
+        if (value instanceof Instant) {
+            return OffsetDateTime.ofInstant((Instant) value, ZULU);
+        }
+
+        /*if (value instanceof GregorianCalendar) {
+            GregorianCalendar calendar = (GregorianCalendar) value;
+            OffsetDateTime odt = calendar.toOffsetDateTime();
+            ZoneId normalizedZoneId = calendar.getTimeZone().toZoneId().normalized();
+            return odt.withZoneSameInstant(normalizedZoneId);
+        }*/
+
+        if (!((value instanceof Time) || (value instanceof java.sql.Date)) && (value instanceof java.util.Date)) {
+            OffsetDateTime odt = Instant.ofEpochMilli(((java.util.Date) value).getTime()).atOffset(ZULU);
+
+            return (value instanceof Timestamp) ? odt.withNano(((Timestamp) value).getNanos()) : odt;
+        }
+        if (value instanceof Long) return Instant.ofEpochMilli((Long) value).atOffset(ZULU);
+        else throw new EdmPrimitiveTypeException("The value type " + value.getClass() + " is not supported.");
+    }
+
+    private static String format(OffsetDateTime dateTime, Integer _precision) {
+        int precision = _precision == null ? 0 : _precision;
+
+        DateTimeFormatter isoLocalTime = (precision == 0)
+                ? new DateTimeFormatterBuilder().append(isoLocalTimeCommon).optionalStart().toFormatter()
+                : new DateTimeFormatterBuilder().append(isoLocalTimeCommon).optionalStart()
+                .appendFraction(NANO_OF_SECOND, 0, precision, true).toFormatter();
+
+        DateTimeFormatter isoOffsetDateTime = new DateTimeFormatterBuilder()
+                .append(ISO_LOCAL_DATE).appendLiteral('T').append(isoLocalTime)
+                .parseLenient().appendOffsetId().parseStrict().toFormatter();
+
+        return dateTime.format(isoOffsetDateTime);
+    }
+
     @Override
     public Class<?> getDefaultType() { return OffsetDateTime.class; }
 
-    @Override
     protected <T> T internalValueOfString(final String value, final Boolean isNullable, final Integer maxLength,
                                           final Integer precision, final Integer scale, final Boolean isUnicode, final Class<T> returnType)
             throws EdmPrimitiveTypeException {
@@ -218,14 +198,4 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
         }
     }
 
-    protected <T> String internalValueToString(final T value,
-                                               final Boolean isNullable,
-                                               final Integer maxLength,
-                                               final Integer precision,
-                                               final Integer scale,
-                                               final Boolean isUnicode) throws EdmPrimitiveTypeException {
-        OffsetDateTime odt = createOffsetDateTime(value);
-
-        return format(odt, precision);
-    }
 }
