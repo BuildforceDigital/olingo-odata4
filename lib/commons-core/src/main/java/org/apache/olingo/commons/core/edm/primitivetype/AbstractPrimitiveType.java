@@ -87,8 +87,11 @@ abstract class AbstractPrimitiveType implements EdmPrimitiveType {
   }
 
   protected abstract <T> String internalValueToString(T value,
-      Boolean isNullable, Integer maxLength, Integer precision, Integer scale,
-      Boolean isUnicode) throws EdmPrimitiveTypeException;
+                                                      Boolean isNullable,
+                                                      Integer maxLength,
+                                                      Integer precision,
+                                                      Integer scale,
+                                                      Boolean isUnicode) throws EdmPrimitiveTypeException;
 
   @Override
   public String toUriLiteral(final String literal) {

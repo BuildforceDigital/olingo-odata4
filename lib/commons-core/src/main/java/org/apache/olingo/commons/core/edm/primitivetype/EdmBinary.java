@@ -19,6 +19,7 @@
 package org.apache.olingo.commons.core.edm.primitivetype;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeException;
@@ -28,7 +29,7 @@ import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeException;
  */
 public class EdmBinary extends SingletonPrimitiveType {
 
-  private static final Charset UTF_8 = Charset.forName("UTF-8");
+  private static final Charset UTF_8 = StandardCharsets.UTF_8;
 
   /**
    * Byte used to pad output.
@@ -120,11 +121,7 @@ public class EdmBinary extends SingletonPrimitiveType {
    * {@code false}, otherwise
    */
   private static boolean isBase64(final byte[] arrayOctet) {
-    for (int i = 0; i < arrayOctet.length; i++) {
-      if (!isBase64(arrayOctet[i]) && !isWhiteSpace(arrayOctet[i])) {
-        return false;
-      }
-    }
+    for (byte b : arrayOctet) if (!isBase64(b) && !isWhiteSpace(b)) return false;
     return true;
   }
 
@@ -139,12 +136,11 @@ public class EdmBinary extends SingletonPrimitiveType {
   }
 
   private static boolean validateMaxLength(final String value, final Integer maxLength) {
-    return maxLength == null ? true :
-        // Every three bytes are represented as four base-64 characters.
-        // Additionally, there could be up to two padding "=" characters
-        // if the number of bytes is not a multiple of three,
-        // and there could be line feeds, possibly with carriage returns.
-        maxLength >= (value.length() - lineEndingsLength(value)) * 3 / 4
+    // Every three bytes are represented as four base-64 characters.
+    // Additionally, there could be up to two padding "=" characters
+    // if the number of bytes is not a multiple of three,
+    // and there could be line feeds, possibly with carriage returns.
+    return maxLength == null || maxLength >= (value.length() - lineEndingsLength(value)) * 3 / 4
             - (value.endsWith("==") ? 2 : value.endsWith("=") ? 1 : 0);
   }
 
@@ -197,7 +193,7 @@ public class EdmBinary extends SingletonPrimitiveType {
       final int length = ((Byte[]) value).length;
       byteArrayValue = new byte[length];
       for (int i = 0; i < length; i++) {
-        byteArrayValue[i] = ((Byte[]) value)[i].byteValue();
+        byteArrayValue[i] = ((Byte[]) value)[i];
       }
     } else {
       throw new EdmPrimitiveTypeException("The value type " + value.getClass() + " is not supported.");

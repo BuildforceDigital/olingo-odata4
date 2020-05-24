@@ -20,8 +20,8 @@ package org.apache.olingo.commons.core.edm;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.OffsetDateTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.Edm;
@@ -65,7 +65,7 @@ public class EdmTypeInfo {
 
   private final boolean collection;
   private final FullQualifiedName fullQualifiedName;
-  private EdmPrimitiveTypeKind primitiveType;
+  private final EdmPrimitiveTypeKind primitiveType;
   private EdmTypeDefinition typeDefinition;
   private EdmEnumType enumType;
   private EdmComplexType complexType;
@@ -103,7 +103,7 @@ public class EdmTypeInfo {
       typeName = baseType.substring(lastDotIdx + 1);
     }
 
-    if (typeName == null || typeName.isEmpty()) {
+    if (typeName.isEmpty()) {
       throw new IllegalArgumentException("Null or empty type name in " + typeExpression);
     }
 
@@ -240,12 +240,15 @@ public class EdmTypeInfo {
       return EdmPrimitiveTypeKind.Double;
     } else if (value instanceof Float) {
       return EdmPrimitiveTypeKind.Single;
-    } else if (value instanceof Calendar || value instanceof Date || value instanceof java.sql.Timestamp) {
-      return EdmPrimitiveTypeKind.DateTimeOffset;
     } else if (value instanceof java.sql.Date) {
       return EdmPrimitiveTypeKind.Date;
     } else if (value instanceof java.sql.Time) {
       return EdmPrimitiveTypeKind.TimeOfDay;
+    } else if ((value instanceof Calendar) ||
+            (value instanceof OffsetDateTime) ||
+            (value instanceof java.util.Date)) { // Which also covers Timestamp
+      return EdmPrimitiveTypeKind.DateTimeOffset;
+
     } else if (value instanceof byte[] || value instanceof Byte[]) {
       return EdmPrimitiveTypeKind.Binary;
     }

@@ -29,7 +29,7 @@
 
   <parent>
     <groupId>org.apache.olingo</groupId>
-    <artifactId>odata-lib</artifactId>
+    <artifactId>OData4-lib</artifactId>
     <version>4.8.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>

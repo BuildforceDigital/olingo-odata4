@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -44,28 +44,28 @@ import org.junit.Test;
 public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
 
   @Test
-  public void nameSpace() throws Exception {
+  public void nameSpace() {
     for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       assertEquals(EdmPrimitiveType.EDM_NAMESPACE, EdmPrimitiveTypeFactory.getInstance(kind).getNamespace());
     }
   }
 
   @Test
-  public void names() throws Exception {
+  public void names() {
     for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       assertEquals(kind.name(), EdmPrimitiveTypeFactory.getInstance(kind).getName());
     }
   }
 
   @Test
-  public void kind() throws Exception {
+  public void kind() {
     for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       assertEquals(EdmTypeKind.PRIMITIVE, EdmPrimitiveTypeFactory.getInstance(kind).getKind());
     }
   }
 
   @Test
-  public void toStringAll() throws Exception {
+  public void toStringAll() {
     for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       assertEquals(kind.getFullQualifiedName().toString(), EdmPrimitiveTypeFactory.getInstance(kind).toString());
     }
@@ -82,13 +82,13 @@ public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
   }
 
   @Test
-  public void defaultType() throws Exception {
+  public void defaultType() {
     assertEquals(byte[].class, EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Binary).getDefaultType());
     assertEquals(Boolean.class,
         EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Boolean).getDefaultType());
     assertEquals(Short.class, EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Byte).getDefaultType());
     assertEquals(Calendar.class, EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Date).getDefaultType());
-    assertEquals(Timestamp.class,
+    assertEquals(OffsetDateTime.class,
         EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.DateTimeOffset).getDefaultType());
     assertEquals(BigDecimal.class,
         EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Decimal).getDefaultType());
@@ -140,7 +140,7 @@ public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
   }
 
   @Test
-  public void validate() throws Exception {
+  public void validate() {
     for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       final EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
       assertTrue(instance.validate(null, null, null, null, null, null));

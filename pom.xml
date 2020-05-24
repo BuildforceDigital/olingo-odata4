@@ -28,7 +28,7 @@
   <version>4.8.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Olingo-OData</name>
+  <name>Olingo-ODataV4 CapSelUI5</name>
 
   <inceptionYear>2013</inceptionYear>
 
@@ -324,11 +324,11 @@
           <artifactId>maven-timestamp-plugin</artifactId>
           <version>1.0</version>
         </plugin>
-        <plugin>
+        <!--<plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
           <version>0.11</version>
-        </plugin>
+        </plugin>-->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -402,8 +402,9 @@
         </executions>
       </plugin>
       <!--<plugin>
-        <artifactId>maven-remote-resources-plugin</artifactId>
-        <version>1.5</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-remote-resources-plugin</artifactId>
+          <version>1.7.0</version>
         <dependencies>
             <dependency>
                 <groupId>org.apache.maven.shared</groupId>
