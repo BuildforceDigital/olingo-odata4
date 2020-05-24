@@ -26,8 +26,8 @@ import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -51,13 +51,11 @@ import org.apache.olingo.server.api.deserializer.batch.BatchOptions;
 import org.apache.olingo.server.api.deserializer.batch.BatchRequestPart;
 import org.apache.olingo.server.api.deserializer.batch.ODataResponsePart;
 import org.apache.olingo.server.api.processor.BatchProcessor;
-import org.apache.olingo.server.api.serializer.BatchSerializerException;
 import org.apache.olingo.server.core.ODataHandlerImpl;
 import org.apache.olingo.server.core.deserializer.batch.BatchLineReader;
 import org.apache.olingo.server.core.deserializer.batch.BatchParserCommon;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 public class MockedBatchHandlerTest {
@@ -166,30 +164,32 @@ public class MockedBatchHandlerTest {
       String contentId = checkChangeSetPartHeader(responseContent, line);
       line += 6;
 
-      if ("1".equals(contentId)) {
-        assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
-        assertEquals("Location: " + BASE_URI + "/ESAllPrim(1)" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else if ("2".equals(contentId)) {
-        assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
-        assertEquals("Location: " + BASE_URI + "/ESTwoPrim(3)" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else if ("3".equals(contentId)) {
-        assertEquals("HTTP/1.1 200 OK" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else if ("4".equals(contentId)) {
-        assertEquals("HTTP/1.1 200 OK" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else if ("5".equals(contentId)) {
-        assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
-        assertEquals("Location: " + BASE_URI + "/ESTwoPrim(2)" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else if ("6".equals(contentId)) {
-        assertEquals("HTTP/1.1 200 OK" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else {
-        fail();
-      }
+        switch (contentId) {
+            case "1":
+                assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
+                assertEquals("Location: " + BASE_URI + "/ESAllPrim(1)" + CRLF, responseContent.get(line++));
+                assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
+                break;
+            case "2":
+                assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
+                assertEquals("Location: " + BASE_URI + "/ESTwoPrim(3)" + CRLF, responseContent.get(line++));
+                assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
+                break;
+            case "3":
+            case "6":
+            case "4":
+                assertEquals("HTTP/1.1 200 OK" + CRLF, responseContent.get(line++));
+                assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
+                break;
+            case "5":
+                assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
+                assertEquals("Location: " + BASE_URI + "/ESTwoPrim(2)" + CRLF, responseContent.get(line++));
+                assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
+                break;
+            default:
+                fail();
+                break;
+        }
       assertEquals(CRLF, responseContent.get(line++));
     }
 
@@ -434,24 +434,30 @@ public class MockedBatchHandlerTest {
       String contentId = checkChangeSetPartHeader(responseContent, line);
       line += 6;
 
-      if ("1".equals(contentId)) {
-        assertEquals("HTTP/1.1 200 OK" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else if ("2".equals(contentId)) {
-        assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
-        assertEquals("Location: " + BASE_URI + "/ESTwoPrim(1)" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else if ("3".equals(contentId)) {
-        assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
-        assertEquals("Location: " + BASE_URI + "/ESAllPrim(2)" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else if ("4".equals(contentId)) {
-        assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
-        assertEquals("Location: " + BASE_URI + "/ESTwoPrim(3)" + CRLF, responseContent.get(line++));
-        assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
-      } else {
-        fail();
-      }
+        switch (contentId) {
+            case "1":
+                assertEquals("HTTP/1.1 200 OK" + CRLF, responseContent.get(line++));
+                assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
+                break;
+            case "2":
+                assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
+                assertEquals("Location: " + BASE_URI + "/ESTwoPrim(1)" + CRLF, responseContent.get(line++));
+                assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
+                break;
+            case "3":
+                assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
+                assertEquals("Location: " + BASE_URI + "/ESAllPrim(2)" + CRLF, responseContent.get(line++));
+                assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
+                break;
+            case "4":
+                assertEquals("HTTP/1.1 201 Created" + CRLF, responseContent.get(line++));
+                assertEquals("Location: " + BASE_URI + "/ESTwoPrim(3)" + CRLF, responseContent.get(line++));
+                assertEquals("Content-Length: 0" + CRLF, responseContent.get(line++));
+                break;
+            default:
+                fail();
+                break;
+        }
 
       assertEquals(CRLF, responseContent.get(line++));
     }
@@ -511,8 +517,8 @@ public class MockedBatchHandlerTest {
         + CRLF
         + "--batch_12345--";
 
-    final Map<String, List<String>> header = new HashMap<String, List<String>>();
-    header.put(HttpHeader.CONTENT_TYPE, Arrays.asList(new String[] { "application/http" }));
+    final Map<String, List<String>> header = new HashMap<>();
+    header.put(HttpHeader.CONTENT_TYPE, Collections.singletonList("application/http"));
     final ODataResponse response = new ODataResponse();
     final ODataRequest request = buildODataRequest(content, header);
 
@@ -542,8 +548,7 @@ public class MockedBatchHandlerTest {
     return Collections.singletonMap(HttpHeader.CONTENT_TYPE, Collections.singletonList(BATCH_CONTENT_TYPE));
   }
 
-  private ODataRequest buildODataRequest(final String content, final Map<String, List<String>> header)
-      throws Exception {
+  private ODataRequest buildODataRequest(final String content, final Map<String, List<String>> header) {
     final ODataRequest request = new ODataRequest();
 
     for (final String key : header.keySet()) {
@@ -557,7 +562,7 @@ public class MockedBatchHandlerTest {
     request.setRawRequestUri(BATCH_REQUEST_URI);
     request.setRawServiceResolutionUri("");
 
-    request.setBody(new ByteArrayInputStream(content.getBytes("UTF-8")));
+    request.setBody(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
 
     return request;
   }
@@ -576,7 +581,7 @@ public class MockedBatchHandlerTest {
 
     @Override
     public ODataResponsePart processChangeSet(final BatchFacade facade, final List<ODataRequest> requests) {
-      List<ODataResponse> responses = new ArrayList<ODataResponse>();
+      List<ODataResponse> responses = new ArrayList<>();
 
       for (ODataRequest request : requests) {
         try {
@@ -591,23 +596,20 @@ public class MockedBatchHandlerTest {
 
     @Override
     public void processBatch(final BatchFacade fascade, final ODataRequest request, final ODataResponse response)
-        throws ODataApplicationException, BatchSerializerException, ODataLibraryException {
+        throws ODataApplicationException, ODataLibraryException {
       final String boundary = getBoundary(request.getHeader(HttpHeader.CONTENT_TYPE));
       final BatchOptions options = BatchOptions.with().isStrict(true).rawBaseUri(BASE_URI).build();
       final List<BatchRequestPart> parts =
           odata.createFixedFormatDeserializer().parseBatchRequest(request.getBody(), boundary, options);
-      final List<ODataResponsePart> responseParts = new ArrayList<ODataResponsePart>();
+      final List<ODataResponsePart> responseParts = new ArrayList<>();
 
       for (BatchRequestPart part : parts) {
         for (final ODataRequest oDataRequest : part.getRequests()) {
           // Mock the processor for a given requests
-          when(oDataHandler.process(oDataRequest)).then(new Answer<ODataResponse>() {
-            @Override
-            public ODataResponse answer(final InvocationOnMock invocation) throws Throwable {
-              Object[] arguments = invocation.getArguments();
+          when(oDataHandler.process(oDataRequest)).then((Answer<ODataResponse>) invocation -> {
+            Object[] arguments = invocation.getArguments();
 
-              return buildResponse((ODataRequest) arguments[0]);
-            }
+            return buildResponse((ODataRequest) arguments[0]);
           });
         }
 
@@ -647,7 +649,7 @@ public class MockedBatchHandlerTest {
   }
 
   private String createResourceUri(final ODataRequest request) {
-    final String parts[] = request.getRawODataPath().split("/");
+    final String[] parts = request.getRawODataPath().split("/");
     String oDataPath = "";
 
     if (parts.length == 2) {
@@ -657,13 +659,15 @@ public class MockedBatchHandlerTest {
       // Navigation property
 
       final String navProperty = parts[parts.length - 1];
-      if (navProperty.equals("NavPropertyETTwoPrimMany")) {
-        oDataPath = "ESTwoPrim";
-      } else if (navProperty.equals("NavPropertyETAllPrimMany")) {
-        oDataPath = "ESAllPrim";
-      } else if (navProperty.equals("NavPropertyETTwoPrimOne")) {
-        oDataPath = "ESTwoPrim";
-      }
+        switch (navProperty) {
+            case "NavPropertyETTwoPrimMany":
+            case "NavPropertyETTwoPrimOne":
+                oDataPath = "ESTwoPrim";
+                break;
+            case "NavPropertyETAllPrimMany":
+                oDataPath = "ESAllPrim";
+                break;
+        }
     }
 
     return BASE_URI + "/" + oDataPath + "(" + entityCounter++ + ")";

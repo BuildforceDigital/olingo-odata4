@@ -58,29 +58,34 @@ public final class EdmSingle extends SingletonPrimitiveType {
       final Boolean isNullable, final Integer maxLength, final Integer precision,
       final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
 
-    Float result = null;
+    Float result;
     BigDecimal bigDecimalValue = null;
     // Handle special values first.
-    if (value.equals(EdmDouble.NEGATIVE_INFINITY)) {
-      result = Float.NEGATIVE_INFINITY;
-    } else if (value.equals(EdmDouble.POSITIVE_INFINITY)) {
-      result = Float.POSITIVE_INFINITY;
-    } else if (value.equals(EdmDouble.NaN)) {
-      result = Float.NaN;
-    } else {
-      // Now only "normal" numbers remain.
-      if (!PATTERN.matcher(value).matches()) {
-        throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
-      }
+    switch (value) {
+      case EdmDouble.NEGATIVE_INFINITY:
+        result = Float.NEGATIVE_INFINITY;
+        break;
+      case EdmDouble.POSITIVE_INFINITY:
+        result = Float.POSITIVE_INFINITY;
+        break;
+      case EdmDouble.NaN:
+        result = Float.NaN;
+        break;
+      default:
+        // Now only "normal" numbers remain.
+        if (!PATTERN.matcher(value).matches()) {
+          throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
+        }
 
-      // The number format is checked above, so we don't have to catch NumberFormatException.
-      bigDecimalValue = new BigDecimal(value);
-      result = bigDecimalValue.floatValue();
-      // "Real" infinite values have been treated already above, so we can throw an exception
-      // if the conversion to a float results in an infinite value.
-      if (result.isInfinite() || bigDecimalValue.compareTo(new BigDecimal(result.toString())) != 0) {
-        throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
-      }
+        // The number format is checked above, so we don't have to catch NumberFormatException.
+        bigDecimalValue = new BigDecimal(value);
+        result = bigDecimalValue.floatValue();
+        // "Real" infinite values have been treated already above, so we can throw an exception
+        // if the conversion to a float results in an infinite value.
+        if (result.isInfinite() || bigDecimalValue.compareTo(new BigDecimal(result.toString())) != 0) {
+          throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
+        }
+        break;
     }
 
     if (returnType.isAssignableFrom(Float.class)) {

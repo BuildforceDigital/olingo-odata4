@@ -25,8 +25,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Locale;
 
-import javax.management.RuntimeErrorException;
-
 import org.apache.olingo.server.api.ODataLibraryException.ODataErrorMessage;
 import org.junit.Test;
 

@@ -61,33 +61,33 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
         return INSTANCE;
     }
 
-    private static ZonedDateTime parseZonedDateTime(final String value) throws DateTimeParseException {
+    private static OffsetDateTime parseZonedDateTime(final String value) throws DateTimeParseException {
         final Matcher matcher = PATTERN.matcher(value); // Harmonize to ISO-8601 conform pattern
 
-        return ZonedDateTime.parse(value + ((matcher.matches() && matcher.group(9) == null) ? "Z" : ""));
+        return OffsetDateTime.parse(value + ((matcher.matches() && matcher.group(9) == null) ? "Z" : ""));
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T convertZonedDateTime(ZonedDateTime zdt, Class<T> returnType) {
-        if (returnType == ZonedDateTime.class) {
-            return (T) zdt;
+    private static <T> T convertOffsetDateTime(OffsetDateTime odt, Class<T> returnType) {
+        if (returnType == OffsetDateTime.class) {
+            return (T) odt;
         } else if (returnType == Instant.class) {
-            return (T) zdt.toInstant();
+            return (T) odt.toInstant();
         } else if (returnType.isAssignableFrom(Timestamp.class)) {
-            return (T) Timestamp.from(zdt.toInstant());
+            return (T) Timestamp.from(odt.toInstant());
         } else if (returnType.isAssignableFrom(java.util.Date.class)) {
-            return (T) java.util.Date.from(zdt.toInstant());
+            return (T) java.util.Date.from(odt.toInstant());
         } else if (returnType.isAssignableFrom(java.sql.Time.class)) {
-            return (T) new java.sql.Time(zdt.toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli());
+            return (T) new java.sql.Time(odt.toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli());
         } else if (returnType.isAssignableFrom(java.sql.Date.class)) {
-            return (T) new java.sql.Date(zdt.toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli());
+            return (T) new java.sql.Date(odt.toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli());
         } else if (returnType.isAssignableFrom(Long.class)) {
-            return (T) Long.valueOf(zdt.toInstant().toEpochMilli());
+            return (T) Long.valueOf(odt.toInstant().toEpochMilli());
         } else if (returnType.isAssignableFrom(Calendar.class)) {
-            return (T) GregorianCalendar.from(zdt);
-        } else {
-            throw new ClassCastException("Unsupported return type " + returnType.getSimpleName());
-        }
+            return (T) GregorianCalendar.from(odt.toZonedDateTime());
+        } else if (returnType.isAssignableFrom(ZonedDateTime.class)) return (T) ZonedDateTime.from(odt);
+        else throw new ClassCastException("Unsupported return type " + returnType.getSimpleName());
+
     }
 
 /*  private static <T> ZonedDateTime createZonedDateTime(final T value) throws EdmPrimitiveTypeException {
@@ -188,9 +188,9 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
                                           final Integer precision, final Integer scale, final Boolean isUnicode, final Class<T> returnType)
             throws EdmPrimitiveTypeException {
         try {
-            ZonedDateTime zdt = parseZonedDateTime(value);
+            OffsetDateTime odt = parseZonedDateTime(value);
 
-            return convertZonedDateTime(zdt, returnType);
+            return convertOffsetDateTime(odt, returnType);
         } catch (DateTimeParseException ex) {
             throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.", ex);
         } catch (final ClassCastException e) {

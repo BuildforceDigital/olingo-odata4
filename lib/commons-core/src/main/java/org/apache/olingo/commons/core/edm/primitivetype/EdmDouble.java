@@ -65,29 +65,34 @@ public final class EdmDouble extends SingletonPrimitiveType {
       final Boolean isNullable, final Integer maxLength, final Integer precision,
       final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
 
-    Double result = null;
+    Double result;
     BigDecimal bigDecimalValue = null;
     // Handle special values first.
-    if (value.equals(NEGATIVE_INFINITY)) {
-      result = Double.NEGATIVE_INFINITY;
-    } else if (value.equals(POSITIVE_INFINITY)) {
-      result = Double.POSITIVE_INFINITY;
-    } else if (value.equals(NaN)) {
-      result = Double.NaN;
-    } else {
-      // Now only "normal" numbers remain.
-      if (!PATTERN.matcher(value).matches()) {
-        throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
-      }
+    switch (value) {
+      case NEGATIVE_INFINITY:
+        result = Double.NEGATIVE_INFINITY;
+        break;
+      case POSITIVE_INFINITY:
+        result = Double.POSITIVE_INFINITY;
+        break;
+      case NaN:
+        result = Double.NaN;
+        break;
+      default:
+        // Now only "normal" numbers remain.
+        if (!PATTERN.matcher(value).matches()) {
+          throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
+        }
 
-      // The number format is checked above, so we don't have to catch NumberFormatException.
-      bigDecimalValue = new BigDecimal(value);
-      result = bigDecimalValue.doubleValue();
-      // "Real" infinite values have been treated already above, so we can throw an exception
-      // if the conversion to a double results in an infinite value.
-      if (result.isInfinite() || BigDecimal.valueOf(result).compareTo(bigDecimalValue) != 0) {
-        throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
-      }
+        // The number format is checked above, so we don't have to catch NumberFormatException.
+        bigDecimalValue = new BigDecimal(value);
+        result = bigDecimalValue.doubleValue();
+        // "Real" infinite values have been treated already above, so we can throw an exception
+        // if the conversion to a double results in an infinite value.
+        if (result.isInfinite() || BigDecimal.valueOf(result).compareTo(bigDecimalValue) != 0) {
+          throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
+        }
+        break;
     }
 
     if (returnType.isAssignableFrom(Double.class)) {

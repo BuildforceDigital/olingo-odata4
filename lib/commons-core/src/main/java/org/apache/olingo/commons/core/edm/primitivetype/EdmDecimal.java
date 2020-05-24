@@ -83,9 +83,7 @@ public final class EdmDecimal extends SingletonPrimitiveType {
 	}
     final int significantIntegerDigits = "0".equals(matcher.group(1)) ? 0 : matcher.group(1).length();
     final int decimals = matcher.group(2) == null ? 0 : matcher.group(2).length();
-    return (precision == null || (significantIntegerDigits >= 0 && 
-        significantIntegerDigits <= precision - ((scale == null) ? 0 : scale))) &&
-        (decimals >= 0 && decimals <= ((scale == null) ? 0 : scale));
+    return (precision == null || significantIntegerDigits <= precision - (scale == null ? 0 : scale)) && decimals <= (scale == null ? 0 : scale);
   }
   
   @Override
@@ -111,22 +109,16 @@ public final class EdmDecimal extends SingletonPrimitiveType {
     
     try {
       int scaleValue = (scale == null) ? 0 : Integer.parseInt(scale);
-      return (precision == null || (significantIntegerDigits >= 0 && 
-          significantIntegerDigits <= precision - scaleValue)) &&
-          (decimals >= 0 && decimals <= scaleValue);
+      return (precision == null || significantIntegerDigits <= precision - scaleValue) && decimals <= scaleValue;
     } catch(NumberFormatException e) {
-      String scaleValue = (scale == null) ? String.valueOf(0) : scale;
-      if (scaleValue.equals("variable")) {
-        return (precision == null || 
-            (significantIntegerDigits >= 0 && 
-            (significantIntegerDigits <= precision - decimals))) && 
-            (decimals >= 0 && decimals <= ((precision == null) ? 0 : precision));
-      } else if (scaleValue.equals("floating")) {
+      if (scale.equals("variable")) {
+        return (precision == null || significantIntegerDigits <= precision - decimals) && decimals <= (precision == null ? 0 : precision);
+      } else if (scale.equals("floating")) {
         Matcher matcher1 = PATTERN.matcher(value);
         matcher1.matches();
         significantIntegerDigits = "0".equals(matcher1.group(1)) ? 0 : matcher1.group(1).length();
         decimals = matcher1.group(2) == null ? 0 : matcher1.group(2).length();
-        int exponents = 0;
+        int exponents;
         if (matcher1.group(3) != null) {
           exponents = Integer.parseInt(matcher1.group(3).substring(1));
           if (exponents < -95 || exponents > 96) {
@@ -189,7 +181,7 @@ public final class EdmDecimal extends SingletonPrimitiveType {
         throw new IllegalArgumentException();
       }
     } else if (returnType.isAssignableFrom(Float.class)) {
-      final Float floatValue = value.floatValue();
+      final float floatValue = value.floatValue();
       if (BigDecimal.valueOf(floatValue).compareTo(value) == 0) {
         return returnType.cast(floatValue);
       } else {

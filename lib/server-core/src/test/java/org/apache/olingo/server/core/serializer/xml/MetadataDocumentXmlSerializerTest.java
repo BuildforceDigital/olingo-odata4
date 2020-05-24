@@ -133,7 +133,7 @@ public class MetadataDocumentXmlSerializerTest {
     EdmSchema schema = mock(EdmSchema.class);
     when(schema.getNamespace()).thenReturn("MyNamespace");
     Edm edm = mock(Edm.class);
-    when(edm.getSchemas()).thenReturn(Arrays.asList(schema));
+    when(edm.getSchemas()).thenReturn(Collections.singletonList(schema));
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
     when(serviceMetadata.getEdm()).thenReturn(edm);
 
@@ -157,7 +157,7 @@ public class MetadataDocumentXmlSerializerTest {
     EdmSchema schema = mock(EdmSchema.class);
     when(schema.getNamespace()).thenReturn("MyNamespace");
     Edm edm = mock(Edm.class);
-    when(edm.getSchemas()).thenReturn(Arrays.asList(schema));
+    when(edm.getSchemas()).thenReturn(Collections.singletonList(schema));
     
     // create mock metadata
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
@@ -165,7 +165,7 @@ public class MetadataDocumentXmlSerializerTest {
     
     // add mock enums to schema
     EdmEnumType enumType = mock(EdmEnumType.class);
-    when(schema.getEnumTypes()).thenReturn(Arrays.asList(enumType));
+    when(schema.getEnumTypes()).thenReturn(Collections.singletonList(enumType));
     when(enumType.getName()).thenReturn("MyEnum");
     EdmPrimitiveType int32Type = OData.newInstance().createPrimitiveTypeInstance(EdmPrimitiveTypeKind.Int32);
     when(enumType.getUnderlyingType()).thenReturn(int32Type);
@@ -207,7 +207,7 @@ public class MetadataDocumentXmlSerializerTest {
 
   @Test
   public void writeEdmxWithLocalTestEdm() throws Exception {
-    List<EdmxReference> edmxReferences = new ArrayList<EdmxReference>();
+    List<EdmxReference> edmxReferences = new ArrayList<>();
     EdmxReference reference = new EdmxReference(URI.create("http://example.com"));
     edmxReferences.add(reference);
 
@@ -423,7 +423,7 @@ public class MetadataDocumentXmlSerializerTest {
 
   private String localMetadata() throws SerializerException, IOException {
     CsdlEdmProvider provider = new LocalProvider();
-    ServiceMetadata serviceMetadata = new ServiceMetadataImpl(provider, Collections.<EdmxReference> emptyList(), null);
+    ServiceMetadata serviceMetadata = new ServiceMetadataImpl(provider, Collections.emptyList(), null);
     InputStream metadataStream = serializer.metadataDocument(serviceMetadata).getContent();
     String metadata = IOUtils.toString(metadataStream);
     assertNotNull(metadata);
@@ -435,10 +435,10 @@ public class MetadataDocumentXmlSerializerTest {
     EdmSchema schema = mock(EdmSchema.class);
     when(schema.getNamespace()).thenReturn("MyNamespace");
     Edm edm = mock(Edm.class);
-    when(edm.getSchemas()).thenReturn(Arrays.asList(schema));
+    when(edm.getSchemas()).thenReturn(Collections.singletonList(schema));
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
     when(serviceMetadata.getEdm()).thenReturn(edm);
-    List<EdmComplexType> complexTypes = new ArrayList<EdmComplexType>();
+    List<EdmComplexType> complexTypes = new ArrayList<>();
 
     FullQualifiedName name = new FullQualifiedName("namespace", "ComplexType");
     EdmComplexType complexType = mock(EdmComplexType.class);
@@ -511,7 +511,7 @@ public class MetadataDocumentXmlSerializerTest {
         .setType(nameETAbstract)
         .setNullable(false)
         .setOnDelete(new CsdlOnDelete().setAction(CsdlOnDeleteAction.Cascade)
-            .setAnnotations(Arrays.asList(new CsdlAnnotation().setTerm("core.Term"))));
+            .setAnnotations(Collections.singletonList(new CsdlAnnotation().setTerm("core.Term"))));
 
     private final FullQualifiedName nameCTTwoPrim = new FullQualifiedName(nameSpace, "CTTwoPrim");
     private final FullQualifiedName nameCTTwoPrimBase = new FullQualifiedName(nameSpace, "CTTwoPrimBase");
@@ -606,13 +606,13 @@ public class MetadataDocumentXmlSerializerTest {
         return Collections.singletonList(
             new CsdlFunction()
             .setName("UFNRTInt16")
-            .setParameters(Collections.<CsdlParameter> emptyList())
+            .setParameters(Collections.emptyList())
             .setReturnType(new CsdlReturnType().setType(nameInt16)));
       } else if (functionName.equals(nameUFNRTETAllPrim)) {
         return Collections.singletonList(
             new CsdlFunction()
             .setName("UFNRTETAllPrim")
-            .setParameters(Collections.<CsdlParameter> emptyList())
+            .setParameters(Collections.emptyList())
             .setReturnType(new CsdlReturnType().setType(nameETAbstractBase)));
       }
       return null;
@@ -648,25 +648,26 @@ public class MetadataDocumentXmlSerializerTest {
     public CsdlActionImport getActionImport(final FullQualifiedName entityContainer, final String actionImportName)
         throws ODataException {
       if (entityContainer.equals(nameContainer)) {
-        if (actionImportName.equals("AIRTPrimParam")) {
-          return new CsdlActionImport()
-          .setName("AIRTPrimParam")
-          .setAction(nameUARTPrimParam);
-        } else if (actionImportName.equals("AIRTOtherEntity")) {
-          return new CsdlActionImport()
-              .setName("AIRTOtherEntity")
-              .setAction(nameUARTOtherEntity)
-              .setEntitySet(nameContainer1.getFullQualifiedNameAsString() + "/ES");
-        } else if (actionImportName.equals("AIRTEntity")) {
-          return new CsdlActionImport()
-              .setName("AIRTEntity")
-              .setAction(nameUARTEntity)
-              .setEntitySet("ESAllPrim");
-        } else if (actionImportName.equals("AIRTEntityNoES")) {
-          return new CsdlActionImport()
-              .setName("AIRTEntityNoES")
-              .setAction(nameUARTEntity);
-        }
+          switch (actionImportName) {
+              case "AIRTPrimParam":
+                  return new CsdlActionImport()
+                          .setName("AIRTPrimParam")
+                          .setAction(nameUARTPrimParam);
+              case "AIRTOtherEntity":
+                  return new CsdlActionImport()
+                          .setName("AIRTOtherEntity")
+                          .setAction(nameUARTOtherEntity)
+                          .setEntitySet(nameContainer1.getFullQualifiedNameAsString() + "/ES");
+              case "AIRTEntity":
+                  return new CsdlActionImport()
+                          .setName("AIRTEntity")
+                          .setAction(nameUARTEntity)
+                          .setEntitySet("ESAllPrim");
+              case "AIRTEntityNoES":
+                  return new CsdlActionImport()
+                          .setName("AIRTEntityNoES")
+                          .setAction(nameUARTEntity);
+          }
       }
       return null;
     }
@@ -694,7 +695,7 @@ public class MetadataDocumentXmlSerializerTest {
 
     @Override
     public List<CsdlSchema> getSchemas() throws ODataException {
-      List<CsdlSchema> schemas = new ArrayList<CsdlSchema>();
+      List<CsdlSchema> schemas = new ArrayList<>();
       CsdlSchema schema = new CsdlSchema();
       schema.setNamespace(nameSpace);
       schema.setAlias("Alias");
@@ -706,7 +707,7 @@ public class MetadataDocumentXmlSerializerTest {
       schemas.add(schema1);
       
       // Add entity type
-      schema1.setEntityTypes(Arrays.asList(getEntityType(nameET)));
+      schema1.setEntityTypes(Collections.singletonList(getEntityType(nameET)));
       
       // Add entity container
       schema1.setEntityContainer(getEntityContainer1());
@@ -841,7 +842,7 @@ public class MetadataDocumentXmlSerializerTest {
         List<CsdlAnnotation> innerAnnotations = Collections.singletonList(
             new CsdlAnnotation().setTerm("ns.term"));
 
-        List<CsdlAnnotation> annotationsList = new ArrayList<CsdlAnnotation>();
+        List<CsdlAnnotation> annotationsList = new ArrayList<>();
         annoGroup.setAnnotations(annotationsList);
         // Constant Annotations
         annotationsList.add(new CsdlAnnotation().setTerm("ns.term")
@@ -922,7 +923,7 @@ public class MetadataDocumentXmlSerializerTest {
         annotationsList.add(new CsdlAnnotation().setTerm("ns.term")
             .setExpression(new CsdlAnnotationPath().setValue("AnnoPathValue")));
 
-        List<CsdlExpression> parameters = new ArrayList<CsdlExpression>();
+        List<CsdlExpression> parameters = new ArrayList<>();
         parameters.add(new CsdlConstantExpression(ConstantExpressionType.Bool, "true"));
         annotationsList.add(new CsdlAnnotation().setTerm("ns.term")
             .setExpression(new CsdlApply().setFunction("odata.concat")
@@ -938,7 +939,7 @@ public class MetadataDocumentXmlSerializerTest {
             .setType("Edm.String")
             .setAnnotations(innerAnnotations)));
 
-        List<CsdlExpression> items = new ArrayList<CsdlExpression>();
+        List<CsdlExpression> items = new ArrayList<>();
         items.add(new CsdlConstantExpression(ConstantExpressionType.Bool, "true"));
         items.add(new CsdlConstantExpression(ConstantExpressionType.Bool, "false"));
         items.add(new CsdlConstantExpression(ConstantExpressionType.String, "String"));
@@ -988,7 +989,7 @@ public class MetadataDocumentXmlSerializerTest {
         .setAnnotations(innerAnnotations);
         annotationsList.add(new CsdlAnnotation().setTerm("ns.term")
             .setExpression(new CsdlRecord().setType("Alias.ETAbstract")
-                .setPropertyValues(Arrays.asList(prop))
+                .setPropertyValues(Collections.singletonList(prop))
                 .setAnnotations(innerAnnotations)));
 
         annotationsList.add(new CsdlAnnotation().setTerm("ns.term")

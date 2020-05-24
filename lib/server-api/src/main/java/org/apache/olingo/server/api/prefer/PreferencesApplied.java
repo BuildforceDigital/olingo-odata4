@@ -18,7 +18,6 @@
  */
 package org.apache.olingo.server.api.prefer;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -36,18 +35,10 @@ import org.apache.olingo.server.api.prefer.Preferences.Return;
 public final class PreferencesApplied {
 
   private static final Set<String> SAFE_PREFERENCE_NAMES = new HashSet<>();
-  private Map<String, String> applied;
+  private final Map<String, String> applied;
 
   private PreferencesApplied() {
     applied = new LinkedHashMap<>();
-  }
-
-  /**
-   * Gets the applied preferences.
-   * @return a map from preference names to preference values
-   */
-  public Map<String, String> getAppliedPreferences() {
-    return Collections.unmodifiableMap(applied);
   }
 
   /** Returns a string representation that can be used as value of a Preference-Applied HTTP response header. */
