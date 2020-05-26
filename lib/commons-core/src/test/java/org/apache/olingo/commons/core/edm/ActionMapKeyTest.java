@@ -81,7 +81,7 @@ public class ActionMapKeyTest {
     someKey = new ActionMapKey(fqn, fqnType, false);
     assertEquals(key, someKey);
 
-    key = new ActionMapKey(fqn, fqnType, new Boolean(false));
+    key = new ActionMapKey(fqn, fqnType, Boolean.FALSE);
     someKey = new ActionMapKey(fqn, fqnType, false);
     assertEquals(key, someKey);
 
@@ -90,7 +90,7 @@ public class ActionMapKeyTest {
     assertNotSame(key, someKey);
 
     key = new ActionMapKey(fqn, fqnType, true);
-    someKey = new ActionMapKey(fqn, fqnType, new Boolean(false));
+    someKey = new ActionMapKey(fqn, fqnType, Boolean.FALSE);
     assertNotSame(key, someKey);
   }
 
@@ -103,7 +103,7 @@ public class ActionMapKeyTest {
     someKey = new ActionMapKey(fqn, fqnType, false);
     assertEquals(key.hashCode(), someKey.hashCode());
 
-    key = new ActionMapKey(fqn, fqnType, new Boolean(false));
+    key = new ActionMapKey(fqn, fqnType, Boolean.FALSE);
     someKey = new ActionMapKey(fqn, fqnType, false);
     assertEquals(key.hashCode(), someKey.hashCode());
 
@@ -112,7 +112,7 @@ public class ActionMapKeyTest {
     assertNotSame(key.hashCode(), someKey.hashCode());
 
     key = new ActionMapKey(fqn, fqnType, true);
-    someKey = new ActionMapKey(fqn, fqnType, new Boolean(false));
+    someKey = new ActionMapKey(fqn, fqnType, Boolean.FALSE);
     assertNotSame(key.hashCode(), someKey.hashCode());
   }
 

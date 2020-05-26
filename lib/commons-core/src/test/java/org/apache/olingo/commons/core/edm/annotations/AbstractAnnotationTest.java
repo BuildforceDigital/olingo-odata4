@@ -82,9 +82,9 @@ public class AbstractAnnotationTest {
     
     
     //Remove all false values so that only one "true" value remains
-    allIsMethodValues.removeAll(Collections.singletonList(new Boolean(false)));
+    allIsMethodValues.removeAll(Collections.singletonList(Boolean.FALSE));
     assertFalse(allIsMethodValues.contains(null));
-    assertTrue(allIsMethodValues.contains(new Boolean(true)));
+    assertTrue(allIsMethodValues.contains(Boolean.TRUE));
     assertEquals(1, allIsMethodValues.size());
     
     

@@ -71,7 +71,7 @@ public class EdmBinaryTest extends PrimitiveTypeBaseTest {
     assertEquals("qrvM3e7/", instance.valueToString(binary, null, 6, null, null, null));
     assertEquals("qrvM3e7/", instance.valueToString(binary, null, Integer.MAX_VALUE, null, null, null));
 
-    assertEquals("qg==", instance.valueToString(new Byte[] { new Byte((byte) 170) }, null, null, null, null, null));
+    assertEquals("qg==", instance.valueToString(new Byte[] {(byte) 170}, null, null, null, null, null));
 
     expectFacetsErrorInValueToString(instance, binary, null, 3, null, null, null);
 

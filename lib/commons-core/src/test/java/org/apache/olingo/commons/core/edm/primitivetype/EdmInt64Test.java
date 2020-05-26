@@ -54,7 +54,7 @@ public class EdmInt64Test extends PrimitiveTypeBaseTest {
     assertEquals("0", instance.valueToString(0, null, null, null, null, null));
     assertEquals("8", instance.valueToString((byte) 8, null, null, null, null, null));
     assertEquals("16", instance.valueToString((short) 16, null, null, null, null, null));
-    assertEquals("32", instance.valueToString(Integer.valueOf(32), null, null, null, null, null));
+    assertEquals("32", instance.valueToString(32, null, null, null, null, null));
     assertEquals("255", instance.valueToString(255L, null, null, null, null, null));
     assertEquals("12345678901", instance.valueToString(12345678901L, null, null, null, null, null));
     assertEquals("1234567890123456789", instance.valueToString(new BigInteger("1234567890123456789"), null, null, null,

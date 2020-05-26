@@ -81,9 +81,9 @@ public class EdmIsOfImplTest extends AbstractAnnotationTest {
   @Test
   public void isOfWithExpression() {
     CsdlIsOf csdlExp = new CsdlIsOf();
-    csdlExp.setMaxLength(new Integer(1));
-    csdlExp.setPrecision(new Integer(2));
-    csdlExp.setScale(new Integer(3));
+    csdlExp.setMaxLength(1);
+    csdlExp.setPrecision(2);
+    csdlExp.setScale(3);
     csdlExp.setType("Edm.String");
     csdlExp.setValue(new CsdlConstantExpression(ConstantExpressionType.String));
     List<CsdlAnnotation> csdlAnnotations = new ArrayList<CsdlAnnotation>();

@@ -55,7 +55,7 @@ public final class EdmBoolean extends SingletonPrimitiveType {
 
     if (validateLiteral(value)) {
       if (returnType.isAssignableFrom(Boolean.class)) {
-        return returnType.cast(Boolean.valueOf("true".equals(value)));
+        return returnType.cast("true".equals(value));
       } else {
         throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.");
       }

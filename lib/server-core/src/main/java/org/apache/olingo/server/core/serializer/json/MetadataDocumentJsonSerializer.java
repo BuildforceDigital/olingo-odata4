@@ -1072,9 +1072,9 @@ public class MetadataDocumentJsonSerializer {
       break;
       case Bool:
       if (termName != null && termName.length() > 0) {
-        json.writeBooleanField(termName, Boolean.valueOf(constExp.getValueAsString()));
+        json.writeBooleanField(termName, Boolean.parseBoolean(constExp.getValueAsString()));
       } else {
-        json.writeBoolean(Boolean.valueOf(constExp.getValueAsString()));
+        json.writeBoolean(Boolean.parseBoolean(constExp.getValueAsString()));
       }
       break;
     case String:

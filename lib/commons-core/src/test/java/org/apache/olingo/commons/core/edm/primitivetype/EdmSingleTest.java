@@ -56,7 +56,7 @@ public class EdmSingleTest extends PrimitiveTypeBaseTest {
     assertEquals("0", instance.valueToString(0, null, null, null, null, null));
     assertEquals("8", instance.valueToString((byte) 8, null, null, null, null, null));
     assertEquals("16", instance.valueToString((short) 16, null, null, null, null, null));
-    assertEquals("32", instance.valueToString(Integer.valueOf(32), null, null, null, null, null));
+    assertEquals("32", instance.valueToString(32, null, null, null, null, null));
     assertEquals("255", instance.valueToString(255L, null, null, null, null, null));
     assertEquals("0.00390625", instance.valueToString(1.0 / 256, null, null, null, null, null));
     assertEquals("4.2E-8", instance.valueToString(42e-9, null, null, null, null, null));

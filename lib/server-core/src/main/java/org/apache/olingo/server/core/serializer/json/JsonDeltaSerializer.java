@@ -393,8 +393,7 @@ public class JsonDeltaSerializer implements EdmDeltaSerializer {
   protected void writePrimitiveValue(final String name, final EdmPrimitiveType type, final Object primitiveValue,
       final Boolean isNullable, final Integer maxLength, final Integer precision, final Integer scale,
       final Boolean isUnicode, final JsonGenerator json) throws EdmPrimitiveTypeException, IOException {
-    final String value = type.valueToString(primitiveValue,
-        isNullable, maxLength, precision, scale, isUnicode);
+    final String value = type.valueToString(primitiveValue, isNullable, maxLength, precision, scale, isUnicode);
     if (value == null) {
       json.writeNull();
     } else if (type == EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Boolean)) {

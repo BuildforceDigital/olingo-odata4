@@ -101,10 +101,10 @@ public class EdmTermImplTest {
     derivedCsdlTerm.setAnnotations(csdlAnnotations);
 
     derivedCsdlTerm.setNullable(false);
-    derivedCsdlTerm.setMaxLength(new Integer(15));
+    derivedCsdlTerm.setMaxLength(15);
     derivedCsdlTerm.setDefaultValue("abc");
-    derivedCsdlTerm.setPrecision(new Integer(14));
-    derivedCsdlTerm.setScale(new Integer(13));
+    derivedCsdlTerm.setPrecision(14);
+    derivedCsdlTerm.setScale(13);
 
     when(provider.getTerm(derivedTermName)).thenReturn(derivedCsdlTerm);
     derivedTerm = new EdmTermImpl(edm, "namespace", derivedCsdlTerm);

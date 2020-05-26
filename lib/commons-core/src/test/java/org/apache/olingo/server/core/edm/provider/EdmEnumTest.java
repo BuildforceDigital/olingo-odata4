@@ -196,7 +196,7 @@ public class EdmEnumTest {
     assertEquals("first", instance.valueToString(1, null, null, null, null, null));
     assertEquals("first", instance.valueToString((byte) 1, null, null, null, null, null));
     assertEquals("first", instance.valueToString((short) 1, null, null, null, null, null));
-    assertEquals("second", instance.valueToString(Integer.valueOf(64), null, null, null, null, null));
+    assertEquals("second", instance.valueToString(64, null, null, null, null, null));
     assertEquals("second", instance.valueToString(64L, null, null, null, null, null));
     assertEquals("first,second", instance.valueToString(65, null, null, null, null, null));
 

@@ -45,7 +45,7 @@ public class EdmSByteTest extends PrimitiveTypeBaseTest {
     assertEquals("0", instance.valueToString(0, null, null, null, null, null));
     assertEquals("8", instance.valueToString((byte) 8, null, null, null, null, null));
     assertEquals("16", instance.valueToString((short) 16, null, null, null, null, null));
-    assertEquals("32", instance.valueToString(Integer.valueOf(32), null, null, null, null, null));
+    assertEquals("32", instance.valueToString(32, null, null, null, null, null));
     assertEquals("64", instance.valueToString(64L, null, null, null, null, null));
     assertEquals("-128", instance.valueToString(BigInteger.valueOf(Byte.MIN_VALUE), null, null, null, null, null));
 

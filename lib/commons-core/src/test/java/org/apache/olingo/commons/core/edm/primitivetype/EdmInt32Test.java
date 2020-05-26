@@ -53,7 +53,7 @@ public class EdmInt32Test extends PrimitiveTypeBaseTest {
     assertEquals("0", instance.valueToString(0, null, null, null, null, null));
     assertEquals("8", instance.valueToString((byte) 8, null, null, null, null, null));
     assertEquals("16", instance.valueToString((short) 16, null, null, null, null, null));
-    assertEquals("32", instance.valueToString(Integer.valueOf(32), null, null, null, null, null));
+    assertEquals("32", instance.valueToString(32, null, null, null, null, null));
     assertEquals("255", instance.valueToString(255L, null, null, null, null, null));
     assertEquals("-2147483648", instance.valueToString(BigInteger.valueOf(Integer.MIN_VALUE), null, null, null, null,
         null));
