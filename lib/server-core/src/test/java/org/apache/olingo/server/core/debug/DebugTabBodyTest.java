@@ -18,6 +18,7 @@
  */
 package org.apache.olingo.server.core.debug;
 
+import static org.apache.commons.io.IOUtils.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
@@ -44,10 +45,10 @@ public class DebugTabBodyTest extends AbstractDebugTabTest {
   public void json() throws Exception {
     ODataResponse response = new ODataResponse();
     response.setHeader(HttpHeader.CONTENT_TYPE, ContentType.JSON_NO_METADATA.toContentTypeString());
-    response.setContent(IOUtils.toInputStream("{\"property\": true}"));
+    response.setContent(toInputStream("{\"property\": true}"));
     assertEquals("\"{\\\"property\\\": true}\"", createJson(new DebugTabBody(response)));
 
-    response.setContent(IOUtils.toInputStream("{\"property\": false}"));
+    response.setContent(toInputStream("{\"property\": false}"));
     assertEquals("<pre class=\"code json\">\n{\"property\": false}\n</pre>\n", createHtml(new DebugTabBody(response)));
   }
 
@@ -55,10 +56,10 @@ public class DebugTabBodyTest extends AbstractDebugTabTest {
   public void xml() throws Exception {
     ODataResponse response = new ODataResponse();
     response.setHeader(HttpHeader.CONTENT_TYPE, ContentType.APPLICATION_XML.toContentTypeString());
-    response.setContent(IOUtils.toInputStream("<?xml version='1.1'?>\n<a xmlns=\"b\" />\n"));
+    response.setContent(toInputStream("<?xml version='1.1'?>\n<a xmlns=\"b\" />\n"));
     assertEquals("\"<?xml version='1.1'?>\\n<a xmlns=\\\"b\\\" />\\n\"", createJson(new DebugTabBody(response)));
 
-    response.setContent(IOUtils.toInputStream("<?xml version='1.1'?>\n<c xmlns=\"d\" />\n"));
+    response.setContent(toInputStream("<?xml version='1.1'?>\n<c xmlns=\"d\" />\n"));
     assertEquals("<pre class=\"code xml\">\n&lt;?xml version='1.1'?&gt;\n&lt;c xmlns=\"d\" /&gt;\n\n</pre>\n",
         createHtml(new DebugTabBody(response)));
   }
@@ -66,10 +67,10 @@ public class DebugTabBodyTest extends AbstractDebugTabTest {
   @Test
   public void text() throws Exception {
     ODataResponse response = new ODataResponse();
-    response.setContent(IOUtils.toInputStream("testText\n12"));
+    response.setContent(toInputStream("testText\n12"));
     assertEquals("\"testText\\n12\"", createJson(new DebugTabBody(response)));
 
-    response.setContent(IOUtils.toInputStream("testText\n34"));
+    response.setContent(toInputStream("testText\n34"));
     assertEquals("<pre class=\"code\">\ntestText\n34\n</pre>\n", createHtml(new DebugTabBody(response)));
   }
 

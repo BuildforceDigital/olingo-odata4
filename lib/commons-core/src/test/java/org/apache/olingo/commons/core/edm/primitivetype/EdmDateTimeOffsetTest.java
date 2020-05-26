@@ -171,7 +171,16 @@ public class EdmDateTimeOffsetTest extends PrimitiveTypeBaseTest {
   public void valueOfStringToZonedDateTime() throws Exception {
     ZonedDateTime zdt = ZonedDateTime.parse("2012-02-29T01:02:03-01:30");
     assertEquals(zdt,
-        instance.valueOfString("2012-02-29T01:02:03-01:30", null, null, null, null, null, ZonedDateTime.class));
+            instance.valueOfString("2012-02-29T01:02:03-01:30", null, null, null, null, null, ZonedDateTime.class));
+  }
+
+  @Test
+  public void valueOfStringToOffsetDateTime() throws Exception {
+    OffsetDateTime odt = OffsetDateTime.parse("2012-02-29T01:02:03-01:30");
+    assertEquals(odt,
+            instance.valueOfString("2012-02-29T01:02:03-01:30",
+                    null, null, null, null, null,
+                    OffsetDateTime.class));
   }
 
   @Test

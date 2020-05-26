@@ -21,7 +21,7 @@ package org.apache.olingo.commons.api.edm.provider.annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 import org.apache.olingo.commons.api.edm.provider.CsdlAnnotatable;
 import org.apache.olingo.commons.api.edm.provider.CsdlAnnotation;
 
@@ -35,9 +35,9 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
   private Integer maxLength;
   private Integer precision;
   private Integer scale;
-  private SRID srid;
+  // private SRID srid;
   private CsdlExpression value;
-  private List<CsdlAnnotation> annotations = new ArrayList<CsdlAnnotation>();
+  private List<CsdlAnnotation> annotations = new ArrayList<>();
 
   @Override
   public List<CsdlAnnotation> getAnnotations() {
@@ -101,18 +101,17 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
     return this;
   }
 
-  /**
-   * Returns the facet attribute SRID
-   * @return Returns the facet attribute SRID
-   */
-  public SRID getSrid() {
+  /*
+    Returns the facet attribute SRID
+    @return Returns the facet attribute SRID
+   public SRID getSrid() {
     return srid;
   }
 
   public CsdlCast setSrid(final SRID srid) {
     this.srid = srid;
     return this;
-  }
+  }*/
 
   /**
    * Cast value of the expression
@@ -146,8 +145,8 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
           this.getPrecision().equals(csdlCast.getPrecision()))
         && (this.getScale() == null ? csdlCast.getScale() == null :
          this.getScale().equals(csdlCast.getScale()))
-        && (this.getSrid() == null ? csdlCast.getSrid() == null :
-          String.valueOf(this.getSrid()).equals(String.valueOf(csdlCast.getSrid())))
+        /*&& (this.getSrid() == null ? csdlCast.getSrid() == null :
+          String.valueOf(this.getSrid()).equals(String.valueOf(csdlCast.getSrid())))*/
         && (this.getAnnotations() == null ? csdlCast.getAnnotations() == null :
           checkAnnotations(csdlCast.getAnnotations()));
   }
@@ -176,7 +175,7 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
     result = prime * result + ((maxLength == null) ? 0 : maxLength.hashCode());
     result = prime * result + ((precision == null) ? 0 : precision.hashCode());
     result = prime * result + ((scale == null) ? 0 : scale.hashCode());
-    result = prime * result + ((srid == null) ? 0 : srid.hashCode());
+    /*result = prime * result + ((srid == null) ? 0 : srid.hashCode());*/
     result = prime * result + ((value == null) ? 0 : value.hashCode());
     result = prime * result + ((annotations == null) ? 0 : annotations.hashCode());
     return result;

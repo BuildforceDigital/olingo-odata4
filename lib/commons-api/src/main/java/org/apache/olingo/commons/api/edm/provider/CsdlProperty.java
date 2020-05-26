@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 
 /**
  * The type Csdl property.
@@ -52,7 +52,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
 
   private boolean unicode = true;
 
-  private SRID srid;
+  // private SRID srid;
 
   private List<CsdlAnnotation> annotations = new ArrayList<CsdlAnnotation>();
 
@@ -307,12 +307,12 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
     return this;
   }
   
-  /**
+  /*
    * Sets srid.
    *
    * @param srid the srid
    * @return the srid
-   */
+   *
   public CsdlProperty setSrid(final SRID srid) {
     this.srid = srid;
     return this;
@@ -322,8 +322,8 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * Gets srid.
    *
    * @return the srid
-   */
+   *
   public SRID getSrid() {
     return srid;
-  }
+  }*/
 }

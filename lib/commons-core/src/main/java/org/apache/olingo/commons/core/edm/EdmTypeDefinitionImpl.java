@@ -26,7 +26,7 @@ import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.EdmTypeDefinition;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.constants.EdmTypeKind;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 import org.apache.olingo.commons.api.edm.provider.CsdlTypeDefinition;
 import org.apache.olingo.commons.core.edm.primitivetype.EdmPrimitiveTypeFactory;
 
@@ -73,10 +73,10 @@ public class EdmTypeDefinitionImpl extends EdmTypeImpl implements EdmTypeDefinit
     return typeDefinition.getScale();
   }
 
-  @Override
+  /*@Override
   public SRID getSrid() {
     return typeDefinition.getSrid();
-  }
+  }*/
 
   @Override
   public Boolean isUnicode() {

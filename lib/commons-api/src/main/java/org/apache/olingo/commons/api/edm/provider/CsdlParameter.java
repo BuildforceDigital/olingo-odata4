@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 
 /**
  * The type Csdl parameter.
@@ -46,9 +46,9 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
 
   private Integer scale;
 
-  private SRID srid;
+// private SRID srid;
 
-  private List<CsdlAnnotation> annotations = new ArrayList<CsdlAnnotation>();
+  private List<CsdlAnnotation> annotations = new ArrayList<>();
 
   @Override
   public String getName() {
@@ -206,11 +206,11 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
     return this;
   }
 
-  /**
+  /*
    * Gets srid.
    *
    * @return the srid
-   */
+   *
   public SRID getSrid() {
     return srid;
   }
@@ -220,11 +220,11 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    *
    * @param srid the srid
    * @return the srid
-   */
+   *
   public CsdlParameter setSrid(final SRID srid) {
     this.srid = srid;
     return this;
-  }
+  }*/
 
   @Override
   public List<CsdlAnnotation> getAnnotations() {

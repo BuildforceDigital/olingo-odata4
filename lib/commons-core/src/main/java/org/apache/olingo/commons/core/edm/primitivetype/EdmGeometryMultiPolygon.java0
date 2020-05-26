@@ -21,18 +21,18 @@ package org.apache.olingo.commons.core.edm.primitivetype;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeException;
 import org.apache.olingo.commons.api.edm.geo.Geospatial.Dimension;
 import org.apache.olingo.commons.api.edm.geo.Geospatial.Type;
-import org.apache.olingo.commons.api.edm.geo.Polygon;
+import org.apache.olingo.commons.api.edm.geo.MultiPolygon;
 
-public final class EdmGeographyPolygon extends AbstractGeospatialType<Polygon> {
+public final class EdmGeometryMultiPolygon extends AbstractGeospatialType<MultiPolygon> {
 
-  private static final EdmGeographyPolygon INSTANCE = new EdmGeographyPolygon();
+  private static final EdmGeometryMultiPolygon INSTANCE = new EdmGeometryMultiPolygon();
 
-  public static EdmGeographyPolygon getInstance() {
+  public static EdmGeometryMultiPolygon getInstance() {
     return INSTANCE;
   }
 
-  public EdmGeographyPolygon() {
-    super(Polygon.class, Dimension.GEOGRAPHY, Type.POLYGON);
+  public EdmGeometryMultiPolygon() {
+    super(MultiPolygon.class, Dimension.GEOMETRY, Type.MULTIPOLYGON);
   }
 
   @Override
@@ -40,9 +40,10 @@ public final class EdmGeographyPolygon extends AbstractGeospatialType<Polygon> {
       final Integer precision, final Integer scale, final Boolean isUnicode,
       final Class<T> returnType) throws EdmPrimitiveTypeException {
 
-    final Polygon polygon = stringToPolygon(value, isNullable, maxLength, precision, scale, isUnicode);
-    if (returnType.isAssignableFrom(Polygon.class)) {
-      return returnType.cast(polygon);
+    final MultiPolygon multiPolygon =
+        stringToMultiPolygon(value, isNullable, maxLength, precision, scale, isUnicode);
+    if (returnType.isAssignableFrom(MultiPolygon.class)) {
+      return returnType.cast(multiPolygon);
     } else {
       throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.");
     }
@@ -52,8 +53,8 @@ public final class EdmGeographyPolygon extends AbstractGeospatialType<Polygon> {
   protected <T> String internalValueToString(final T value, final Boolean isNullable, final Integer maxLength,
       final Integer precision, final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
 
-    if (value instanceof Polygon) {
-      return toString((Polygon) value, isNullable, maxLength, precision, scale, isUnicode);
+    if (value instanceof MultiPolygon) {
+      return toString((MultiPolygon) value, isNullable, maxLength, precision, scale, isUnicode);
     }
 
     throw new EdmPrimitiveTypeException("The value type " + value.getClass() + " is not supported.");

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 
 /**
  * The type Csdl return type.
@@ -42,7 +42,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
 
   private Integer scale;
 
-  private SRID srid;
+  // private SRID srid;
   
   private List<CsdlAnnotation> annotations = new ArrayList<CsdlAnnotation>();
 
@@ -186,14 +186,14 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
     return this;
   }
 
-  /**
-   * Gets srid.
-   *
-   * @return the srid
+  /*
+    Gets srid.
+
+    @return the srid
    */
-  public SRID getSrid() {
+  /*public SRID getSrid() {
     return srid;
-  }
+  }*/
 
   /**
    * Sets srid.
@@ -201,10 +201,10 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param srid the srid
    * @return the srid
    */
-  public CsdlReturnType setSrid(final SRID srid) {
+  /*public CsdlReturnType setSrid(final SRID srid) {
     this.srid = srid;
     return this;
-  }
+  }*/
 
   @Override
   public List<CsdlAnnotation> getAnnotations() {

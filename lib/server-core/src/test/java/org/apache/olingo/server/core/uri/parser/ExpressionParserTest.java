@@ -224,7 +224,7 @@ public class ExpressionParserTest {
     parseMethod(TokenKind.DateMethod, dateTimeOffsetValue);
     parseMethod(TokenKind.TotalsecondsMethod, "duration'PT1H'");
     parseMethod(TokenKind.RoundMethod, "3.141592653589793");
-    parseMethod(TokenKind.GeoLengthMethod, "geometry'SRID=0;LineString(0 0,4 0,4 4,0 4,0 0)'");
+    //parseMethod(TokenKind.GeoLengthMethod, "geometry'SRID=0;LineString(0 0,4 0,4 4,0 4,0 0)'");
     parseMethod(TokenKind.HourMethod, new String[] { null });
 
     wrongExpression("trim()");
@@ -241,10 +241,11 @@ public class ExpressionParserTest {
     parseMethod(TokenKind.StartswithMethod, "'a'", "'b'");
     parseMethod(TokenKind.IndexofMethod, "'a'", "'b'");
     parseMethod(TokenKind.ConcatMethod, "'a'", "'b'");
-    parseMethod(TokenKind.GeoDistanceMethod, "geography'SRID=0;Point(1.2 3.4)'", "geography'SRID=0;Point(5.6 7.8)'");
+    /*parseMethod(TokenKind.GeoDistanceMethod, "geography'SRID=0;Point(1.2 3.4)'", "geography'SRID=0;Point(5.6 7.8)'");
     parseMethod(TokenKind.GeoIntersectsMethod,
         "geometry'SRID=0;Point(1.2 3.4)'",
         "geometry'SRID=0;Polygon((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1))'");
+    */
     parseMethod(TokenKind.StartswithMethod, null, "'b'");
     parseMethod(TokenKind.IndexofMethod, "'a'", null);
 

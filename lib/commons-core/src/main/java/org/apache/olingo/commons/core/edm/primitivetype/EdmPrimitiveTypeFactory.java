@@ -66,7 +66,7 @@ public final class EdmPrimitiveTypeFactory {
     case Stream:
       return EdmStream.getInstance();
 
-    case Geography:
+    /*case Geography:
       return EdmGeography.getInstance();
     case GeographyPoint:
       return EdmGeographyPoint.getInstance();
@@ -97,7 +97,7 @@ public final class EdmPrimitiveTypeFactory {
     case GeometryMultiPolygon:
       return EdmGeometryMultiPolygon.getInstance();
     case GeometryCollection:
-      return EdmGeometryCollection.getInstance();
+      return EdmGeometryCollection.getInstance();*/
 
     default:
       throw new IllegalArgumentException("Wrong type: " + kind);

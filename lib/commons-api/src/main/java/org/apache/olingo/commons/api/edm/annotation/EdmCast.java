@@ -20,7 +20,7 @@ package org.apache.olingo.commons.api.edm.annotation;
 
 import org.apache.olingo.commons.api.edm.EdmAnnotatable;
 import org.apache.olingo.commons.api.edm.EdmType;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 
 /**
  * Represents an edm:Cast expression.
@@ -45,11 +45,11 @@ public interface EdmCast extends EdmDynamicExpression, EdmAnnotatable {
    */
   Integer getScale();
 
-  /**
-   * Returns the facet attribute SRID
-   * @return Returns the facet attribute SRID
+  /*
+    Returns the facet attribute SRID
+    @return Returns the facet attribute SRID
    */
-  SRID getSrid();
+  // SRID getSrid();
 
   /**
    * Value cast to

@@ -23,7 +23,7 @@ import org.apache.olingo.commons.api.edm.EdmException;
 import org.apache.olingo.commons.api.edm.EdmMapping;
 import org.apache.olingo.commons.api.edm.EdmParameter;
 import org.apache.olingo.commons.api.edm.EdmType;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 import org.apache.olingo.commons.api.edm.provider.CsdlParameter;
 
 public class EdmParameterImpl extends AbstractEdmNamed implements EdmParameter {
@@ -66,10 +66,10 @@ public class EdmParameterImpl extends AbstractEdmNamed implements EdmParameter {
     return parameter.getScale();
   }
 
-  @Override
+  /*@Override
   public SRID getSrid() {
     return parameter.getSrid();
-  }
+  }*/
 
   @Override
   public EdmType getType() {

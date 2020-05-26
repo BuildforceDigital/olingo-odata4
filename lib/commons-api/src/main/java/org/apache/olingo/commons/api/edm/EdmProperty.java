@@ -18,7 +18,7 @@
  */
 package org.apache.olingo.commons.api.edm;
 
-import org.apache.olingo.commons.api.edm.geo.SRID;
+// import org.apache.olingo.commons.api.edm.geo.SRID;
 
 /**
  * A CSDL Property element.
@@ -61,10 +61,10 @@ public interface EdmProperty extends EdmElement, EdmMappable, EdmAnnotatable {
    */
   Integer getScale();
 
-  /**
-   * @return a non-negative integer or the special value <tt>variable</tt>
+  /*
+    @return a non-negative integer or the special value <tt>variable</tt>
    */
-  SRID getSrid();
+  // SRID getSrid();
 
   /**
    * @return true if unicode or not specified
@@ -76,10 +76,10 @@ public interface EdmProperty extends EdmElement, EdmMappable, EdmAnnotatable {
    */
   String getDefaultValue();
   
-  /**
+  /*
    * See {@link EdmType} for more information about possible types.
    *
    * @return {@link EdmType}
    */
-  EdmType getTypeWithAnnotations();
+  // EdmType getTypeWithAnnotations();
 }

@@ -22,7 +22,7 @@ import org.apache.olingo.commons.api.edm.Edm;
 import org.apache.olingo.commons.api.edm.EdmException;
 import org.apache.olingo.commons.api.edm.EdmReturnType;
 import org.apache.olingo.commons.api.edm.EdmType;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 import org.apache.olingo.commons.api.edm.provider.CsdlReturnType;
 
 public class EdmReturnTypeImpl implements EdmReturnType {
@@ -61,10 +61,10 @@ public class EdmReturnTypeImpl implements EdmReturnType {
     return returnType.getScale();
   }
 
-  @Override
+  /*@Override
   public SRID getSrid() {
     return returnType.getSrid();
-  }
+  }*/
 
   @Override
   public EdmType getType() {

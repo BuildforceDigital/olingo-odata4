@@ -575,7 +575,7 @@ public class UriTokenizerTest {
     assertFalse(new UriTokenizer("NOT").next(TokenKind.Word));
   }
 
-  @Test
+/*  @Test
   public void geoPoint() {
     assertTrue(new UriTokenizer("geography'SRID=4326;Point(1.23 4.56)'").next(TokenKind.GeographyPoint));
     assertTrue(new UriTokenizer("GeOgRaPhY'SrId=4326;pOiNt(1 2)'").next(TokenKind.GeographyPoint));
@@ -657,7 +657,7 @@ public class UriTokenizerTest {
         .next(TokenKind.GeographyCollection));
 
     wrongToken(TokenKind.GeometryCollection, "geometry'SRID=0;Collection(Point(1 2),Point(3 4))'", 'x');
-  }
+  }*/
 
   @Test
   public void aggregation() {

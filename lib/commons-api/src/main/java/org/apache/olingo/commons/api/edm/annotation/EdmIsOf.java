@@ -20,7 +20,7 @@ package org.apache.olingo.commons.api.edm.annotation;
 
 import org.apache.olingo.commons.api.edm.EdmAnnotatable;
 import org.apache.olingo.commons.api.edm.EdmType;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 
 /**
  *  The edm:IsOf expression evaluates a child expression and returns a Boolean value indicating whether 
@@ -46,11 +46,11 @@ public interface EdmIsOf extends EdmDynamicExpression, EdmAnnotatable {
    */
   Integer getScale();
   
-  /**
-   * Facet SRID
-   * @return facet SRID
+  /*
+    Facet SRID
+    @return facet SRID
    */
-  SRID getSrid();
+  // SRID getSrid();
   
   /**
    * The type which is checked again the child expression

@@ -19,10 +19,7 @@
 package org.apache.olingo.server.core.serializer.json;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import org.apache.olingo.commons.api.edm.EdmAction;
@@ -346,7 +343,7 @@ public class MetadataDocumentJsonSerializer {
   }
 
   private void appendNavigationPropertyBindings(final JsonGenerator json, 
-      final EdmBindingTarget bindingTarget) throws SerializerException, IOException {
+      final EdmBindingTarget bindingTarget) throws IOException {
     if (bindingTarget.getNavigationPropertyBindings() != null && 
         !bindingTarget.getNavigationPropertyBindings().isEmpty()) {
       json.writeObjectFieldStart(NAVIGATION_PROPERTY_BINDING);
@@ -370,17 +367,17 @@ public class MetadataDocumentJsonSerializer {
       }
 
       if (term.getAppliesTo() != null && !term.getAppliesTo().isEmpty()) {
-        String appliesToString = "";
+        StringBuilder appliesToString = new StringBuilder();
         boolean first = true;
         for (TargetType target : term.getAppliesTo()) {
           if (first) {
             first = false;
-            appliesToString = target.toString();
+            appliesToString = Optional.ofNullable(target.toString()).map(StringBuilder::new).orElse(null);
           } else {
-            appliesToString = appliesToString + " " + target.toString();
+            appliesToString = (appliesToString == null ? new StringBuilder() : appliesToString).append(" ").append(target.toString());
           }
         }
-        json.writeStringField(APPLIES_TO, appliesToString);
+        json.writeStringField(APPLIES_TO, appliesToString == null ? null : appliesToString.toString());
       }
 
       // Facets
@@ -513,7 +510,7 @@ public class MetadataDocumentJsonSerializer {
   }
 
   private void appendReturnTypeFacets(final JsonGenerator json, 
-      final EdmReturnType returnType) throws SerializerException, IOException {
+      final EdmReturnType returnType) throws IOException {
     if (!returnType.isNullable()) {
       json.writeBooleanField(NULLABLE, returnType.isNullable());
     }
@@ -559,7 +556,7 @@ public class MetadataDocumentJsonSerializer {
   }
 
   private void appendParameterFacets(final JsonGenerator json, 
-      final EdmParameter parameter) throws SerializerException, IOException {
+      final EdmParameter parameter) throws IOException {
     if (!parameter.isNullable()) {
       json.writeBooleanField(NULLABLE, parameter.isNullable());
     }
@@ -725,9 +722,9 @@ public class MetadataDocumentJsonSerializer {
         json.writeNumberField(SCALE, property.getScale());
       }
       
-      if (property.getSrid() != null) {
+/*      if (property.getSrid() != null) {
           json.writeStringField(SRID, "" + property.getSrid());
-      }
+      }*/
 
       appendAnnotations(json, property, null);
       json.writeEndObject();
@@ -735,7 +732,7 @@ public class MetadataDocumentJsonSerializer {
   }
 
   private void appendKey(final JsonGenerator json, 
-      final EdmEntityType entityType) throws SerializerException, IOException {
+      final EdmEntityType entityType) throws IOException {
     List<EdmKeyPropertyRef> keyPropertyRefs = entityType.getKeyPropertyRefs();
     if (keyPropertyRefs != null && !keyPropertyRefs.isEmpty()) {
       // Resolve Base Type key as it is shown in derived type
@@ -783,9 +780,9 @@ public class MetadataDocumentJsonSerializer {
         json.writeStringField(SCALE, "" + definition.getScale());
       }
       
-      if (definition.getSrid() != null) {
+      /*if (definition.getSrid() != null) {
         json.writeStringField(SRID, "" + definition.getSrid());
-      }
+      }*/
 
       appendAnnotations(json, definition, null);
       json.writeEndObject();
@@ -1053,59 +1050,27 @@ public class MetadataDocumentJsonSerializer {
   }
 
   private void appendConstantExpression(final JsonGenerator json, 
-      final EdmConstantExpression constExp, String termName) throws SerializerException, IOException {
+      final EdmConstantExpression constExp, String termName) throws IOException {
     switch (constExp.getExpressionType()) {
-    case Binary: 
-      json.writeObjectFieldStart(termName);
+    case Binary:
+      case TimeOfDay:
+      case EnumMember:
+      case Duration:
+      case Int:
+      case Float:
+      case Decimal:
+      case DateTimeOffset:
+      case Date:
+        json.writeObjectFieldStart(termName);
       json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
       json.writeEndObject();
       break;
-    case Date:
-      json.writeObjectFieldStart(termName);
-      json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
-      json.writeEndObject();
-      break;
-    case DateTimeOffset:
-      json.writeObjectFieldStart(termName);
-      json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
-      json.writeEndObject();
-      break;
-    case Decimal:
-      json.writeObjectFieldStart(termName);      
-      json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
-      json.writeEndObject();
-      break;
-    case Float:
-      json.writeObjectFieldStart(termName);
-      json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
-      json.writeEndObject();
-      break;
-    case Int:
-      json.writeObjectFieldStart(termName);
-      json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
-      json.writeEndObject();
-      break;
-    case Duration:
-      json.writeObjectFieldStart(termName);
-      json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
-      json.writeEndObject();
-      break;
-    case EnumMember:
-      json.writeObjectFieldStart(termName);
-      json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
-      json.writeEndObject();
-      break;
-    case Guid:
+      case Guid:
       json.writeObjectFieldStart(termName);
       json.writeStringField("$" + constExp.getExpressionName(), constExp.getValueAsString());
       json.writeEndObject();
       break;
-    case TimeOfDay:
-      json.writeObjectFieldStart(termName);
-      json.writeStringField(DOLLAR + constExp.getExpressionName(), constExp.getValueAsString());
-      json.writeEndObject();
-      break;
-    case Bool:
+      case Bool:
       if (termName != null && termName.length() > 0) {
         json.writeBooleanField(termName, Boolean.valueOf(constExp.getValueAsString()));
       } else {
@@ -1160,7 +1125,7 @@ public class MetadataDocumentJsonSerializer {
   }
 
   private void appendIncludeAnnotations(JsonGenerator json, 
-      List<EdmxReferenceIncludeAnnotation> includeAnnotations) throws SerializerException, IOException {
+      List<EdmxReferenceIncludeAnnotation> includeAnnotations) throws IOException {
     json.writeArrayFieldStart(INCLUDE_ANNOTATIONS);
     for (EdmxReferenceIncludeAnnotation includeAnnotation : includeAnnotations) {
       json.writeStartObject();
@@ -1177,7 +1142,7 @@ public class MetadataDocumentJsonSerializer {
   }
 
   private void appendIncludes(JsonGenerator json, 
-      List<EdmxReferenceInclude> includes) throws SerializerException, IOException {
+      List<EdmxReferenceInclude> includes) throws IOException {
    json.writeArrayFieldStart(INCLUDE);
    for (EdmxReferenceInclude include : includes) {
      json.writeStartObject();

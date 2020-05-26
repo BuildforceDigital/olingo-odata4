@@ -66,8 +66,8 @@ public enum MethodKind {
   }
 
   @Override
-  /**
-   * @return URI syntax for that operator kind
+  /*
+    @return URI syntax for that operator kind
    */
   public String toString() {
     return syntax;

@@ -20,7 +20,7 @@ package org.apache.olingo.commons.api.edm;
 
 import java.util.List;
 
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 
 /**
  * An {@link EdmTerm} defines a term in a vocabulary.
@@ -71,10 +71,10 @@ public interface EdmTerm extends EdmNamed, EdmAnnotatable {
    */
   Integer getScale();
 
-  /**
-   * @return a non-negative integer or the special value <tt>variable</tt>
+  /*
+    @return a non-negative integer or the special value <tt>variable</tt>
    */
-  SRID getSrid();
+  //SRID getSrid();
 
   /**
    * @return the default value as a String or null if not specified

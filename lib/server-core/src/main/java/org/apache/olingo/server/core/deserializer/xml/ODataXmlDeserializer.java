@@ -57,7 +57,7 @@ import org.apache.olingo.commons.api.edm.EdmType;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.format.ContentType;
 import org.apache.olingo.commons.core.edm.EdmTypeInfo;
-import org.apache.olingo.commons.core.edm.primitivetype.AbstractGeospatialType;
+// import org.apache.olingo.commons.core.edm.primitivetype.AbstractGeospatialType;
 import org.apache.olingo.server.api.ServiceMetadata;
 import org.apache.olingo.server.api.deserializer.DeserializerException;
 import org.apache.olingo.server.api.deserializer.DeserializerException.MessageKeys;
@@ -111,10 +111,10 @@ public class ODataXmlDeserializer implements ODataDeserializer {
       final XMLEvent event = reader.nextEvent();
 
       if (event.isCharacters() && !event.asCharacters().isWhiteSpace()) {
-        if (type instanceof AbstractGeospatialType<?>) {
+       /* if (type instanceof AbstractGeospatialType<?>) {
           throw new DeserializerException("geo types support not implemented",
               DeserializerException.MessageKeys.NOT_IMPLEMENTED);
-        }
+        }*/
         final EdmPrimitiveType primitiveType = (EdmPrimitiveType) type;
         final String stringValue = event.asCharacters().getData();
         value = primitiveType.valueOfString(stringValue,
@@ -171,7 +171,7 @@ public class ODataXmlDeserializer implements ODataDeserializer {
       final Integer scale, final boolean isUnicode) throws XMLStreamException, EdmPrimitiveTypeException,
       DeserializerException {
 
-    List<Object> values = new ArrayList<Object>();
+    List<Object> values = new ArrayList<>();
     boolean foundEndProperty = false;
     while (reader.hasNext() && !foundEndProperty) {
       final XMLEvent event = reader.nextEvent();

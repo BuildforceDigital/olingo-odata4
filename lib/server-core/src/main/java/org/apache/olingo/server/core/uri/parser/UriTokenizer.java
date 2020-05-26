@@ -93,7 +93,7 @@ public class UriTokenizer {
     BinaryValue,
     EnumValue,
 
-    GeographyPoint,
+    /*GeographyPoint,
     GeometryPoint,
     GeographyLineString,
     GeometryLineString,
@@ -106,7 +106,7 @@ public class UriTokenizer {
     GeographyMultiPolygon,
     GeometryMultiPolygon,
     GeographyCollection,
-    GeometryCollection,
+    GeometryCollection,*/
 
     jsonArrayOrObject,
 
@@ -414,7 +414,7 @@ public class UriTokenizer {
       break;
 
     // Geo Values
-    case GeographyPoint:
+    /*case GeographyPoint:
       found = nextGeoPoint(true);
       break;
     case GeometryPoint:
@@ -455,7 +455,7 @@ public class UriTokenizer {
       break;
     case GeometryCollection:
       found = nextGeoCollection(false);
-      break;
+      break;*/
 
     // Complex or Collection Value
     case jsonArrayOrObject:

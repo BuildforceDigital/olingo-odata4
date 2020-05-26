@@ -23,7 +23,7 @@ import org.apache.olingo.commons.api.edm.EdmException;
 import org.apache.olingo.commons.api.edm.EdmMapping;
 import org.apache.olingo.commons.api.edm.EdmProperty;
 import org.apache.olingo.commons.api.edm.EdmType;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 
 public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
@@ -54,7 +54,7 @@ public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
     return propertyType;
   }
 
-  @Override
+  /*@Override
   public EdmType getTypeWithAnnotations() {
     if (propertyType == null) {
       if (typeInfo == null) {
@@ -67,7 +67,7 @@ public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
     }
 
     return propertyType;
-  }
+  }*/
   
   private void buildTypeInfo() {
     if (property.getType() == null) {
@@ -119,10 +119,11 @@ public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
     return property.getScale();
   }
 
+  /*
   @Override
   public SRID getSrid() {
     return property.getSrid();
-  }
+  }*/
 
   @Override
   public boolean isUnicode() {

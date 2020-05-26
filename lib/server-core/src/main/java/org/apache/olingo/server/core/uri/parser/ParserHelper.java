@@ -79,6 +79,7 @@ public class ParserHelper {
     temp.put(TokenKind.DurationValue, EdmPrimitiveTypeKind.Duration);
     temp.put(TokenKind.BinaryValue, EdmPrimitiveTypeKind.Binary);
 
+/*
     temp.put(TokenKind.GeographyPoint, EdmPrimitiveTypeKind.GeographyPoint);
     temp.put(TokenKind.GeometryPoint, EdmPrimitiveTypeKind.GeometryPoint);
     temp.put(TokenKind.GeographyLineString, EdmPrimitiveTypeKind.GeographyLineString);
@@ -93,6 +94,7 @@ public class ParserHelper {
     temp.put(TokenKind.GeometryMultiPolygon, EdmPrimitiveTypeKind.GeometryMultiPolygon);
     temp.put(TokenKind.GeographyCollection, EdmPrimitiveTypeKind.GeographyCollection);
     temp.put(TokenKind.GeometryCollection, EdmPrimitiveTypeKind.GeometryCollection);
+*/
 
     tokenToPrimitiveType = Collections.unmodifiableMap(temp);
   }
@@ -139,7 +141,7 @@ public class ParserHelper {
 
         TokenKind.DurationValue,
         TokenKind.BinaryValue,
-        TokenKind.EnumValue,
+        TokenKind.EnumValue/*,
 
         // Geography and geometry literals are defined to be primitive,
         // although they contain several parts with their own meaning.
@@ -156,7 +158,7 @@ public class ParserHelper {
         TokenKind.GeographyMultiPolygon,
         TokenKind.GeometryMultiPolygon,
         TokenKind.GeographyCollection,
-        TokenKind.GeometryCollection);
+        TokenKind.GeometryCollection*/);
   }
 
   protected static List<UriParameter> parseFunctionParameters(UriTokenizer tokenizer,

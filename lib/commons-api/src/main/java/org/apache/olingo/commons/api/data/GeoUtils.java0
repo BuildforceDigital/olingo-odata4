@@ -20,7 +20,7 @@ package org.apache.olingo.commons.api.data;
 
 import org.apache.olingo.commons.api.Constants;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
-import org.apache.olingo.commons.api.edm.geo.Geospatial;
+//import org.apache.olingo.commons.api.edm.geo.Geospatial;
 
 /**
  * Utilities class for Geography data types.

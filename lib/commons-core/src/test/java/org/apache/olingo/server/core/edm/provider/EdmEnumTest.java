@@ -282,7 +282,7 @@ public class EdmEnumTest {
   public void unsupportedUnderlyingType() throws Exception {
     // Test some random unsupported types.
     expectErrorInUnderlyingType(EdmPrimitiveTypeKind.Date);
-    expectErrorInUnderlyingType(EdmPrimitiveTypeKind.GeographyPoint);
+    // expectErrorInUnderlyingType(EdmPrimitiveTypeKind.GeographyPoint);
     expectErrorInUnderlyingType(EdmPrimitiveTypeKind.Guid);
   }
 

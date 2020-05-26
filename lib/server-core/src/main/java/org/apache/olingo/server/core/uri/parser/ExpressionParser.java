@@ -568,7 +568,7 @@ public class ExpressionParser {
       checkNoCollection(decimalParameter);
       parameters.add(decimalParameter);
       break;
-    case GEOLENGTH:
+    /*case GEOLENGTH:
       ParserHelper.bws(tokenizer);
       final Expression geoParameter = parseExpression();
       ParserHelper.bws(tokenizer);
@@ -576,7 +576,7 @@ public class ExpressionParser {
           EdmPrimitiveTypeKind.GeographyLineString, EdmPrimitiveTypeKind.GeometryLineString);
       checkNoCollection(geoParameter);
       parameters.add(geoParameter);
-      break;
+      break;*/
 
     // Must have two parameters.
     case CONTAINS:
@@ -599,7 +599,7 @@ public class ExpressionParser {
       checkNoCollection(stringParameter2);
       parameters.add(stringParameter2);
       break;
-    case GEODISTANCE:
+/*    case GEODISTANCE:
       ParserHelper.bws(tokenizer);
       final Expression geoParameter1 = parseExpression();
       checkType(geoParameter1, EdmPrimitiveTypeKind.GeographyPoint, EdmPrimitiveTypeKind.GeometryPoint);
@@ -630,7 +630,7 @@ public class ExpressionParser {
           EdmPrimitiveTypeKind.GeographyPolygon, EdmPrimitiveTypeKind.GeometryPolygon);
       checkNoCollection(geoPolygonParameter);
       parameters.add(geoPolygonParameter);
-      break;
+      break;*/
 
     // Can have two or three parameters.
     case SUBSTRING:

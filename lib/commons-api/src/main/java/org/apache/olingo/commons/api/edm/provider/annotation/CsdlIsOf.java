@@ -21,7 +21,7 @@ package org.apache.olingo.commons.api.edm.provider.annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.olingo.commons.api.edm.geo.SRID;
+//import org.apache.olingo.commons.api.edm.geo.SRID;
 import org.apache.olingo.commons.api.edm.provider.CsdlAnnotatable;
 import org.apache.olingo.commons.api.edm.provider.CsdlAnnotation;
 
@@ -35,9 +35,9 @@ public class CsdlIsOf extends CsdlDynamicExpression implements CsdlAnnotatable {
   private Integer maxLength;
   private Integer precision;
   private Integer scale;
-  private SRID srid;
+  // private SRID srid;
   private CsdlExpression value;
-  private List<CsdlAnnotation> annotations = new ArrayList<CsdlAnnotation>();
+  private List<CsdlAnnotation> annotations = new ArrayList<>();
 
   @Override
   public List<CsdlAnnotation> getAnnotations() {
@@ -100,10 +100,10 @@ return this;
     return this;
   }
 
-  /**
-   * Facet SRID
-   * @return facet SRID
-   */
+  /*
+    Facet SRID
+    @return facet SRID
+   *
   public SRID getSrid() {
     return srid;
   }
@@ -111,7 +111,7 @@ return this;
   public CsdlIsOf setSrid(final SRID srid) {
     this.srid = srid;
     return this;
-  }
+  }*/
 
   /**
    * Returns the child expression
@@ -143,8 +143,8 @@ return this;
           this.getPrecision().equals(csdlIsOf.getPrecision()))
         && (this.getScale() == null ? csdlIsOf.getScale() == null :
           this.getScale().equals(csdlIsOf.getScale()))
-        && (this.getSrid() == null ? csdlIsOf.getSrid() == null :
-          this.getSrid().equals(csdlIsOf.getSrid()))
+        /*&& (this.getSrid() == null ? csdlIsOf.getSrid() == null :
+          this.getSrid().equals(csdlIsOf.getSrid()))*/
         && (this.getValue() == null ? csdlIsOf.getValue() == null :
           this.getValue().equals(csdlIsOf.getValue()))
         && (this.getAnnotations() == null ? csdlIsOf.getAnnotations() == null :
@@ -175,7 +175,7 @@ return this;
     result = prime * result + ((maxLength == null) ? 0 : maxLength.hashCode());
     result = prime * result + ((precision == null) ? 0 : precision.hashCode());
     result = prime * result + ((scale == null) ? 0 : scale.hashCode());
-    result = prime * result + ((srid == null) ? 0 : srid.hashCode());
+    /*result = prime * result + ((srid == null) ? 0 : srid.hashCode());*/
     result = prime * result + ((value == null) ? 0 : value.hashCode());
     result = prime * result + ((annotations == null) ? 0 : annotations.hashCode());
     return result;

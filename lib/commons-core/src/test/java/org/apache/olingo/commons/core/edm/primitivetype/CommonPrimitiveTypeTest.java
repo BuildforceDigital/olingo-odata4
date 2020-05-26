@@ -31,7 +31,8 @@ import java.util.UUID;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveType;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.constants.EdmTypeKind;
-import org.apache.olingo.commons.api.edm.geo.Geospatial;
+/*
+//import org.apache.olingo.commons.api.edm.geo.Geospatial;
 import org.apache.olingo.commons.api.edm.geo.GeospatialCollection;
 import org.apache.olingo.commons.api.edm.geo.LineString;
 import org.apache.olingo.commons.api.edm.geo.MultiLineString;
@@ -39,6 +40,7 @@ import org.apache.olingo.commons.api.edm.geo.MultiPoint;
 import org.apache.olingo.commons.api.edm.geo.MultiPolygon;
 import org.apache.olingo.commons.api.edm.geo.Point;
 import org.apache.olingo.commons.api.edm.geo.Polygon;
+*/
 import org.junit.Test;
 
 public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
@@ -105,7 +107,7 @@ public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
     assertEquals(Calendar.class,
         EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.TimeOfDay).getDefaultType());
 
-    assertEquals(Geospatial.class,
+    /*assertEquals(Geospatial.class,
         EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Geography).getDefaultType());
     assertEquals(Point.class,
         EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.GeographyPoint).getDefaultType());
@@ -136,7 +138,7 @@ public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
     assertEquals(MultiPolygon.class,
         EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.GeometryMultiPolygon).getDefaultType());
     assertEquals(GeospatialCollection.class,
-        EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.GeometryCollection).getDefaultType());
+        EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.GeometryCollection).getDefaultType());*/
   }
 
   @Test

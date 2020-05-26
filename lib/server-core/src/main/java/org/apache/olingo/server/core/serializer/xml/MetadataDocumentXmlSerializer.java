@@ -18,10 +18,7 @@
  */
 package org.apache.olingo.server.core.serializer.xml;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -97,7 +94,7 @@ public class MetadataDocumentXmlSerializer {
   private static final String XML_PROPERTY_REF = "PropertyRef";
   private static final String XML_KEY = "Key";
   private static final String XML_SCALE = "Scale";
-  private static final String XML_SRID = "SRID";
+  // private static final String XML_SRID = "SRID";
   private static final String XML_PRECISION = "Precision";
   private static final String XML_MAX_LENGTH = "MaxLength";
   private static final String XML_DEFAULT_VALUE = "DefaultValue";
@@ -246,17 +243,17 @@ public class MetadataDocumentXmlSerializer {
       }
 
       if (term.getAppliesTo() != null && !term.getAppliesTo().isEmpty()) {
-        String appliesToString = "";
+        StringBuilder appliesToString = new StringBuilder();
         boolean first = true;
         for (TargetType target : term.getAppliesTo()) {
           if (first) {
             first = false;
-            appliesToString = target.toString();
+            appliesToString = Optional.ofNullable(target.toString()).map(StringBuilder::new).orElse(null);
           } else {
-            appliesToString = appliesToString + " " + target.toString();
+            appliesToString = (appliesToString == null ? new StringBuilder() : appliesToString).append(" ").append(target.toString());
           }
         }
-        writer.writeAttribute(XML_APPLIES_TO, appliesToString);
+        writer.writeAttribute(XML_APPLIES_TO, appliesToString == null ? null : appliesToString.toString());
       }
 
       // Facets
@@ -943,9 +940,9 @@ public class MetadataDocumentXmlSerializer {
         writer.writeAttribute(XML_SCALE, "" + property.getScale());
       }
       
-      if (property.getSrid() != null) {
+/*      if (property.getSrid() != null) {
           writer.writeAttribute(XML_SRID, "" + property.getSrid());
-      }
+      }*/
 
       appendAnnotations(writer, property);
       writer.writeEndElement();

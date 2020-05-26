@@ -20,7 +20,7 @@ package org.apache.olingo.commons.api.data;
 
 import java.util.List;
 
-import org.apache.olingo.commons.api.edm.geo.Geospatial;
+//import org.apache.olingo.commons.api.edm.geo.Geospatial;
 
 /**
  * Defines a value with an according type.
@@ -109,14 +109,14 @@ public abstract class Valuable extends Annotatable {
     return isPrimitive() && !isCollection() ? value : null;
   }
 
-  /**
+  /*
    * Get the value in its geospatial representation or null if it is not based on a geospatial ValueType
    *
    * @return geospatial representation or null if it is not based on a geospatial ValueType
    */
-  public Geospatial asGeospatial() {
+  /*public Geospatial asGeospatial() {
     return isGeospatial() && !isCollection() ? (Geospatial) value : null;
-  }
+  }*/
 
   /**
    * Get the value in its enum representation or null if it is not based on a enum ValueType

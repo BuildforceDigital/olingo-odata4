@@ -54,7 +54,7 @@ import org.apache.olingo.commons.api.edm.EdmStructuredType;
 import org.apache.olingo.commons.api.edm.EdmType;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.constants.EdmTypeKind;
-import org.apache.olingo.commons.api.edm.geo.ComposedGeospatial;
+/*import org.apache.olingo.commons.api.edm.geo.ComposedGeospatial;
 import org.apache.olingo.commons.api.edm.geo.Geospatial;
 import org.apache.olingo.commons.api.edm.geo.GeospatialCollection;
 import org.apache.olingo.commons.api.edm.geo.LineString;
@@ -63,7 +63,7 @@ import org.apache.olingo.commons.api.edm.geo.MultiPoint;
 import org.apache.olingo.commons.api.edm.geo.MultiPolygon;
 import org.apache.olingo.commons.api.edm.geo.Point;
 import org.apache.olingo.commons.api.edm.geo.Polygon;
-import org.apache.olingo.commons.api.edm.geo.SRID;
+import org.apache.olingo.commons.api.edm.geo.SRID;*/
 import org.apache.olingo.commons.api.format.ContentType;
 import org.apache.olingo.commons.core.edm.primitivetype.EdmPrimitiveTypeFactory;
 import org.apache.olingo.server.api.ODataServerError;
@@ -98,7 +98,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 public class ODataJsonSerializer extends AbstractODataSerializer {
 
-  private static final Map<Geospatial.Type, String> geoValueTypeToJsonName;
+  /*private static final Map<Geospatial.Type, String> geoValueTypeToJsonName;
   static {
     Map<Geospatial.Type, String> temp = new EnumMap<>(Geospatial.Type.class);
     temp.put(Geospatial.Type.POINT, Constants.ELEM_POINT);
@@ -109,7 +109,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
     temp.put(Geospatial.Type.MULTIPOLYGON, "MultiPolygon");
     temp.put(Geospatial.Type.GEOSPATIALCOLLECTION, "GeometryCollection");
     geoValueTypeToJsonName = Collections.unmodifiableMap(temp);
-  }
+  }*/
 
   private final boolean isIEEE754Compatible;
   private final boolean isODataMetadataNone;
@@ -901,9 +901,9 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
     if (property.isPrimitive()) {
       writePrimitiveValue(property.getName(), type, property.asPrimitive(),
           isNullable, maxLength, precision, scale, isUnicode, json);
-    } else if (property.isGeospatial()) {
+    /*} else if (property.isGeospatial()) {
       writeGeoValue(property.getName(), type, property.asGeospatial(), isNullable, json, null);
-    } else if (property.isEnum()) {
+    */} else if (property.isEnum()) {
       writePrimitiveValue(property.getName(), type, property.asEnum(),
           isNullable, maxLength, precision, scale, isUnicode, json);
     } else {
@@ -957,7 +957,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
   }
 
   /** Writes a geospatial value following the GeoJSON specification defined in RFC 7946. */
-  protected void writeGeoValue(final String name, final EdmPrimitiveType type, final Geospatial geoValue,
+  /*protected void writeGeoValue(final String name, final EdmPrimitiveType type, final Geospatial geoValue,
       final Boolean isNullable, JsonGenerator json, SRID parentSrid)
       throws EdmPrimitiveTypeException, IOException, SerializerException {
     if (geoValue == null) {
@@ -1057,7 +1057,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
       writeGeoPoints(json, polygon.getInterior(i));
       json.writeEndArray();
     }
-  }
+  }*/
 
   protected void writeComplexValue(final ServiceMetadata metadata,
       final EdmComplexType type, final List<Property> properties,

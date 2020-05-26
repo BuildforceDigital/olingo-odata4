@@ -43,7 +43,7 @@ public enum EdmPrimitiveTypeKind {
   Int32,
   Int64,
   String,
-  Stream,
+  Stream/*,
   Geography,
   GeographyPoint,
   GeographyLineString,
@@ -59,7 +59,7 @@ public enum EdmPrimitiveTypeKind {
   GeometryMultiPoint,
   GeometryMultiLineString,
   GeometryMultiPolygon,
-  GeometryCollection;
+  GeometryCollection*/;
 
   private static Map<String, EdmPrimitiveTypeKind> VALUES_BY_NAME;
 

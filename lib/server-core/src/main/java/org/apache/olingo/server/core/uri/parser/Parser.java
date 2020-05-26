@@ -169,10 +169,10 @@ public class Parser {
           }
         }
         if (numberOfSegments > 1) {
-          /**
-           * If url is of the form 
-           * http://localhost:8080/odata-server-tecsvc/odata.svc/$entity/
-           * olingo.odata.test1.ETAllPrim?$id=ESAllPrim(32767)
+          /*
+            If url is of the form
+            http://localhost:8080/odata-server-tecsvc/odata.svc/$entity/
+            olingo.odata.test1.ETAllPrim?$id=ESAllPrim(32767)
            */
           final ResourcePathParser resourcePathParser = new ResourcePathParser
             (edm, contextUriInfo.getAliasMap());
@@ -183,9 +183,9 @@ public class Parser {
               parseUri("/" + idOptionText, query, fragment, baseUri);
           contextUriInfo.setEntityTypeCast((EdmEntityType) contextType);
         } else if (numberOfSegments == 1) {
-          /**
-           * If url is of the form 
-           * http://localhost:8080/odata-server-tecsvc/odata.svc/$entity?$id=ESAllPrim(32527)
+          /*
+            If url is of the form
+            http://localhost:8080/odata-server-tecsvc/odata.svc/$entity?$id=ESAllPrim(32527)
            */
           contextUriInfo = (UriInfoImpl) new Parser(edm, odata).
                   parseUri("/" + idOptionText, query, fragment, baseUri);
@@ -194,14 +194,14 @@ public class Parser {
         contextUriInfo.setKind(UriInfoKind.entityId);
         contextIsCollection = false;
       } else {
-        /**
-         * If url is of the form 
-         * http://localhost:8080/odata-server-tecsvc/odata.svc/$entity/olingo.odata.test1.ETKeyNav/$ref
+        /*
+          If url is of the form
+          http://localhost:8080/odata-server-tecsvc/odata.svc/$entity/olingo.odata.test1.ETKeyNav/$ref
          */
         ensureLastSegment(firstSegment, 2, numberOfSegments);
-        /**
-         * If url is of the form 
-         * http://localhost:8080/odata-server-tecsvc/odata.svc/$entity/olingo.odata.test1.ETKeyNav
+        /*
+          If url is of the form
+          http://localhost:8080/odata-server-tecsvc/odata.svc/$entity/olingo.odata.test1.ETKeyNav
          */
         throw new UriParserSyntaxException("The entity-id MUST be specified using the system query option $id",
                   UriParserSyntaxException.MessageKeys.ENTITYID_MISSING_SYSTEM_QUERY_OPTION_ID);
@@ -224,9 +224,9 @@ public class Parser {
       for (final String pathSegment : pathSegmentsDecoded) {
         count++;
         if (pathSegment.startsWith(ENTITY)) {
-          /**
-           * If url is of the form 
-           * http://localhost:8080/odata-server-tecsvc/odata.svc/ESAllPrim/$entity
+          /*
+            If url is of the form
+            http://localhost:8080/odata-server-tecsvc/odata.svc/ESAllPrim/$entity
            */
           throw new UriParserSyntaxException("The entity-id MUST be specified using the system query option $id",
                     UriParserSyntaxException.MessageKeys.ENTITYID_MISSING_SYSTEM_QUERY_OPTION_ID);
