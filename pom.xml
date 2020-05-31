@@ -25,7 +25,7 @@
 
   <groupId>org.apache.olingo</groupId>
   <artifactId>odata-parent</artifactId>
-  <version>4.8.0-SNAPSHOT</version>
+  <version>4.8.0</version>
   <packaging>pom</packaging>
 
   <name>Olingo-ODataV4 CapSelUI5</name>
@@ -74,17 +74,17 @@
   <properties>
     <aalto-xml.version>0.9.11</aalto-xml.version>
     <android.platform.version>4.1.1.4</android.platform.version>
-    <commons.codec.version>1.12</commons.codec.version>
-    <commons.io.version>2.6</commons.io.version>
-    <commons.lang3.version>3.9</commons.lang3.version>
+    <commons.codec.version>1.14</commons.codec.version>
+    <commons.io.version>2.7</commons.io.version>
+    <commons.lang3.version>3.10</commons.lang3.version>
     <commons.logging.version>1.2</commons.logging.version>
     <commons.vfs.version>2.0</commons.vfs.version>
     <cxf.version>3.0.0</cxf.version>
     <esigate.version>4.4</esigate.version>
     <hc.client.version>4.5.8</hc.client.version>
     <hc.core.version>4.4.11</hc.core.version>
-    <jackson-databind.version>2.10.0</jackson-databind.version>
-    <jackson.version>2.10.0</jackson.version>
+    <jackson-databind.version>2.11.0</jackson-databind.version>
+    <jackson.version>2.11.0</jackson.version>
     <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
     <maven.bundle.plugin.version>2.5.3</maven.bundle.plugin.version>
     <maven.plugin.api.version>3.2.2</maven.plugin.api.version>
@@ -527,49 +527,16 @@
           <aggregate>true</aggregate>
         </configuration>
       </plugin>
-      <!--<plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>rat-check</id>
-            <phase>install</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <excludes>
-                <exclude>**/target/**</exclude>
-                <exclude>**/META-INF/**</exclude>
-                <exclude>**/*.txt</exclude>
-                <exclude>**/*.ini</exclude>
-                <exclude>**/*.bin</exclude>
-                <exclude>**/MANIFEST.MF</exclude>
-                <exclude>.gitignore</exclude>
-                <exclude>.git/**</exclude>
-                <exclude>bin/**</exclude>
-                <exclude>**/*.local</exclude>
-                <exclude>**/*.project</exclude>
-                <exclude>**/*.classpath</exclude>
-                <exclude>**/*.json</exclude>
-                <exclude>**/*.batch</exclude>
-                <exclude>**/NOTICE</exclude>
-                <exclude>**/DEPENDENCIES</exclude>
-                <exclude>**/nb-configuration.xml</exclude>
-                <exclude>**/.externalToolBuilders/**</exclude>
-                <exclude>**/maven-eclipse.xml</exclude>
-                <exclude>**/*.iml</exclude>
-                <exclude>**/ref/**</exclude>
-                <exclude>**/server-ref/**</exclude>
-                <exclude>**/dependency-reduced-pom.xml</exclude>
-                <exclude>**/.settings/**</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>-->
     </plugins>
   </build>
+
+  <distributionManagement>
+    <repository>
+      <id>bintray-serioussoftware-repo</id>
+      <name>serioussoftware-repo</name>
+      <url>https://api.bintray.com/maven/serioussoftware/repo/Olingo/;publish=1</url>
+    </repository>
+  </distributionManagement>
 
   <profiles>
     <profile>
