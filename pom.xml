@@ -72,17 +72,17 @@
   </modules>
 
   <properties>
-    <aalto-xml.version>0.9.11</aalto-xml.version>
-    <android.platform.version>4.1.1.4</android.platform.version>
+    <!--<aalto-xml.version>0.9.11</aalto-xml.version>
+    <android.platform.version>4.1.1.4</android.platform.version>-->
     <commons.codec.version>1.14</commons.codec.version>
     <commons.io.version>2.7</commons.io.version>
-    <commons.lang3.version>3.10</commons.lang3.version>
+    <!--<commons.lang3.version>3.10</commons.lang3.version>
     <commons.logging.version>1.2</commons.logging.version>
     <commons.vfs.version>2.0</commons.vfs.version>
     <cxf.version>3.0.0</cxf.version>
     <esigate.version>4.4</esigate.version>
     <hc.client.version>4.5.8</hc.client.version>
-    <hc.core.version>4.4.11</hc.core.version>
+    <hc.core.version>4.4.11</hc.core.version>-->
     <jackson-databind.version>2.11.0</jackson-databind.version>
     <jackson.version>2.11.0</jackson.version>
     <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
@@ -91,18 +91,18 @@
     <maven.plugin.tools.version>3.3</maven.plugin.tools.version>
     <netty.version>4.1.45.Final</netty.version>
     <servlet.version>3.1.0</servlet.version>
-    <sl4j.version>1.7.7</sl4j.version>
-    <spring.version>4.0.6.RELEASE</spring.version>
+    <sl4j.version>2.0.0-alpha1</sl4j.version>
+    <!--<spring.version>4.0.6.RELEASE</spring.version>
     <stax.api.version>1.0-2</stax.api.version>
     <tomcat.servlet.port>9080</tomcat.servlet.port>
     <tomcat.version>7.0.55</tomcat.version>
     <velocity.version>1.7</velocity.version>
-    <woodstox.stax2-api.version>3.1.4</woodstox.stax2-api.version>
+    <woodstox.stax2-api.version>3.1.4</woodstox.stax2-api.version>-->
 
     <!-- for osgi integration testing -->
-    <osgi.version>4.2.0</osgi.version>
+    <!--<osgi.version>4.2.0</osgi.version>
     <karaf.version>3.0.3</karaf.version>
-    <pax.exam.version>3.4.0</pax.exam.version>
+    <pax.exam.version>3.4.0</pax.exam.version>-->
 
     <!-- Project build settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -130,7 +130,7 @@
         <artifactId>commons-io</artifactId>
         <version>${commons.io.version}</version>
       </dependency>
-      <dependency>
+      <!--<dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${commons.lang3.version}</version>
@@ -151,7 +151,7 @@
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>${hc.client.version}</version>
-      </dependency>
+      </dependency>-->
 
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
@@ -161,7 +161,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>${jackson-databind.version}</version>
+        <version>${jackson.version}</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
@@ -178,18 +178,18 @@
         <artifactId>jackson-jaxrs-json-provider</artifactId>
         <version>${jackson.version}</version>
       </dependency>
-      <dependency>
+      <!--<dependency>
         <groupId>com.fasterxml</groupId>
         <artifactId>aalto-xml</artifactId>
         <version>${aalto-xml.version}</version>
-      </dependency>
+      </dependency>-->
 
-      <dependency>
+      <!--<dependency>
         <groupId>com.google.android</groupId>
         <artifactId>android</artifactId>
         <version>${android.platform.version}</version>
         <scope>provided</scope>
-      </dependency>
+      </dependency>-->
       <dependency>
         <groupId>javax.xml.stream</groupId>
         <artifactId>stax-api</artifactId>
@@ -207,41 +207,41 @@
         <artifactId>commons-vfs2</artifactId>
         <version>${commons.vfs.version}</version>
       </dependency>
-      <dependency>
+<!--      <dependency>
         <groupId>org.esigate</groupId>
         <artifactId>esigate-core</artifactId>
         <version>${esigate.version}</version>
-      </dependency>
+      </dependency>-->
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>${servlet.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.apache.geronimo.specs</groupId>
-        <artifactId>geronimo-javamail_1.4_spec</artifactId>
-        <version>1.7.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-        <version>${cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-rs-client</artifactId>
-        <version>${cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-rs-security-oauth2</artifactId>
-        <version>${cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-web</artifactId>
-        <version>${spring.version}</version>
-      </dependency>
+      <!--     <dependency>
+             <groupId>org.apache.geronimo.specs</groupId>
+             <artifactId>geronimo-javamail_1.4_spec</artifactId>
+             <version>1.7.1</version>
+           </dependency>
+       <dependency>
+             <groupId>org.apache.cxf</groupId>
+             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+             <version>${cxf.version}</version>
+           </dependency>
+           <dependency>
+             <groupId>org.apache.cxf</groupId>
+             <artifactId>cxf-rt-rs-client</artifactId>
+             <version>${cxf.version}</version>
+           </dependency>
+           <dependency>
+             <groupId>org.apache.cxf</groupId>
+             <artifactId-rt-rs-security-oauth2</artifactId>
+             <version>${cxf.version}</version>
+           </dependency>
+           <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-web</artifactId>
+             <version>${spring.version}</version>
+           </dependency>
 
       <dependency>
         <groupId>org.apache.tomcat.embed</groupId>
@@ -257,14 +257,14 @@
         <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-jasper</artifactId>
         <version>${tomcat.version}</version>
-      </dependency>
+      </dependency>-->
 
       <!-- Pojogen Maven Plugin depenencies -->
-      <dependency>
+      <!--<dependency>
         <groupId>org.apache.velocity</groupId>
         <artifactId>velocity</artifactId>
         <version>${velocity.version}</version>
-      </dependency>
+      </dependency>-->
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
@@ -280,7 +280,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.11</version>
+        <version>4.13</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -289,12 +289,14 @@
         <version>1.9.5</version>
         <scope>test</scope>
       </dependency>
+<!--
       <dependency>
         <groupId>xmlunit</groupId>
         <artifactId>xmlunit</artifactId>
-        <version>1.5</version>
+        <version>1.6</version>
         <scope>test</scope>
       </dependency>
+-->
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-simple</artifactId>
