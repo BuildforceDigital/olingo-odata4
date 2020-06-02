@@ -21,6 +21,7 @@ package org.apache.olingo.server.api;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class ODataRequestTest {
   public void testHeader() {
     ODataRequest r = new ODataRequest();
 
-    r.addHeader("aa", Arrays.asList("cc"));
+    r.addHeader("aa", Collections.singletonList("cc"));
 
     assertEquals("cc", r.getHeaders("aa").get(0));
     assertEquals("cc", r.getHeaders("aA").get(0));
@@ -45,7 +46,7 @@ public class ODataRequestTest {
   @Test
   public void testHeader2() {
     ODataRequest r = new ODataRequest();
-    r.addHeader("AA", Arrays.asList("dd"));
+    r.addHeader("AA", Collections.singletonList("dd"));
 
     assertEquals("dd", r.getHeaders("aa").get(0));
     assertEquals("dd", r.getHeaders("aA").get(0));
@@ -61,7 +62,7 @@ public class ODataRequestTest {
     assertEquals("a", r.getHeaders("aa").get(0));
     assertEquals("b", r.getHeaders("aA").get(1));
 
-    r.addHeader("Aa", Arrays.asList("c"));
+    r.addHeader("Aa", Collections.singletonList("c"));
 
     assertEquals("a", r.getHeaders("aa").get(0));
     assertEquals("b", r.getHeaders("aA").get(1));

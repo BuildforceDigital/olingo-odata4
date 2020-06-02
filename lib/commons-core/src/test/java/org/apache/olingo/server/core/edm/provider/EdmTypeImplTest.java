@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.olingo.commons.api.edm.EdmAnnotatable;
@@ -45,7 +46,7 @@ public class EdmTypeImplTest {
     assertNotNull(an.getAnnotations().get(0));
   }
 
-  private class EdmTypeImplTester extends EdmTypeImpl {
+  private static class EdmTypeImplTester extends EdmTypeImpl {
     public EdmTypeImplTester(FullQualifiedName name, EdmTypeKind kind) {
       super(null, name, kind, new AnnoTester());
     }
@@ -56,7 +57,7 @@ public class EdmTypeImplTest {
     public List<CsdlAnnotation> getAnnotations() {
       CsdlAnnotation annotation = new CsdlAnnotation();
       annotation.setTerm("NS.SimpleTerm");
-      return Arrays.asList(annotation);
+      return Collections.singletonList(annotation);
     }
   }
 }

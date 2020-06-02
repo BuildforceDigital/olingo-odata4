@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.olingo.server.api.uri.queryoption.QueryOption;
@@ -31,9 +32,9 @@ public class UriDecoderTest {
 
   @Test
   public void split() throws Exception {
-    assertEquals(Arrays.asList(""), UriDecoder.splitAndDecodePath(""));
+    assertEquals(Collections.singletonList(""), UriDecoder.splitAndDecodePath(""));
     assertEquals(Arrays.asList("", ""), UriDecoder.splitAndDecodePath("/"));
-    assertEquals(Arrays.asList("a"), UriDecoder.splitAndDecodePath("a"));
+    assertEquals(Collections.singletonList("a"), UriDecoder.splitAndDecodePath("a"));
     assertEquals(Arrays.asList("a", ""), UriDecoder.splitAndDecodePath("a/"));
     assertEquals(Arrays.asList("", "a"), UriDecoder.splitAndDecodePath("/a"));
     assertEquals(Arrays.asList("a", "b"), UriDecoder.splitAndDecodePath("a/b"));

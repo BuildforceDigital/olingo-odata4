@@ -668,14 +668,14 @@ public class ExpressionParserTest {
     Mockito.when(navEntityType.getFullQualifiedName()).thenReturn(new FullQualifiedName("test.navET"));
     Mockito.when(navEntityType.getNamespace()).thenReturn("test");
     Mockito.when(navEntityType.getPropertyNames()).thenReturn(
-        Arrays.asList(keyPropertyName));
+            Collections.singletonList(keyPropertyName));
     Mockito.when(navEntityType.getProperty(keyPropertyName)).thenReturn(keyProperty);
     
     EdmEntityType baseEntityType = mockEntityType(keyPropertyName, keyPropertyRef);
     Mockito.when(baseEntityType.getFullQualifiedName()).thenReturn(new FullQualifiedName("test.baseET"));
     Mockito.when(baseEntityType.getNamespace()).thenReturn("test");
     Mockito.when(baseEntityType.getPropertyNames()).thenReturn(
-        Arrays.asList(keyPropertyName));
+            Collections.singletonList(keyPropertyName));
     Mockito.when(baseEntityType.getProperty(keyPropertyName)).thenReturn(keyProperty);
     
     Mockito.when(navEntityType.getBaseType()).thenReturn(baseEntityType);

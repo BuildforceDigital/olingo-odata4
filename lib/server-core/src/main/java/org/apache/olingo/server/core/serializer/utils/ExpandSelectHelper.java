@@ -177,17 +177,13 @@ public abstract class ExpandSelectHelper {
       List<UriResource> parts = item.getResourcePath().getUriResourceParts();
       UriResource resource = parts.get(0);
       if (resource instanceof UriResourceProperty) {
-        if (!parts.isEmpty()) {
-          List<String> path = new ArrayList<>();
-          for (UriResource part : parts.subList(0, parts.size())) {
-            if (part instanceof UriResourceProperty) {
-              path.add(((UriResourceProperty) part).getProperty().getName());
-            }
+        List<String> path = new ArrayList<>();
+        for (UriResource part : parts.subList(0, parts.size())) {
+          if (part instanceof UriResourceProperty) {
+            path.add(((UriResourceProperty) part).getProperty().getName());
           }
-          selectedPaths.add(path);
-        } else {
-          return null;
         }
+        selectedPaths.add(path);
       }
     }
     return selectedPaths.isEmpty() ? null : selectedPaths;
@@ -336,14 +332,12 @@ public abstract class ExpandSelectHelper {
           expandItem = getMatchedExpandItem(propertyName, item, matched, resource);
         } else {
           resource = resourceParts.get(resourceParts.size() - 3);
-          matched = resource.getSegmentValue().equalsIgnoreCase(resourceName) ? 
-              isFoundExpandItem(type, matched, resource) : false;
+          matched = resource.getSegmentValue().equalsIgnoreCase(resourceName) && isFoundExpandItem(type, matched, resource);
           expandItem = getMatchedExpandItem(propertyName, item, matched, resourceParts.get(resourceParts.size() - 2));
         }
       } else {
         resource = resourceParts.get(resourceParts.size() - 2);
-        matched = resource.getSegmentValue().equalsIgnoreCase(resourceName) ? 
-            isFoundExpandItem(type, matched, resource) : false;
+        matched = resource.getSegmentValue().equalsIgnoreCase(resourceName) && isFoundExpandItem(type, matched, resource);
         expandItem = getMatchedExpandItem(propertyName, item, matched, resourceParts.get(resourceParts.size() - 1));
       }
       if (expandItem != null) {

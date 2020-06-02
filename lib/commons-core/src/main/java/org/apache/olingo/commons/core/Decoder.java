@@ -39,7 +39,7 @@ public class Decoder {
    */
   public static String decode(String value) throws IllegalArgumentException, NumberFormatException {
     if (value == null) {
-      return value;
+      return null;
     }
 
     // Use a tiny finite-state machine to handle decoding on byte level.

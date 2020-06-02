@@ -182,7 +182,7 @@ public class Parser {
           contextUriInfo = (UriInfoImpl) new Parser(edm, odata).
               parseUri("/" + idOptionText, query, fragment, baseUri);
           contextUriInfo.setEntityTypeCast((EdmEntityType) contextType);
-        } else if (numberOfSegments == 1) {
+        } else {
           /*
             If url is of the form
             http://localhost:8080/odata-server-tecsvc/odata.svc/$entity?$id=ESAllPrim(32527)

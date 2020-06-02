@@ -172,9 +172,7 @@ public final class ContextURLHelper {
             edmProperty.getType() instanceof EdmComplexType ?
             getComplexSelectedPaths(edmProperty, selectedPaths) : new ArrayList<>();
         if (complexSelectedPaths.isEmpty()) {
-          for (List<String> path : selectedPaths) {
-            complexSelectedPaths.add(path);
-          }
+          complexSelectedPaths.addAll(selectedPaths);
           int position = getPositionToAddProperty(selectItems, propertyName, selectedPaths);
           if (position == -1) {
             complexSelectedPaths.get(0).add(propertyName);

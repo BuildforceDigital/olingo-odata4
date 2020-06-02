@@ -208,18 +208,17 @@ public final class AcceptType {
     }
     Map<String, String> compareParameters = contentType.getParameters();
     for (Map.Entry<String, String> entry : parameters.entrySet()) {
-      if (entry.getKey().equalsIgnoreCase(ContentType.PARAMETER_CHARSET) && 
-          compareParameters.containsKey(entry.getKey())) {
-      } else {
-        if (compareParameters.containsKey(entry.getKey()) || TypeUtil.PARAMETER_Q.equalsIgnoreCase(entry.getKey())) {
-          String compare = compareParameters.get(entry.getKey());
-          if (!entry.getValue().equalsIgnoreCase(compare) && !TypeUtil.PARAMETER_Q.equalsIgnoreCase(entry.getKey())) {
-            return false;
-          }
-        } else {
-          return false;
-        }
-      }
+      if (!entry.getKey().equalsIgnoreCase(ContentType.PARAMETER_CHARSET) ||
+              !compareParameters.containsKey(entry.getKey())) {
+                if (compareParameters.containsKey(entry.getKey()) || TypeUtil.PARAMETER_Q.equalsIgnoreCase(entry.getKey())) {
+                  String compare = compareParameters.get(entry.getKey());
+                  if (!entry.getValue().equalsIgnoreCase(compare) && !TypeUtil.PARAMETER_Q.equalsIgnoreCase(entry.getKey())) {
+                    return false;
+                  }
+                } else {
+                  return false;
+                }
+              }
     }
     return true;
   }
@@ -231,26 +230,25 @@ public final class AcceptType {
    * @param toSort list which is sorted and hence re-arranged
    */
   private static void sort(List<AcceptType> toSort) {
-    Collections.sort(toSort,
-        new Comparator<AcceptType>() {
-      @Override
-      public int compare(AcceptType a1, AcceptType a2) {
-        int compare = a2.getQuality().compareTo(a1.getQuality());
-        if (compare != 0) {
-          return compare;
+    toSort.sort(new Comparator<AcceptType>() {
+        @Override
+        public int compare(AcceptType a1, AcceptType a2) {
+            int compare = a2.getQuality().compareTo(a1.getQuality());
+            if (compare != 0) {
+                return compare;
+            }
+            compare = (a1.getType().equals(TypeUtil.MEDIA_TYPE_WILDCARD) ? 1 : 0)
+                    - (a2.getType().equals(TypeUtil.MEDIA_TYPE_WILDCARD) ? 1 : 0);
+            if (compare != 0) {
+                return compare;
+            }
+            compare = (a1.getSubtype().equals(TypeUtil.MEDIA_TYPE_WILDCARD) ? 1 : 0)
+                    - (a2.getSubtype().equals(TypeUtil.MEDIA_TYPE_WILDCARD) ? 1 : 0);
+            if (compare != 0) {
+                return compare;
+            }
+            return a2.getParameters().size() - a1.getParameters().size();
         }
-        compare = (a1.getType().equals(TypeUtil.MEDIA_TYPE_WILDCARD) ? 1 : 0)
-            - (a2.getType().equals(TypeUtil.MEDIA_TYPE_WILDCARD) ? 1 : 0);
-        if (compare != 0) {
-          return compare;
-        }
-        compare = (a1.getSubtype().equals(TypeUtil.MEDIA_TYPE_WILDCARD) ? 1 : 0)
-            - (a2.getSubtype().equals(TypeUtil.MEDIA_TYPE_WILDCARD) ? 1 : 0);
-        if (compare != 0) {
-          return compare;
-        }
-        return a2.getParameters().size() - a1.getParameters().size();
-      }
     });
   }
 

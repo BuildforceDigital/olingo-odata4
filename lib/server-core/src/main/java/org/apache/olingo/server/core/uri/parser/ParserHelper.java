@@ -367,7 +367,7 @@ public class ParserHelper {
     EdmProperty edmProperty = edmKeyPropertyRef == null ? null : edmKeyPropertyRef.getProperty();
     if (nextPrimitiveTypeValue(tokenizer,
         edmProperty == null ? null : (EdmPrimitiveType) edmProperty.getType(),
-        edmProperty == null ? false : edmProperty.isNullable())) {
+            edmProperty != null && edmProperty.isNullable())) {
       String literalValue = tokenizer.getText();
       ParserHelper.requireNext(tokenizer, TokenKind.CLOSE);
       return createUriParameter(edmProperty, edmKeyPropertyRef.getName(), literalValue, edm, referringType, aliases);

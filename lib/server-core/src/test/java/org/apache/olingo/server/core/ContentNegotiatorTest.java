@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.olingo.commons.api.format.ContentType;
@@ -273,12 +274,12 @@ public class ContentNegotiatorTest {
 
     ODataRequest request = new ODataRequest();
     if (useCase[2] != null) {
-      request.addHeader(HttpHeader.ACCEPT, Arrays.asList(useCase[2]));
+      request.addHeader(HttpHeader.ACCEPT, Collections.singletonList(useCase[2]));
     }
 	
 	if (useCase.length > 4) {
       if (useCase[4] != null) {
-        request.addHeader(HttpHeader.ACCEPT_CHARSET, Arrays.asList(useCase[4]));
+        request.addHeader(HttpHeader.ACCEPT_CHARSET, Collections.singletonList(useCase[4]));
       }
     }
 

@@ -151,8 +151,7 @@ public class AcceptCharset {
    * @param toSort list which is sorted and hence re-arranged
    */
   private static void sort(List<AcceptCharset> toSort) {
-    Collections.sort(toSort,
-        new Comparator<AcceptCharset>() {
+    toSort.sort(new Comparator<AcceptCharset>() {
       @Override
       public int compare(AcceptCharset a1, AcceptCharset a2) {
         int compare = a2.getQuality().compareTo(a1.getQuality());

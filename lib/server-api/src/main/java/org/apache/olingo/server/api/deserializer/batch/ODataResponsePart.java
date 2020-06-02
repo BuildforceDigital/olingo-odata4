@@ -19,6 +19,7 @@
 package org.apache.olingo.server.api.deserializer.batch;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.olingo.server.api.ODataResponse;
@@ -58,7 +59,7 @@ public class ODataResponsePart {
    * @param isChangeSet whether this ODataResponsePart represents a change set
    */
   public ODataResponsePart(ODataResponse response, boolean isChangeSet) {
-    responses = Arrays.asList(response);
+    responses = Collections.singletonList(response);
     this.isChangeSet = isChangeSet;
   }
 

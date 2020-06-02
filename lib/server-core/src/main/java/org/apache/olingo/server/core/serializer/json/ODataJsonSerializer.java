@@ -531,9 +531,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
   private void addKeyPropertiesToSelected(Set<String> selected, EdmStructuredType type) {
     if (!selected.isEmpty() && type instanceof EdmEntityType) {
       List<String> keyNames = ((EdmEntityType) type).getKeyPredicateNames();
-      for (String key : keyNames) {
-        selected.add(key);
-      }
+        selected.addAll(keyNames);
     }
   }
 

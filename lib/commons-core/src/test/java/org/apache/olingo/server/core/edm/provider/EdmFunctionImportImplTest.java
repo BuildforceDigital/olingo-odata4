@@ -61,7 +61,7 @@ public class EdmFunctionImportImplTest {
         .setBound(false)
         .setComposable(false)
         .setReturnType(new CsdlReturnType().setType(EdmPrimitiveTypeKind.Boolean.getFullQualifiedName()));
-    when(provider.getFunctions(functionName)).thenReturn(Arrays.asList(functionProvider));
+    when(provider.getFunctions(functionName)).thenReturn(Collections.singletonList(functionProvider));
 
     FullQualifiedName containerName = new FullQualifiedName("ns", "container");
     CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);

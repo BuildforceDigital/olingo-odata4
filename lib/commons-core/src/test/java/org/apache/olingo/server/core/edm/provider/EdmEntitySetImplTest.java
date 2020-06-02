@@ -27,6 +27,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.apache.olingo.commons.api.edm.EdmBindingTarget;
 import org.apache.olingo.commons.api.edm.EdmEntityContainer;
@@ -55,7 +56,7 @@ public class EdmEntitySetImplTest {
     FullQualifiedName typeName = new FullQualifiedName("ns", "entityType");
     CsdlEntityType entityTypeProvider = new CsdlEntityType()
         .setName(typeName.getName())
-        .setKey(Arrays.asList(new CsdlPropertyRef().setName("Id")));
+        .setKey(Collections.singletonList(new CsdlPropertyRef().setName("Id")));
     when(provider.getEntityType(typeName)).thenReturn(entityTypeProvider);
 
     FullQualifiedName containerName = new FullQualifiedName("ns", "container");
@@ -68,9 +69,9 @@ public class EdmEntitySetImplTest {
         .setName(entitySetName)
         .setTitle("title")
         .setType(typeName)
-        .setNavigationPropertyBindings(Arrays.asList(
-            new CsdlNavigationPropertyBinding().setPath("path")
-                .setTarget(containerName.getFullQualifiedNameAsString() + "/" + entitySetName)));
+        .setNavigationPropertyBindings(Collections.singletonList(
+                new CsdlNavigationPropertyBinding().setPath("path")
+                        .setTarget(containerName.getFullQualifiedNameAsString() + "/" + entitySetName)));
     when(provider.getEntitySet(containerName, entitySetName)).thenReturn(entitySetProvider);
 
     EdmEntitySet entitySet = new EdmEntitySetImpl(edm, entityContainer, entitySetProvider);

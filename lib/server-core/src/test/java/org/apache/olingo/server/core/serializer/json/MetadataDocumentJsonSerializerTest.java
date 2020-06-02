@@ -233,7 +233,7 @@ public class MetadataDocumentJsonSerializerTest {
     EdmSchema schema = mock(EdmSchema.class);
     when(schema.getNamespace()).thenReturn("MyNamespace");
     Edm edm = mock(Edm.class);
-    when(edm.getSchemas()).thenReturn(Arrays.asList(schema));
+    when(edm.getSchemas()).thenReturn(Collections.singletonList(schema));
     
     // create mock metadata
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
@@ -241,7 +241,7 @@ public class MetadataDocumentJsonSerializerTest {
     
     // add mock enums to schema
     EdmEnumType enumType = mock(EdmEnumType.class);
-    when(schema.getEnumTypes()).thenReturn(Arrays.asList(enumType));
+    when(schema.getEnumTypes()).thenReturn(Collections.singletonList(enumType));
     when(enumType.getName()).thenReturn("MyEnum");
     when(enumType.getKind()).thenReturn(EdmTypeKind.ENUM);
     EdmPrimitiveType int32Type = OData.newInstance().createPrimitiveTypeInstance(EdmPrimitiveTypeKind.Int32);
@@ -285,7 +285,7 @@ public class MetadataDocumentJsonSerializerTest {
     EdmSchema schema = mock(EdmSchema.class);
     when(schema.getNamespace()).thenReturn("MyNamespace");
     Edm edm = mock(Edm.class);
-    when(edm.getSchemas()).thenReturn(Arrays.asList(schema));
+    when(edm.getSchemas()).thenReturn(Collections.singletonList(schema));
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
     when(serviceMetadata.getEdm()).thenReturn(edm);
 
@@ -534,7 +534,7 @@ public class MetadataDocumentJsonSerializerTest {
         .setType(nameETAbstract)
         .setNullable(false)
         .setOnDelete(new CsdlOnDelete().setAction(CsdlOnDeleteAction.Cascade)
-            .setAnnotations(Arrays.asList(new CsdlAnnotation().setTerm("core.Term"))));
+            .setAnnotations(Collections.singletonList(new CsdlAnnotation().setTerm("core.Term"))));
     
     private final FullQualifiedName nameCTTwoPrim = new FullQualifiedName(nameSpace, "CTTwoPrim");
     private final FullQualifiedName nameCTTwoPrimBase = new FullQualifiedName(nameSpace, "CTTwoPrimBase");
@@ -572,7 +572,7 @@ public class MetadataDocumentJsonSerializerTest {
         .setFlags(true)
         .setUnderlyingType(EdmPrimitiveTypeKind.Int16.getFullQualifiedName())
         .setMembers(Collections.singletonList(
-            new CsdlEnumMember().setName("String1").setValue("1").setAnnotations(Arrays.asList(memberAnnotation))));
+            new CsdlEnumMember().setName("String1").setValue("1").setAnnotations(Collections.singletonList(memberAnnotation))));
       }
       return null;
     }
@@ -583,22 +583,22 @@ public class MetadataDocumentJsonSerializerTest {
         return new CsdlEntityType()
         .setName("ETAbstract")
         .setAbstract(true)
-        .setNavigationProperties(Arrays.asList(
-            new CsdlNavigationProperty().setName("NavPropertyETTwoKeyNavOne").setType(nameETTwoKeyNavOne)))
+        .setNavigationProperties(Collections.singletonList(
+                new CsdlNavigationProperty().setName("NavPropertyETTwoKeyNavOne").setType(nameETTwoKeyNavOne)))
         .setProperties(Collections.singletonList(propertyString));
       } else if (entityTypeName.equals(nameETAbstractBase)) {
         CsdlAnnotation annotation = new CsdlAnnotation()
             .setTerm("Core.Description")
             .setQualifier("Target")
             .setExpression(new CsdlConstantExpression(ConstantExpressionType.String, "Description of Type"));
-        propertyInt16_NotNullable.setAnnotations(Arrays.asList(annotation));
+        propertyInt16_NotNullable.setAnnotations(Collections.singletonList(annotation));
         
         return new CsdlEntityType()
         .setName("ETAbstractBase")
         .setBaseType(nameETAbstract)
         .setKey(Collections.singletonList(new CsdlPropertyRef().setName("PropertyInt16")))
         .setProperties(Collections.singletonList(propertyInt16_NotNullable))
-        .setAnnotations(Arrays.asList(annotation));
+        .setAnnotations(Collections.singletonList(annotation));
       } else if (entityTypeName.equals(nameET)) {
         return new CsdlEntityType()
             .setName("ET")
@@ -620,8 +620,8 @@ public class MetadataDocumentJsonSerializerTest {
         return new CsdlEntityType()
             .setName("ETOne")
             .setKey(Collections.singletonList(new CsdlPropertyRef().setName("PropertyInt16")))
-            .setNavigationProperties(Arrays.asList(
-                new CsdlNavigationProperty().setName("NavPropertyET").setType(nameET)))
+            .setNavigationProperties(Collections.singletonList(
+                    new CsdlNavigationProperty().setName("NavPropertyET").setType(nameET)))
             .setProperties(Collections.singletonList(propertyInt16_NotNullable));
       } else if (entityTypeName.equals(nameETTwoKeyNavOne)) {
         return new CsdlEntityType()
@@ -629,17 +629,17 @@ public class MetadataDocumentJsonSerializerTest {
             .setBaseType(nameETOne)
             .setHasStream(true)
             .setProperties(Collections.singletonList(propertyString))
-            .setNavigationProperties(Arrays.asList(
-                new CsdlNavigationProperty().setName("NavPropertyETAbstract")
-                .setCollection(true).setType(nameETAbstract)
-                .setContainsTarget(true).setPartner("NavPropertyETTwoKeyNavOne").setNullable(false)
-                .setReferentialConstraints(Collections.singletonList(new CsdlReferentialConstraint()
-                    .setProperty("PropertyString").setReferencedProperty("PropertyString")
-                    .setAnnotations(Collections.singletonList(new CsdlAnnotation()
-            .setTerm("Core.Description")
-            .setQualifier("Target")
-            .setExpression(new CsdlConstantExpression(
-                ConstantExpressionType.String, "Description of Complex Type"))))))));
+            .setNavigationProperties(Collections.singletonList(
+                    new CsdlNavigationProperty().setName("NavPropertyETAbstract")
+                            .setCollection(true).setType(nameETAbstract)
+                            .setContainsTarget(true).setPartner("NavPropertyETTwoKeyNavOne").setNullable(false)
+                            .setReferentialConstraints(Collections.singletonList(new CsdlReferentialConstraint()
+                                    .setProperty("PropertyString").setReferencedProperty("PropertyString")
+                                    .setAnnotations(Collections.singletonList(new CsdlAnnotation()
+                                            .setTerm("Core.Description")
+                                            .setQualifier("Target")
+                                            .setExpression(new CsdlConstantExpression(
+                                                    ConstantExpressionType.String, "Description of Complex Type"))))))));
       }
       return null;
     }
@@ -663,7 +663,7 @@ public class MetadataDocumentJsonSerializerTest {
         .setName("CTTwoPrimBase")
         .setBaseType(nameCTTwoPrim)
         .setProperties(Arrays.asList(propertyInt16_NotNullable, propertyString))
-        .setAnnotations(Arrays.asList(annotation));
+        .setAnnotations(Collections.singletonList(annotation));
       }
       if (complexTypeName.equals(nameCTEntityInfo)) {
         return new CsdlComplexType()
@@ -673,7 +673,7 @@ public class MetadataDocumentJsonSerializerTest {
       if (complexTypeName.equals(nameCTPrimComp)) {
         return new CsdlComplexType()
         .setName("CTPrimComp")
-        .setProperties(Arrays.asList(propertyString));
+        .setProperties(Collections.singletonList(propertyString));
       }
       return null;
 
@@ -698,14 +698,14 @@ public class MetadataDocumentJsonSerializerTest {
             .setEntitySetPath("BindingParam/NavPropertyETTwoKeyNavOne")
             .setBound(true),
             new CsdlAction().setName("BAETTwoKeyNavRTETTwoKeyNavParam")
-            .setParameters(Arrays.asList(
-                new CsdlParameter().setName("BindingParam").setType(nameET)))
+            .setParameters(Collections.singletonList(
+                    new CsdlParameter().setName("BindingParam").setType(nameET)))
             .setReturnType(new CsdlReturnType().setNullable(false).setType(nameET))
             .setBound(true)
             .setEntitySetPath("BindingParam/NavPropertyET"),
             new CsdlAction().setName("BAETTwoKeyNavRTETTwoKeyNavParam")
-            .setParameters(Arrays.asList(
-                new CsdlParameter().setName("PropertyComp").setType(nameCTPrimComp)))
+            .setParameters(Collections.singletonList(
+                    new CsdlParameter().setName("PropertyComp").setType(nameCTPrimComp)))
             .setReturnType(new CsdlReturnType().setNullable(false).setType(nameET)));
       }
       if (actionName.equals(nameBAProp)) {
@@ -741,8 +741,8 @@ public class MetadataDocumentJsonSerializerTest {
             .setEntitySetPath("BindingParam/NavPropertyETTwoKeyNavOne")
             .setBound(true).setComposable(true),
             new CsdlFunction().setName("BFETTwoKeyNavRTETTwoKeyNavParam")
-            .setParameters(Arrays.asList(
-                new CsdlParameter().setName("BindingParam").setType(nameET)))
+            .setParameters(Collections.singletonList(
+                    new CsdlParameter().setName("BindingParam").setType(nameET)))
             .setReturnType(new CsdlReturnType().setNullable(false).setType(nameET))
             .setBound(true)
             .setEntitySetPath("BindingParam/NavPropertyET"));
@@ -932,7 +932,7 @@ public class MetadataDocumentJsonSerializerTest {
       container.setName("container1");
 
       // EntitySets
-      container.setEntitySets(Arrays.asList(getEntitySet(nameContainer1, "ESAllPrim")));
+      container.setEntitySets(Collections.singletonList(getEntitySet(nameContainer1, "ESAllPrim")));
       container.setExtendsContainer(nameContainer2.getFullQualifiedNameAsString());
 
       return container;
@@ -1169,7 +1169,7 @@ public class MetadataDocumentJsonSerializerTest {
         .setAnnotations(innerAnnotations);
         annotationsList.add(new CsdlAnnotation().setTerm("ns.term").setQualifier("T33")
             .setExpression(new CsdlRecord().setType("Alias.ETAbstract")
-                .setPropertyValues(Arrays.asList(prop))
+                .setPropertyValues(Collections.singletonList(prop))
                 .setAnnotations(innerAnnotations))); 
 
         annotationsList.add(new CsdlAnnotation().setTerm("ns.term").setQualifier("T34")

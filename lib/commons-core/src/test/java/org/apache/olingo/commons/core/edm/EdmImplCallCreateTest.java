@@ -313,7 +313,7 @@ public class EdmImplCallCreateTest {
     protected EdmAnnotations createAnnotationGroup(FullQualifiedName targetName, String qualifier) {
       if (FQN.equals(targetName) && qualifier == null) {
         EdmAnnotations annotationGroup = mock(EdmAnnotations.class);
-        when(annotationGroup.getQualifier()).thenReturn(qualifier);
+        when(annotationGroup.getQualifier()).thenReturn(null);
         return annotationGroup;
       }
       return null;

@@ -384,9 +384,7 @@ public class EdmProviderImpl extends AbstractEdm {
       for (CsdlAnnotation annotation : annotPropDerivedFromES) {
         List<CsdlAnnotation> propAnnot = structuralType.getNavigationProperty(
             navProperty.getName()).getAnnotations();
-        if (propAnnot.contains(annotation)) {
-          propAnnot.remove(annotation);
-        }
+        propAnnot.remove(annotation);
       }
     }
   }

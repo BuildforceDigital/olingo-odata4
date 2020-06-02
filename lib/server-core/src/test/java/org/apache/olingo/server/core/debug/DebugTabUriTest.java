@@ -28,6 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.apache.olingo.commons.api.edm.EdmEntitySet;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
@@ -113,7 +114,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
     EdmFunctionImport edmFunctionImport = mock(EdmFunctionImport.class);
     DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.resource)
         .addResourcePart(new UriResourceFunctionImpl(edmFunctionImport, edmFunction,
-            Arrays.asList((UriParameter) new UriParameterImpl().setName("parameter1")))));
+                Collections.singletonList((UriParameter) new UriParameterImpl().setName("parameter1")))));
 
     assertEquals("{\"kind\":\"resource\",\"uriResourceParts\":["
         + "{\"uriResourceKind\":\"function\",\"segment\":null,\"isCollection\":false,"
@@ -314,9 +315,9 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
         + "\"parameters\":[{\"nodeType\":\"literal\",\"type\":\"Edm.Decimal\",\"value\":\"1.5\"}]}}",
         createJson(new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
             .setSystemQueryOption(new FilterOptionImpl().setExpression(
-                new MethodImpl(MethodKind.CEILING, Arrays.asList(
-                    (Expression) new LiteralImpl("1.5",
-                        EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Decimal)))))))));
+                new MethodImpl(MethodKind.CEILING, Collections.singletonList(
+                        (Expression) new LiteralImpl("1.5",
+                                EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Decimal)))))))));
 
     EdmEntityType edmEntityType = mock(EdmEntityType.class);
     when(edmEntityType.getFullQualifiedName()).thenReturn(new FullQualifiedName("ns", "entityType"));
