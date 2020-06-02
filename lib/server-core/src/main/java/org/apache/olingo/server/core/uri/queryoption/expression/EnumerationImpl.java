@@ -45,7 +45,7 @@ public class EnumerationImpl implements Enumeration {
   @Override
   public List<String> getValues() {
     return values == null ?
-        Collections.<String> emptyList() :
+        Collections.emptyList() :
         Collections.unmodifiableList(values);
   }
 

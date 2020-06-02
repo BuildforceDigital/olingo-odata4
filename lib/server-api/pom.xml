@@ -46,10 +46,10 @@
       <version>2.5</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>io.netty</groupId>
       <artifactId>netty-codec-http</artifactId>
-    </dependency>
+    </dependency>-->
     <!-- Test dependencies -->
     <dependency>
       <groupId>junit</groupId>

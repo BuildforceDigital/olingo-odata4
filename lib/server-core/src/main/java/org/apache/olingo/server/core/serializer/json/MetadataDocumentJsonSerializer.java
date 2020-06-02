@@ -19,8 +19,17 @@
 package org.apache.olingo.server.core.serializer.json;
 
 import java.io.IOException;
-import java.util.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import org.apache.olingo.commons.api.edm.EdmAction;
 import org.apache.olingo.commons.api.edm.EdmActionImport;

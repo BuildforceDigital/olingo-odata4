@@ -51,7 +51,7 @@ public class CustomFunctionImpl implements CustomFunction {
   @Override
   public List<UriParameter> getParameters() {
     return parameters == null ?
-        Collections.<UriParameter> emptyList() :
+        Collections.emptyList() :
         Collections.unmodifiableList(parameters);
   }
 

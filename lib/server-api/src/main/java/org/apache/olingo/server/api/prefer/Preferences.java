@@ -106,7 +106,7 @@ public interface Preferences {
      */
     public Map<String, String> getParameters() {
       return parameters == null ?
-          Collections.<String, String> emptyMap() :
+          Collections.emptyMap() :
             Collections.unmodifiableMap(parameters);
     }
   }

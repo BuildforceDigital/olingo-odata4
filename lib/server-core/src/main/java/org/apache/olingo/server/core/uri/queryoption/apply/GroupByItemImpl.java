@@ -37,7 +37,7 @@ public class GroupByItemImpl implements GroupByItem {
 
   @Override
   public List<UriResource> getPath() {
-    return path == null ? Collections.<UriResource> emptyList() : path.getUriResourceParts();
+    return path == null ? Collections.emptyList() : path.getUriResourceParts();
   }
 
   public GroupByItemImpl setPath(UriInfo uriInfo) {

@@ -18,7 +18,7 @@
  */
 package org.apache.olingo.server.core.debug;
 
-import static org.apache.commons.io.IOUtils.*;
+import static org.apache.commons.io.IOUtils.toInputStream;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;

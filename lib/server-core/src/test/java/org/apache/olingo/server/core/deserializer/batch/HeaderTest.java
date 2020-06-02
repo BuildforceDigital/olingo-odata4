@@ -26,8 +26,16 @@ import org.apache.olingo.commons.api.format.ContentType;
 import org.apache.olingo.commons.api.http.HttpHeader;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 public class HeaderTest {
 
   @Test
@@ -117,9 +125,9 @@ public class HeaderTest {
   public void duplicatedAddList() {
     Header header = new Header(1);
     header.addHeader(HttpHeader.CONTENT_TYPE, ContentType.MULTIPART_MIXED.toContentTypeString(), 1);
-    header.addHeader(HttpHeader.CONTENT_TYPE, Arrays.asList(new String[] {
-        ContentType.MULTIPART_MIXED.toContentTypeString(),
-        ContentType.APPLICATION_ATOM_SVC.toContentTypeString() }), 2);
+    header.addHeader(HttpHeader.CONTENT_TYPE,
+            Arrays.asList(ContentType.MULTIPART_MIXED.toContentTypeString(), ContentType.APPLICATION_ATOM_SVC.toContentTypeString()),
+            2);
 
     assertEquals(ContentType.MULTIPART_MIXED + ", " + ContentType.APPLICATION_ATOM_SVC, header
         .getHeader(HttpHeader.CONTENT_TYPE));

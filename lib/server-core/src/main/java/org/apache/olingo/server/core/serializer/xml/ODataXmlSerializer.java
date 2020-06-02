@@ -32,7 +32,21 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.olingo.commons.api.Constants;
-import org.apache.olingo.commons.api.data.*;
+import org.apache.olingo.commons.api.data.AbstractEntityCollection;
+import org.apache.olingo.commons.api.data.Annotation;
+import org.apache.olingo.commons.api.data.ComplexValue;
+import org.apache.olingo.commons.api.data.ContextURL;
+import org.apache.olingo.commons.api.data.DeletedEntity;
+import org.apache.olingo.commons.api.data.Delta;
+import org.apache.olingo.commons.api.data.DeltaLink;
+import org.apache.olingo.commons.api.data.Entity;
+import org.apache.olingo.commons.api.data.EntityCollection;
+import org.apache.olingo.commons.api.data.EntityIterator;
+import org.apache.olingo.commons.api.data.Link;
+import org.apache.olingo.commons.api.data.Linked;
+import org.apache.olingo.commons.api.data.Operation;
+import org.apache.olingo.commons.api.data.Property;
+import org.apache.olingo.commons.api.data.ValueType;
 import org.apache.olingo.commons.api.edm.EdmComplexType;
 import org.apache.olingo.commons.api.edm.EdmEntitySet;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
@@ -637,9 +651,7 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
     if (!selected.isEmpty() && type instanceof EdmEntityType) {
       List<String> keyNames = ((EdmEntityType) type).getKeyPredicateNames();
       for (String key : keyNames) {
-        if (!selected.contains(key)) {
-          selected.add(key);
-        }
+        selected.add(key);
       }
     }
   }
@@ -994,7 +1006,7 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
     
     if (null != expandedPaths) {
       for(List<String> paths : expandedPaths) {
-        if (!paths.isEmpty() && paths.size() == 1) {
+        if (paths.size() == 1) {
           expandedPaths = ExpandSelectHelper.getReducedExpandItemsPaths(expandedPaths, paths.get(0));
         }
       }
@@ -1379,7 +1391,7 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
       if (c <= 0x0020 && c != ' ' && c != '\n' && c != '\t' && c != '\r') {
         if (result == null) {
           result = new StringBuilder();
-          result.append(s.substring(0, i));
+          result.append(s, 0, i);
         }
         result.append(invalidCharacterReplacement);
       } else if (result != null) {

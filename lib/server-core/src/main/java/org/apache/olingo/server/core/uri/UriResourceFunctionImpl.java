@@ -48,7 +48,7 @@ public class UriResourceFunctionImpl extends UriResourceWithKeysImpl implements 
   @Override
   public List<UriParameter> getParameters() {
     return parameters == null ?
-        Collections.<UriParameter> emptyList() :
+        Collections.emptyList() :
           Collections.unmodifiableList(parameters);
   }
 

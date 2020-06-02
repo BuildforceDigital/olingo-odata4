@@ -26,7 +26,19 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.olingo.commons.api.Constants;
-import org.apache.olingo.commons.api.data.*;
+
+import org.apache.olingo.commons.api.data.AbstractEntityCollection;
+import org.apache.olingo.commons.api.data.Annotation;
+import org.apache.olingo.commons.api.data.ComplexValue;
+import org.apache.olingo.commons.api.data.ContextURL;
+import org.apache.olingo.commons.api.data.DeletedEntity;
+import org.apache.olingo.commons.api.data.Delta;
+import org.apache.olingo.commons.api.data.DeltaLink;
+import org.apache.olingo.commons.api.data.Entity;
+import org.apache.olingo.commons.api.data.Link;
+import org.apache.olingo.commons.api.data.Linked;
+import org.apache.olingo.commons.api.data.Property;
+import org.apache.olingo.commons.api.data.ValueType;
 import org.apache.olingo.commons.api.edm.EdmComplexType;
 import org.apache.olingo.commons.api.edm.EdmEntitySet;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
@@ -162,7 +174,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
               SerializerException.MessageKeys.MISSING_DELTA_PROPERTY, "Source");
         }
         if (link.getRelationship() != null) {
-          json.writeStringField(Constants.ATTR_RELATIONSHIP, link.getRelationship().toString());
+          json.writeStringField(Constants.ATTR_RELATIONSHIP, link.getRelationship());
         } else {
           throw new SerializerException("DeltaLink relationship is null.",
               SerializerException.MessageKeys.MISSING_DELTA_PROPERTY, "Relationship");

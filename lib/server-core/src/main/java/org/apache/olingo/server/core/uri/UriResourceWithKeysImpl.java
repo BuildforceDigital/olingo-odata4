@@ -46,7 +46,7 @@ public abstract class UriResourceWithKeysImpl extends UriResourceImpl implements
 
   public List<UriParameter> getKeyPredicates() {
     return keyPredicates == null ?
-        Collections.<UriParameter> emptyList() :
+        Collections.emptyList() :
         Collections.unmodifiableList(keyPredicates);
   }
 

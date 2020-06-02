@@ -106,7 +106,7 @@ final class HttpHeaders {
    * @return an unmodifiable Map of header names/values or an empty collection if no headers have been set
    */
   public Map<String, List<String>> getHeaderToValues() {
-    return headers.isEmpty() ? Collections.<String, List<String>> emptyMap() : Collections.unmodifiableMap(headers);
+    return headers.isEmpty() ? Collections.emptyMap() : Collections.unmodifiableMap(headers);
   }
 
   /**
@@ -114,7 +114,7 @@ final class HttpHeaders {
    * @return all header names or an empty collection if no headers have been set
    */
   public Collection<String> getHeaderNames() {
-    return headers.isEmpty() ? Collections.<String> emptySet() : Collections.unmodifiableSet(headers.keySet());
+    return headers.isEmpty() ? Collections.emptySet() : Collections.unmodifiableSet(headers.keySet());
   }
 
   /**

@@ -40,7 +40,7 @@ public class SelectOptionImpl extends SystemQueryOptionImpl implements SelectOpt
 
   @Override
   public List<SelectItem> getSelectItems() {
-    return selectItems == null ? Collections.<SelectItem> emptyList() : Collections.unmodifiableList(selectItems);
+    return selectItems == null ? Collections.emptyList() : Collections.unmodifiableList(selectItems);
   }
 
 }

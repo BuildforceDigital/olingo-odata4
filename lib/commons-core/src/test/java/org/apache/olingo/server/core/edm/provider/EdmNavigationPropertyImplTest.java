@@ -18,7 +18,15 @@
  */
 package org.apache.olingo.server.core.edm.provider;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,7 +57,7 @@ public class EdmNavigationPropertyImplTest {
     EdmProviderImpl edm = new EdmProviderImpl(provider);
     FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
     CsdlEntityType entityTypeProvider = new CsdlEntityType();
-    entityTypeProvider.setKey(Collections.<CsdlPropertyRef> emptyList());
+    entityTypeProvider.setKey(Collections.emptyList());
     when(provider.getEntityType(entityTypeName)).thenReturn(entityTypeProvider);
     CsdlNavigationProperty propertyProvider = new CsdlNavigationProperty();
     propertyProvider.setType(entityTypeName);
@@ -76,7 +84,7 @@ public class EdmNavigationPropertyImplTest {
     EdmProviderImpl edm = new EdmProviderImpl(provider);
     FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
     CsdlEntityType entityTypeProvider = new CsdlEntityType();
-    entityTypeProvider.setKey(Collections.<CsdlPropertyRef> emptyList());
+    entityTypeProvider.setKey(Collections.emptyList());
     when(provider.getEntityType(entityTypeName)).thenReturn(entityTypeProvider);
     CsdlNavigationProperty propertyProvider = new CsdlNavigationProperty();
     propertyProvider.setType(entityTypeName);
@@ -105,7 +113,7 @@ public class EdmNavigationPropertyImplTest {
     EdmProviderImpl edm = new EdmProviderImpl(provider);
     FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
     CsdlEntityType entityTypeProvider = new CsdlEntityType();
-    entityTypeProvider.setKey(Collections.<CsdlPropertyRef> emptyList());
+    entityTypeProvider.setKey(Collections.emptyList());
 
     List<CsdlNavigationProperty> navigationProperties = new ArrayList<CsdlNavigationProperty>();
     navigationProperties.add(new CsdlNavigationProperty().setName("partnerName").setType(entityTypeName));
@@ -129,7 +137,7 @@ public class EdmNavigationPropertyImplTest {
     EdmProviderImpl edm = new EdmProviderImpl(provider);
     FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
     CsdlEntityType entityTypeProvider = new CsdlEntityType();
-    entityTypeProvider.setKey(Collections.<CsdlPropertyRef> emptyList());
+    entityTypeProvider.setKey(Collections.emptyList());
 
     List<CsdlNavigationProperty> navigationProperties = new ArrayList<CsdlNavigationProperty>();
     navigationProperties.add(new CsdlNavigationProperty().setName("partnerName").setType(entityTypeName));

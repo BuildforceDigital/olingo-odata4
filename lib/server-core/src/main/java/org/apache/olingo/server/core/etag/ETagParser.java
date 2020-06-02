@@ -50,7 +50,7 @@ public class ETagParser {
 
   protected static Collection<String> parse(Collection<String> values) {
     if (values == null) {
-      return Collections.<String> emptySet();
+      return Collections.emptySet();
     }
 
     Set<String> result = new HashSet<>();
@@ -81,10 +81,10 @@ public class ETagParser {
           result.add(matcher.group(2));
           separator = null;
         } else {
-          return Collections.<String> emptySet();
+          return Collections.emptySet();
         }
       }
-      return matcher.hitEnd() ? result : Collections.<String> emptySet();
+      return matcher.hitEnd() ? result : Collections.emptySet();
     }
   }
 }

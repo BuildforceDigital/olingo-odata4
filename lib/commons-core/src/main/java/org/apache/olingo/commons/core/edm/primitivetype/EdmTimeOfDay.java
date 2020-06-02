@@ -33,7 +33,7 @@ import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeException;
 
 public final class EdmTimeOfDay extends SingletonPrimitiveType {
 
-  private static final LocalDate EPOCH = LocalDate.ofEpochDay(0l);
+  private static final LocalDate EPOCH = LocalDate.ofEpochDay(0L);
   private static final EdmTimeOfDay INSTANCE = new EdmTimeOfDay();
 
   public static EdmTimeOfDay getInstance() {

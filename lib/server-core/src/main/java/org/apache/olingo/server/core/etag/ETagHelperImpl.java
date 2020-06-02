@@ -67,6 +67,6 @@ public class ETagHelperImpl implements ETagHelper {
     Collection<String> eTags = ETagParser.parse(values);
     boolean isAll = eTags.size() == 1 && "*".equals(eTags.iterator().next());
     return new ETagInformation(isAll,
-        isAll ? Collections.<String> emptySet() : Collections.unmodifiableCollection(eTags));
+        isAll ? Collections.emptySet() : Collections.unmodifiableCollection(eTags));
   }
 }

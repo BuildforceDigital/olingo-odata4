@@ -113,7 +113,7 @@ public class ETagParserTest {
 
   @Test
   public void match() {
-    assertFalse(eTagHelper.createETagInformation(Collections.<String> emptySet()).isMatchedBy("\"ETag\""));
+    assertFalse(eTagHelper.createETagInformation(Collections.emptySet()).isMatchedBy("\"ETag\""));
     assertFalse(eTagHelper.createETagInformation(Collections.singleton("\"ETag\"")).isMatchedBy(null));
     assertTrue(eTagHelper.createETagInformation(Collections.singleton("\"ETag\"")).isMatchedBy("\"ETag\""));
     assertTrue(eTagHelper.createETagInformation(Collections.singleton("*")).isMatchedBy("\"ETag\""));

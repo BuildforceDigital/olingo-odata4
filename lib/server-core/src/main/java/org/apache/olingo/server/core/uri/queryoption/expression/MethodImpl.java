@@ -109,7 +109,7 @@ public class MethodImpl implements Method {
   @Override
   public List<Expression> getParameters() {
     return parameters == null ?
-        Collections.<Expression> emptyList() :
+        Collections.emptyList() :
         Collections.unmodifiableList(parameters);
   }
 

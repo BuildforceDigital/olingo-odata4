@@ -31,7 +31,21 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.olingo.commons.api.Constants;
 import org.apache.olingo.commons.api.IConstants;
 import org.apache.olingo.commons.api.constants.Constantsv00;
-import org.apache.olingo.commons.api.data.*;
+
+import org.apache.olingo.commons.api.data.AbstractEntityCollection;
+import org.apache.olingo.commons.api.data.Annotation;
+import org.apache.olingo.commons.api.data.ComplexValue;
+import org.apache.olingo.commons.api.data.ContextURL;
+import org.apache.olingo.commons.api.data.DeletedEntity;
+import org.apache.olingo.commons.api.data.Delta;
+import org.apache.olingo.commons.api.data.DeltaLink;
+import org.apache.olingo.commons.api.data.Entity;
+import org.apache.olingo.commons.api.data.EntityIterator;
+import org.apache.olingo.commons.api.data.Link;
+import org.apache.olingo.commons.api.data.Linked;
+import org.apache.olingo.commons.api.data.Operation;
+import org.apache.olingo.commons.api.data.Property;
+import org.apache.olingo.commons.api.data.ValueType;
 import org.apache.olingo.commons.api.edm.EdmComplexType;
 import org.apache.olingo.commons.api.edm.EdmEntitySet;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
@@ -518,9 +532,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
     if (!selected.isEmpty() && type instanceof EdmEntityType) {
       List<String> keyNames = ((EdmEntityType) type).getKeyPredicateNames();
       for (String key : keyNames) {
-        if (!selected.contains(key)) {
-          selected.add(key);
-        }
+        selected.add(key);
       }
     }
   }
@@ -1055,7 +1067,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
 
     if (null != expandedPaths) {
       for(List<String> paths : expandedPaths) {
-        if (!paths.isEmpty() && paths.size() == 1) {
+        if (paths.size() == 1) {
           expandedPaths = ExpandSelectHelper.getReducedExpandItemsPaths(expandedPaths, paths.get(0));
         }
       }
@@ -1164,7 +1176,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
       }
       writeOperations(property.getOperations(), json);      
       List<Property> values =
-          property.isNull() ? Collections.<Property> emptyList() : property.asComplex().getValue();
+          property.isNull() ? Collections.emptyList() : property.asComplex().getValue();
       writeProperties(metadata, type, values, options == null ? null : options == null ? null : options.getSelect(), 
           json, 
           property.asComplex(), options == null ? null : options.getExpand());

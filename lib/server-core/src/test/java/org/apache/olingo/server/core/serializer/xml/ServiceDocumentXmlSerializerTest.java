@@ -56,9 +56,9 @@ public class ServiceDocumentXmlSerializerTest {
     Edm edm = mock(Edm.class);
     EdmEntityContainer container = mock(EdmEntityContainer.class);
     when(container.getFullQualifiedName()).thenReturn(new FullQualifiedName("service", "test"));
-    when(container.getEntitySets()).thenReturn(Collections.<EdmEntitySet> emptyList());
-    when(container.getFunctionImports()).thenReturn(Collections.<EdmFunctionImport> emptyList());
-    when(container.getSingletons()).thenReturn(Collections.<EdmSingleton> emptyList());
+    when(container.getEntitySets()).thenReturn(Collections.emptyList());
+    when(container.getFunctionImports()).thenReturn(Collections.emptyList());
+    when(container.getSingletons()).thenReturn(Collections.emptyList());
     when(edm.getEntityContainer()).thenReturn(container);
     ServiceMetadata metadata = mock(ServiceMetadata.class);
     when(metadata.getEdm()).thenReturn(edm);
@@ -77,7 +77,7 @@ public class ServiceDocumentXmlSerializerTest {
   public void writeServiceDocument() throws Exception {
     CsdlEdmProvider provider = new MetadataDocumentXmlSerializerTest.LocalProvider();
     ServiceMetadata serviceMetadata = new ServiceMetadataImpl(provider,
-        Collections.<EdmxReference> emptyList(), null);
+        Collections.emptyList(), null);
     InputStream metadataStream = serializer.serviceDocument(serviceMetadata, "http://host/svc").getContent();
     String metadata = IOUtils.toString(metadataStream);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"

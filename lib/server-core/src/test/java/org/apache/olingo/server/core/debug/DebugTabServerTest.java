@@ -41,7 +41,7 @@ public class DebugTabServerTest extends AbstractDebugTabTest {
 
   @Test
   public void initialServerInformationMustNotleadToException() throws Exception {
-    DebugTabServer serverTab = new DebugTabServer(Collections.<String, String> emptyMap());
+    DebugTabServer serverTab = new DebugTabServer(Collections.emptyMap());
 
     assertEquals("null", createJson(serverTab));
     String html = createHtml(serverTab);

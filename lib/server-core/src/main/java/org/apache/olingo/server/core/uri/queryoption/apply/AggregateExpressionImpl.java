@@ -43,7 +43,7 @@ public class AggregateExpressionImpl implements AggregateExpression {
 
   @Override
   public List<UriResource> getPath() {
-    return path == null ? Collections.<UriResource> emptyList() : path.getUriResourceParts();
+    return path == null ? Collections.emptyList() : path.getUriResourceParts();
   }
 
   public AggregateExpressionImpl setPath(UriInfo uriInfo) {

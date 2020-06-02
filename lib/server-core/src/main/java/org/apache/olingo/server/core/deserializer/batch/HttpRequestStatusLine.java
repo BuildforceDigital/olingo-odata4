@@ -34,7 +34,7 @@ public class HttpRequestStatusLine {
   private static final Pattern PATTERN_RELATIVE_URI = Pattern.compile("([^/][^?]*)(?:\\?(.*))?");
 
   private static final Set<HttpMethod> HTTP_CHANGE_SET_METHODS = new HashSet<>(Arrays.asList(
-      new HttpMethod[] { HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.PATCH }));
+          HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.PATCH));
   private static final String HTTP_VERSION = "HTTP/1.1";
 
   final private Line statusLine;

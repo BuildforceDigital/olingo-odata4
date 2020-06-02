@@ -528,9 +528,7 @@ public class EdmProviderImpl extends AbstractEdm {
       for (CsdlAnnotation annotation : annotPropDerivedFromES) {
         List<CsdlAnnotation> propAnnot = structuralType.getProperty(
             property.getName()).getAnnotations();
-        if (propAnnot.contains(annotation)) {
-          propAnnot.remove(annotation);
-        }
+        propAnnot.remove(annotation);
       }
     }
   }
@@ -758,7 +756,7 @@ public class EdmProviderImpl extends AbstractEdm {
         }
       }
       List<String> parameterNamesCopy =
-          parameterNames == null ? Collections.<String> emptyList() : parameterNames;
+          parameterNames == null ? Collections.emptyList() : parameterNames;
       for (CsdlFunction function : functions) {
         if (function.isBound()) {
           List<CsdlParameter> providerParameters = function.getParameters();
@@ -873,7 +871,7 @@ public class EdmProviderImpl extends AbstractEdm {
       }
 
       List<String> parameterNamesCopy =
-          parameterNames == null ? Collections.<String> emptyList() : parameterNames;
+          parameterNames == null ? Collections.emptyList() : parameterNames;
       for (CsdlFunction function : functions) {
         if (!function.isBound()) {
           List<CsdlParameter> providerParameters = function.getParameters();
