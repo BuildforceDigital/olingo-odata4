@@ -45,11 +45,11 @@ public class BatchLineReader {
   private int offset = 0;
   private int limit = 0;
 
-  public BatchLineReader(final InputStream reader) {
+  public BatchLineReader(InputStream reader) {
     this(reader, BUFFER_SIZE);
   }
 
-  public BatchLineReader(final InputStream reader, final int bufferSize) {
+  public BatchLineReader(InputStream reader, int bufferSize) {
     if (bufferSize <= 0) {
       throw new IllegalArgumentException("Buffer size must be greater than zero.");
     }
@@ -63,7 +63,7 @@ public class BatchLineReader {
   }
 
   public List<String> toList() throws IOException {
-    final List<String> result = new ArrayList<>();
+    List<String> result = new ArrayList<>();
     String currentLine = readLine();
     if (currentLine != null) {
       currentBoundary = currentLine.trim();
@@ -77,7 +77,7 @@ public class BatchLineReader {
   }
 
   public List<Line> toLineList() throws IOException {
-    final List<Line> result = new ArrayList<>();
+    List<Line> result = new ArrayList<>();
     String currentLine = readLine();
     if (currentLine != null) {
       currentBoundary = currentLine.trim();
@@ -92,20 +92,20 @@ public class BatchLineReader {
     return result;
   }
 
-  private void updateCurrentCharset(final String currentLine) {
+  private void updateCurrentCharset(String currentLine) {
     if (currentLine != null) {
       if (currentLine.startsWith(HttpHeader.CONTENT_TYPE)) {
-        final ContentType contentType = ContentType.parse(
+        ContentType contentType = ContentType.parse(
             currentLine.substring(HttpHeader.CONTENT_TYPE.length() + 1, currentLine.length() - 2).trim());
         if (contentType != null) {
-          final String charsetString = contentType.getParameter(ContentType.PARAMETER_CHARSET);
+          String charsetString = contentType.getParameter(ContentType.PARAMETER_CHARSET);
           currentCharset = charsetString == null ?
               contentType.isCompatible(ContentType.APPLICATION_JSON) || contentType.getSubtype().contains("xml") ?
                   Charset.forName("UTF-8") :
                   DEFAULT_CHARSET :
               Charset.forName(charsetString);
 
-          final String boundary = contentType.getParameter(BOUNDARY);
+          String boundary = contentType.getParameter(BOUNDARY);
           if (boundary != null) {
             currentBoundary = DOUBLE_DASH + boundary;
           }
@@ -118,7 +118,7 @@ public class BatchLineReader {
     }
   }
 
-  private boolean isBoundary(final String currentLine) {
+  private boolean isBoundary(String currentLine) {
     return (currentBoundary + CRLF).equals(currentLine)
         || (currentBoundary + DOUBLE_DASH + CRLF).equals(currentLine);
   }
@@ -171,7 +171,7 @@ public class BatchLineReader {
     if (innerBuffer.position() == 0) {
       return null;
     } else {
-      final String currentLine = new String(innerBuffer.array(), 0, innerBuffer.position(),
+      String currentLine = new String(innerBuffer.array(), 0, innerBuffer.position(),
           readState.isReadBody() ? currentCharset : DEFAULT_CHARSET);
       updateCurrentCharset(currentLine);
       return currentLine;

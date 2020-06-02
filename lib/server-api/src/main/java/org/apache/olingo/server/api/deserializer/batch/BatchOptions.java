@@ -77,7 +77,7 @@ public final class BatchOptions {
     /**
      * @see BatchOptions#isStrict()
      */
-    public Builder isStrict(final boolean isStrict) {
+    public Builder isStrict(boolean isStrict) {
       options.isStrict = isStrict;
       return this;
     }
@@ -85,7 +85,7 @@ public final class BatchOptions {
     /**
      * @see org.apache.olingo.server.api.ODataRequest#getRawBaseUri()
      */
-    public Builder rawBaseUri(final String baseUri) {
+    public Builder rawBaseUri(String baseUri) {
       options.rawBaseUri = baseUri;
       return this;
     }
@@ -93,7 +93,7 @@ public final class BatchOptions {
     /**
      * @see org.apache.olingo.server.api.ODataRequest#getRawServiceResolutionUri()
      */
-    public Builder rawServiceResolutionUri(final String serviceResolutionUri) {
+    public Builder rawServiceResolutionUri(String serviceResolutionUri) {
       options.rawServiceResolutionUri = serviceResolutionUri;
       return this;
     }

@@ -55,7 +55,7 @@ public class Delta extends EntityCollection {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     return super.equals(o)
         && deletedEntities.equals(((Delta) o).deletedEntities)
         && addedLinks.equals(((Delta) o).addedLinks)

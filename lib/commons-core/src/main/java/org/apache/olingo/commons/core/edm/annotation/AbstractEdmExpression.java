@@ -39,7 +39,7 @@ public abstract class AbstractEdmExpression implements EdmExpression {
   @Override
   public String getExpressionName() {
     return name;
-  };
+  }
 
   @Override
   public boolean isConstant() {
@@ -61,7 +61,7 @@ public abstract class AbstractEdmExpression implements EdmExpression {
     return isDynamic() ? (EdmDynamicExpression) this : null;
   }
   
-  public static EdmExpression getExpression(Edm edm, final CsdlExpression exp) {
+  public static EdmExpression getExpression(Edm edm, CsdlExpression exp) {
     EdmExpression _expression = null;
 
     if (exp.isConstant()) {
@@ -73,7 +73,7 @@ public abstract class AbstractEdmExpression implements EdmExpression {
     return _expression;
   }
 
-  private static EdmDynamicExpression getDynamicExpression(Edm edm, final CsdlDynamicExpression exp) {
+  private static EdmDynamicExpression getDynamicExpression(Edm edm, CsdlDynamicExpression exp) {
 
     EdmDynamicExpression _expression = null;
 

@@ -56,7 +56,7 @@ public class CsdlIsOf extends CsdlDynamicExpression implements CsdlAnnotatable {
     return type;
   }
 
-  public CsdlIsOf setType(final String type) {
+  public CsdlIsOf setType(String type) {
     this.type = type;
     return this;
   }
@@ -69,7 +69,7 @@ public class CsdlIsOf extends CsdlDynamicExpression implements CsdlAnnotatable {
     return maxLength;
   }
 
-  public CsdlIsOf setMaxLength(final Integer maxLength) {
+  public CsdlIsOf setMaxLength(Integer maxLength) {
     this.maxLength = maxLength;
     return this;
   }
@@ -82,7 +82,7 @@ public class CsdlIsOf extends CsdlDynamicExpression implements CsdlAnnotatable {
     return precision;
   }
 
-  public CsdlIsOf setPrecision(final Integer precision) {
+  public CsdlIsOf setPrecision(Integer precision) {
     this.precision = precision;
 return this;
   }
@@ -95,7 +95,7 @@ return this;
     return scale;
   }
 
-  public CsdlIsOf setScale(final Integer scale) {
+  public CsdlIsOf setScale(Integer scale) {
     this.scale = scale;
     return this;
   }
@@ -121,7 +121,7 @@ return this;
     return value;
   }
 
-  public CsdlIsOf setValue(final CsdlExpression value) {
+  public CsdlIsOf setValue(CsdlExpression value) {
     this.value = value;
     return this;
   }
@@ -135,19 +135,19 @@ return this;
       return false;
     }
     CsdlIsOf csdlIsOf = (CsdlIsOf) obj;
-    return (this.getType() == null ? csdlIsOf.getType() == null :
-      this.getType().equals(csdlIsOf.getType()))
-        && (this.getMaxLength() == null ? csdlIsOf.getMaxLength() == null :
-          this.getMaxLength().equals(csdlIsOf.getMaxLength()))
-        && (this.getPrecision() == null ? csdlIsOf.getPrecision() == null : 
-          this.getPrecision().equals(csdlIsOf.getPrecision()))
-        && (this.getScale() == null ? csdlIsOf.getScale() == null :
-          this.getScale().equals(csdlIsOf.getScale()))
+    return (getType() == null ? csdlIsOf.getType() == null :
+            getType().equals(csdlIsOf.getType()))
+        && (getMaxLength() == null ? csdlIsOf.getMaxLength() == null :
+            getMaxLength().equals(csdlIsOf.getMaxLength()))
+        && (getPrecision() == null ? csdlIsOf.getPrecision() == null :
+            getPrecision().equals(csdlIsOf.getPrecision()))
+        && (getScale() == null ? csdlIsOf.getScale() == null :
+            getScale().equals(csdlIsOf.getScale()))
         /*&& (this.getSrid() == null ? csdlIsOf.getSrid() == null :
           this.getSrid().equals(csdlIsOf.getSrid()))*/
-        && (this.getValue() == null ? csdlIsOf.getValue() == null :
-          this.getValue().equals(csdlIsOf.getValue()))
-        && (this.getAnnotations() == null ? csdlIsOf.getAnnotations() == null :
+        && (getValue() == null ? csdlIsOf.getValue() == null :
+            getValue().equals(csdlIsOf.getValue()))
+        && (getAnnotations() == null ? csdlIsOf.getAnnotations() == null :
             checkAnnotations(csdlIsOf.getAnnotations()));
   }
   
@@ -155,9 +155,9 @@ return this;
     if (csdlIsOfannot == null) {
       return false;
     }
-    if (this.getAnnotations().size() == csdlIsOfannot.size()) {
-      for (int i = 0; i < this.getAnnotations().size(); i++) {
-        if (!this.getAnnotations().get(i).equals(csdlIsOfannot.get(i))) {
+    if (getAnnotations().size() == csdlIsOfannot.size()) {
+      for (int i = 0; i < getAnnotations().size(); i++) {
+        if (!getAnnotations().get(i).equals(csdlIsOfannot.get(i))) {
           return false;
         }
       }

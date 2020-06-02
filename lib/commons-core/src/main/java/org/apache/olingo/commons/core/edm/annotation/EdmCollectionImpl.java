@@ -35,7 +35,7 @@ public class EdmCollectionImpl extends AbstractEdmDynamicExpression implements E
 
   public EdmCollectionImpl(Edm edm, CsdlCollection csdlExp) {
     super(edm, "Collection");
-    this.csdlCollection = csdlExp;
+      csdlCollection = csdlExp;
   }
 
   @Override

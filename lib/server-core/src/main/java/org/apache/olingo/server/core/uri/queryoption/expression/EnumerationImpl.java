@@ -32,7 +32,7 @@ public class EnumerationImpl implements Enumeration {
   private final EdmEnumType type;
   private final List<String> values;
 
-  public EnumerationImpl(final EdmEnumType type, final List<String> values) {
+  public EnumerationImpl(EdmEnumType type, List<String> values) {
     this.type = type;
     this.values = values;
   }
@@ -50,7 +50,7 @@ public class EnumerationImpl implements Enumeration {
   }
 
   @Override
-  public <T> T accept(final ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
+  public <T> T accept(ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
     return visitor.visitEnum(type, values);
   }
 

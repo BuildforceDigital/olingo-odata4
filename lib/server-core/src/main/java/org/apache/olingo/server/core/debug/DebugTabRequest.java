@@ -39,7 +39,7 @@ public class DebugTabRequest implements DebugTab {
   private final String protocol;
   private final Map<String, List<String>> headers;
 
-  public DebugTabRequest(final ODataRequest request) {
+  public DebugTabRequest(ODataRequest request) {
     if (request != null) {
       method = request.getMethod() == null ? UNKOWN_MSG : request.getMethod().toString();
       uri = request.getRawRequestUri() == null ? UNKOWN_MSG : request.getRawRequestUri();
@@ -54,7 +54,7 @@ public class DebugTabRequest implements DebugTab {
   }
 
   @Override
-  public void appendHtml(final Writer writer) throws IOException {
+  public void appendHtml(Writer writer) throws IOException {
     writer.append("<h2>Request Method</h2>\n")
     .append("<p>").append(method).append("</p>\n")
     .append("<h2>Request URI</h2>\n")
@@ -66,7 +66,7 @@ public class DebugTabRequest implements DebugTab {
     writer.append("<table>\n<thead>\n")
     .append("<tr><th class=\"name\">Name</th><th class=\"value\">Value</th></tr>\n")
     .append("</thead>\n<tbody>\n");
-    for (final Map.Entry<String, List<String>> entry : headers.entrySet()) {
+    for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
       List<String> headersList = entry.getValue();
       if (headersList != null && !headersList.isEmpty()) {
         for (String headerValue : headersList) {
@@ -86,7 +86,7 @@ public class DebugTabRequest implements DebugTab {
   }
 
   @Override
-  public void appendJson(final JsonGenerator gen) throws IOException {
+  public void appendJson(JsonGenerator gen) throws IOException {
     gen.writeStartObject();
     gen.writeStringField("method", method);
 

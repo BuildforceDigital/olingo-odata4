@@ -48,11 +48,11 @@ public class EdmDuration extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode, Class<T> returnType) throws EdmPrimitiveTypeException {
 
-    final Matcher matcher = PATTERN.matcher(value);
+    Matcher matcher = PATTERN.matcher(value);
     if (!matcher.matches()
         || matcher.group(1) == null && matcher.group(2) == null && matcher.group(3) == null
         && matcher.group(4) == null) {
@@ -75,18 +75,18 @@ public class EdmDuration extends SingletonPrimitiveType {
 
     try {
       return EdmDecimal.convertDecimal(result, returnType);
-    } catch (final IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       throw new EdmPrimitiveTypeException("The literal '" + value
           + "' cannot be converted to value type " + returnType + ".", e);
-    } catch (final ClassCastException e) {
+    } catch (ClassCastException e) {
       throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.", e);
     }
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     BigDecimal valueDecimal;
     if (value instanceof BigDecimal) {
@@ -103,27 +103,27 @@ public class EdmDuration extends SingletonPrimitiveType {
       throw new EdmPrimitiveTypeException("The value '" + value + "' does not match the facets' constraints.");
     }
 
-    final StringBuilder result = new StringBuilder();
+    StringBuilder result = new StringBuilder();
     if (valueDecimal.signum() == -1) {
       result.append('-');
       valueDecimal = valueDecimal.negate();
     }
     result.append('P');
     BigInteger seconds = valueDecimal.toBigInteger();
-    final BigInteger days = seconds.divide(BigInteger.valueOf(24 * 60 * 60));
+    BigInteger days = seconds.divide(BigInteger.valueOf(24 * 60 * 60));
     if (!days.equals(BigInteger.ZERO)) {
       result.append(days.toString());
       result.append('D');
     }
     result.append('T');
     seconds = seconds.subtract(days.multiply(BigInteger.valueOf(24 * 60 * 60)));
-    final BigInteger hours = seconds.divide(BigInteger.valueOf(60 * 60));
+    BigInteger hours = seconds.divide(BigInteger.valueOf(60 * 60));
     if (!hours.equals(BigInteger.ZERO)) {
       result.append(hours.toString());
       result.append('H');
     }
     seconds = seconds.subtract(hours.multiply(BigInteger.valueOf(60 * 60)));
-    final BigInteger minutes = seconds.divide(BigInteger.valueOf(60));
+    BigInteger minutes = seconds.divide(BigInteger.valueOf(60));
     if (!minutes.equals(BigInteger.ZERO)) {
       result.append(minutes.toString());
       result.append('M');

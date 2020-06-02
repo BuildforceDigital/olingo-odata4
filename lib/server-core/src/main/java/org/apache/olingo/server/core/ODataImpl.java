@@ -65,11 +65,11 @@ import org.apache.olingo.server.core.uri.UriHelperImpl;
 public class ODataImpl extends OData {
 
   @Override
-  public ODataSerializer createSerializer(final ContentType contentType) throws SerializerException {
+  public ODataSerializer createSerializer(ContentType contentType) throws SerializerException {
     ODataSerializer serializer = null;
 
     if (contentType != null && contentType.isCompatible(ContentType.APPLICATION_JSON)) {
-      final String metadata = contentType.getParameter(ContentType.PARAMETER_ODATA_METADATA);
+      String metadata = contentType.getParameter(ContentType.PARAMETER_ODATA_METADATA);
       if (metadata == null
           || ContentType.VALUE_ODATA_METADATA_MINIMAL.equalsIgnoreCase(metadata)
           || ContentType.VALUE_ODATA_METADATA_NONE.equalsIgnoreCase(metadata)
@@ -92,15 +92,15 @@ public class ODataImpl extends OData {
   }
   
   @Override
-  public ODataSerializer createSerializer(final ContentType contentType, 
-      final List<String> versions) throws SerializerException {
+  public ODataSerializer createSerializer(ContentType contentType,
+                                          List<String> versions) throws SerializerException {
     ODataSerializer serializer = null;
     IConstants constants = new Constantsv00();
     if(versions!=null && !versions.isEmpty() && getMaxVersion(versions) > 4){
       constants = new Constantsv01() ;
     }
     if (contentType != null && contentType.isCompatible(ContentType.APPLICATION_JSON)) {
-      final String metadata = contentType.getParameter(ContentType.PARAMETER_ODATA_METADATA);
+      String metadata = contentType.getParameter(ContentType.PARAMETER_ODATA_METADATA);
       if (metadata == null
           || ContentType.VALUE_ODATA_METADATA_MINIMAL.equalsIgnoreCase(metadata)
           || ContentType.VALUE_ODATA_METADATA_NONE.equalsIgnoreCase(metadata)
@@ -128,7 +128,7 @@ public class ODataImpl extends OData {
   }
 
   @Override
-  public EdmAssistedSerializer createEdmAssistedSerializer(final ContentType contentType) throws SerializerException {
+  public EdmAssistedSerializer createEdmAssistedSerializer(ContentType contentType) throws SerializerException {
     if (contentType != null && contentType.isCompatible(ContentType.APPLICATION_JSON)) {
       return new EdmAssistedJsonSerializer(contentType);
     }
@@ -140,7 +140,7 @@ public class ODataImpl extends OData {
   
   
   @Override
-  public EdmDeltaSerializer createEdmDeltaSerializer(final ContentType contentType, final List<String> versions)
+  public EdmDeltaSerializer createEdmDeltaSerializer(ContentType contentType, List<String> versions)
       throws SerializerException {
     if (contentType != null && contentType.isCompatible(ContentType.APPLICATION_JSON)) {
       if(versions!=null && !versions.isEmpty()){
@@ -168,7 +168,7 @@ public class ODataImpl extends OData {
   }
 
   @Override
-  public ODataHttpHandler createHandler(final ServiceMetadata serviceMetadata) {
+  public ODataHttpHandler createHandler(ServiceMetadata serviceMetadata) {
     return new ODataHttpHandlerImpl(this, serviceMetadata);
   }
 
@@ -178,14 +178,14 @@ public class ODataImpl extends OData {
   }
 
   @Override
-  public ServiceMetadata createServiceMetadata(final CsdlEdmProvider edmProvider,
-      final List<EdmxReference> references) {
+  public ServiceMetadata createServiceMetadata(CsdlEdmProvider edmProvider,
+                                               List<EdmxReference> references) {
     return createServiceMetadata(edmProvider, references, null);
   }
 
   @Override
-  public ServiceMetadata createServiceMetadata(final CsdlEdmProvider edmProvider,
-      final List<EdmxReference> references, final ServiceMetadataETagSupport serviceMetadataETagSupport) {
+  public ServiceMetadata createServiceMetadata(CsdlEdmProvider edmProvider,
+                                               List<EdmxReference> references, ServiceMetadataETagSupport serviceMetadataETagSupport) {
     return new ServiceMetadataImpl(edmProvider, references, serviceMetadataETagSupport);
   }
 
@@ -200,7 +200,7 @@ public class ODataImpl extends OData {
   }
 
   @Override
-  public ODataDeserializer createDeserializer(final ContentType contentType) throws DeserializerException {
+  public ODataDeserializer createDeserializer(ContentType contentType) throws DeserializerException {
     if (contentType != null && contentType.isCompatible(ContentType.JSON)) {
       return new ODataJsonDeserializer(contentType);
     } else if (contentType != null && (contentType.isCompatible(ContentType.APPLICATION_XML)
@@ -214,8 +214,8 @@ public class ODataImpl extends OData {
     }
   }  
   @Override
-  public ODataDeserializer createDeserializer(final ContentType contentType,
-      ServiceMetadata metadata) throws DeserializerException {
+  public ODataDeserializer createDeserializer(ContentType contentType,
+                                              ServiceMetadata metadata) throws DeserializerException {
     if (contentType != null && contentType.isCompatible(ContentType.JSON)) {
       return new ODataJsonDeserializer(contentType, metadata);
     } else if (contentType != null && (contentType.isCompatible(ContentType.APPLICATION_XML)
@@ -230,7 +230,7 @@ public class ODataImpl extends OData {
   }
 
   @Override
-  public EdmPrimitiveType createPrimitiveTypeInstance(final EdmPrimitiveTypeKind kind) {
+  public EdmPrimitiveType createPrimitiveTypeInstance(EdmPrimitiveTypeKind kind) {
     return EdmPrimitiveTypeFactory.getInstance(kind);
   }
 
@@ -240,12 +240,12 @@ public class ODataImpl extends OData {
   }
 
   @Override
-  public Preferences createPreferences(final Collection<String> preferHeaders) {
+  public Preferences createPreferences(Collection<String> preferHeaders) {
     return new PreferencesImpl(preferHeaders);
   }
 
   @Override
-  public DebugResponseHelper createDebugResponseHelper(final String debugFormat) {
+  public DebugResponseHelper createDebugResponseHelper(String debugFormat) {
     // TODO: What should we do with invalid formats?
     // TODO: Support more debug formats
     return new DebugResponseHelperImpl(debugFormat);

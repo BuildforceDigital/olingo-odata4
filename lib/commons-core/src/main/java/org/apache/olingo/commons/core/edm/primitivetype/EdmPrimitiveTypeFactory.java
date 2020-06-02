@@ -29,7 +29,7 @@ public final class EdmPrimitiveTypeFactory {
    * @param kind EdmPrimitiveTypeKind
    * @return {@link EdmPrimitiveType} instance
    */
-  public static EdmPrimitiveType getInstance(final EdmPrimitiveTypeKind kind) {
+  public static EdmPrimitiveType getInstance(EdmPrimitiveTypeKind kind) {
     switch (kind) {
     case Binary:
       return EdmBinary.getInstance();

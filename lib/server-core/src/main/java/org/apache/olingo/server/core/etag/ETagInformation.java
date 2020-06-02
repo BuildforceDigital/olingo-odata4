@@ -27,7 +27,7 @@ public class ETagInformation {
   private final boolean all;
   private final Collection<String> eTags;
 
-  public ETagInformation(final boolean all, final Collection<String> eTags) {
+  public ETagInformation(boolean all, Collection<String> eTags) {
     this.all = all;
     this.eTags = eTags;
   }
@@ -56,13 +56,13 @@ public class ETagInformation {
    * @param eTag the ETag value to match
    * @return a boolean match result
    */
-  public boolean isMatchedBy(final String eTag) {
+  public boolean isMatchedBy(String eTag) {
     if (eTag == null) {
       return false;
     } else if (all) {
       return true;
     } else {
-      for (final String candidate : eTags) {
+      for (String candidate : eTags) {
         if ((eTag.startsWith("W/") ? eTag.substring(2) : eTag)
             .equals(candidate.startsWith("W/") ? candidate.substring(2) : candidate)) {
           return true;

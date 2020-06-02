@@ -43,8 +43,8 @@ public class ActionMapKeyTest {
 
   }
 
-  private void createAndCheckForEdmException(final FullQualifiedName fqn, final FullQualifiedName typeName,
-      final Boolean collection) {
+  private void createAndCheckForEdmException(FullQualifiedName fqn, FullQualifiedName typeName,
+                                             Boolean collection) {
     try {
       new ActionMapKey(fqn, typeName, collection);
     } catch (EdmException e) {

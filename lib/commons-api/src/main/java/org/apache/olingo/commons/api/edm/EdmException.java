@@ -22,15 +22,15 @@ public class EdmException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 
-  public EdmException(final Exception cause) {
+  public EdmException(Exception cause) {
     super(cause);
   }
 
-  public EdmException(final String msg) {
+  public EdmException(String msg) {
     super(msg);
   }
 
-  public EdmException(final String string, final Exception cause) {
+  public EdmException(String string, Exception cause) {
     super(string, cause);
   }
 

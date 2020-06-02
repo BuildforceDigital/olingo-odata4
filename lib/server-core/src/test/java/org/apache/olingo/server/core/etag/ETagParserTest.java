@@ -36,7 +36,7 @@ public class ETagParserTest {
 
   @Test
   public void empty() {
-    final ETagInformation eTagInformation = eTagHelper.createETagInformation(null);
+    ETagInformation eTagInformation = eTagHelper.createETagInformation(null);
     assertFalse(eTagInformation.isAll());
     assertNotNull(eTagInformation.getETags());
     assertTrue(eTagInformation.getETags().isEmpty());
@@ -44,7 +44,7 @@ public class ETagParserTest {
 
   @Test
   public void loneStar() {
-    final ETagInformation eTagInformation = eTagHelper.createETagInformation(Collections.singleton("*"));
+    ETagInformation eTagInformation = eTagHelper.createETagInformation(Collections.singleton("*"));
     assertTrue(eTagInformation.isAll());
     assertNotNull(eTagInformation.getETags());
     assertTrue(eTagInformation.getETags().isEmpty());
@@ -52,7 +52,7 @@ public class ETagParserTest {
 
   @Test
   public void starWins() {
-    final ETagInformation eTagInformation = eTagHelper.createETagInformation(Arrays.asList("\"ETag\"", "*"));
+    ETagInformation eTagInformation = eTagHelper.createETagInformation(Arrays.asList("\"ETag\"", "*"));
     assertTrue(eTagInformation.isAll());
     assertNotNull(eTagInformation.getETags());
     assertTrue(eTagInformation.getETags().isEmpty());
@@ -60,7 +60,7 @@ public class ETagParserTest {
 
   @Test
   public void starAsEtagAndEmptyEtag() {
-    final ETagInformation eTagInformation = eTagHelper.createETagInformation(
+    ETagInformation eTagInformation = eTagHelper.createETagInformation(
         Collections.singleton("\"*\", \"\""));
     assertFalse(eTagInformation.isAll());
     assertNotNull(eTagInformation.getETags());
@@ -70,7 +70,7 @@ public class ETagParserTest {
 
   @Test
   public void severalEtags() {
-    final ETagInformation eTagInformation = eTagHelper.createETagInformation(
+    ETagInformation eTagInformation = eTagHelper.createETagInformation(
         Arrays.asList("\"ETag1\"", "\"ETag2\",, , ,W/\"ETag3\", ,"));
     assertFalse(eTagInformation.isAll());
     assertNotNull(eTagInformation.getETags());
@@ -80,7 +80,7 @@ public class ETagParserTest {
 
   @Test
   public void duplicateEtagValues() {
-    final ETagInformation eTagInformation = eTagHelper.createETagInformation(
+    ETagInformation eTagInformation = eTagHelper.createETagInformation(
         Arrays.asList("\"ETag1\"", "\"ETag2\", W/\"ETag1\", \"ETag1\""));
     assertFalse(eTagInformation.isAll());
     assertNotNull(eTagInformation.getETags());
@@ -90,7 +90,7 @@ public class ETagParserTest {
 
   @Test
   public void specialCharacters() {
-    final ETagInformation eTagInformation = eTagHelper.createETagInformation(
+    ETagInformation eTagInformation = eTagHelper.createETagInformation(
         Collections.singleton("\"!#$%&'()*+,-./:;<=>?@[]^_`{|}~¡\u00FF\", \"ETag2\""));
     assertFalse(eTagInformation.isAll());
     assertNotNull(eTagInformation.getETags());
@@ -101,7 +101,7 @@ public class ETagParserTest {
 
   @Test
   public void wrongFormat() {
-    final ETagInformation eTagInformation = eTagHelper.createETagInformation(
+    ETagInformation eTagInformation = eTagHelper.createETagInformation(
         Arrays.asList("\"ETag1\", ETag2", "w/\"ETag3\"", "W//\"ETag4\"", "W/ETag5",
             "\"\"ETag6\"\"", " \"ETag7\"\"ETag7\" ", "\"ETag8\" \"ETag8\"",
             "\"ETag 9\"", "\"ETag10\""));

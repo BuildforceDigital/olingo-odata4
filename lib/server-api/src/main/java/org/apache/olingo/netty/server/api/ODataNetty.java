@@ -32,17 +32,17 @@ public abstract class ODataNetty extends OData {
    */
   public static ODataNetty newInstance() {
     try {
-      final Class<?> clazz = Class.forName(ODataNetty.IMPLEMENTATION);
+      Class<?> clazz = Class.forName(ODataNetty.IMPLEMENTATION);
 
       
        /* We explicitly do not use the singleton pattern to keep the server state free
        * and avoid class loading issues also during hot deployment.*/
        
-      final Object object = clazz.newInstance();
+      Object object = clazz.newInstance();
 
       return (ODataNetty) object;
 
-    } catch (final Exception e) {
+    } catch (Exception e) {
       throw new ODataRuntimeException(e);
     }
   }

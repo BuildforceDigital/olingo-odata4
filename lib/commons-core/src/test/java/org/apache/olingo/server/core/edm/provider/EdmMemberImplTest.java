@@ -30,8 +30,8 @@ public class EdmMemberImplTest {
 
   @Test
   public void enumMember() {
-    final CsdlEnumMember member = new CsdlEnumMember().setName("name").setValue("value");
-    final EdmMemberImpl memberImpl = new EdmMemberImpl(mock(EdmProviderImpl.class), member);
+    CsdlEnumMember member = new CsdlEnumMember().setName("name").setValue("value");
+    EdmMemberImpl memberImpl = new EdmMemberImpl(mock(EdmProviderImpl.class), member);
 
     assertEquals("name", memberImpl.getName());
     assertEquals("value", memberImpl.getValue());

@@ -64,7 +64,7 @@ public class EdmBinaryTest extends PrimitiveTypeBaseTest {
 
   @Test
   public void valueToString() throws Exception {
-    final byte[] binary = new byte[] { (byte) 0xAA, (byte) 0xBB, (byte) 0xCC, (byte) 0xDD, (byte) 0xEE, (byte) 0xFF };
+    byte[] binary = new byte[] { (byte) 0xAA, (byte) 0xBB, (byte) 0xCC, (byte) 0xDD, (byte) 0xEE, (byte) 0xFF };
 
     assertEquals("qrvM3e7/", instance.valueToString(binary, null, null, null, null, null));
 
@@ -80,7 +80,7 @@ public class EdmBinaryTest extends PrimitiveTypeBaseTest {
 
   @Test
   public void valueOfString() throws Exception {
-    final byte[] binary = new byte[] { (byte) 0xAA, (byte) 0xBB, (byte) 0xCC, (byte) 0xDD, (byte) 0xEE, (byte) 0xFF };
+    byte[] binary = new byte[] { (byte) 0xAA, (byte) 0xBB, (byte) 0xCC, (byte) 0xDD, (byte) 0xEE, (byte) 0xFF };
 
     assertTrue(Arrays.equals(binary, instance.valueOfString("qrvM3e7_", null, null, null, null, null, byte[].class)));
     assertTrue(Arrays.equals(new Byte[] { binary[0], binary[1], binary[2] }, instance.valueOfString("qrvM", null, null,

@@ -30,7 +30,7 @@ public class EdmFunctionImpl extends AbstractEdmOperation implements EdmFunction
 
   private final CsdlFunction function;
 
-  public EdmFunctionImpl(final Edm edm, final FullQualifiedName name, final CsdlFunction function) {
+  public EdmFunctionImpl(Edm edm, FullQualifiedName name, CsdlFunction function) {
     super(edm, name, function, EdmTypeKind.FUNCTION);
     this.function = function;
   }
@@ -42,7 +42,7 @@ public class EdmFunctionImpl extends AbstractEdmOperation implements EdmFunction
 
   @Override
   public EdmReturnType getReturnType() {
-    final EdmReturnType returnType = super.getReturnType();
+    EdmReturnType returnType = super.getReturnType();
     if (returnType == null) {
       throw new EdmException("ReturnType for a function must not be null");
     }

@@ -33,7 +33,7 @@ public class SkipOptionImpl extends SystemQueryOptionImpl implements SkipOption 
     return value;
   }
 
-  public SkipOptionImpl setValue(final int value) {
+  public SkipOptionImpl setValue(int value) {
     this.value = value;
     return this;
   }

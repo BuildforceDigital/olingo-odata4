@@ -70,7 +70,7 @@ public class EdmTimeOfDayTest extends PrimitiveTypeBaseTest {
     dateTime2.set(Calendar.MINUTE, 59);
     dateTime2.set(Calendar.SECOND, 23);
 
-    final java.sql.Time time = new java.sql.Time(dateTime2.getTimeInMillis());
+    java.sql.Time time = new java.sql.Time(dateTime2.getTimeInMillis());
     assertEquals("05:59:23", instance.valueToString(time, null, null, null, null, null));
 
     assertEquals("05:59:23", instance.valueToString(dateTime2.getTimeInMillis(), null, null, null, null, null));
@@ -116,7 +116,7 @@ public class EdmTimeOfDayTest extends PrimitiveTypeBaseTest {
     assertEqualCalendar(dateTime,
         instance.valueOfString("00:00:00.000000000", null, null, null, null, null, Calendar.class));
 
-    final Time timeValue = instance.valueOfString("00:00:00.999", null, null, 3, null, null, Time.class);
+    Time timeValue = instance.valueOfString("00:00:00.999", null, null, 3, null, null, Time.class);
     assertEquals(dateTime.getTimeInMillis(), timeValue.getTime());
 
     dateTime.set(Calendar.MILLISECOND, 999);
@@ -127,7 +127,7 @@ public class EdmTimeOfDayTest extends PrimitiveTypeBaseTest {
     assertEquals(Long.valueOf(dateTime.getTimeInMillis()),
         instance.valueOfString("00:00:00.999", null, null, 3, null, null, Long.class));
 
-    final Timestamp timestamp = instance.valueOfString("00:00:00.999888777", null, null, 9, null, null,
+    Timestamp timestamp = instance.valueOfString("00:00:00.999888777", null, null, 9, null, null,
         Timestamp.class);
     assertEquals(dateTime.getTimeInMillis(), timestamp.getTime());
     assertEquals(999888777, timestamp.getNanos());

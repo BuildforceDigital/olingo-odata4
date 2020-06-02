@@ -164,7 +164,7 @@ public class EdmProviderImplTest {
     }
   }
 
-  private void callMethodAndExpectEdmException(final Edm localEdm, final String methodName) throws Exception {
+  private void callMethodAndExpectEdmException(Edm localEdm, String methodName) throws Exception {
     Method method = localEdm.getClass().getMethod(methodName, FullQualifiedName.class);
     try {
       method.invoke(localEdm, new FullQualifiedName("namespace", "name"));

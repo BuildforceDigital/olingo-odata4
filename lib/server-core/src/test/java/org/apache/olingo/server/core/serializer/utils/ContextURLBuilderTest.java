@@ -41,13 +41,13 @@ public class ContextURLBuilderTest {
 
   @Test
   public void buildServiceDocument() {
-    final ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot).build();
+    ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot).build();
     assertEquals(serviceRoot + "$metadata", ContextURLBuilder.create(contextURL).toASCIIString());
   }
 
   @Test
   public void buildRelative() {
-    final ContextURL contextURL = ContextURL.with().build();
+    ContextURL contextURL = ContextURL.with().build();
     assertEquals("$metadata", ContextURLBuilder.create(contextURL).toASCIIString());
   }
 
@@ -55,7 +55,7 @@ public class ContextURLBuilderTest {
   public void buildEntitySet() {
     EdmEntitySet entitySet = Mockito.mock(EdmEntitySet.class);
     Mockito.when(entitySet.getName()).thenReturn("Customers");
-    final ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot)
+    ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot)
         .entitySet(entitySet)
         .build();
     assertEquals(serviceRoot + "$metadata#Customers", ContextURLBuilder.create(contextURL).toASCIIString());
@@ -67,7 +67,7 @@ public class ContextURLBuilderTest {
     Mockito.when(entitySet.getName()).thenReturn("Customers");
     EdmEntityType derivedType = Mockito.mock(EdmEntityType.class);
     Mockito.when(derivedType.getFullQualifiedName()).thenReturn(new FullQualifiedName("Model", "VipCustomer"));
-    final ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot)
+    ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot)
         .entitySet(entitySet)
         .derived(derivedType)
         .build();
@@ -79,7 +79,7 @@ public class ContextURLBuilderTest {
   public void buildEntitySetWithEntitySuffix() {
     EdmEntitySet entitySet = Mockito.mock(EdmEntitySet.class);
     Mockito.when(entitySet.getName()).thenReturn("Customers");
-    final ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot)
+    ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot)
         .entitySet(entitySet)
         .suffix(Suffix.ENTITY)
         .build();
@@ -118,7 +118,7 @@ public class ContextURLBuilderTest {
     Mockito.when(entitySet.getName()).thenReturn("Customers");
     EdmEntityType derivedType = Mockito.mock(EdmEntityType.class);
     Mockito.when(derivedType.getFullQualifiedName()).thenReturn(new FullQualifiedName("Model", "VipCustomer"));
-    final ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot)
+    ContextURL contextURL = ContextURL.with().serviceRoot(serviceRoot)
         .entitySet(entitySet)
         .derived(derivedType)
         .suffix(Suffix.ENTITY)
@@ -190,7 +190,7 @@ public class ContextURLBuilderTest {
 
   @Test
   public void buildReference() {
-    final ContextURL contextURL = ContextURL.with().suffix(Suffix.REFERENCE).build();
+    ContextURL contextURL = ContextURL.with().suffix(Suffix.REFERENCE).build();
     assertEquals("../$metadata#$ref", ContextURLBuilder.create(contextURL).toASCIIString());
   }
 
@@ -208,7 +208,7 @@ public class ContextURLBuilderTest {
     EdmEntityType derivedType = Mockito.mock(EdmEntityType.class);
     Mockito.when(derivedType.getFullQualifiedName()).thenReturn(
         new FullQualifiedName("Namensräumchen", "UnüblicherName"));
-    final ContextURL contextURL = ContextURL.with().entitySet(entitySet).derived(derivedType).build();
+    ContextURL contextURL = ContextURL.with().entitySet(entitySet).derived(derivedType).build();
     assertEquals("$metadata#Entit%C3%A4ten/Namensr%C3%A4umchen.Un%C3%BCblicherName",
         ContextURLBuilder.create(contextURL).toString());
   }

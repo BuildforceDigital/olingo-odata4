@@ -84,9 +84,9 @@ public class ODataWritableContent implements ODataContent {
     		  writeBinary(mediaEntity, out);
     	  }
       } catch (SerializerException e) {
-        final ODataContentWriteErrorCallback errorCallback = options.getODataContentWriteErrorCallback();
+        ODataContentWriteErrorCallback errorCallback = options.getODataContentWriteErrorCallback();
         if (errorCallback != null) {
-          final WriteErrorContext errorContext = new WriteErrorContext(e);
+          WriteErrorContext errorContext = new WriteErrorContext(e);
           errorCallback.handleError(errorContext, Channels.newChannel(out));
         }
       }
@@ -108,7 +108,7 @@ public class ODataWritableContent implements ODataContent {
       try {
         jsonSerializer.entityCollectionIntoStream(metadata, entityType, entity, options, outputStream);
         outputStream.flush();
-      } catch (final IOException e) {
+      } catch (IOException e) {
         throw new ODataRuntimeException("Failed entity serialization", e);
       }
     }
@@ -156,7 +156,7 @@ public class ODataWritableContent implements ODataContent {
       try {
         xmlSerializer.entityCollectionIntoStream(metadata, entityType, entity, options, outputStream);
         outputStream.flush();
-      } catch (final IOException e) {
+      } catch (IOException e) {
         throw new ODataRuntimeException("Failed entity serialization", e);
       }
     }
@@ -169,7 +169,7 @@ public class ODataWritableContent implements ODataContent {
 
   @Override
   public void write(WritableByteChannel writeChannel) {
-    this.streamContent.write(Channels.newOutputStream(writeChannel));
+      streamContent.write(Channels.newOutputStream(writeChannel));
   }
 
   @Override

@@ -85,14 +85,14 @@ public class UriParserSemanticException extends UriParserException {
     }
   }
 
-  public UriParserSemanticException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public UriParserSemanticException(String developmentMessage, MessageKey messageKey,
+                                    String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
-  public UriParserSemanticException(final String developmentMessage, final Throwable cause,
-      final MessageKey messageKey,
-      final String... parameters) {
+  public UriParserSemanticException(String developmentMessage, Throwable cause,
+                                    MessageKey messageKey,
+                                    String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 }

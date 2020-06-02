@@ -222,7 +222,7 @@ public class EdmEntityContainerImplTest {
 
   private class CustomProvider extends CsdlAbstractEdmProvider {
     @Override
-    public CsdlEntitySet getEntitySet(final FullQualifiedName entityContainer, final String entitySetName)
+    public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName)
         throws ODataException {
       if (entitySetName != null) {
         return new CsdlEntitySet().setName("entitySetName");
@@ -231,7 +231,7 @@ public class EdmEntityContainerImplTest {
     }
 
     @Override
-    public CsdlSingleton getSingleton(final FullQualifiedName entityContainer, final String singletonName)
+    public CsdlSingleton getSingleton(FullQualifiedName entityContainer, String singletonName)
         throws ODataException {
       if (singletonName != null) {
         return new CsdlSingleton().setName("singletonName");
@@ -240,7 +240,7 @@ public class EdmEntityContainerImplTest {
     }
 
     @Override
-    public CsdlActionImport getActionImport(final FullQualifiedName entityContainer, final String actionImportName)
+    public CsdlActionImport getActionImport(FullQualifiedName entityContainer, String actionImportName)
         throws ODataException {
       if (actionImportName != null) {
         return new CsdlActionImport().setName("actionImportName");
@@ -249,8 +249,8 @@ public class EdmEntityContainerImplTest {
     }
 
     @Override
-    public CsdlFunctionImport getFunctionImport(final FullQualifiedName entityContainer,
-        final String functionImportName)
+    public CsdlFunctionImport getFunctionImport(FullQualifiedName entityContainer,
+                                                String functionImportName)
         throws ODataException {
       if (functionImportName != null) {
         return new CsdlFunctionImport().setName("functionImportName");
@@ -284,4 +284,5 @@ public class EdmEntityContainerImplTest {
       return container;
     }
   }
+
 }

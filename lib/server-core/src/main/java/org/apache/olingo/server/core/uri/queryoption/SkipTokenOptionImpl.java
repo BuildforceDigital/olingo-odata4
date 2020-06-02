@@ -32,7 +32,7 @@ public class SkipTokenOptionImpl extends SystemQueryOptionImpl implements SkipTo
     return getText();
   }
 
-  public SkipTokenOptionImpl setValue(final String skipTokenValue) {
+  public SkipTokenOptionImpl setValue(String skipTokenValue) {
     setText(skipTokenValue);
     return this;
   }

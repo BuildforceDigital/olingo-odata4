@@ -120,7 +120,7 @@ public class MetadataDocumentJsonSerializerTest {
   
   @Test
   public void writeMetadataWithEmptyMockedEdm() throws Exception {
-    final Edm edm = mock(Edm.class);
+    Edm edm = mock(Edm.class);
     ServiceMetadata metadata = mock(ServiceMetadata.class);
     when(metadata.getEdm()).thenReturn(edm);
 
@@ -179,13 +179,13 @@ public class MetadataDocumentJsonSerializerTest {
     edmxReferences.add(referenceWithAllAndNull);
 
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
-    final Edm edm = mock(Edm.class);
+    Edm edm = mock(Edm.class);
     when(serviceMetadata.getEdm()).thenReturn(edm);
     when(serviceMetadata.getReferences()).thenReturn(edmxReferences);
 
     InputStream metadata = serializer.metadataDocument(serviceMetadata).getContent();
     assertNotNull(metadata);
-    final String metadataString = IOUtils.toString(metadata);
+    String metadataString = IOUtils.toString(metadata);
     // edmx reference
     assertTrue(metadataString.contains(
         "\"$Reference\":{\"http://example.com\":{},"));
@@ -558,7 +558,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlEnumType getEnumType(final FullQualifiedName enumTypeName) {
+    public CsdlEnumType getEnumType(FullQualifiedName enumTypeName) {
       
       if (nameENString.equals(enumTypeName)) {
         
@@ -578,7 +578,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlEntityType getEntityType(final FullQualifiedName entityTypeName) {
+    public CsdlEntityType getEntityType(FullQualifiedName entityTypeName) {
       if (entityTypeName.equals(nameETAbstract)) {
         return new CsdlEntityType()
         .setName("ETAbstract")
@@ -645,7 +645,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlComplexType getComplexType(final FullQualifiedName complexTypeName) {
+    public CsdlComplexType getComplexType(FullQualifiedName complexTypeName) {
       if (complexTypeName.equals(nameCTTwoPrim)) {
         return new CsdlComplexType()
         .setName("CTTwoPrim")
@@ -680,7 +680,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public List<CsdlAction> getActions(final FullQualifiedName actionName) {
+    public List<CsdlAction> getActions(FullQualifiedName actionName) {
       if (actionName.equals(nameUARTPrimParam)) {
         return Collections.singletonList(
             new CsdlAction().setName("UARTPrimParam")
@@ -723,7 +723,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public List<CsdlFunction> getFunctions(final FullQualifiedName functionName) {
+    public List<CsdlFunction> getFunctions(FullQualifiedName functionName) {
       if (functionName.equals(nameUFNRTInt16)) {
         return Collections.singletonList(
             new CsdlFunction()
@@ -751,7 +751,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlEntitySet getEntitySet(final FullQualifiedName entityContainer, final String entitySetName) {
+    public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName) {
       if (entitySetName.equals("ESAllPrim")) {
         return new CsdlEntitySet()
         .setName("ESAllPrim")
@@ -792,7 +792,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlSingleton getSingleton(final FullQualifiedName entityContainer, final String singletonName) {
+    public CsdlSingleton getSingleton(FullQualifiedName entityContainer, String singletonName) {
       if (singletonName.equals("SI")) {
         return new CsdlSingleton()
         .setName("SI")
@@ -810,7 +810,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlActionImport getActionImport(final FullQualifiedName entityContainer, final String actionImportName) {
+    public CsdlActionImport getActionImport(FullQualifiedName entityContainer, String actionImportName) {
       if (entityContainer.equals(nameContainer)) {
         if (actionImportName.equals("AIRTPrimParam")) {
           return new CsdlActionImport()
@@ -823,8 +823,8 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlFunctionImport getFunctionImport(final FullQualifiedName entityContainer,
-        final String functionImportName) {
+    public CsdlFunctionImport getFunctionImport(FullQualifiedName entityContainer,
+                                                String functionImportName) {
       if (null != entityContainer && entityContainer.equals(nameContainer)) {
         if (functionImportName.equals("FINRTInt16")) {
           return new CsdlFunctionImport()
@@ -946,7 +946,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
     
     @Override
-    public CsdlEntityContainerInfo getEntityContainerInfo(final FullQualifiedName entityContainerName) {
+    public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName) {
       if (entityContainerName == null) {
         return new CsdlEntityContainerInfo().setContainerName(new FullQualifiedName("org.olingo", "container"));
       }
@@ -982,12 +982,12 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlTypeDefinition getTypeDefinition(final FullQualifiedName typeDefinitionName) {
+    public CsdlTypeDefinition getTypeDefinition(FullQualifiedName typeDefinitionName) {
       return null;
     }
 
     @Override
-    public CsdlTerm getTerm(final FullQualifiedName termName) {
+    public CsdlTerm getTerm(FullQualifiedName termName) {
       if (new FullQualifiedName("ns", "term").equals(termName)) {
         return new CsdlTerm().setType("Edm.String").setName("term");
 
@@ -1013,7 +1013,7 @@ public class MetadataDocumentJsonSerializerTest {
     }
 
     @Override
-    public CsdlAnnotations getAnnotationsGroup(final FullQualifiedName targetName, final String qualifier) {
+    public CsdlAnnotations getAnnotationsGroup(FullQualifiedName targetName, String qualifier) {
       if (new FullQualifiedName("Alias", "ETAbstract").equals(targetName) && "Tablett".equals(qualifier)) {
         CsdlAnnotations annoGroup = new CsdlAnnotations();
         annoGroup.setTarget("Alias.ETAbstract").setQualifier("Tablett");

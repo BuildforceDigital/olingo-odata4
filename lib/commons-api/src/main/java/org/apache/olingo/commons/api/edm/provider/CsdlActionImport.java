@@ -30,13 +30,13 @@ public class CsdlActionImport extends CsdlOperationImport {
   private FullQualifiedName action;
 
   @Override
-  public CsdlActionImport setName(final String name) {
+  public CsdlActionImport setName(String name) {
     this.name = name;
     return this;
   }
 
   @Override
-  public CsdlActionImport setEntitySet(final String entitySet) {
+  public CsdlActionImport setEntitySet(String entitySet) {
     this.entitySet = entitySet;
     return this;
   }
@@ -62,7 +62,7 @@ public class CsdlActionImport extends CsdlOperationImport {
    * @param action full qualified name
    * @return this instance
    */
-  public CsdlActionImport setAction(final String action) {
+  public CsdlActionImport setAction(String action) {
     this.action = new FullQualifiedName(action);
     return this;
   }
@@ -72,13 +72,13 @@ public class CsdlActionImport extends CsdlOperationImport {
    * @param action full qualified name
    * @return this instance
    */
-  public CsdlActionImport setAction(final FullQualifiedName action) {
+  public CsdlActionImport setAction(FullQualifiedName action) {
     this.action = action;
     return this;
   }
 
   @Override
-  public CsdlActionImport setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlActionImport setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

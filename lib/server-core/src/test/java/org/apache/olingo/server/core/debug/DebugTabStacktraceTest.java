@@ -33,7 +33,7 @@ public class DebugTabStacktraceTest extends AbstractDebugTabTest {
     exception.setStackTrace(new StackTraceElement[] {
         new StackTraceElement("some.class", "some.method", "filename", 42),
         cause.getStackTrace()[0] });
-    final DebugTabStacktrace tab = new DebugTabStacktrace(exception);
+    DebugTabStacktrace tab = new DebugTabStacktrace(exception);
     assertEquals("{\"exceptions\":["
         + "{\"class\":\"java.lang.Exception\",\"message\":\"error\","
         + "\"invocation\":{\"class\":\"some.class\",\"method\":\"some.method\",\"line\":42}},"

@@ -44,14 +44,14 @@ public final class PreferencesApplied {
   /** Returns a string representation that can be used as value of a Preference-Applied HTTP response header. */
   public String toValueString() {
     StringBuilder result = new StringBuilder();
-    for (final Map.Entry<String, String> entry : applied.entrySet()) {
+    for (Map.Entry<String, String> entry : applied.entrySet()) {
       if (result.length() > 0) {
         result.append(',').append(' ');
       }
-      final String key = entry.getKey();
+      String key = entry.getKey();
       result.append(key);
       if (entry.getValue() != null) {
-        final boolean safe = isSafe(key);
+        boolean safe = isSafe(key);
         result.append('=')
         .append(safe ? "" : '"')
         .append(entry.getValue().replaceAll("[\\\\\"]", "\\\\$0"))
@@ -61,7 +61,7 @@ public final class PreferencesApplied {
     return result.toString();
   }
 
-  private boolean isSafe(final String key) {
+  private boolean isSafe(String key) {
     if (SAFE_PREFERENCE_NAMES.isEmpty()) {
       SAFE_PREFERENCE_NAMES.add(PreferenceName.ALLOW_ENTITY_REFERENCES.getName());
       SAFE_PREFERENCE_NAMES.add(PreferenceName.CALLBACK.getName());
@@ -113,7 +113,7 @@ public final class PreferencesApplied {
     }
 
     /** Sets the value of the applied preference <code>odata.maxpagesize</code>. */
-    public Builder maxPageSize(final Integer maxPageSize) {
+    public Builder maxPageSize(Integer maxPageSize) {
       add(PreferenceName.MAX_PAGE_SIZE.getName(), Integer.toString(maxPageSize));
       return this;
     }
@@ -125,7 +125,7 @@ public final class PreferencesApplied {
     }
 
     /** Sets the value of the applied preference <code>return</code>. */
-    public Builder returnRepresentation(final Return returnRepresentation) {
+    public Builder returnRepresentation(Return returnRepresentation) {
       add(PreferenceName.RETURN.getName(), returnRepresentation.name().toLowerCase(Locale.ROOT));
       return this;
     }
@@ -137,7 +137,7 @@ public final class PreferencesApplied {
     }
 
     /** Sets the value of the applied preference <code>wait</code>. */
-    public Builder waitPreference(final Integer wait) {
+    public Builder waitPreference(Integer wait) {
       add(PreferenceName.WAIT.getName(), Integer.toString(wait));
       return this;
     }
@@ -150,7 +150,7 @@ public final class PreferencesApplied {
      * @param name preference name
      * @param value preference value
      */
-    public Builder preference(final String name, final String value) {
+    public Builder preference(String name, String value) {
       if (name != null) {
         add(name.toLowerCase(Locale.ROOT), value);
       }
@@ -162,7 +162,7 @@ public final class PreferencesApplied {
       return preferencesApplied;
     }
 
-    private void add(final String name, final String value) {
+    private void add(String name, String value) {
       if (!preferencesApplied.applied.containsKey(name)) {
         preferencesApplied.applied.put(name, value);
       }

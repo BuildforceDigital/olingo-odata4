@@ -51,7 +51,7 @@ public abstract class Valuable extends Annotatable {
    * Set string representation of type.
    * @param type string representation of type
    */
-  public void setType(final String type) {
+  public void setType(String type) {
     this.type = type;
   }
 
@@ -159,7 +159,7 @@ public abstract class Valuable extends Annotatable {
    * @param valueType value type
    * @param value value
    */
-  public void setValue(final ValueType valueType, final Object value) {
+  public void setValue(ValueType valueType, Object value) {
     this.valueType = valueType;
     this.value = value;
   }
@@ -173,7 +173,7 @@ public abstract class Valuable extends Annotatable {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -181,7 +181,7 @@ public abstract class Valuable extends Annotatable {
       return false;
     }
 
-    final Valuable other = (Valuable) o;
+    Valuable other = (Valuable) o;
     return getAnnotations().equals(other.getAnnotations())
         && (valueType == null ? other.valueType == null : valueType.equals(other.valueType))
         && (value == null ? other.value == null : value.equals(other.value))

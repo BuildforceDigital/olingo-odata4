@@ -41,4 +41,5 @@ public interface ActionEntityCollectionProcessor extends Processor {
    */
   void processActionEntityCollection(ODataRequest request, ODataResponse response, UriInfo uriInfo,
       ContentType requestFormat, ContentType responseFormat) throws ODataApplicationException, ODataLibraryException;
+
 }

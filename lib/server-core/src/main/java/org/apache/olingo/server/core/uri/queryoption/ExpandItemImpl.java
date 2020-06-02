@@ -56,7 +56,7 @@ public class ExpandItemImpl implements ExpandItem {
   private boolean hasCountPath;
   private EdmType startTypeFilter;
 
-  public ExpandItemImpl setSystemQueryOption(final SystemQueryOption sysItem) {
+  public ExpandItemImpl setSystemQueryOption(SystemQueryOption sysItem) {
 
     if (sysItem instanceof ApplyOption) {
       validateDoubleSystemQueryOption(applyOption, sysItem);
@@ -94,13 +94,13 @@ public class ExpandItemImpl implements ExpandItem {
     return this;
   }
 
-  private void validateDoubleSystemQueryOption(final SystemQueryOption oldOption, final SystemQueryOption newOption) {
+  private void validateDoubleSystemQueryOption(SystemQueryOption oldOption, SystemQueryOption newOption) {
     if (oldOption != null) {
       throw new ODataRuntimeException(newOption.getName());
     }
   }
 
-  public ExpandItemImpl setSystemQueryOptions(final List<SystemQueryOption> list) {
+  public ExpandItemImpl setSystemQueryOptions(List<SystemQueryOption> list) {
     for (SystemQueryOption item : list) {
       setSystemQueryOption(item);
     }
@@ -158,7 +158,7 @@ public class ExpandItemImpl implements ExpandItem {
     return applyOption;
   }
 
-  public ExpandItemImpl setResourcePath(final UriInfoResource resourceInfo) {
+  public ExpandItemImpl setResourcePath(UriInfoResource resourceInfo) {
     this.resourceInfo = resourceInfo;
     return this;
   }
@@ -174,7 +174,7 @@ public class ExpandItemImpl implements ExpandItem {
     return isStar;
   }
 
-  public ExpandItemImpl setIsStar(final boolean isStar) {
+  public ExpandItemImpl setIsStar(boolean isStar) {
     this.isStar = isStar;
     return this;
   }
@@ -184,7 +184,7 @@ public class ExpandItemImpl implements ExpandItem {
     return isRef;
   }
 
-  public ExpandItemImpl setIsRef(final boolean isRef) {
+  public ExpandItemImpl setIsRef(boolean isRef) {
     this.isRef = isRef;
     return this;
   }
@@ -194,17 +194,17 @@ public class ExpandItemImpl implements ExpandItem {
     return startTypeFilter;
   }
 
-  public ExpandItemImpl setTypeFilter(final EdmType startTypeFilter) {
+  public ExpandItemImpl setTypeFilter(EdmType startTypeFilter) {
     this.startTypeFilter = startTypeFilter;
     return this;
   }
 
   @Override
   public boolean hasCountPath() {
-    return this.hasCountPath;
+    return hasCountPath;
   }
   
   public void setCountPath(boolean value) {
-    this.hasCountPath = value;
+      hasCountPath = value;
   }
 }

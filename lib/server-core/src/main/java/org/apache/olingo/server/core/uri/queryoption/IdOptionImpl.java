@@ -27,7 +27,7 @@ public class IdOptionImpl extends SystemQueryOptionImpl implements IdOption {
     setKind(SystemQueryOptionKind.ID);
   }
 
-  public IdOptionImpl setValue(final String value) {
+  public IdOptionImpl setValue(String value) {
     setText(value);
     return this;
   }

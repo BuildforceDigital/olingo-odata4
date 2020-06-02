@@ -29,7 +29,7 @@ public abstract class QueryOptionImpl implements QueryOption {
     return name;
   }
 
-  public QueryOptionImpl setName(final String name) {
+  public QueryOptionImpl setName(String name) {
     this.name = name;
     return this;
   }
@@ -39,7 +39,7 @@ public abstract class QueryOptionImpl implements QueryOption {
     return text;
   }
 
-  public QueryOptionImpl setText(final String value) {
+  public QueryOptionImpl setText(String value) {
     text = value;
     return this;
   }

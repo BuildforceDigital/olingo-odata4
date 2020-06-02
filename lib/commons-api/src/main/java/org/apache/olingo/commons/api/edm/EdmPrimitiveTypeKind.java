@@ -104,7 +104,7 @@ public enum EdmPrimitiveTypeKind {
    * @param fqn full-qualified type name
    * @return {@link EdmPrimitiveTypeKind} object
    */
-  public static EdmPrimitiveTypeKind valueOfFQN(final FullQualifiedName fqn) {
+  public static EdmPrimitiveTypeKind valueOfFQN(FullQualifiedName fqn) {
     if (EdmPrimitiveType.EDM_NAMESPACE.equals(fqn.getNamespace())) {
       return valueOf(fqn.getName());
     } else {
@@ -117,7 +117,7 @@ public enum EdmPrimitiveTypeKind {
    * @param fqn String containing a full-qualified type name
    * @return {@link EdmPrimitiveTypeKind} object
    */
-  public static EdmPrimitiveTypeKind valueOfFQN(final String fqn) {
+  public static EdmPrimitiveTypeKind valueOfFQN(String fqn) {
     if (!fqn.startsWith(EdmPrimitiveType.EDM_NAMESPACE + ".")) {
       throw new IllegalArgumentException(fqn + " does not look like an Edm primitive type");
     }

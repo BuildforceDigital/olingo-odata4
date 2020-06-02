@@ -56,7 +56,7 @@ public class CsdlCollection extends CsdlDynamicExpression {
       return false;
     }
     CsdlCollection annotColl = (CsdlCollection) obj;
-    return (this.getItems() == null ? annotColl.getItems() == null :
+    return (getItems() == null ? annotColl.getItems() == null :
       checkItems(annotColl.getItems()));
   }
   
@@ -64,9 +64,9 @@ public class CsdlCollection extends CsdlDynamicExpression {
     if (annotCollItems == null) {
       return false;
     }
-    if (this.getItems().size() == annotCollItems.size()) {
-      for (int i = 0; i < this.getItems().size(); i++) {
-        if (!this.getItems().get(i).equals(annotCollItems.get(i))) {
+    if (getItems().size() == annotCollItems.size()) {
+      for (int i = 0; i < getItems().size(); i++) {
+        if (!getItems().get(i).equals(annotCollItems.get(i))) {
           return false;
         }
       }

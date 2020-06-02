@@ -62,7 +62,7 @@ public class CircleStreamBuffer {
    *
    * @param initialCapacity initial capacity of internal buffer
    */
-  public CircleStreamBuffer(final int initialCapacity) {
+  public CircleStreamBuffer(int initialCapacity) {
     currentAllocateCapacity = initialCapacity;
     createNewWriteBuffer();
     inStream = new InternalInputStream(this);
@@ -170,7 +170,7 @@ public class CircleStreamBuffer {
     return tmp;
   }
 
-  private int read(final byte[] b, final int off, final int len) throws IOException {
+  private int read(byte[] b, int off, int len) throws IOException {
     ByteBuffer readBuffer = getReadBuffer();
     if (readBuffer == null) {
       return READ_EOF;
@@ -218,12 +218,12 @@ public class CircleStreamBuffer {
   // #
   // #############################################
 
-  private void write(final byte[] data, final int off, final int len) throws IOException {
+  private void write(byte[] data, int off, int len) throws IOException {
     ByteBuffer writeBuffer = getWriteBuffer(len);
     writeBuffer.put(data, off, len);
   }
 
-  private ByteBuffer getWriteBuffer(final int size) throws IOException {
+  private ByteBuffer getWriteBuffer(int size) throws IOException {
     if (writeClosed) {
       throw new IOException("Tried to write into closed stream.");
     }
@@ -240,7 +240,7 @@ public class CircleStreamBuffer {
     return currentWriteBuffer;
   }
 
-  private void write(final int b) throws IOException {
+  private void write(int b) throws IOException {
     ByteBuffer writeBuffer = getWriteBuffer(1);
     writeBuffer.put((byte) b);
   }
@@ -256,7 +256,7 @@ public class CircleStreamBuffer {
    *
    * @param requestedCapacity minimum capacity for new allocated buffer
    */
-  private void createNewWriteBuffer(final int requestedCapacity) {
+  private void createNewWriteBuffer(int requestedCapacity) {
     ByteBuffer b = allocateBuffer(requestedCapacity);
     bufferQueue.add(b);
     currentWriteBuffer = b;
@@ -268,7 +268,7 @@ public class CircleStreamBuffer {
    * @param requestedCapacity minimal capacity of new buffer
    * @return the buffer
    */
-  private ByteBuffer allocateBuffer(final int requestedCapacity) {
+  private ByteBuffer allocateBuffer(int requestedCapacity) {
     if (requestedCapacity > MAX_CAPACITY) {
       currentAllocateCapacity = MAX_CAPACITY;
       return ByteBuffer.allocate(requestedCapacity);
@@ -299,7 +299,7 @@ public class CircleStreamBuffer {
 
     private final CircleStreamBuffer inBuffer;
 
-    public InternalInputStream(final CircleStreamBuffer csBuffer) {
+    public InternalInputStream(CircleStreamBuffer csBuffer) {
       inBuffer = csBuffer;
     }
 
@@ -314,7 +314,7 @@ public class CircleStreamBuffer {
     }
 
     @Override
-    public int read(final byte[] buffer, final int off, final int len) throws IOException {
+    public int read(byte[] buffer, int off, int len) throws IOException {
       return inBuffer.read(buffer, off, len);
     }
 
@@ -330,17 +330,17 @@ public class CircleStreamBuffer {
   private static class InternalOutputStream extends OutputStream {
     private final CircleStreamBuffer outBuffer;
 
-    public InternalOutputStream(final CircleStreamBuffer csBuffer) {
+    public InternalOutputStream(CircleStreamBuffer csBuffer) {
       outBuffer = csBuffer;
     }
 
     @Override
-    public void write(final int b) throws IOException {
+    public void write(int b) throws IOException {
       outBuffer.write(b);
     }
 
     @Override
-    public void write(final byte[] buffer, final int off, final int len) throws IOException {
+    public void write(byte[] buffer, int off, int len) throws IOException {
       outBuffer.write(buffer, off, len);
     }
 

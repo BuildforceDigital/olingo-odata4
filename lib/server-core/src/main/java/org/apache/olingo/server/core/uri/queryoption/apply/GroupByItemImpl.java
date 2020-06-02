@@ -40,7 +40,7 @@ public class GroupByItemImpl implements GroupByItem {
     return path == null ? Collections.<UriResource> emptyList() : path.getUriResourceParts();
   }
 
-  public GroupByItemImpl setPath(final UriInfo uriInfo) {
+  public GroupByItemImpl setPath(UriInfo uriInfo) {
     path = uriInfo;
     return this;
   }
@@ -50,7 +50,7 @@ public class GroupByItemImpl implements GroupByItem {
     return rollup;
   }
 
-  public GroupByItemImpl addRollupItem(final GroupByItem groupByItem) {
+  public GroupByItemImpl addRollupItem(GroupByItem groupByItem) {
     rollup.add(groupByItem);
     return this;
   }
@@ -61,7 +61,7 @@ public class GroupByItemImpl implements GroupByItem {
   }
 
   public GroupByItemImpl setIsRollupAll() {
-    this.isRollupAll = true;
+      isRollupAll = true;
     return this;
   }
 }

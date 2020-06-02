@@ -117,13 +117,13 @@ public class ApplyParser {
   private Collection<String> crossjoinEntitySetNames;
   private Map<String, AliasQueryOption> aliases;
 
-  public ApplyParser(final Edm edm, final OData odata) {
+  public ApplyParser(Edm edm, OData odata) {
     this.edm = edm;
     this.odata = odata;
   }
 
   public ApplyOption parse(UriTokenizer tokenizer, EdmStructuredType referencedType,
-      final Collection<String> crossjoinEntitySetNames, final Map<String, AliasQueryOption> aliases)
+      Collection<String> crossjoinEntitySetNames, Map<String, AliasQueryOption> aliases)
       throws UriParserException, UriValidationException {
     this.tokenizer = tokenizer;
     this.crossjoinEntitySetNames = crossjoinEntitySetNames;
@@ -159,7 +159,7 @@ public class ApplyParser {
       return new ExpandImpl().setExpandOption(parseExpandTrafo(referencedType));
 
     } else if (tokenizer.next(TokenKind.FilterTrafo)) {
-      final FilterOption filterOption = new FilterParser(edm, odata)
+      FilterOption filterOption = new FilterParser(edm, odata)
           .parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
       ParserHelper.requireNext(tokenizer, TokenKind.CLOSE);
       return new FilterImpl().setFilterOption(filterOption);
@@ -168,7 +168,7 @@ public class ApplyParser {
       return parseGroupByTrafo(referencedType);
 
     } else if (tokenizer.next(TokenKind.SearchTrafo)) {
-      final SearchOption searchOption = new SearchParser().parse(tokenizer);
+      SearchOption searchOption = new SearchParser().parse(tokenizer);
       ParserHelper.requireNext(tokenizer, TokenKind.CLOSE);
       return new SearchImpl().setSearchOption(searchOption);
 
@@ -176,7 +176,7 @@ public class ApplyParser {
       return parseCustomFunction(new FullQualifiedName(tokenizer.getText()), referencedType);
 
     } else {
-      final TokenKind kind = ParserHelper.next(tokenizer,
+      TokenKind kind = ParserHelper.next(tokenizer,
           TokenKind.BottomCountTrafo, TokenKind.BottomPercentTrafo, TokenKind.BottomSumTrafo,
           TokenKind.TopCountTrafo, TokenKind.TopPercentTrafo, TokenKind.TopSumTrafo);
       if (kind == null) {
@@ -205,22 +205,22 @@ public class ApplyParser {
 
     // First try is checking for a (potentially empty) path prefix and the things that could follow it.
     UriInfoImpl uriInfo = new UriInfoImpl();
-    final String identifierLeft = parsePathPrefix(uriInfo, referencedType);
+    String identifierLeft = parsePathPrefix(uriInfo, referencedType);
     if (identifierLeft != null) {
-      final String customAggregate = tokenizer.getText();
+      String customAggregate = tokenizer.getText();
       // A custom aggregate (an OData identifier) is defined in the CustomAggregate
       // EDM annotation (in namespace Org.OData.Aggregation.V1) of the structured type or of the entity container.
       // Currently we don't look into annotations, so all custom aggregates are allowed and have no type.
       uriInfo.addResourcePart(new UriResourcePrimitivePropertyImpl(createDynamicProperty(customAggregate, null)));
       aggregateExpression.setPath(uriInfo);
-      final String alias = parseAsAlias(referencedType, false);
+      String alias = parseAsAlias(referencedType, false);
       aggregateExpression.setAlias(alias);
       if (alias != null) {
         ((DynamicStructuredType) referencedType).addProperty(createDynamicProperty(alias, null));
       }
       parseAggregateFrom(aggregateExpression, referencedType);
     } else if (tokenizer.next(TokenKind.OPEN)) {
-      final UriResource lastResourcePart = uriInfo.getLastResourcePart();
+      UriResource lastResourcePart = uriInfo.getLastResourcePart();
       if (lastResourcePart == null) {
         throw new UriParserSyntaxException("Invalid 'aggregateExpr' syntax.",
             UriParserSyntaxException.MessageKeys.SYNTAX);
@@ -233,7 +233,7 @@ public class ApplyParser {
     } else if (tokenizer.next(TokenKind.COUNT)) {
       uriInfo.addResourcePart(new UriResourceCountImpl());
       aggregateExpression.setPath(uriInfo);
-      final String alias = parseAsAlias(referencedType, true);
+      String alias = parseAsAlias(referencedType, true);
       aggregateExpression.setAlias(alias);
       ((DynamicStructuredType) referencedType).addProperty(
           createDynamicProperty(alias,
@@ -244,7 +244,7 @@ public class ApplyParser {
 
       // Second try is checking for a common expression.
       tokenizer.returnToSavedState();
-      final Expression expression = new ExpressionParser(edm, odata)
+      Expression expression = new ExpressionParser(edm, odata)
           .parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
       aggregateExpression.setExpression(expression);
       parseAggregateWith(aggregateExpression);
@@ -252,7 +252,7 @@ public class ApplyParser {
         throw new UriParserSyntaxException("Invalid 'aggregateExpr' syntax.",
             UriParserSyntaxException.MessageKeys.SYNTAX);
       }
-      final String alias = parseAsAlias(referencedType, true);
+      String alias = parseAsAlias(referencedType, true);
       aggregateExpression.setAlias(alias);
       DynamicProperty dynamicProperty = createDynamicProperty(alias,
           // Determine the type for standard methods; there is no way to do this for custom methods.
@@ -274,7 +274,7 @@ public class ApplyParser {
 
   private void parseAggregateWith(AggregateExpressionImpl aggregateExpression) throws UriParserException {
     if (tokenizer.next(TokenKind.WithOperator)) {
-      final TokenKind kind = ParserHelper.next(tokenizer,
+      TokenKind kind = ParserHelper.next(tokenizer,
           TokenKind.SUM, TokenKind.MIN, TokenKind.MAX, TokenKind.AVERAGE, TokenKind.COUNTDISTINCT,
           TokenKind.QualifiedName);
       if (kind == null) {
@@ -291,7 +291,7 @@ public class ApplyParser {
     }
   }
 
-  private EdmType getTypeForAggregateMethod(final StandardMethod method, final EdmType type) {
+  private EdmType getTypeForAggregateMethod(StandardMethod method, EdmType type) {
     if (method == StandardMethod.SUM || method == StandardMethod.AVERAGE || method == StandardMethod.COUNT_DISTINCT) {
       return odata.createPrimitiveTypeInstance(EdmPrimitiveTypeKind.Decimal);
     } else if (method == StandardMethod.MIN || method == StandardMethod.MAX) {
@@ -301,11 +301,11 @@ public class ApplyParser {
     }
   }
 
-  private String parseAsAlias(final EdmStructuredType referencedType, final boolean isRequired)
+  private String parseAsAlias(EdmStructuredType referencedType, boolean isRequired)
       throws UriParserException {
     if (tokenizer.next(TokenKind.AsOperator)) {
       ParserHelper.requireNext(tokenizer, TokenKind.ODataIdentifier);
-      final String name = tokenizer.getText();
+      String name = tokenizer.getText();
       if (referencedType.getProperty(name) != null) {
         throw new UriParserSemanticException("Alias '" + name + "' is already a property.",
             UriParserSemanticException.MessageKeys.IS_PROPERTY, name);
@@ -318,7 +318,7 @@ public class ApplyParser {
   }
 
   private void parseAggregateFrom(AggregateExpressionImpl aggregateExpression,
-      final EdmStructuredType referencedType) throws UriParserException {
+      EdmStructuredType referencedType) throws UriParserException {
     while (tokenizer.next(TokenKind.FromOperator)) {
       AggregateExpressionImpl from = new AggregateExpressionImpl();
       from.setExpression(new MemberImpl(parseGroupingProperty(referencedType), referencedType));
@@ -327,7 +327,7 @@ public class ApplyParser {
     }
   }
 
-  private DynamicProperty createDynamicProperty(final String name, final EdmType type) {
+  private DynamicProperty createDynamicProperty(String name, EdmType type) {
     return name == null ? null : new DynamicProperty(name, type);
   }
 
@@ -335,14 +335,14 @@ public class ApplyParser {
       throws UriParserException, UriValidationException {
     ComputeImpl compute = new ComputeImpl();
     do {
-      final Expression expression = new ExpressionParser(edm, odata)
+      Expression expression = new ExpressionParser(edm, odata)
           .parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
-      final EdmType expressionType = ExpressionParser.getType(expression);
+      EdmType expressionType = ExpressionParser.getType(expression);
       if (expressionType.getKind() != EdmTypeKind.PRIMITIVE) {
         throw new UriParserSemanticException("Compute expressions must return primitive values.",
             UriParserSemanticException.MessageKeys.ONLY_FOR_PRIMITIVE_TYPES, "compute");
       }
-      final String alias = parseAsAlias(referencedType, true);
+      String alias = parseAsAlias(referencedType, true);
       ((DynamicStructuredType) referencedType).addProperty(createDynamicProperty(alias, expressionType));
       compute.addExpression(new ComputeExpressionImpl()
           .setExpression(expression)
@@ -367,11 +367,11 @@ public class ApplyParser {
     return concat;
   }
 
-  private ExpandOption parseExpandTrafo(final EdmStructuredType referencedType)
+  private ExpandOption parseExpandTrafo(EdmStructuredType referencedType)
       throws UriParserException, UriValidationException {
     ExpandItemImpl item = new ExpandItemImpl();
     item.setResourcePath(ExpandParser.parseExpandPath(tokenizer, edm, referencedType, item));
-    final EdmType type = ParserHelper.getTypeInformation((UriResourcePartTyped)
+    EdmType type = ParserHelper.getTypeInformation((UriResourcePartTyped)
         ((UriInfoImpl) item.getResourcePath()).getLastResourcePart());
     if (tokenizer.next(TokenKind.COMMA)) {
       if (tokenizer.next(TokenKind.FilterTrafo)) {
@@ -385,7 +385,7 @@ public class ApplyParser {
     }
     while (tokenizer.next(TokenKind.COMMA)) {
       ParserHelper.requireNext(tokenizer, TokenKind.ExpandTrafo);
-      final ExpandOption nestedExpand = parseExpandTrafo((EdmStructuredType) type);
+      ExpandOption nestedExpand = parseExpandTrafo((EdmStructuredType) type);
       if (item.getExpandOption() == null) {
         item.setSystemQueryOption(nestedExpand);
       } else {
@@ -400,7 +400,7 @@ public class ApplyParser {
     return expand;
   }
 
-  private GroupBy parseGroupByTrafo(final EdmStructuredType referencedType)
+  private GroupBy parseGroupByTrafo(EdmStructuredType referencedType)
       throws UriParserException, UriValidationException {
     GroupByImpl groupBy = new GroupByImpl();
     parseGroupByList(groupBy, referencedType);
@@ -411,7 +411,7 @@ public class ApplyParser {
     return groupBy;
   }
 
-  private void parseGroupByList(GroupByImpl groupBy, final EdmStructuredType referencedType)
+  private void parseGroupByList(GroupByImpl groupBy, EdmStructuredType referencedType)
       throws UriParserException {
     ParserHelper.requireNext(tokenizer, TokenKind.OPEN);
     do {
@@ -420,7 +420,7 @@ public class ApplyParser {
     ParserHelper.requireNext(tokenizer, TokenKind.CLOSE);
   }
 
-  private GroupByItem parseGroupByElement(final EdmStructuredType referencedType)
+  private GroupByItem parseGroupByElement(EdmStructuredType referencedType)
       throws UriParserException {
     if (tokenizer.next(TokenKind.RollUpSpec)) {
       return parseRollUpSpec(referencedType);
@@ -429,7 +429,7 @@ public class ApplyParser {
     }
   }
 
-  private GroupByItem parseRollUpSpec(final EdmStructuredType referencedType)
+  private GroupByItem parseRollUpSpec(EdmStructuredType referencedType)
       throws UriParserException {
     GroupByItemImpl item = new GroupByItemImpl();
     if (tokenizer.next(TokenKind.ROLLUP_ALL)) {
@@ -447,9 +447,9 @@ public class ApplyParser {
     return item;
   }
 
-  private UriInfo parseGroupingProperty(final EdmStructuredType referencedType) throws UriParserException {
+  private UriInfo parseGroupingProperty(EdmStructuredType referencedType) throws UriParserException {
     UriInfoImpl uriInfo = new UriInfoImpl();
-    final String identifierLeft = parsePathPrefix(uriInfo, referencedType);
+    String identifierLeft = parsePathPrefix(uriInfo, referencedType);
     if (identifierLeft != null) {
       throw new UriParserSemanticException("Unknown identifier in grouping property path.",
           UriParserSemanticException.MessageKeys.EXPRESSION_PROPERTY_NOT_IN_TYPE,
@@ -466,18 +466,18 @@ public class ApplyParser {
    * Parses the path prefix and a following OData identifier as one path, deviating from the ABNF.
    * @param uriInfo object to be filled with path segments
    * @return a parsed but not used OData identifier */
-  private String parsePathPrefix(UriInfoImpl uriInfo, final EdmStructuredType referencedType)
+  private String parsePathPrefix(UriInfoImpl uriInfo, EdmStructuredType referencedType)
       throws UriParserException {
-    final EdmStructuredType typeCast = ParserHelper.parseTypeCast(tokenizer, edm, referencedType);
+    EdmStructuredType typeCast = ParserHelper.parseTypeCast(tokenizer, edm, referencedType);
     if (typeCast != null) {
       uriInfo.addResourcePart(new UriResourceStartingTypeFilterImpl(typeCast, true));
       ParserHelper.requireNext(tokenizer, TokenKind.SLASH);
     }
     EdmStructuredType type = typeCast == null ? referencedType : typeCast;
     while (tokenizer.next(TokenKind.ODataIdentifier)) {
-      final String name = tokenizer.getText();
-      final EdmElement property = type.getProperty(name);
-      final UriResource segment = parsePathSegment(property);
+      String name = tokenizer.getText();
+      EdmElement property = type.getProperty(name);
+      UriResource segment = parsePathSegment(property);
       if (segment == null) {
         if (property == null) {
           return name;
@@ -498,7 +498,7 @@ public class ApplyParser {
     return null;
   }
 
-  private UriResource parsePathSegment(final EdmElement property) throws UriParserException {
+  private UriResource parsePathSegment(EdmElement property) throws UriParserException {
     if (property == null
         || !(property.getType().getKind() == EdmTypeKind.COMPLEX
         || property instanceof EdmNavigationProperty)) {
@@ -506,7 +506,7 @@ public class ApplyParser {
       return null;
     }
     if (tokenizer.next(TokenKind.SLASH)) {
-      final EdmStructuredType typeCast = ParserHelper.parseTypeCast(tokenizer, edm,
+      EdmStructuredType typeCast = ParserHelper.parseTypeCast(tokenizer, edm,
           (EdmStructuredType) property.getType());
       if (typeCast != null) {
         ParserHelper.requireNext(tokenizer, TokenKind.SLASH);
@@ -519,12 +519,12 @@ public class ApplyParser {
     }
   }
 
-  private CustomFunction parseCustomFunction(final FullQualifiedName functionName,
-      final EdmStructuredType referencedType) throws UriParserException, UriValidationException {
-    final List<UriParameter> parameters =
+  private CustomFunction parseCustomFunction(FullQualifiedName functionName,
+                                             EdmStructuredType referencedType) throws UriParserException, UriValidationException {
+    List<UriParameter> parameters =
         ParserHelper.parseFunctionParameters(tokenizer, edm, referencedType, true, aliases);
-    final List<String> parameterNames = ParserHelper.getParameterNames(parameters);
-    final EdmFunction function = edm.getBoundFunction(functionName,
+    List<String> parameterNames = ParserHelper.getParameterNames(parameters);
+    EdmFunction function = edm.getBoundFunction(functionName,
         referencedType.getFullQualifiedName(), true, parameterNames);
     if (function == null) {
       throw new UriParserSemanticException("No function '" + functionName + "' found.",
@@ -534,8 +534,8 @@ public class ApplyParser {
     ParserHelper.validateFunctionParameters(function, parameters, edm, referencedType, aliases);
 
     // The binding parameter and the return type must be of type complex or entity collection.
-    final EdmParameter bindingParameter = function.getParameter(function.getParameterNames().get(0));
-    final EdmReturnType returnType = function.getReturnType();
+    EdmParameter bindingParameter = function.getParameter(function.getParameterNames().get(0));
+    EdmReturnType returnType = function.getReturnType();
     if (bindingParameter.getType().getKind() != EdmTypeKind.ENTITY
         && bindingParameter.getType().getKind() != EdmTypeKind.COMPLEX
         || !bindingParameter.isCollection()
@@ -550,16 +550,16 @@ public class ApplyParser {
     return new CustomFunctionImpl().setFunction(function).setParameters(parameters);
   }
 
-  private BottomTop parseBottomTop(final TokenKind kind, final EdmStructuredType referencedType)
+  private BottomTop parseBottomTop(TokenKind kind, EdmStructuredType referencedType)
       throws UriParserException, UriValidationException {
     BottomTopImpl bottomTop = new BottomTopImpl();
     bottomTop.setMethod(TOKEN_KIND_TO_BOTTOM_TOP_METHOD.get(kind));
-    final ExpressionParser expressionParser = new ExpressionParser(edm, odata);
-    final Expression number = expressionParser.parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
+    ExpressionParser expressionParser = new ExpressionParser(edm, odata);
+    Expression number = expressionParser.parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
     expressionParser.checkIntegerType(number);
     bottomTop.setNumber(number);
     ParserHelper.requireNext(tokenizer, TokenKind.COMMA);
-    final Expression value = expressionParser.parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
+    Expression value = expressionParser.parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
     expressionParser.checkNumericType(value);
     bottomTop.setValue(value);
     ParserHelper.requireNext(tokenizer, TokenKind.CLOSE);

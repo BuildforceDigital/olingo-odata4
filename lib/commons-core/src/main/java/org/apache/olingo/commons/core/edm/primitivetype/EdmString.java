@@ -46,9 +46,9 @@ public final class EdmString extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode, Class<T> returnType) throws EdmPrimitiveTypeException {
 
     if (isUnicode != null && !isUnicode && !PATTERN_ASCII.matcher(value).matches()
         || maxLength != null && maxLength < value.length()) {
@@ -63,11 +63,11 @@ public final class EdmString extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
-    final String result = value instanceof String ? (String) value : String.valueOf(value);
+    String result = value instanceof String ? (String) value : String.valueOf(value);
 
     if (isUnicode != null && !isUnicode && !PATTERN_ASCII.matcher(result).matches()
         || maxLength != null && maxLength < result.length()) {
@@ -78,17 +78,17 @@ public final class EdmString extends SingletonPrimitiveType {
   }
 
   @Override
-  public String toUriLiteral(final String literal) {
+  public String toUriLiteral(String literal) {
     if (literal == null) {
       return null;
     }
 
-    final int length = literal.length();
+    int length = literal.length();
 
-    final StringBuilder uriLiteral = new StringBuilder(length + 2);
+    StringBuilder uriLiteral = new StringBuilder(length + 2);
     uriLiteral.append(uriPrefix);
     for (int i = 0; i < length; i++) {
-      final char c = literal.charAt(i);
+      char c = literal.charAt(i);
       if (c == '\'') {
         uriLiteral.append(c);
       }
@@ -99,7 +99,7 @@ public final class EdmString extends SingletonPrimitiveType {
   }
 
   @Override
-  public String fromUriLiteral(final String literal) throws EdmPrimitiveTypeException {
+  public String fromUriLiteral(String literal) throws EdmPrimitiveTypeException {
     return literal == null ? null : super.fromUriLiteral(literal).replace("''", "'");
   }
 }

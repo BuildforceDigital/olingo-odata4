@@ -40,7 +40,7 @@ public enum UnaryOperatorKind {
    * Constructor for enumeration value
    * @param Syntax used in the URI
    */
-  private UnaryOperatorKind(final String syntax) {
+  private UnaryOperatorKind(String syntax) {
     this.syntax = syntax;
   }
 
@@ -57,7 +57,7 @@ public enum UnaryOperatorKind {
    * @param operator Operator in the syntax used in the URI
    * @return Operator kind which represents the given syntax
    */
-  public static UnaryOperatorKind get(final String operator) {
+  public static UnaryOperatorKind get(String operator) {
     for (UnaryOperatorKind op : UnaryOperatorKind.values()) {
       if (op.toString().equals(operator)) {
         return op;

@@ -40,7 +40,7 @@ public class EdmNavigationPropertyImpl extends AbstractEdmNamed implements EdmNa
   private EdmEntityType typeImpl;
   private EdmNavigationProperty partnerNavigationProperty;
 
-  public EdmNavigationPropertyImpl(final Edm edm, final CsdlNavigationProperty navigationProperty) {
+  public EdmNavigationPropertyImpl(Edm edm, CsdlNavigationProperty navigationProperty) {
     super(edm, navigationProperty.getName(), navigationProperty);
     this.navigationProperty = navigationProperty;
   }
@@ -78,7 +78,7 @@ public class EdmNavigationPropertyImpl extends AbstractEdmNamed implements EdmNa
       if (partner != null) {
         EdmStructuredType type = getType();
         EdmNavigationProperty property = null;
-        final String[] split = partner.split("/");
+        String[] split = partner.split("/");
         for (String element : split) {
           property = type.getNavigationProperty(element);
           if (property == null) {
@@ -94,8 +94,8 @@ public class EdmNavigationPropertyImpl extends AbstractEdmNamed implements EdmNa
   }
 
   @Override
-  public String getReferencingPropertyName(final String referencedPropertyName) {
-    final List<CsdlReferentialConstraint> refConstraints = navigationProperty.getReferentialConstraints();
+  public String getReferencingPropertyName(String referencedPropertyName) {
+    List<CsdlReferentialConstraint> refConstraints = navigationProperty.getReferentialConstraints();
     if (refConstraints != null) {
       for (CsdlReferentialConstraint constraint : refConstraints) {
         if (constraint.getReferencedProperty().equals(referencedPropertyName)) {
@@ -109,8 +109,8 @@ public class EdmNavigationPropertyImpl extends AbstractEdmNamed implements EdmNa
   @Override
   public List<EdmReferentialConstraint> getReferentialConstraints() {
     if (referentialConstraints == null) {
-      final List<CsdlReferentialConstraint> providerConstraints = navigationProperty.getReferentialConstraints();
-      final List<EdmReferentialConstraint> referentialConstraintsLocal = new ArrayList<EdmReferentialConstraint>();
+      List<CsdlReferentialConstraint> providerConstraints = navigationProperty.getReferentialConstraints();
+      List<EdmReferentialConstraint> referentialConstraintsLocal = new ArrayList<EdmReferentialConstraint>();
       if (providerConstraints != null) {
         for (CsdlReferentialConstraint constraint : providerConstraints) {
           referentialConstraintsLocal.add(new EdmReferentialConstraintImpl(edm, constraint));

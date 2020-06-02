@@ -24,11 +24,11 @@ public class EdmPrimitiveTypeException extends ODataException {
 
   private static final long serialVersionUID = -93578822384514620L;
 
-  public EdmPrimitiveTypeException(final String msg) {
+  public EdmPrimitiveTypeException(String msg) {
     super(msg);
   }
 
-  public EdmPrimitiveTypeException(final String msg, final Exception cause) {
+  public EdmPrimitiveTypeException(String msg, Exception cause) {
     super(msg, cause);
   }
 }

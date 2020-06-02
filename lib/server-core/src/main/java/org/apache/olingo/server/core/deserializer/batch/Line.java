@@ -22,7 +22,7 @@ public class Line {
   private final int lineNumber;
   private final String content;
 
-  public Line(final String content, final int lineNumber) {
+  public Line(String content, int lineNumber) {
     this.content = content;
     this.lineNumber = lineNumber;
   }
@@ -46,7 +46,7 @@ public class Line {
   }
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }

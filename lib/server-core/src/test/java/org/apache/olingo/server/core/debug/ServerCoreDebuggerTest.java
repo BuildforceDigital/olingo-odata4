@@ -122,7 +122,7 @@ public class ServerCoreDebuggerTest {
     when(request.getParameter(DebugSupport.ODATA_DEBUG_QUERY_PARAMETER)).thenReturn(DebugSupport.ODATA_DEBUG_JSON);
     defaultDebugger.resolveDebugMode(request);
 
-    final int handle = defaultDebugger.startRuntimeMeasurement("someClass", "someMethod");
+    int handle = defaultDebugger.startRuntimeMeasurement("someClass", "someMethod");
     defaultDebugger.stopRuntimeMeasurement(handle);
     assertEquals(0, handle);
 

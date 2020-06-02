@@ -86,12 +86,12 @@ public class Parser {
   private final Edm edm;
   private final OData odata;
 
-  public Parser(final Edm edm, final OData odata) {
+  public Parser(Edm edm, OData odata) {
     this.edm = edm;
     this.odata = odata;
   }
 
-  public UriInfo parseUri(final String path, final String query, final String fragment, String baseUri)
+  public UriInfo parseUri(String path, String query, String fragment, String baseUri)
       throws UriParserException, UriValidationException {
 
     UriInfoImpl contextUriInfo = new UriInfoImpl();
@@ -99,19 +99,19 @@ public class Parser {
     // Read the query options (system and custom options).
     // This is done before parsing the resource path because the aliases have to be available there.
     // System query options that can only be parsed with context from the resource path will be post-processed later.
-    final List<QueryOption> options =
+    List<QueryOption> options =
         query == null ? Collections.<QueryOption> emptyList() : UriDecoder.splitAndDecodeOptions(query);
-    for (final QueryOption option : options) {
-      final String optionName = option.getName();
+    for (QueryOption option : options) {
+      String optionName = option.getName();
       String value = option.getText();
       if(UriDecoder.isFormEncoding()){
         value = getFormEncodedValue(value);
       }
       // Parse the untyped option and retrieve a system-option or alias-option instance (or null for a custom option).
-      final QueryOption parsedOption = parseOption(optionName, value);
+      QueryOption parsedOption = parseOption(optionName, value);
       try {
         contextUriInfo.setQueryOption(parsedOption == null ? option : parsedOption);
-      } catch (final ODataRuntimeException e) {
+      } catch (ODataRuntimeException e) {
         throw new UriParserSyntaxException(
             parsedOption instanceof SystemQueryOption ?
                 "Double system query option!" :
@@ -136,7 +136,7 @@ public class Parser {
       numberOfSegments--;
     }
 
-    final String firstSegment = pathSegmentsDecoded.get(0);
+    String firstSegment = pathSegmentsDecoded.get(0);
 
     if (firstSegment.isEmpty()) {
       ensureLastSegment(firstSegment, 1, numberOfSegments);
@@ -174,7 +174,7 @@ public class Parser {
             http://localhost:8080/odata-server-tecsvc/odata.svc/$entity/
             olingo.odata.test1.ETAllPrim?$id=ESAllPrim(32767)
            */
-          final ResourcePathParser resourcePathParser = new ResourcePathParser
+          ResourcePathParser resourcePathParser = new ResourcePathParser
             (edm, contextUriInfo.getAliasMap());
           String typeCastSegment = pathSegmentsDecoded.get(1);
           ensureLastSegment(typeCastSegment, 2, numberOfSegments);
@@ -209,19 +209,19 @@ public class Parser {
     } else if (firstSegment.startsWith("$crossjoin")) {
       ensureLastSegment(firstSegment, 1, numberOfSegments);
       contextUriInfo.setKind(UriInfoKind.crossjoin);
-      final List<String> entitySetNames = new ResourcePathParser(edm, contextUriInfo.getAliasMap())
+      List<String> entitySetNames = new ResourcePathParser(edm, contextUriInfo.getAliasMap())
           .parseCrossjoinSegment(firstSegment);
-      for (final String name : entitySetNames) {
+      for (String name : entitySetNames) {
         contextUriInfo.addEntitySetName(name);
       }
       contextIsCollection = true;
 
     } else {
       contextUriInfo.setKind(UriInfoKind.resource);
-      final ResourcePathParser resourcePathParser = new ResourcePathParser(edm, contextUriInfo.getAliasMap());
+      ResourcePathParser resourcePathParser = new ResourcePathParser(edm, contextUriInfo.getAliasMap());
       int count = 0;
       UriResource lastSegment = null;
-      for (final String pathSegment : pathSegmentsDecoded) {
+      for (String pathSegment : pathSegmentsDecoded) {
         count++;
         if (pathSegment.startsWith(ENTITY)) {
           /*
@@ -231,7 +231,7 @@ public class Parser {
           throw new UriParserSyntaxException("The entity-id MUST be specified using the system query option $id",
                     UriParserSyntaxException.MessageKeys.ENTITYID_MISSING_SYSTEM_QUERY_OPTION_ID);
         } else {
-          final UriResource segment = resourcePathParser.parsePathSegment(pathSegment, lastSegment);
+          UriResource segment = resourcePathParser.parsePathSegment(pathSegment, lastSegment);
           if (segment != null) {
             if (segment instanceof UriResourceCount
                 || segment instanceof UriResourceRef
@@ -259,7 +259,7 @@ public class Parser {
       }
 
       if (lastSegment instanceof UriResourcePartTyped) {
-        final UriResourcePartTyped typed = (UriResourcePartTyped) lastSegment;
+        UriResourcePartTyped typed = (UriResourcePartTyped) lastSegment;
         contextType = ParserHelper.getTypeInformation(typed);
         if (contextType != null && ((lastSegment instanceof UriResourceEntitySet &&
             (((UriResourceEntitySet) lastSegment).getTypeFilterOnCollection() != null
@@ -297,10 +297,10 @@ public class Parser {
     return value;    
   }
 
-  private QueryOption parseOption(final String optionName, final String optionValue)
+  private QueryOption parseOption(String optionName, String optionValue)
       throws UriParserException, UriValidationException {
     if (optionName.startsWith(DOLLAR)) {
-      final SystemQueryOptionKind kind = SystemQueryOptionKind.get(optionName);
+      SystemQueryOptionKind kind = SystemQueryOptionKind.get(optionName);
       if (kind == null) {
         throw new UriParserSyntaxException("Unknown system query option!",
             UriParserSyntaxException.MessageKeys.UNKNOWN_SYSTEM_QUERY_OPTION, optionName);
@@ -402,11 +402,11 @@ public class Parser {
     }
   }
 
-  private void parseFilterOption(FilterOption filterOption, final EdmType contextType,
-      final List<String> entitySetNames, final Map<String, AliasQueryOption> aliases)
+  private void parseFilterOption(FilterOption filterOption, EdmType contextType,
+      List<String> entitySetNames, Map<String, AliasQueryOption> aliases)
       throws UriParserException, UriValidationException {
     if (filterOption != null) {
-      final String optionValue = filterOption.getText();
+      String optionValue = filterOption.getText();
       UriTokenizer filterTokenizer = new UriTokenizer(optionValue);
       // The referring type could be a primitive type or a structured type.
       ((FilterOptionImpl) filterOption).setExpression(
@@ -416,25 +416,25 @@ public class Parser {
     }
   }
 
-  private void parseOrderByOption(OrderByOption orderByOption, final EdmType contextType,
-      final List<String> entitySetNames, final Map<String, AliasQueryOption> aliases)
+  private void parseOrderByOption(OrderByOption orderByOption, EdmType contextType,
+      List<String> entitySetNames, Map<String, AliasQueryOption> aliases)
       throws UriParserException, UriValidationException {
     if (orderByOption != null) {
-      final String optionValue = orderByOption.getText();
+      String optionValue = orderByOption.getText();
       UriTokenizer orderByTokenizer = new UriTokenizer(optionValue);
-      final OrderByOption option = new OrderByParser(edm, odata).parse(orderByTokenizer,
+      OrderByOption option = new OrderByParser(edm, odata).parse(orderByTokenizer,
           contextType instanceof EdmStructuredType ? (EdmStructuredType) contextType : null,
           entitySetNames,
           aliases);
       checkOptionEOF(orderByTokenizer, orderByOption.getName(), optionValue);
-      for (final OrderByItem item : option.getOrders()) {
+      for (OrderByItem item : option.getOrders()) {
         ((OrderByOptionImpl) orderByOption).addOrder(item);
       }
     }
   }
 
-  private void parseExpandOption(ExpandOption expandOption, final EdmType contextType, final boolean isAll,
-      final List<String> entitySetNames, final Map<String, AliasQueryOption> aliases)
+  private void parseExpandOption(ExpandOption expandOption, EdmType contextType, boolean isAll,
+      List<String> entitySetNames, Map<String, AliasQueryOption> aliases)
       throws UriParserException, UriValidationException {
     if (expandOption != null) {
       if (!(contextType instanceof EdmStructuredType || isAll
@@ -442,21 +442,21 @@ public class Parser {
         throw new UriValidationException("Expand is only allowed on structured types!",
             UriValidationException.MessageKeys.SYSTEM_QUERY_OPTION_NOT_ALLOWED, expandOption.getName());
       }
-      final String optionValue = expandOption.getText();
+      String optionValue = expandOption.getText();
       UriTokenizer expandTokenizer = new UriTokenizer(optionValue);
-      final ExpandOption option = new ExpandParser(edm, odata, aliases, entitySetNames).parse(expandTokenizer,
+      ExpandOption option = new ExpandParser(edm, odata, aliases, entitySetNames).parse(expandTokenizer,
           contextType instanceof EdmStructuredType ? (EdmStructuredType) contextType : null);
       checkOptionEOF(expandTokenizer, expandOption.getName(), optionValue);
-      for (final ExpandItem item : option.getExpandItems()) {
+      for (ExpandItem item : option.getExpandItems()) {
         ((ExpandOptionImpl) expandOption).addExpandItem(item);
       }
     }
   }
 
-  private void parseSelectOption(SelectOption selectOption, final EdmType contextType,
-      final boolean contextIsCollection) throws UriParserException, UriValidationException {
+  private void parseSelectOption(SelectOption selectOption, EdmType contextType,
+      boolean contextIsCollection) throws UriParserException, UriValidationException {
     if (selectOption != null) {
-      final String optionValue = selectOption.getText();
+      String optionValue = selectOption.getText();
       UriTokenizer selectTokenizer = new UriTokenizer(optionValue);
       ((SelectOptionImpl) selectOption).setSelectItems(
           new SelectParser(edm).parse(selectTokenizer,
@@ -468,24 +468,24 @@ public class Parser {
   }
 
   private void parseApplyOption(ApplyOption applyOption, EdmType contextType,
-      final List<String> entitySetNames, final Map<String, AliasQueryOption> aliases)
+      List<String> entitySetNames, Map<String, AliasQueryOption> aliases)
       throws UriParserException, UriValidationException {
     if (applyOption != null) {
-      final String optionValue = applyOption.getText();
+      String optionValue = applyOption.getText();
       UriTokenizer applyTokenizer = new UriTokenizer(optionValue);
-      final ApplyOption option = new ApplyParser(edm, odata).parse(applyTokenizer,
+      ApplyOption option = new ApplyParser(edm, odata).parse(applyTokenizer,
           contextType instanceof EdmStructuredType ? (EdmStructuredType) contextType : null,
           entitySetNames,
           aliases);
       checkOptionEOF(applyTokenizer, applyOption.getName(), optionValue);
-      for (final ApplyItem item : option.getApplyItems()) {
+      for (ApplyItem item : option.getApplyItems()) {
         ((ApplyOptionImpl) applyOption).add(item);
       }
       ((ApplyOptionImpl) applyOption).setEdmStructuredType(option.getEdmStructuredType());
     }
   }
 
-  private void ensureLastSegment(final String segment, final int pos, final int size)
+  private void ensureLastSegment(String segment, int pos, int size)
       throws UriParserSyntaxException {
     if (pos < size) {
       throw new UriParserSyntaxException(segment + " must be the last segment.",
@@ -493,12 +493,12 @@ public class Parser {
     }
   }
 
-  private boolean isFormatSyntaxValid(final String value) {
-    final int index = value.indexOf('/');
+  private boolean isFormatSyntaxValid(String value) {
+    int index = value.indexOf('/');
     return index > 0 && index < value.length() - 1 && index == value.lastIndexOf('/');
   }
 
-  private void checkOptionEOF(UriTokenizer tokenizer, final String optionName, final String optionValue)
+  private void checkOptionEOF(UriTokenizer tokenizer, String optionName, String optionValue)
       throws UriParserException {
     if (!tokenizer.next(TokenKind.EOF)) {
       throw new UriParserSyntaxException("Illegal value of '" + optionName + "' option!",

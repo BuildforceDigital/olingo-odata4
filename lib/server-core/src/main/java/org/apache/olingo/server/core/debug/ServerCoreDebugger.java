@@ -48,11 +48,11 @@ public class ServerCoreDebugger {
   private DebugSupport debugSupport;
   private String debugFormat;
 
-  public ServerCoreDebugger(final OData odata) {
+  public ServerCoreDebugger(OData odata) {
     this.odata = odata;
   }
 
-  public void resolveDebugMode(final HttpServletRequest request) {
+  public void resolveDebugMode(HttpServletRequest request) {
     if (debugSupport != null) {
       // Should we read the parameter from the servlet here and ignore multiple parameters?
       debugFormat = request.getParameter(DebugSupport.ODATA_DEBUG_QUERY_PARAMETER);
@@ -63,8 +63,8 @@ public class ServerCoreDebugger {
     }
   }
   
-  public ODataResponse createDebugResponse(final ODataRequest request, final ODataResponse response,
-      final Exception exception, final UriInfo uriInfo, final Map<String, String> serverEnvironmentVariables) {
+  public ODataResponse createDebugResponse(ODataRequest request, ODataResponse response,
+                                           Exception exception, UriInfo uriInfo, Map<String, String> serverEnvironmentVariables) {
     // Failsafe so we do not generate unauthorized debug messages
     if (!isDebugMode) {
       return response;
@@ -90,8 +90,8 @@ public class ServerCoreDebugger {
     return odResponse;
   }
 
-  private DebugInformation createDebugInformation(final ODataRequest request, final ODataResponse response,
-      final Exception exception, final UriInfo uriInfo, final Map<String, String> serverEnvironmentVariables) {
+  private DebugInformation createDebugInformation(ODataRequest request, ODataResponse response,
+                                                  Exception exception, UriInfo uriInfo, Map<String, String> serverEnvironmentVariables) {
     DebugInformation debugInfo = new DebugInformation();
     debugInfo.setRequest(request);
     debugInfo.setApplicationResponse(response);
@@ -106,11 +106,11 @@ public class ServerCoreDebugger {
     return debugInfo;
   }
 
-  public int startRuntimeMeasurement(final String className, final String methodName) {
+  public int startRuntimeMeasurement(String className, String methodName) {
     if (isDebugMode) {
       int handleId = runtimeInformation.size();
 
-      final RuntimeMeasurement measurement = new RuntimeMeasurement();
+      RuntimeMeasurement measurement = new RuntimeMeasurement();
       measurement.setTimeStarted(System.nanoTime());
       measurement.setClassName(className);
       measurement.setMethodName(methodName);
@@ -123,7 +123,7 @@ public class ServerCoreDebugger {
     }
   }
 
-  public void stopRuntimeMeasurement(final int handle) {
+  public void stopRuntimeMeasurement(int handle) {
     if (isDebugMode && handle < runtimeInformation.size()) {
       RuntimeMeasurement runtimeMeasurement = runtimeInformation.get(handle);
       if (runtimeMeasurement != null) {
@@ -132,7 +132,7 @@ public class ServerCoreDebugger {
     }
   }
 
-  public void setDebugSupportProcessor(final DebugSupport debugSupport) {
+  public void setDebugSupportProcessor(DebugSupport debugSupport) {
     this.debugSupport = debugSupport;
   }
 

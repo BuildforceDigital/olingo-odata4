@@ -132,7 +132,7 @@ public class CircleStreamBufferTest {
 
     OutputStream outStream = csb.getOutputStream();
     InputStream inStream = csb.getInputStream();
-    final int signs = bufferSize + 1;
+    int signs = bufferSize + 1;
 
     String testData = createTestString(signs);
     outStream.write(testData.getBytes(DEFAULT_CHARSET));
@@ -182,7 +182,7 @@ public class CircleStreamBufferTest {
 
     OutputStream outStream = csb.getOutputStream();
     InputStream inStream = csb.getInputStream();
-    final int signs = bufferSize * 10;
+    int signs = bufferSize * 10;
 
     String testData = createTestString(signs);
     outStream.write(testData.getBytes(DEFAULT_CHARSET));
@@ -199,7 +199,7 @@ public class CircleStreamBufferTest {
 
     OutputStream outStream = csb.getOutputStream();
     InputStream inStream = csb.getInputStream();
-    final int signs = bufferSize * 10;
+    int signs = bufferSize * 10;
 
     String testData = createTestString(signs);
     testData = "äüöÄÜÖ" + testData + "äüöÄÜÖ";
@@ -217,7 +217,7 @@ public class CircleStreamBufferTest {
 
     OutputStream outStream = csb.getOutputStream();
     InputStream inStream = csb.getInputStream();
-    final int signs = bufferSize * 10;
+    int signs = bufferSize * 10;
 
     String testData = createTestString(signs);
     testData = "äüöÄÜÖ" + testData + "äüöÄÜÖ";
@@ -235,7 +235,7 @@ public class CircleStreamBufferTest {
 
     OutputStream outStream = csb.getOutputStream();
     InputStream inStream = csb.getInputStream();
-    final int signs = bufferSize * 100;
+    int signs = bufferSize * 100;
 
     String testData = createTestString(signs);
     outStream.write(testData.getBytes(DEFAULT_CHARSET));
@@ -274,19 +274,19 @@ public class CircleStreamBufferTest {
   // #
   // ###################################################
 
-  private String readFrom(final InputStream stream) throws IOException {
+  private String readFrom(InputStream stream) throws IOException {
     return readFrom(stream, DEFAULT_CHARSET, 128);
   }
 
-  private String readFrom(final InputStream stream, final String charset) throws IOException {
+  private String readFrom(InputStream stream, String charset) throws IOException {
     return readFrom(stream, Charset.forName(charset), 128);
   }
 
-  private String readFrom(final InputStream stream, final int bufferSize) throws IOException {
+  private String readFrom(InputStream stream, int bufferSize) throws IOException {
     return readFrom(stream, DEFAULT_CHARSET, bufferSize);
   }
 
-  private String readFrom(final InputStream stream, final Charset charset, final int bufferSize) throws IOException {
+  private String readFrom(InputStream stream, Charset charset, int bufferSize) throws IOException {
     StringBuilder b = new StringBuilder();
     int count;
     byte[] buffer = new byte[bufferSize];
@@ -296,7 +296,7 @@ public class CircleStreamBufferTest {
     return b.toString();
   }
 
-  private String createTestString(final int signs) {
+  private String createTestString(int signs) {
     StringBuilder b = new StringBuilder();
 
     for (int i = 0; i < signs; i++) {

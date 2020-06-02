@@ -40,7 +40,7 @@ public class EdmxReference implements CsdlAnnotatable{
    *
    * @param uri of reference
    */
-  public EdmxReference(final URI uri) {
+  public EdmxReference(URI uri) {
     this.uri = uri;
     edmxIncludes = new ArrayList<EdmxReferenceInclude>();
     edmxIncludeAnnotations = new ArrayList<EdmxReferenceIncludeAnnotation>();
@@ -69,7 +69,7 @@ public class EdmxReference implements CsdlAnnotatable{
    * @param include to be added
    * @return this EdmxReference object
    */
-  public EdmxReference addInclude(final EdmxReferenceInclude include) {
+  public EdmxReference addInclude(EdmxReferenceInclude include) {
     edmxIncludes.add(include);
     return this;
   }
@@ -89,7 +89,7 @@ public class EdmxReference implements CsdlAnnotatable{
    * @param includeAnnotation to be added
    * @return this EdmxReference object
    */
-  public EdmxReference addIncludeAnnotation(final EdmxReferenceIncludeAnnotation includeAnnotation) {
+  public EdmxReference addIncludeAnnotation(EdmxReferenceIncludeAnnotation includeAnnotation) {
     edmxIncludeAnnotations.add(includeAnnotation);
     return this;
   }
@@ -105,7 +105,7 @@ public class EdmxReference implements CsdlAnnotatable{
    * @param annotations the annotations
    * @return the annotations
    */
-  public EdmxReference setAnnotations(final List<CsdlAnnotation> annotations) {
+  public EdmxReference setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }  

@@ -53,8 +53,8 @@ public final class AcceptType {
   private final Map<String, String> parameters;
   private final Float quality;
 
-  private AcceptType(final String type, final String subtype, final Map<String, String> parameters,
-      final Float quality) {
+  private AcceptType(String type, String subtype, Map<String, String> parameters,
+                     Float quality) {
     this.type = type;
     this.subtype = subtype;
     this.parameters = TypeUtil.createParameterMap();
@@ -62,7 +62,7 @@ public final class AcceptType {
     this.quality = quality;
   }
 
-  private AcceptType(final String type) {
+  private AcceptType(String type) {
     List<String> typeSubtype = new ArrayList<String>();
     parameters = TypeUtil.createParameterMap();
 
@@ -75,7 +75,7 @@ public final class AcceptType {
           + "subtype in accept header:" + type);
     }
 
-    final String q = parameters.get(TypeUtil.PARAMETER_Q);
+    String q = parameters.get(TypeUtil.PARAMETER_Q);
     if (q == null) {
       quality = 1F;
     } else if (Q_PATTERN.matcher(q).matches()) {
@@ -85,12 +85,12 @@ public final class AcceptType {
     }
   }
 
-  private static void parse(final String format, final List<String> typeSubtype,
-      final Map<String, String> parameters) {
+  private static void parse(String format, List<String> typeSubtype,
+                            Map<String, String> parameters) {
 
-    final String[] typesAndParameters = format.split(TypeUtil.PARAMETER_SEPARATOR, 2);
-    final String types = typesAndParameters[0];
-    final String params = (typesAndParameters.length > 1 ? typesAndParameters[1] : null);
+    String[] typesAndParameters = format.split(TypeUtil.PARAMETER_SEPARATOR, 2);
+    String types = typesAndParameters[0];
+    String params = (typesAndParameters.length > 1 ? typesAndParameters[1] : null);
 
     String[] tokens = types.split(TypeUtil.TYPE_SUBTYPE_SEPARATOR);
     if (tokens.length == 2) {
@@ -116,7 +116,7 @@ public final class AcceptType {
    * @return a list of <code>AcceptType</code> objects
    * @throws IllegalArgumentException if input string is not parseable
    */
-  public static List<AcceptType> create(final String acceptTypes) {
+  public static List<AcceptType> create(String acceptTypes) {
     if (acceptTypes == null) {
       throw new IllegalArgumentException("Type parameter MUST NOT be null.");
     }
@@ -146,7 +146,7 @@ public final class AcceptType {
    * @param contentType the content type
    * @return an immutable one-element list of <code>AcceptType</code> objects that matches only the given content type
    */
-  public static List<AcceptType> fromContentType(final ContentType contentType) {
+  public static List<AcceptType> fromContentType(ContentType contentType) {
     return Collections.singletonList(new AcceptType(
         contentType.getType(), contentType.getSubtype(), contentType.getParameters(), 1F));
   }
@@ -163,7 +163,7 @@ public final class AcceptType {
     return Collections.unmodifiableMap(parameters);
   }
 
-  public String getParameter(final String name) {
+  public String getParameter(String name) {
     return parameters.get(name.toLowerCase(Locale.ROOT));
   }
 
@@ -175,7 +175,7 @@ public final class AcceptType {
   public String toString() {
     StringBuilder result = new StringBuilder();
     result.append(type).append('/').append(subtype);
-    for (final Map.Entry<String, String> entry : parameters.entrySet()) {
+    for (Map.Entry<String, String> entry : parameters.entrySet()) {
       result.append(';').append(entry.getKey()).append('=').append(entry.getValue());
     }
 
@@ -193,7 +193,7 @@ public final class AcceptType {
    * @param contentType content type against which is matched
    * @return whether this accept type matches the given content type
    */
-  public boolean matches(final ContentType contentType) {
+  public boolean matches(ContentType contentType) {
     if (type.equals(TypeUtil.MEDIA_TYPE_WILDCARD)) {
       return true;
     }
@@ -207,10 +207,9 @@ public final class AcceptType {
       return false;
     }
     Map<String, String> compareParameters = contentType.getParameters();
-    for (final Map.Entry<String, String> entry : parameters.entrySet()) {
+    for (Map.Entry<String, String> entry : parameters.entrySet()) {
       if (entry.getKey().equalsIgnoreCase(ContentType.PARAMETER_CHARSET) && 
           compareParameters.containsKey(entry.getKey())) {
-        continue;
       } else {
         if (compareParameters.containsKey(entry.getKey()) || TypeUtil.PARAMETER_Q.equalsIgnoreCase(entry.getKey())) {
           String compare = compareParameters.get(entry.getKey());
@@ -235,7 +234,7 @@ public final class AcceptType {
     Collections.sort(toSort,
         new Comparator<AcceptType>() {
       @Override
-      public int compare(final AcceptType a1, final AcceptType a2) {
+      public int compare(AcceptType a1, AcceptType a2) {
         int compare = a2.getQuality().compareTo(a1.getQuality());
         if (compare != 0) {
           return compare;
@@ -254,4 +253,5 @@ public final class AcceptType {
       }
     });
   }
+
 }

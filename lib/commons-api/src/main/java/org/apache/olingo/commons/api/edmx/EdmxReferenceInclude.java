@@ -31,7 +31,7 @@ public class EdmxReferenceInclude {
    * @param namespace of include
    * @param alias of include
    */
-  public EdmxReferenceInclude(final String namespace, final String alias) {
+  public EdmxReferenceInclude(String namespace, String alias) {
     this.namespace = namespace;
     this.alias = alias;
   }
@@ -41,7 +41,7 @@ public class EdmxReferenceInclude {
    *
    * @param namespace of include
    */
-  public EdmxReferenceInclude(final String namespace) {
+  public EdmxReferenceInclude(String namespace) {
     this(namespace, null);
   }
 

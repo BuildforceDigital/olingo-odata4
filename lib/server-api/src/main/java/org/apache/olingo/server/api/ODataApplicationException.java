@@ -42,7 +42,7 @@ public class ODataApplicationException extends ODataException {
    * @see ODataException
    * @see HttpStatusCode
    */
-  public ODataApplicationException(final String msg, final int statusCode, final Locale locale) {
+  public ODataApplicationException(String msg, int statusCode, Locale locale) {
     super(msg);
     this.statusCode = statusCode;
     this.locale = locale;
@@ -57,8 +57,8 @@ public class ODataApplicationException extends ODataException {
    * @see ODataException
    * @see HttpStatusCode
    */
-  public ODataApplicationException(final String msg, final int statusCode, final Locale locale,
-      final String oDataErrorCode) {
+  public ODataApplicationException(String msg, int statusCode, Locale locale,
+                                   String oDataErrorCode) {
     this(msg, statusCode, locale);
     this.oDataErrorCode = oDataErrorCode;
   }
@@ -73,8 +73,8 @@ public class ODataApplicationException extends ODataException {
    * @see HttpStatusCode
    * @see Throwable#getCause()
    */
-  public ODataApplicationException(final String msg, final int statusCode, final Locale locale,
-      final Throwable cause) {
+  public ODataApplicationException(String msg, int statusCode, Locale locale,
+                                   Throwable cause) {
     super(msg, cause);
     this.statusCode = statusCode;
     this.locale = locale;
@@ -91,8 +91,8 @@ public class ODataApplicationException extends ODataException {
    * @see HttpStatusCode
    * @see Throwable#getCause()
    */
-  public ODataApplicationException(final String msg, final int statusCode, final Locale locale, final Throwable cause,
-      final String oDataErrorCode) {
+  public ODataApplicationException(String msg, int statusCode, Locale locale, Throwable cause,
+                                   String oDataErrorCode) {
     this(msg, statusCode, locale, cause);
     this.oDataErrorCode = oDataErrorCode;
   }

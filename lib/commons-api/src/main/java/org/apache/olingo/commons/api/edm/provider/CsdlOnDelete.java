@@ -44,7 +44,7 @@ public class CsdlOnDelete extends CsdlAbstractEdmItem implements CsdlAnnotatable
    * @param action the action
    * @return the action
    */
-  public CsdlOnDelete setAction(final CsdlOnDeleteAction action) {
+  public CsdlOnDelete setAction(CsdlOnDeleteAction action) {
     this.action = action;
     return this;
   }
@@ -60,7 +60,7 @@ public class CsdlOnDelete extends CsdlAbstractEdmItem implements CsdlAnnotatable
    * @param annotations the annotations
    * @return the annotations
    */
-  public CsdlOnDelete setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlOnDelete setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

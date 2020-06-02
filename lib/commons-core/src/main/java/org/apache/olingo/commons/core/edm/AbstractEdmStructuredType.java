@@ -50,10 +50,10 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
   private Map<String, EdmNavigationProperty> navigationProperties;
 
   public AbstractEdmStructuredType(
-      final Edm edm,
-      final FullQualifiedName typeName,
-      final EdmTypeKind kind,
-      final CsdlStructuralType structuredType) {
+      Edm edm,
+      FullQualifiedName typeName,
+      EdmTypeKind kind,
+      CsdlStructuralType structuredType) {
 
     super(edm, typeName, kind, structuredType);
     baseTypeName = structuredType.getBaseTypeFQN();
@@ -67,7 +67,7 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
   @Override
   public List<String> getPropertyNames() {
     if (propertyNames == null) {
-      final List<String> localPropertyNames = new ArrayList<String>();
+      List<String> localPropertyNames = new ArrayList<String>();
       checkBaseType();
       if (baseType != null) {
         localPropertyNames.addAll(baseType.getPropertyNames());
@@ -81,7 +81,7 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
   @Override
   public List<String> getNavigationPropertyNames() {
     if (navigationPropertyNames == null) {
-      final ArrayList<String> localNavigatinPropertyNames = new ArrayList<String>();
+      ArrayList<String> localNavigatinPropertyNames = new ArrayList<String>();
       checkBaseType();
       if (baseType != null) {
         localNavigatinPropertyNames.addAll(baseType.getNavigationPropertyNames());
@@ -93,7 +93,7 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
   }
 
   @Override
-  public EdmElement getProperty(final String name) {
+  public EdmElement getProperty(String name) {
     EdmElement property = getStructuralProperty(name);
     if (property == null) {
       property = getNavigationProperty(name);
@@ -102,7 +102,7 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
   }
 
   @Override
-  public EdmProperty getStructuralProperty(final String name) {
+  public EdmProperty getStructuralProperty(String name) {
     EdmProperty property = null;
     checkBaseType();
     if (baseType != null) {
@@ -115,7 +115,7 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
   }
 
   @Override
-  public EdmNavigationProperty getNavigationProperty(final String name) {
+  public EdmNavigationProperty getNavigationProperty(String name) {
     EdmNavigationProperty property = null;
     checkBaseType();
     if (baseType != null) {
@@ -128,7 +128,7 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
   }
 
   @Override
-  public boolean compatibleTo(final EdmType targetType) {
+  public boolean compatibleTo(EdmType targetType) {
     EdmStructuredType sourceType = this;
     if (targetType == null) {
       throw new EdmException("Target type must not be null");
@@ -147,8 +147,8 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
 
   public Map<String, EdmProperty> getProperties() {
     if (properties == null) {
-      final Map<String, EdmProperty> localPorperties = new LinkedHashMap<String, EdmProperty>();
-      final List<CsdlProperty> structureTypeProperties = providerStructuredType.getProperties();
+      Map<String, EdmProperty> localPorperties = new LinkedHashMap<String, EdmProperty>();
+      List<CsdlProperty> structureTypeProperties = providerStructuredType.getProperties();
       for (CsdlProperty property : structureTypeProperties) {
         localPorperties.put(property.getName(), new EdmPropertyImpl(edm, property));
       }
@@ -159,9 +159,9 @@ public abstract class AbstractEdmStructuredType extends EdmTypeImpl implements E
 
   public Map<String, EdmNavigationProperty> getNavigationProperties() {
     if (navigationProperties == null) {
-      final Map<String, EdmNavigationProperty> localNavigationProperties =
+      Map<String, EdmNavigationProperty> localNavigationProperties =
           new LinkedHashMap<String, EdmNavigationProperty>();
-      final List<CsdlNavigationProperty> structuredTypeNavigationProperties =
+      List<CsdlNavigationProperty> structuredTypeNavigationProperties =
           providerStructuredType.getNavigationProperties();
 
       if (structuredTypeNavigationProperties != null) {

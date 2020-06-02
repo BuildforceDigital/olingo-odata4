@@ -43,7 +43,7 @@ public class CustomFunctionImpl implements CustomFunction {
     return function;
   }
 
-  public CustomFunctionImpl setFunction(final EdmFunction function) {
+  public CustomFunctionImpl setFunction(EdmFunction function) {
     this.function = function;
     return this;
   }
@@ -55,7 +55,7 @@ public class CustomFunctionImpl implements CustomFunction {
         Collections.unmodifiableList(parameters);
   }
 
-  public CustomFunctionImpl setParameters(final List<UriParameter> parameters) {
+  public CustomFunctionImpl setParameters(List<UriParameter> parameters) {
     this.parameters = parameters;
     return this;
   }

@@ -92,7 +92,7 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
   private final JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
 
   @Override
-  public JsonNode visitBinaryOperator(final BinaryOperatorKind operator, final JsonNode left, final JsonNode right)
+  public JsonNode visitBinaryOperator(BinaryOperatorKind operator, JsonNode left, JsonNode right)
       throws ExpressionVisitException, ODataApplicationException {
     ObjectNode result = nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, BINARY_NAME)
@@ -104,7 +104,7 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
   }
 
   @Override
-  public JsonNode visitUnaryOperator(final UnaryOperatorKind operator, final JsonNode operand)
+  public JsonNode visitUnaryOperator(UnaryOperatorKind operator, JsonNode operand)
       throws ExpressionVisitException, ODataApplicationException {
     return nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, UNARY_NAME)
@@ -114,22 +114,22 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
   }
 
   @Override
-  public JsonNode visitMethodCall(final MethodKind methodCall, final List<JsonNode> parameters)
+  public JsonNode visitMethodCall(MethodKind methodCall, List<JsonNode> parameters)
       throws ExpressionVisitException, ODataApplicationException {
     ObjectNode result = nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, METHOD_NAME)
         .put(OPERATOR_NAME, methodCall.toString())
         .put(TYPE_NAME, getType(methodCall));
     ArrayNode jsonParameters = result.putArray(PARAMETERS_NAME);
-    for (final JsonNode parameter : parameters) {
+    for (JsonNode parameter : parameters) {
       jsonParameters.add(parameter);
     }
     return result;
   }
 
   @Override
-  public JsonNode visitLambdaExpression(final String lambdaFunction, final String lambdaVariable,
-      final Expression expression) throws ExpressionVisitException, ODataApplicationException {
+  public JsonNode visitLambdaExpression(String lambdaFunction, String lambdaVariable,
+                                        Expression expression) throws ExpressionVisitException, ODataApplicationException {
     return nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, LAMBDA_FUNCTION_NAME)
         .put(LAMBDA_VARIABLE_NAME, lambdaVariable)
@@ -137,7 +137,7 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
   }
 
   @Override
-  public JsonNode visitLiteral(final Literal literal) throws ExpressionVisitException, ODataApplicationException {
+  public JsonNode visitLiteral(Literal literal) throws ExpressionVisitException, ODataApplicationException {
     return nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, LITERAL_NAME)
         .put(TYPE_NAME, getTypeString(literal.getType()))
@@ -145,21 +145,21 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
   }
 
   @Override
-  public JsonNode visitMember(final Member member)
+  public JsonNode visitMember(Member member)
       throws ExpressionVisitException, ODataApplicationException {
-    final List<UriResource> uriResourceParts = member.getResourcePath().getUriResourceParts();
-    final UriResource lastSegment = uriResourceParts.get(uriResourceParts.size() - 1);
+    List<UriResource> uriResourceParts = member.getResourcePath().getUriResourceParts();
+    UriResource lastSegment = uriResourceParts.get(uriResourceParts.size() - 1);
     ObjectNode result = nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, MEMBER_NAME)
         .put(TYPE_NAME, getType(lastSegment));
     putType(result, TYPE_FILTER_NAME, member.getStartTypeFilter());
     ArrayNode segments = result.putArray(RESOURCE_SEGMENTS_NAME);
-    for (final UriResource segment : uriResourceParts) {
+    for (UriResource segment : uriResourceParts) {
       if (segment instanceof UriResourceLambdaAll) {
-        final UriResourceLambdaAll all = (UriResourceLambdaAll) segment;
+        UriResourceLambdaAll all = (UriResourceLambdaAll) segment;
         segments.add(visitLambdaExpression(ALL_NAME, all.getLambdaVariable(), all.getExpression()));
       } else if (segment instanceof UriResourceLambdaAny) {
-        final UriResourceLambdaAny any = (UriResourceLambdaAny) segment;
+        UriResourceLambdaAny any = (UriResourceLambdaAny) segment;
         segments.add(visitLambdaExpression(ANY_NAME, any.getLambdaVariable(), any.getExpression()));
       } else if (segment instanceof UriResourcePartTyped) {
         ObjectNode node = nodeFactory.objectNode()
@@ -198,16 +198,16 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
     return result;
   }
 
-  private void putType(ObjectNode node, final String name, final EdmType type) {
+  private void putType(ObjectNode node, String name, EdmType type) {
     if (type != null) {
       node.put(name, type.getFullQualifiedName().getFullQualifiedNameAsString());
     }
   }
 
-  private void putParameters(ObjectNode node, final String name, final List<UriParameter> parameters) {
+  private void putParameters(ObjectNode node, String name, List<UriParameter> parameters) {
     if (!parameters.isEmpty()) {
       ObjectNode parametersNode = node.putObject(name);
-      for (final UriParameter parameter : parameters) {
+      for (UriParameter parameter : parameters) {
         parametersNode.put(parameter.getName(),
             parameter.getText() == null ? parameter.getAlias() : parameter.getText());
       }
@@ -215,21 +215,21 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
   }
 
   @Override
-  public JsonNode visitAlias(final String aliasName) throws ExpressionVisitException, ODataApplicationException {
+  public JsonNode visitAlias(String aliasName) throws ExpressionVisitException, ODataApplicationException {
     return nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, ALIAS_NAME)
         .put(ALIAS_NAME, aliasName);
   }
 
   @Override
-  public JsonNode visitTypeLiteral(final EdmType type) throws ExpressionVisitException, ODataApplicationException {
+  public JsonNode visitTypeLiteral(EdmType type) throws ExpressionVisitException, ODataApplicationException {
     return nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, TYPE_NAME)
         .put(TYPE_NAME, getTypeString(type));
   }
 
   @Override
-  public JsonNode visitLambdaReference(final String variableName)
+  public JsonNode visitLambdaReference(String variableName)
       throws ExpressionVisitException, ODataApplicationException {
     return nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, LAMBDA_REFERENCE_NAME)
@@ -237,21 +237,21 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
   }
 
   @Override
-  public JsonNode visitEnum(final EdmEnumType type, final List<String> enumValues)
+  public JsonNode visitEnum(EdmEnumType type, List<String> enumValues)
       throws ExpressionVisitException, ODataApplicationException {
     ObjectNode result = nodeFactory.objectNode()
         .put(NODE_TYPE_NAME, ENUM_NAME)
         .put(TYPE_NAME, getTypeString(type));
     ArrayNode values = result.putArray(VALUES_NAME);
     if (enumValues != null) {
-      for (final String enumValue : enumValues) {
+      for (String enumValue : enumValues) {
         values.add(enumValue);
       }
     }
     return result;
   }
 
-  private String getType(final UnaryOperatorKind operator) {
+  private String getType(UnaryOperatorKind operator) {
     switch (operator) {
     case MINUS:
       return NUMBER_NAME;
@@ -261,7 +261,7 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
     return UNKNOWN_NAME;
   }
 
-  private String getType(final MethodKind methodCall) {
+  private String getType(MethodKind methodCall) {
     switch (methodCall) {
     case STARTSWITH:
     case CONTAINS:
@@ -312,7 +312,7 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
     return UNKNOWN_NAME;
   }
 
-  private String getType(final BinaryOperatorKind operator) {
+  private String getType(BinaryOperatorKind operator) {
     switch (operator) {
     case MUL:
     case DIV:
@@ -336,12 +336,12 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
     return UNKNOWN_NAME;
   }
 
-  private String getTypeString(final EdmType type) {
+  private String getTypeString(EdmType type) {
     return type == null ? null : type.getFullQualifiedName().getFullQualifiedNameAsString();
   }
 
-  private String getType(final UriResource segment) {
-    final EdmType type = segment instanceof UriResourcePartTyped ? ((UriResourcePartTyped) segment).getType() : null;
+  private String getType(UriResource segment) {
+    EdmType type = segment instanceof UriResourcePartTyped ? ((UriResourcePartTyped) segment).getType() : null;
     return type == null ? UNKNOWN_NAME : type.getFullQualifiedName().getFullQualifiedNameAsString();
   }
 
@@ -354,7 +354,7 @@ public class ExpressionJsonVisitor implements ExpressionVisitor<JsonNode> {
         .put(TYPE_NAME, getType(operator));
     result.set(LEFT_NODE_NAME, left);
     ArrayNode jsonExprs = result.putArray(RIGHT_NODE_NAME);
-    for (final JsonNode exp : right) {
+    for (JsonNode exp : right) {
       jsonExprs.add(exp);
     }
     return result;

@@ -37,12 +37,12 @@ public class Annotation extends Valuable {
    * Set term for Annotation.
    * @param term term for Annotation.
    */
-  public void setTerm(final String term) {
+  public void setTerm(String term) {
     this.term = term;
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     return super.equals(o)
         && (term == null ? ((Annotation) o).term == null : term.equals(((Annotation) o).term));
   }

@@ -70,7 +70,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param type the type
    * @return the type
    */
-  public CsdlReturnType setType(final String type) {
+  public CsdlReturnType setType(String type) {
     this.type = type;
     return this;
   }
@@ -81,7 +81,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param type the type
    * @return the type
    */
-  public CsdlReturnType setType(final FullQualifiedName type) {
+  public CsdlReturnType setType(FullQualifiedName type) {
     this.type = type.getFullQualifiedNameAsString();
     return this;
   }
@@ -101,7 +101,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param isCollection the is collection
    * @return the collection
    */
-  public CsdlReturnType setCollection(final boolean isCollection) {
+  public CsdlReturnType setCollection(boolean isCollection) {
     this.isCollection = isCollection;
     return this;
   }
@@ -121,7 +121,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param nullable the nullable
    * @return the nullable
    */
-  public CsdlReturnType setNullable(final boolean nullable) {
+  public CsdlReturnType setNullable(boolean nullable) {
     this.nullable = nullable;
     return this;
   }
@@ -141,7 +141,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param maxLength the max length
    * @return the max length
    */
-  public CsdlReturnType setMaxLength(final Integer maxLength) {
+  public CsdlReturnType setMaxLength(Integer maxLength) {
     this.maxLength = maxLength;
     return this;
   }
@@ -161,7 +161,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param precision the precision
    * @return the precision
    */
-  public CsdlReturnType setPrecision(final Integer precision) {
+  public CsdlReturnType setPrecision(Integer precision) {
     this.precision = precision;
     return this;
   }
@@ -181,7 +181,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param scale the scale
    * @return the scale
    */
-  public CsdlReturnType setScale(final Integer scale) {
+  public CsdlReturnType setScale(Integer scale) {
     this.scale = scale;
     return this;
   }
@@ -217,7 +217,7 @@ public class CsdlReturnType extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param annotations the annotations
    * @return the annotations
    */
-  public CsdlReturnType setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlReturnType setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

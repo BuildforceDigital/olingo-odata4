@@ -105,7 +105,7 @@ public enum BinaryOperatorKind {
    * Constructor for enumeration value
    * @param Syntax used in the URI
    */
-  private BinaryOperatorKind(final String syntax) {
+  private BinaryOperatorKind(String syntax) {
     this.syntax = syntax;
   }
 
@@ -114,7 +114,7 @@ public enum BinaryOperatorKind {
    * @param operator Operator in the syntax used in the URI
    * @return Operator kind which represents the given syntax
    */
-  public static BinaryOperatorKind get(final String operator) {
+  public static BinaryOperatorKind get(String operator) {
     for (BinaryOperatorKind op : BinaryOperatorKind.values()) {
       if (op.toString().equals(operator)) {
         return op;

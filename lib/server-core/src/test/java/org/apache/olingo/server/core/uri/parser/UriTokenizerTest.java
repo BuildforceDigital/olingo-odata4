@@ -37,7 +37,7 @@ public class UriTokenizerTest {
 
   @Test
   public void constants() {
-    final UriTokenizer tokenizer = new UriTokenizer("$ref");
+    UriTokenizer tokenizer = new UriTokenizer("$ref");
     assertTrue(tokenizer.next(TokenKind.REF));
     assertEquals("$ref", tokenizer.getText());
     assertTrue(tokenizer.next(TokenKind.EOF));
@@ -154,7 +154,7 @@ public class UriTokenizerTest {
     assertFalse(new UriTokenizer("1name").next(TokenKind.ODataIdentifier));
     assertFalse(new UriTokenizer("").next(TokenKind.ODataIdentifier));
 
-    final String outsideBmpLetter = String.valueOf(Character.toChars(0x10330));
+    String outsideBmpLetter = String.valueOf(Character.toChars(0x10330));
     UriTokenizer tokenizer = new UriTokenizer(
         outsideBmpLetter + "name1\u0300a\u0600b\uFE4F" + outsideBmpLetter + "end\b");
     assertTrue(tokenizer.next(TokenKind.ODataIdentifier));
@@ -176,7 +176,7 @@ public class UriTokenizerTest {
   public void qualifiedName() {
     assertTrue(new UriTokenizer("namespace.name").next(TokenKind.QualifiedName));
 
-    final UriTokenizer tokenizer = new UriTokenizer("multi.part.namespace.name.1");
+    UriTokenizer tokenizer = new UriTokenizer("multi.part.namespace.name.1");
     assertTrue(tokenizer.next(TokenKind.QualifiedName));
     assertTrue(tokenizer.next(TokenKind.DOT));
     assertTrue(tokenizer.next(TokenKind.IntegerValue));
@@ -214,7 +214,7 @@ public class UriTokenizerTest {
     assertTrue(new UriTokenizer('\'' + String.valueOf(Character.toChars(0x1F603)) + '\'')
         .next(TokenKind.StringValue));
 
-    final UriTokenizer tokenizer = new UriTokenizer("'AB''''C'''D");
+    UriTokenizer tokenizer = new UriTokenizer("'AB''''C'''D");
     assertTrue(tokenizer.next(TokenKind.StringValue));
     assertEquals("'AB''''C'''", tokenizer.getText());
     assertTrue(tokenizer.next(TokenKind.ODataIdentifier));
@@ -519,7 +519,7 @@ public class UriTokenizerTest {
     assertTrue(new UriTokenizer("maxdatetime()").next(TokenKind.MaxdatetimeMethod));
     assertTrue(new UriTokenizer("mindatetime()").next(TokenKind.MindatetimeMethod));
 
-    for (final TokenKind tokenKind : TokenKind.values()) {
+    for (TokenKind tokenKind : TokenKind.values()) {
       if (tokenKind.name().endsWith("Method")) {
         assertTrue(tokenKind.name(),
             new UriTokenizer(
@@ -565,7 +565,7 @@ public class UriTokenizerTest {
     assertFalse(new UriTokenizer("\"a\\x\"").next(TokenKind.Phrase));
     wrongToken(TokenKind.Phrase, "\"a\"", '\\');
 
-    final String outsideBmpLetter = String.valueOf(Character.toChars(0x10330));
+    String outsideBmpLetter = String.valueOf(Character.toChars(0x10330));
     assertTrue(new UriTokenizer("\"" + outsideBmpLetter + "\"").next(TokenKind.Phrase));
 
     assertTrue(new UriTokenizer(outsideBmpLetter).next(TokenKind.Word));
@@ -717,10 +717,10 @@ public class UriTokenizerTest {
     assertTrue(new UriTokenizer("isdefined(x)").next(TokenKind.IsDefinedMethod));
   }
 
-  private void wrongToken(final TokenKind kind, final String value, final char disturbCharacter) {
+  private void wrongToken(TokenKind kind, String value, char disturbCharacter) {
     assertFalse(new UriTokenizer(disturbCharacter + value).next(kind));
 
-    final UriTokenizer tokenizer = new UriTokenizer(value + disturbCharacter);
+    UriTokenizer tokenizer = new UriTokenizer(value + disturbCharacter);
     assertTrue(tokenizer.next(kind));
     assertEquals(value, tokenizer.getText());
     assertFalse(tokenizer.next(TokenKind.EOF));

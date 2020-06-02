@@ -41,7 +41,7 @@ public abstract class AbstractODataObject extends Annotatable {
    * Sets base URI.
    * @param baseURI new base URI
    */
-  public void setBaseURI(final URI baseURI) {
+  public void setBaseURI(URI baseURI) {
     this.baseURI = baseURI;
   }
 
@@ -57,7 +57,7 @@ public abstract class AbstractODataObject extends Annotatable {
    * Sets ID.
    * @param id new ID value
    */
-  public void setId(final URI id) {
+  public void setId(URI id) {
     this.id = id;
   }
 
@@ -74,7 +74,7 @@ public abstract class AbstractODataObject extends Annotatable {
    * @param key key of property
    * @param value new value for property
    */
-  public void setCommonProperty(final String key, final String value) {
+  public void setCommonProperty(String key, String value) {
     if ("id".equals(key)) {
       id = URI.create(value);
     } else if ("title".equals(key)) {
@@ -83,7 +83,7 @@ public abstract class AbstractODataObject extends Annotatable {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -91,7 +91,7 @@ public abstract class AbstractODataObject extends Annotatable {
       return false;
     }
 
-    final AbstractODataObject other = (AbstractODataObject) o;
+    AbstractODataObject other = (AbstractODataObject) o;
     return getAnnotations().equals(other.getAnnotations())
         && (baseURI == null ? other.baseURI == null : baseURI.equals(other.baseURI))
         && (id == null ? other.id == null : id.equals(other.id))

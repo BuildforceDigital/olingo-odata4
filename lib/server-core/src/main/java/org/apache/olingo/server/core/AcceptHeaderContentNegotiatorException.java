@@ -39,14 +39,14 @@ public class AcceptHeaderContentNegotiatorException extends ContentNegotiatorExc
     }
   }
 
-  public AcceptHeaderContentNegotiatorException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public AcceptHeaderContentNegotiatorException(String developmentMessage, MessageKey messageKey,
+                                                String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
   
-  public AcceptHeaderContentNegotiatorException(final String developmentMessage, final Throwable cause,
-      final MessageKey messageKey,
-      final String... parameters) {
+  public AcceptHeaderContentNegotiatorException(String developmentMessage, Throwable cause,
+                                                MessageKey messageKey,
+                                                String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 

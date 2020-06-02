@@ -61,8 +61,8 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
         return INSTANCE;
     }
 
-    private static OffsetDateTime parseZonedDateTime(final String value) throws DateTimeParseException {
-        final Matcher matcher = PATTERN.matcher(value); // Harmonize to ISO-8601 conform pattern
+    private static OffsetDateTime parseZonedDateTime(String value) throws DateTimeParseException {
+        Matcher matcher = PATTERN.matcher(value); // Harmonize to ISO-8601 conform pattern
 
         return OffsetDateTime.parse(value + ((matcher.matches() && matcher.group(9) == null) ? "Z" : ""));
     }
@@ -131,18 +131,18 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
         }
     }*/
 
-    protected <T> String internalValueToString(final T value,
-                                               final Boolean isNullable,
-                                               final Integer maxLength,
-                                               final Integer precision,
-                                               final Integer scale,
-                                               final Boolean isUnicode) throws EdmPrimitiveTypeException {
+    protected <T> String internalValueToString(T value,
+                                               Boolean isNullable,
+                                               Integer maxLength,
+                                               Integer precision,
+                                               Integer scale,
+                                               Boolean isUnicode) throws EdmPrimitiveTypeException {
         OffsetDateTime odt = createOffsetDateTime(value);
 
         return format(odt, precision);
     }
 
-    private static <T> OffsetDateTime createOffsetDateTime(final T value) throws EdmPrimitiveTypeException {
+    private static <T> OffsetDateTime createOffsetDateTime(T value) throws EdmPrimitiveTypeException {
         if (value instanceof OffsetDateTime) {
             return (OffsetDateTime) value;
         }
@@ -184,8 +184,8 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
     @Override
     public Class<?> getDefaultType() { return OffsetDateTime.class; }
 
-    protected <T> T internalValueOfString(final String value, final Boolean isNullable, final Integer maxLength,
-                                          final Integer precision, final Integer scale, final Boolean isUnicode, final Class<T> returnType)
+    protected <T> T internalValueOfString(String value, Boolean isNullable, Integer maxLength,
+                                          Integer precision, Integer scale, Boolean isUnicode, Class<T> returnType)
             throws EdmPrimitiveTypeException {
         try {
             OffsetDateTime odt = parseZonedDateTime(value);
@@ -193,7 +193,7 @@ public final class EdmDateTimeOffset extends SingletonPrimitiveType {
             return convertOffsetDateTime(odt, returnType);
         } catch (DateTimeParseException ex) {
             throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.", ex);
-        } catch (final ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.", e);
         }
     }

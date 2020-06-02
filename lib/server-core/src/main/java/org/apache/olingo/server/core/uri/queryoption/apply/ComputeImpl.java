@@ -41,7 +41,7 @@ public class ComputeImpl implements Compute {
     return expressions;
   }
 
-  public ComputeImpl addExpression(final ComputeExpressionImpl expression) {
+  public ComputeImpl addExpression(ComputeExpressionImpl expression) {
     expressions.add(expression);
     return this;
   }

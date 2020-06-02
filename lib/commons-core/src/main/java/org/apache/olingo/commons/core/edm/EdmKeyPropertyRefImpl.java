@@ -31,7 +31,7 @@ public class EdmKeyPropertyRefImpl implements EdmKeyPropertyRef {
   private EdmEntityType edmEntityType;
   private EdmProperty property;
 
-  public EdmKeyPropertyRefImpl(final EdmEntityType edmEntityType, final CsdlPropertyRef ref) {
+  public EdmKeyPropertyRefImpl(EdmEntityType edmEntityType, CsdlPropertyRef ref) {
     this.edmEntityType = edmEntityType;
     this.ref = ref;
   }
@@ -59,10 +59,10 @@ public class EdmKeyPropertyRefImpl implements EdmKeyPropertyRef {
         if (getName() == null || getName().isEmpty()) {
           throw new EdmException("Alias but no path specified for propertyRef");
         }
-        final String[] splitPath = getName().split("/");
+        String[] splitPath = getName().split("/");
         EdmStructuredType structType = edmEntityType;
         for (int i = 0; i < splitPath.length - 1; i++) {
-          final EdmProperty _property = structType.getStructuralProperty(splitPath[i]);
+          EdmProperty _property = structType.getStructuralProperty(splitPath[i]);
           if (_property == null) {
             throw new EdmException("Invalid property ref specified. Can´t find property with name: " + splitPath[i]
                 + " at type: " + structType.getNamespace() + "." + structType.getName());

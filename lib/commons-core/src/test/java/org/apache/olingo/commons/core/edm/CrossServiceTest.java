@@ -62,7 +62,7 @@ import org.junit.Assert;
      private final CsdlEntitySet entitySet;
      private final CsdlEntityType entityType;
  
-     private CsdlProvider(final String name) {
+     private CsdlProvider(String name) {
        this.name = name;
     namespace = NAMESPACE_PREFIX + name;
        other = name.equals("One") ? "Two" : "One";
@@ -93,7 +93,7 @@ import org.junit.Assert;
      }
  
      @Override
-    public CsdlEntityContainerInfo getEntityContainerInfo(final FullQualifiedName entityContainerName)
+    public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName)
         throws ODataException {
       if (entityContainerName == null) {
         return new CsdlEntityContainerInfo().setContainerName(
@@ -104,7 +104,7 @@ import org.junit.Assert;
         }
         return null;
       } else if ((NAMESPACE_PREFIX + other).equals(entityContainerName.getNamespace())) {
-        final CsdlEdmProvider otherProvider = this == provider1 ? provider2 : provider1;
+        CsdlEdmProvider otherProvider = this == provider1 ? provider2 : provider1;
         return otherProvider.getEntityContainerInfo(entityContainerName);
       }
       return null;
@@ -117,7 +117,7 @@ import org.junit.Assert;
     }
 
     @Override
-    public CsdlEntitySet getEntitySet(final FullQualifiedName entityContainer, final String entitySetName)
+    public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName)
         throws ODataException {
       if (namespace.equals(entityContainer.getNamespace())) {
         if ((CONTAINER_PREFIX + name).equals(entityContainer.getName())
@@ -126,14 +126,14 @@ import org.junit.Assert;
         }
         return null;
       } else if ((NAMESPACE_PREFIX + other).equals(entityContainer.getNamespace())) {
-        final CsdlEdmProvider otherProvider = this == provider1 ? provider2 : provider1;
+        CsdlEdmProvider otherProvider = this == provider1 ? provider2 : provider1;
         return otherProvider.getEntitySet(entityContainer, entitySetName);
       }
       return null;
     }
 
     @Override
-    public CsdlEntityType getEntityType(final FullQualifiedName entityTypeName) throws ODataException {
+    public CsdlEntityType getEntityType(FullQualifiedName entityTypeName) throws ODataException {
       if (namespace.equals(entityTypeName.getNamespace())) {
         if ((ENTITY_TYPE_PREFIX + name).equals(entityTypeName.getName())) {
           return entityType;
@@ -141,7 +141,7 @@ import org.junit.Assert;
         return null;
       } else if ((NAMESPACE_PREFIX + other).equals(entityTypeName.getNamespace())) {
         // Requesting a type in a foreign namespace delegates the request to another CSDL provider.
-        final CsdlEdmProvider otherProvider = this == provider1 ? provider2 : provider1;
+        CsdlEdmProvider otherProvider = this == provider1 ? provider2 : provider1;
         return otherProvider.getEntityType(entityTypeName);
       }
       return null;
@@ -150,15 +150,15 @@ import org.junit.Assert;
 
   @Test
   public void entityType() throws Exception {
-    final FullQualifiedName typeName = new FullQualifiedName("Namespace.One", "EntityTypeOne");
-    final EdmEntityType entityType = edm1.getEntityType(typeName);
+    FullQualifiedName typeName = new FullQualifiedName("Namespace.One", "EntityTypeOne");
+    EdmEntityType entityType = edm1.getEntityType(typeName);
     Assert.assertNotNull(entityType);
     Assert.assertNotNull(entityType.getNavigationProperty("NavigationTwo"));
 
     // We get an entity type in a foreign namespace if it is used in our namespace.
-    final EdmEntityType targetType = entityType.getNavigationProperty("NavigationTwo").getType();
+    EdmEntityType targetType = entityType.getNavigationProperty("NavigationTwo").getType();
     Assert.assertNotNull(targetType);
-    final FullQualifiedName targetName = new FullQualifiedName("Namespace.Two", "EntityTypeTwo");
+    FullQualifiedName targetName = new FullQualifiedName("Namespace.Two", "EntityTypeTwo");
     Assert.assertEquals(targetName, targetType.getFullQualifiedName());
 
     // Directly accessing the foreign type is also possible.
@@ -166,7 +166,7 @@ import org.junit.Assert;
     Assert.assertEquals(targetType, edm1.getEntityType(targetName));
 
     // However, the schema contains only elements from the own namespace.
-    final List<EdmEntityType> entityTypes = edm1.getSchema("Namespace.One").getEntityTypes();
+    List<EdmEntityType> entityTypes = edm1.getSchema("Namespace.One").getEntityTypes();
     Assert.assertNotNull(entityTypes);
     Assert.assertEquals(1, entityTypes.size());
     Assert.assertEquals(typeName, entityTypes.get(0).getFullQualifiedName());
@@ -203,7 +203,7 @@ import org.junit.Assert;
 
   @Test
   public void entitySet() throws Exception {
-    final EdmEntitySet entitySet = edm1.getEntityContainer(new FullQualifiedName("AliasTwo", "ContainerTwo"))
+    EdmEntitySet entitySet = edm1.getEntityContainer(new FullQualifiedName("AliasTwo", "ContainerTwo"))
         .getEntitySet("EntitySetTwo");
     Assert.assertNotNull(entitySet);
     Assert.assertEquals("EntitySetTwo", entitySet.getName());

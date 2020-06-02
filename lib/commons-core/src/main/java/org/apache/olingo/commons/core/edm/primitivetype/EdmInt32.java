@@ -35,7 +35,7 @@ public final class EdmInt32 extends SingletonPrimitiveType {
   }
 
   @Override
-  public boolean isCompatible(final EdmPrimitiveType primitiveType) {
+  public boolean isCompatible(EdmPrimitiveType primitiveType) {
     return primitiveType instanceof EdmByte
         || primitiveType instanceof EdmSByte
         || primitiveType instanceof EdmInt16
@@ -48,31 +48,31 @@ public final class EdmInt32 extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode, Class<T> returnType) throws EdmPrimitiveTypeException {
 
     Integer valueInteger;
     try {
       valueInteger = Integer.parseInt(value);
-    } catch (final NumberFormatException e) {
+    } catch (NumberFormatException e) {
       throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.", e);
     }
 
     try {
       return EdmInt64.convertNumber(valueInteger, returnType);
-    } catch (final IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       throw new EdmPrimitiveTypeException("The literal '" + value
           + "' cannot be converted to value type " + returnType + ".", e);
-    } catch (final ClassCastException e) {
+    } catch (ClassCastException e) {
       throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.", e);
     }
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     if (value instanceof Byte || value instanceof Short || value instanceof Integer) {
       return value.toString();

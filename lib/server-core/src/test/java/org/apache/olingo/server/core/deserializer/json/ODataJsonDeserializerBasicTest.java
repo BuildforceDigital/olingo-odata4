@@ -47,7 +47,7 @@ public class ODataJsonDeserializerBasicTest {
         + "}";
 
     InputStream stream = new ByteArrayInputStream(entityString.getBytes());
-    final List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
+    List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
     assertEquals(1, entityReferences.size());
     assertEquals("ESAllPrim(0)", entityReferences.get(0).toASCIIString());
   }
@@ -63,7 +63,7 @@ public class ODataJsonDeserializerBasicTest {
         "}";
 
     InputStream stream = new ByteArrayInputStream(entityString.getBytes());
-    final List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
+    List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
 
     assertEquals(2, entityReferences.size());
     assertEquals("ESAllPrim(0)", entityReferences.get(0).toASCIIString());
@@ -81,7 +81,7 @@ public class ODataJsonDeserializerBasicTest {
         "}";
 
     InputStream stream = new ByteArrayInputStream(entityString.getBytes());
-    final List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
+    List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
 
     assertEquals(1, entityReferences.size());
     assertEquals("ESAllPrim(0)", entityReferences.get(0).toASCIIString());
@@ -98,7 +98,7 @@ public class ODataJsonDeserializerBasicTest {
         "}";
 
     InputStream stream = new ByteArrayInputStream(entityString.getBytes());
-    final List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
+    List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
 
     assertEquals(1, entityReferences.size());
     assertEquals("ESAllPrim(0)", entityReferences.get(0).toASCIIString());
@@ -111,7 +111,7 @@ public class ODataJsonDeserializerBasicTest {
         + "}";
 
     InputStream stream = new ByteArrayInputStream(entityString.getBytes());
-    final List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
+    List<URI> entityReferences = deserializer.entityReferences(stream).getEntityReferences();
     assertEquals(0, entityReferences.size());
   }
 

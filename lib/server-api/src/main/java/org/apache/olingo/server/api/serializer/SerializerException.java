@@ -68,8 +68,8 @@ public class SerializerException extends ODataLibraryException {
    * @param messageKey one of the {@link MessageKeys} for the exception text in the resource bundle
    * @param parameters parameters for the exception text
    */
-  public SerializerException(final String developmentMessage,
-      final MessageKey messageKey, final String... parameters) {
+  public SerializerException(String developmentMessage,
+                             MessageKey messageKey, String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
@@ -80,8 +80,8 @@ public class SerializerException extends ODataLibraryException {
    * @param messageKey one of the {@link MessageKeys} for the exception text in the resource bundle
    * @param parameters parameters for the exception text
    */
-  public SerializerException(final String developmentMessage, final Throwable cause,
-      final MessageKey messageKey, final String... parameters) {
+  public SerializerException(String developmentMessage, Throwable cause,
+                             MessageKey messageKey, String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 

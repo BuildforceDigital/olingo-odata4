@@ -40,11 +40,11 @@ public class DynamicStructuredType implements EdmStructuredType, Cloneable {
   private final EdmStructuredType startType;
   private Map<String, EdmProperty> properties;
 
-  public DynamicStructuredType(final EdmStructuredType startType) {
+  public DynamicStructuredType(EdmStructuredType startType) {
     this.startType = startType;
   }
 
-  public DynamicStructuredType addProperty(final EdmProperty property) {
+  public DynamicStructuredType addProperty(EdmProperty property) {
     if (properties == null) {
       properties = new LinkedHashMap<>();
     }
@@ -53,8 +53,8 @@ public class DynamicStructuredType implements EdmStructuredType, Cloneable {
   }
 
   @Override
-  public EdmElement getProperty(final String name) {
-    final EdmElement property = startType.getProperty(name);
+  public EdmElement getProperty(String name) {
+    EdmElement property = startType.getProperty(name);
     return property == null ?
         properties == null ? null : properties.get(name) :
         property;
@@ -72,15 +72,15 @@ public class DynamicStructuredType implements EdmStructuredType, Cloneable {
   }
 
   @Override
-  public EdmProperty getStructuralProperty(final String name) {
-    final EdmProperty property = startType.getStructuralProperty(name);
+  public EdmProperty getStructuralProperty(String name) {
+    EdmProperty property = startType.getStructuralProperty(name);
     return property == null ?
         properties == null ? null : properties.get(name) :
         property;
   }
 
   @Override
-  public EdmNavigationProperty getNavigationProperty(final String name) {
+  public EdmNavigationProperty getNavigationProperty(String name) {
     return startType.getNavigationProperty(name);
   }
 
@@ -110,7 +110,7 @@ public class DynamicStructuredType implements EdmStructuredType, Cloneable {
   }
 
   @Override
-  public EdmAnnotation getAnnotation(final EdmTerm term, final String qualifier) {
+  public EdmAnnotation getAnnotation(EdmTerm term, String qualifier) {
     return startType.getAnnotation(term, qualifier);
   }
 
@@ -125,7 +125,7 @@ public class DynamicStructuredType implements EdmStructuredType, Cloneable {
   }
 
   @Override
-  public boolean compatibleTo(final EdmType targetType) {
+  public boolean compatibleTo(EdmType targetType) {
     return startType.compatibleTo(targetType);
   }
 

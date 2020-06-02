@@ -38,14 +38,14 @@ public class BatchParserCommonTest {
 
   @Test
   public void multipleHeaders() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList(
+    Header header = BatchParserCommon.consumeHeaders(toLineList(
         "Content-Id: 1" + CRLF,
         "Content-Id: 2" + CRLF,
         "content-type: Application/http" + CRLF,
         "content-transfer-encoding: Binary" + CRLF));
     assertNotNull(header);
 
-    final List<String> contentIdHeaders = header.getHeaders(HttpHeader.CONTENT_ID);
+    List<String> contentIdHeaders = header.getHeaders(HttpHeader.CONTENT_ID);
     assertNotNull(contentIdHeaders);
     assertEquals(2, contentIdHeaders.size());
     assertEquals("1", contentIdHeaders.get(0));
@@ -54,14 +54,14 @@ public class BatchParserCommonTest {
 
   @Test
   public void multipleHeadersSameValue() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList(
+    Header header = BatchParserCommon.consumeHeaders(toLineList(
         "Content-Id: 1" + CRLF,
         "Content-Id: 1" + CRLF,
         "content-type: Application/http" + CRLF,
         "content-transfer-encoding: Binary" + CRLF));
     assertNotNull(header);
 
-    final List<String> contentIdHeaders = header.getHeaders(HttpHeader.CONTENT_ID);
+    List<String> contentIdHeaders = header.getHeaders(HttpHeader.CONTENT_ID);
     assertNotNull(contentIdHeaders);
     assertEquals(1, contentIdHeaders.size());
     assertEquals("1", contentIdHeaders.get(0));
@@ -69,14 +69,14 @@ public class BatchParserCommonTest {
 
   @Test
   public void headersSeparatedByComma() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList(
+    Header header = BatchParserCommon.consumeHeaders(toLineList(
         "Content-Id: 1" + CRLF,
         "Upgrade: HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11" + CRLF,
         "content-type: Application/http" + CRLF,
         "content-transfer-encoding: Binary" + CRLF));
     assertNotNull(header);
 
-    final List<String> upgradeHeader = header.getHeaders("upgrade");
+    List<String> upgradeHeader = header.getHeaders("upgrade");
     assertNotNull(upgradeHeader);
     assertEquals(4, upgradeHeader.size());
     assertEquals("HTTP/2.0", upgradeHeader.get(0));
@@ -87,7 +87,7 @@ public class BatchParserCommonTest {
 
   @Test
   public void multipleAcceptHeaders() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList(
+    Header header = BatchParserCommon.consumeHeaders(toLineList(
         "Accept: application/atomsvc+xml;q=0.8, application/json;odata=verbose;q=0.5, */*;q=0.1" + CRLF,
         "Accept: text/plain;q=0.3" + CRLF,
         "Accept-Language:en-US,en;q=0.7,en-UK;q=0.9" + CRLF,
@@ -95,14 +95,14 @@ public class BatchParserCommonTest {
         "content-transfer-encoding: Binary" + CRLF));
     assertNotNull(header);
 
-    final List<String> acceptHeader = header.getHeaders(HttpHeader.ACCEPT);
+    List<String> acceptHeader = header.getHeaders(HttpHeader.ACCEPT);
     assertNotNull(acceptHeader);
     assertEquals(4, acceptHeader.size());
   }
 
   @Test
   public void multipleAcceptHeadersSameValue() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList(
+    Header header = BatchParserCommon.consumeHeaders(toLineList(
         "Accept: application/atomsvc+xml;q=0.8, application/json;odata=verbose;q=0.5, */*;q=0.1" + CRLF,
         "Accept: application/atomsvc+xml;q=0.8" + CRLF,
         "Accept-Language:en-US,en;q=0.7,en-UK;q=0.9" + CRLF,
@@ -110,42 +110,42 @@ public class BatchParserCommonTest {
         "content-transfer-encoding: Binary" + CRLF));
     assertNotNull(header);
 
-    final List<String> acceptHeader = header.getHeaders(HttpHeader.ACCEPT);
+    List<String> acceptHeader = header.getHeaders(HttpHeader.ACCEPT);
     assertNotNull(acceptHeader);
     assertEquals(3, acceptHeader.size());
   }
 
   @Test
   public void multipleAcceptLanguageHeaders() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList(
+    Header header = BatchParserCommon.consumeHeaders(toLineList(
         "Accept-Language:en-US,en;q=0.7,en-UK;q=0.9" + CRLF,
         "Accept-Language: de-DE;q=0.3" + CRLF,
         "content-type: Application/http" + CRLF,
         "content-transfer-encoding: Binary" + CRLF));
     assertNotNull(header);
 
-    final List<String> acceptLanguageHeader = header.getHeaders(HttpHeader.ACCEPT_LANGUAGE);
+    List<String> acceptLanguageHeader = header.getHeaders(HttpHeader.ACCEPT_LANGUAGE);
     assertNotNull(acceptLanguageHeader);
     assertEquals(4, acceptLanguageHeader.size());
   }
 
   @Test
   public void multipleAcceptLanguageHeadersSameValue() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList(
+    Header header = BatchParserCommon.consumeHeaders(toLineList(
         "Accept-Language:en-US,en;q=0.7,en-UK;q=0.9" + CRLF,
         "Accept-Language:en-US,en;q=0.7" + CRLF,
         "content-type: Application/http" + CRLF,
         "content-transfer-encoding: Binary" + CRLF));
     assertNotNull(header);
 
-    final List<String> acceptLanguageHeader = header.getHeaders(HttpHeader.ACCEPT_LANGUAGE);
+    List<String> acceptLanguageHeader = header.getHeaders(HttpHeader.ACCEPT_LANGUAGE);
     assertNotNull(acceptLanguageHeader);
     assertEquals(3, acceptLanguageHeader.size());
   }
 
   @Test
   public void headersWithSpecialNames() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList(
+    Header header = BatchParserCommon.consumeHeaders(toLineList(
         "Test0123456789: 42" + CRLF,
         "a_b: c/d" + CRLF,
         "!#$%&'*+-.^_`|~: weird" + CRLF));
@@ -158,7 +158,7 @@ public class BatchParserCommonTest {
 
   @Test
   public void headerWithWrongName() throws Exception {
-    final Header header = BatchParserCommon.consumeHeaders(toLineList("a,b: c/d" + CRLF));
+    Header header = BatchParserCommon.consumeHeaders(toLineList("a,b: c/d" + CRLF));
     assertNotNull(header);
     assertFalse(header.iterator().hasNext());
   }
@@ -192,7 +192,7 @@ public class BatchParserCommonTest {
   @Test
   public void contentTypeCharset() throws Exception {
     final String contentType = MULTIPART_MIXED + "; charset=UTF-8;boundary=" + BatchParserCommon.BOUNDARY;
-    final String boundary = BatchParserCommon.getBoundary(contentType, 0);
+    String boundary = BatchParserCommon.getBoundary(contentType, 0);
     Assert.assertEquals(BatchParserCommon.BOUNDARY, boundary);
   }
 
@@ -266,22 +266,22 @@ public class BatchParserCommonTest {
         BatchParserCommon.removeEndingCRLF(new Line(line, 1)).toString());
   }
 
-  private List<Line> toLineList(final String... messageRaw) {
-    final List<Line> lineList = new ArrayList<Line>();
+  private List<Line> toLineList(String... messageRaw) {
+    List<Line> lineList = new ArrayList<Line>();
     int counter = 1;
 
-    for (final String currentLine : messageRaw) {
+    for (String currentLine : messageRaw) {
       lineList.add(new Line(currentLine, counter++));
     }
 
     return lineList;
   }
 
-  private void invalidBoundary(final String contentType, final BatchDeserializerException.MessageKeys messageKey) {
+  private void invalidBoundary(String contentType, BatchDeserializerException.MessageKeys messageKey) {
     try {
       BatchParserCommon.getBoundary(contentType, 0);
       Assert.fail("Expected exception not thrown.");
-    } catch (final BatchDeserializerException e) {
+    } catch (BatchDeserializerException e) {
       Assert.assertEquals(messageKey, e.getMessageKey());
     }
   }

@@ -29,7 +29,7 @@ public class DebugTabRuntimeTest extends AbstractDebugTabTest {
 
   @Test
   public void runtime() throws Exception {
-    final DebugTabRuntime tab = new DebugTabRuntime(Arrays.asList(
+    DebugTabRuntime tab = new DebugTabRuntime(Arrays.asList(
         createMeasurement("class1", "method1", 0, 42),
         createMeasurement("class2", "method2", 12, 23),
         createMeasurement("class2", "method2", 24, 26),
@@ -61,8 +61,8 @@ public class DebugTabRuntimeTest extends AbstractDebugTabTest {
         createHtml(tab));
   }
 
-  private RuntimeMeasurement createMeasurement(final String className, final String methodName,
-      final int startMilliseconds, final int stopMilliseconds) {
+  private RuntimeMeasurement createMeasurement(String className, String methodName,
+                                               int startMilliseconds, int stopMilliseconds) {
     RuntimeMeasurement measurement = new RuntimeMeasurement();
     measurement.setClassName(className);
     measurement.setMethodName(methodName);

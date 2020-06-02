@@ -47,36 +47,36 @@ public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
 
   @Test
   public void nameSpace() {
-    for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
+    for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       assertEquals(EdmPrimitiveType.EDM_NAMESPACE, EdmPrimitiveTypeFactory.getInstance(kind).getNamespace());
     }
   }
 
   @Test
   public void names() {
-    for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
+    for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       assertEquals(kind.name(), EdmPrimitiveTypeFactory.getInstance(kind).getName());
     }
   }
 
   @Test
   public void kind() {
-    for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
+    for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       assertEquals(EdmTypeKind.PRIMITIVE, EdmPrimitiveTypeFactory.getInstance(kind).getKind());
     }
   }
 
   @Test
   public void toStringAll() {
-    for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
+    for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       assertEquals(kind.getFullQualifiedName().toString(), EdmPrimitiveTypeFactory.getInstance(kind).toString());
     }
   }
 
   @Test
   public void compatibility() {
-    for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
-      final EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
+    for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
+      EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
       assertTrue(instance.isCompatible(instance));
       assertFalse(instance.isCompatible(EdmPrimitiveTypeFactory.getInstance(
           (kind == EdmPrimitiveTypeKind.String ? EdmPrimitiveTypeKind.Binary : EdmPrimitiveTypeKind.String))));
@@ -143,8 +143,8 @@ public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
 
   @Test
   public void validate() {
-    for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
-      final EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
+    for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
+      EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
       assertTrue(instance.validate(null, null, null, null, null, null));
       assertTrue(instance.validate(null, true, null, null, null, null));
       assertFalse(instance.validate(null, false, null, null, null, null));
@@ -174,8 +174,8 @@ public class CommonPrimitiveTypeTest extends PrimitiveTypeBaseTest {
 
   @Test
   public void uriLiteral() throws Exception {
-    for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
-      final EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
+    for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
+      EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
       assertEquals("test", instance.fromUriLiteral(instance.toUriLiteral("test")));
       assertNull(instance.toUriLiteral(null));
       assertNull(instance.fromUriLiteral(null));

@@ -42,43 +42,43 @@ public class CsdlFunction extends CsdlOperation {
    * @param isComposable the is composable
    * @return the composable
    */
-  public CsdlFunction setComposable(final boolean isComposable) {
+  public CsdlFunction setComposable(boolean isComposable) {
     this.isComposable = isComposable;
     return this;
   }
 
   @Override
-  public CsdlFunction setName(final String name) {
+  public CsdlFunction setName(String name) {
     this.name = name;
     return this;
   }
 
   @Override
-  public CsdlFunction setBound(final boolean isBound) {
+  public CsdlFunction setBound(boolean isBound) {
     this.isBound = isBound;
     return this;
   }
 
   @Override
-  public CsdlFunction setEntitySetPath(final String entitySetPath) {
+  public CsdlFunction setEntitySetPath(String entitySetPath) {
     this.entitySetPath = entitySetPath;
     return this;
   }
 
   @Override
-  public CsdlFunction setParameters(final List<CsdlParameter> parameters) {
+  public CsdlFunction setParameters(List<CsdlParameter> parameters) {
     this.parameters = parameters;
     return this;
   }
 
   @Override
-  public CsdlFunction setReturnType(final CsdlReturnType returnType) {
+  public CsdlFunction setReturnType(CsdlReturnType returnType) {
     this.returnType = returnType;
     return this;
   }
 
   @Override
-  public CsdlFunction setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlFunction setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

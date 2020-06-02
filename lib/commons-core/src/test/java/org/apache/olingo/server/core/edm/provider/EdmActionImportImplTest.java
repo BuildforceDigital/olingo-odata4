@@ -21,6 +21,7 @@ package org.apache.olingo.server.core.edm.provider;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -68,18 +69,18 @@ public class EdmActionImportImplTest {
   @Test
   public void simpleActionTest() {
     assertEquals("actionImportName", actionImport.getName());
-    assertTrue(container == actionImport.getEntityContainer());
-    assertTrue(action == actionImport.getUnboundAction());
+      assertSame(container, actionImport.getEntityContainer());
+      assertSame(action, actionImport.getUnboundAction());
   }
 
   @Test
   public void getReturnedEntitySet() {
     EdmEntitySet returnedEntitySet = actionImport.getReturnedEntitySet();
     assertNotNull(returnedEntitySet);
-    assertTrue(returnedEntitySet == entitySet);
+      assertSame(returnedEntitySet, entitySet);
 
     // Chaching
-    assertTrue(returnedEntitySet == actionImport.getReturnedEntitySet());
+      assertSame(returnedEntitySet, actionImport.getReturnedEntitySet());
   }
 
   @Test(expected = EdmException.class)

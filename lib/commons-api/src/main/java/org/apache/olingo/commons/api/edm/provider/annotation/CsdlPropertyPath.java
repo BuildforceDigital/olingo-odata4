@@ -34,7 +34,7 @@ public class CsdlPropertyPath extends CsdlDynamicExpression {
     return value;
   }
 
-  public CsdlPropertyPath setValue(final String value) {
+  public CsdlPropertyPath setValue(String value) {
     this.value = value;
     return this;
   }
@@ -48,8 +48,8 @@ public class CsdlPropertyPath extends CsdlDynamicExpression {
       return false;
     }
     CsdlPropertyPath csdlPropPath = (CsdlPropertyPath) obj;
-    return this.getValue() == null ? csdlPropPath.getValue() == null : 
-      this.getValue().equals(csdlPropPath.getValue());
+    return getValue() == null ? csdlPropPath.getValue() == null :
+            getValue().equals(csdlPropPath.getValue());
   }
   
   @Override

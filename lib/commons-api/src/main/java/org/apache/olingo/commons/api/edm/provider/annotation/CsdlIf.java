@@ -54,7 +54,7 @@ public class CsdlIf extends CsdlDynamicExpression implements CsdlAnnotatable {
     return guard;
   }
 
-  public CsdlIf setGuard(final CsdlExpression guard) {
+  public CsdlIf setGuard(CsdlExpression guard) {
     this.guard = guard;
     return this;
   }
@@ -70,7 +70,7 @@ public class CsdlIf extends CsdlDynamicExpression implements CsdlAnnotatable {
     return _then;
   }
 
-  public CsdlIf setThen(final CsdlExpression _then) {
+  public CsdlIf setThen(CsdlExpression _then) {
     this._then = _then;
     return this;
   }
@@ -86,7 +86,7 @@ public class CsdlIf extends CsdlDynamicExpression implements CsdlAnnotatable {
     return _else;
   }
 
-  public CsdlIf setElse(final CsdlExpression _else) {
+  public CsdlIf setElse(CsdlExpression _else) {
     this._else = _else;
     return this;
   }
@@ -100,13 +100,13 @@ public class CsdlIf extends CsdlDynamicExpression implements CsdlAnnotatable {
       return false;
     }
     CsdlIf csdlIf = (CsdlIf) obj;
-    return (this.getGuard() == null ? csdlIf.getGuard() == null :
-      this.getGuard().equals(csdlIf.getGuard()))
-        && (this.getThen() == null ? csdlIf.getThen() == null :
-          this.getThen().equals(csdlIf.getThen()))
-        && (this.getElse() == null ? csdlIf.getElse() == null :
-          this.getElse().equals(csdlIf.getElse()))
-        && (this.getAnnotations() == null ? csdlIf.getAnnotations() == null :
+    return (getGuard() == null ? csdlIf.getGuard() == null :
+            getGuard().equals(csdlIf.getGuard()))
+        && (getThen() == null ? csdlIf.getThen() == null :
+            getThen().equals(csdlIf.getThen()))
+        && (getElse() == null ? csdlIf.getElse() == null :
+            getElse().equals(csdlIf.getElse()))
+        && (getAnnotations() == null ? csdlIf.getAnnotations() == null :
             checkAnnotations(csdlIf.getAnnotations()));
   }
   
@@ -114,9 +114,9 @@ public class CsdlIf extends CsdlDynamicExpression implements CsdlAnnotatable {
     if (csdlIfAnnotations == null) {
       return false;
     }
-    if (this.getAnnotations().size() == csdlIfAnnotations.size()) {
-      for (int i = 0; i < this.getAnnotations().size(); i++) {
-        if (!this.getAnnotations().get(i).equals(csdlIfAnnotations.get(i))) {
+    if (getAnnotations().size() == csdlIfAnnotations.size()) {
+      for (int i = 0; i < getAnnotations().size(); i++) {
+        if (!getAnnotations().get(i).equals(csdlIfAnnotations.get(i))) {
           return false;
         }
       }

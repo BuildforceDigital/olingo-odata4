@@ -53,7 +53,7 @@ public class ServiceDocumentXmlSerializerTest {
 
   @Test
   public void writeServiceWithEmptyMockedEdm() throws Exception {
-    final Edm edm = mock(Edm.class);
+    Edm edm = mock(Edm.class);
     EdmEntityContainer container = mock(EdmEntityContainer.class);
     when(container.getFullQualifiedName()).thenReturn(new FullQualifiedName("service", "test"));
     when(container.getEntitySets()).thenReturn(Collections.<EdmEntitySet> emptyList());

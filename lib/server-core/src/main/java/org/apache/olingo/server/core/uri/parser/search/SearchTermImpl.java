@@ -23,7 +23,7 @@ import org.apache.olingo.server.api.uri.queryoption.search.SearchTerm;
 public class SearchTermImpl extends SearchExpressionImpl implements SearchTerm {
   private final String term;
 
-  public SearchTermImpl(final String term) {
+  public SearchTermImpl(String term) {
     this.term = term;
   }
 

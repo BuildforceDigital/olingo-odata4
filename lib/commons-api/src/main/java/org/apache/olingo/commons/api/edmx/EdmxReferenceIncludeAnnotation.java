@@ -31,7 +31,7 @@ public class EdmxReferenceIncludeAnnotation {
    *
    * @param termNamespace of include annotation
    */
-  public EdmxReferenceIncludeAnnotation(final String termNamespace) {
+  public EdmxReferenceIncludeAnnotation(String termNamespace) {
     this(termNamespace, null, null);
   }
 
@@ -42,8 +42,8 @@ public class EdmxReferenceIncludeAnnotation {
    * @param qualifier of include annotation
    * @param targetNamespace of include annotation
    */
-  public EdmxReferenceIncludeAnnotation(final String termNamespace, final String qualifier,
-      final String targetNamespace) {
+  public EdmxReferenceIncludeAnnotation(String termNamespace, String qualifier,
+                                        String targetNamespace) {
     this.termNamespace = termNamespace;
     this.qualifier = qualifier;
     this.targetNamespace = targetNamespace;
@@ -69,7 +69,7 @@ public class EdmxReferenceIncludeAnnotation {
    * @param qualifier for include annotation
    * @return this include annotation
    */
-  public EdmxReferenceIncludeAnnotation setQualifier(final String qualifier) {
+  public EdmxReferenceIncludeAnnotation setQualifier(String qualifier) {
     this.qualifier = qualifier;
     return this;
   }
@@ -87,7 +87,7 @@ public class EdmxReferenceIncludeAnnotation {
    * @param targetNamespace for include annotation
    * @return this include annotation
    */
-  public EdmxReferenceIncludeAnnotation setTargetNamespace(final String targetNamespace) {
+  public EdmxReferenceIncludeAnnotation setTargetNamespace(String targetNamespace) {
     this.targetNamespace = targetNamespace;
     return this;
   }

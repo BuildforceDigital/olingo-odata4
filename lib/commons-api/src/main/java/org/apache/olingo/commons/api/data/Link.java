@@ -50,7 +50,7 @@ public class Link extends Annotatable {
    *
    * @param title title.
    */
-  public void setTitle(final String title) {
+  public void setTitle(String title) {
     this.title = title;
   }
 
@@ -68,7 +68,7 @@ public class Link extends Annotatable {
    *
    * @param rel rel info.
    */
-  public void setRel(final String rel) {
+  public void setRel(String rel) {
     this.rel = rel;
   }
 
@@ -86,7 +86,7 @@ public class Link extends Annotatable {
    *
    * @param href href.
    */
-  public void setHref(final String href) {
+  public void setHref(String href) {
     this.href = href;
   }
 
@@ -104,7 +104,7 @@ public class Link extends Annotatable {
    *
    * @param type type.
    */
-  public void setType(final String type) {
+  public void setType(String type) {
     this.type = type;
   }
 
@@ -122,7 +122,7 @@ public class Link extends Annotatable {
    *
    * @param mediaETag media ETag
    */
-  public void setMediaETag(final String mediaETag) {
+  public void setMediaETag(String mediaETag) {
     this.mediaETag = mediaETag;
   }
 
@@ -140,7 +140,7 @@ public class Link extends Annotatable {
    *
    * @param entity entity.
    */
-  public void setInlineEntity(final Entity entity) {
+  public void setInlineEntity(Entity entity) {
     this.entity = entity;
   }
 
@@ -158,7 +158,7 @@ public class Link extends Annotatable {
    *
    * @param entitySet entity set.
    */
-  public void setInlineEntitySet(final EntityCollection entitySet) {
+  public void setInlineEntitySet(EntityCollection entitySet) {
     this.entitySet = entitySet;
   }
 
@@ -182,7 +182,7 @@ public class Link extends Annotatable {
    * Sets the binding link.
    * @param bindingLink name of binding link
    */
-  public void setBindingLink(final String bindingLink) {
+  public void setBindingLink(String bindingLink) {
     this.bindingLink = bindingLink;
   }
 
@@ -190,12 +190,12 @@ public class Link extends Annotatable {
    * Sets the binding links. List MUST NOT be <tt>null</tt>.
    * @param bindingLinks list of binding link names
    */
-  public void setBindingLinks(final List<String> bindingLinks) {
+  public void setBindingLinks(List<String> bindingLinks) {
     this.bindingLinks = bindingLinks;
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -203,7 +203,7 @@ public class Link extends Annotatable {
       return false;
     }
 
-    final Link other = (Link) o;
+    Link other = (Link) o;
     return getAnnotations().equals(other.getAnnotations())
         && (title == null ? other.title == null : title.equals(other.title))
         && (rel == null ? other.rel == null : rel.equals(other.rel))

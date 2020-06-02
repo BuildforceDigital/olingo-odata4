@@ -64,7 +64,7 @@ public interface EdmExpression {
     Path,
     PropertyPath,
     Record,
-    UrlRef;
+    UrlRef
   }
   
   /**

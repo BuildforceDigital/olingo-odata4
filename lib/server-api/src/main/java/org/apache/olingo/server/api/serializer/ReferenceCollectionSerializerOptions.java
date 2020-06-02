@@ -52,13 +52,13 @@ public final class ReferenceCollectionSerializerOptions {
     }
 
     /** Sets the {@link ContextURL}. */
-    public Builder contextURL(final ContextURL contextURL) {
+    public Builder contextURL(ContextURL contextURL) {
       options.contextURL = contextURL;
       return this;
     }
 
     /** Sets the $count system query option. */
-    public Builder count(final CountOption count) {
+    public Builder count(CountOption count) {
       options.count = count;
       return this;
     }

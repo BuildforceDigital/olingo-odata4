@@ -39,7 +39,7 @@ public enum PreferenceName {
 
   private final String preferenceName;
 
-  PreferenceName(final String preferenceName) {
+  PreferenceName(String preferenceName) {
     this.preferenceName = preferenceName;
   }
 

@@ -28,7 +28,7 @@ public class TypeLiteralImpl implements TypeLiteral {
 
   private final EdmType type;
 
-  public TypeLiteralImpl(final EdmType type) {
+  public TypeLiteralImpl(EdmType type) {
     this.type = type;
   }
 
@@ -38,7 +38,7 @@ public class TypeLiteralImpl implements TypeLiteral {
   }
 
   @Override
-  public <T> T accept(final ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
+  public <T> T accept(ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
     return visitor.visitTypeLiteral(type);
   }
 

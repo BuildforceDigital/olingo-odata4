@@ -34,7 +34,7 @@ public class CountOptionImpl extends SystemQueryOptionImpl implements CountOptio
     return count;
   }
 
-  public CountOptionImpl setValue(final boolean count) {
+  public CountOptionImpl setValue(boolean count) {
     this.count = count;
     return this;
   }

@@ -57,7 +57,7 @@ public class CsdlTypeDefinition extends CsdlAbstractEdmItem implements CsdlNamed
    * @param name the name
    * @return the name
    */
-  public CsdlTypeDefinition setName(final String name) {
+  public CsdlTypeDefinition setName(String name) {
     this.name = name;
     return this;
   }
@@ -80,7 +80,7 @@ public class CsdlTypeDefinition extends CsdlAbstractEdmItem implements CsdlNamed
    * @param underlyingType the underlying type
    * @return the underlying type
    */
-  public CsdlTypeDefinition setUnderlyingType(final String underlyingType) {
+  public CsdlTypeDefinition setUnderlyingType(String underlyingType) {
     this.underlyingType = new FullQualifiedName(underlyingType);
     return this;
   }
@@ -91,7 +91,7 @@ public class CsdlTypeDefinition extends CsdlAbstractEdmItem implements CsdlNamed
    * @param underlyingType the underlying type
    * @return the underlying type
    */
-  public CsdlTypeDefinition setUnderlyingType(final FullQualifiedName underlyingType) {
+  public CsdlTypeDefinition setUnderlyingType(FullQualifiedName underlyingType) {
     this.underlyingType = underlyingType;
     return this;
   }
@@ -111,7 +111,7 @@ public class CsdlTypeDefinition extends CsdlAbstractEdmItem implements CsdlNamed
    * @param maxLength the max length
    * @return the max length
    */
-  public CsdlTypeDefinition setMaxLength(final Integer maxLength) {
+  public CsdlTypeDefinition setMaxLength(Integer maxLength) {
     this.maxLength = maxLength;
     return this;
   }
@@ -131,7 +131,7 @@ public class CsdlTypeDefinition extends CsdlAbstractEdmItem implements CsdlNamed
    * @param precision the precision
    * @return the precision
    */
-  public CsdlTypeDefinition setPrecision(final Integer precision) {
+  public CsdlTypeDefinition setPrecision(Integer precision) {
     this.precision = precision;
     return this;
   }
@@ -151,7 +151,7 @@ public class CsdlTypeDefinition extends CsdlAbstractEdmItem implements CsdlNamed
    * @param scale the scale
    * @return the scale
    */
-  public CsdlTypeDefinition setScale(final Integer scale) {
+  public CsdlTypeDefinition setScale(Integer scale) {
     this.scale = scale;
     return this;
   }
@@ -171,7 +171,7 @@ public class CsdlTypeDefinition extends CsdlAbstractEdmItem implements CsdlNamed
    * @param unicode the unicode
    * @return the unicode
    */
-  public CsdlTypeDefinition setUnicode(final boolean unicode) {
+  public CsdlTypeDefinition setUnicode(boolean unicode) {
     this.unicode = unicode;
     return this;
   }
@@ -206,7 +206,7 @@ public class CsdlTypeDefinition extends CsdlAbstractEdmItem implements CsdlNamed
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlTypeDefinition setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlTypeDefinition setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

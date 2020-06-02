@@ -33,7 +33,7 @@ public final class ContextURLBuilder {
   
   private ContextURLBuilder() { /* private ctor for helper class */}
 
-  public static URI create(final ContextURL contextURL) {
+  public static URI create(ContextURL contextURL) {
     StringBuilder result = new StringBuilder();
     if (contextURL.getServiceRoot() != null) {
       result.append(contextURL.getServiceRoot());

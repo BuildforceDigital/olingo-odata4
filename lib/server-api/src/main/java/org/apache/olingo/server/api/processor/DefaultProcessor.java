@@ -50,14 +50,14 @@ public class DefaultProcessor implements MetadataProcessor, ServiceDocumentProce
   private ServiceMetadata serviceMetadata;
 
   @Override
-  public void init(final OData odata, final ServiceMetadata serviceMetadata) {
+  public void init(OData odata, ServiceMetadata serviceMetadata) {
     this.odata = odata;
     this.serviceMetadata = serviceMetadata;
   }
 
   @Override
-  public void readServiceDocument(final ODataRequest request, final ODataResponse response, final UriInfo uriInfo,
-      final ContentType requestedContentType) throws ODataApplicationException, ODataLibraryException {
+  public void readServiceDocument(ODataRequest request, ODataResponse response, UriInfo uriInfo,
+                                  ContentType requestedContentType) throws ODataApplicationException, ODataLibraryException {
     boolean isNotModified = false;
     ServiceMetadataETagSupport eTagSupport = serviceMetadata.getServiceMetadataETagSupport();
     if (eTagSupport != null && eTagSupport.getServiceDocumentETag() != null) {
@@ -86,8 +86,8 @@ public class DefaultProcessor implements MetadataProcessor, ServiceDocumentProce
   }
 
   @Override
-  public void readMetadata(final ODataRequest request, final ODataResponse response, final UriInfo uriInfo,
-      final ContentType requestedContentType) throws ODataApplicationException, ODataLibraryException {
+  public void readMetadata(ODataRequest request, ODataResponse response, UriInfo uriInfo,
+                           ContentType requestedContentType) throws ODataApplicationException, ODataLibraryException {
     boolean isNotModified = false;
     ServiceMetadataETagSupport eTagSupport = serviceMetadata.getServiceMetadataETagSupport();
     if (eTagSupport != null && eTagSupport.getMetadataETag() != null) {
@@ -116,9 +116,9 @@ public class DefaultProcessor implements MetadataProcessor, ServiceDocumentProce
   }
 
   @Override
-  public void processError(final ODataRequest request, final ODataResponse response,
-      final ODataServerError serverError,
-      final ContentType requestedContentType) {
+  public void processError(ODataRequest request, ODataResponse response,
+                           ODataServerError serverError,
+                           ContentType requestedContentType) {
     try {
       ODataSerializer serializer = odata.createSerializer(requestedContentType);
       response.setContent(serializer.error(serverError).getContent());

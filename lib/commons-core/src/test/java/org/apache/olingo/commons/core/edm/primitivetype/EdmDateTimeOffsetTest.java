@@ -137,7 +137,7 @@ public class EdmDateTimeOffsetTest extends PrimitiveTypeBaseTest {
   @Test
   public void valueToStringFromJavaUtilDate() throws Exception {
     final long millis = 1330558323007L;
-    final Date date = new Date(millis);
+    Date date = new Date(millis);
     assertEquals("2012-02-29T23:32:03.007Z", instance.valueToString(date, null, null, 9, null, null));
     assertEquals("2012-02-29T23:32:03.007Z", instance.valueToString(date, null, null, 3, null, null));
   }

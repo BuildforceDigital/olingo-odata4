@@ -48,7 +48,7 @@ public class ODataError {
    * @param code the service defined error code for this error
    * @return this for method chaining
    */
-  public ODataError setCode(final String code) {
+  public ODataError setCode(String code) {
     this.code = code;
     return this;
   }
@@ -68,7 +68,7 @@ public class ODataError {
    * @param message message for this error
    * @return this for method chaining
    */
-  public ODataError setMessage(final String message) {
+  public ODataError setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -88,7 +88,7 @@ public class ODataError {
    * @param target target to which this error is related to
    * @return this for method chaining
    */
-  public ODataError setTarget(final String target) {
+  public ODataError setTarget(String target) {
     this.target = target;
     return this;
   }
@@ -107,7 +107,7 @@ public class ODataError {
    *
    * @return this for method chaining.
    */
-  public ODataError setDetails(final List<ODataErrorDetail> details) {
+  public ODataError setDetails(List<ODataErrorDetail> details) {
     this.details = details;
     return this;
   }
@@ -126,7 +126,7 @@ public class ODataError {
    *
    * @return this for method chaining.
    */
-  public ODataError setInnerError(final Map<String, String> innerError) {
+  public ODataError setInnerError(Map<String, String> innerError) {
     this.innerError = innerError;
     return this;
   }
@@ -136,7 +136,7 @@ public class ODataError {
    * @param additionalProperties
    * @return this for method chaining.
    */
-  public ODataError setAdditionalProperties(final Map<String, Object> additionalProperties) {
+  public ODataError setAdditionalProperties(Map<String, Object> additionalProperties) {
 	  this.additionalProperties = additionalProperties;
 	  return this;
   }
@@ -146,6 +146,6 @@ public class ODataError {
    * @return a pair representing server defined object.
    */
   public Map<String, Object> getAdditionalProperties() {
-	  return this.additionalProperties;
+	  return additionalProperties;
   }
 }

@@ -78,7 +78,7 @@ public class DebugTabUri implements DebugTab {
 
   private final UriInfo uriInfo;
 
-  public DebugTabUri(final UriInfo uriInfo) {
+  public DebugTabUri(UriInfo uriInfo) {
     this.uriInfo = uriInfo;
   }
 
@@ -88,7 +88,7 @@ public class DebugTabUri implements DebugTab {
   }
 
   @Override
-  public void appendJson(final JsonGenerator gen) throws IOException {
+  public void appendJson(JsonGenerator gen) throws IOException {
     gen.writeStartObject();
 
     gen.writeStringField("kind", uriInfo.getKind().name());
@@ -98,7 +98,7 @@ public class DebugTabUri implements DebugTab {
     } else if (uriInfo.getKind() == UriInfoKind.crossjoin) {
       gen.writeFieldName("entitySetNames");
       gen.writeStartArray();
-      for (final String name : uriInfo.asUriInfoCrossjoin().getEntitySetNames()) {
+      for (String name : uriInfo.asUriInfoCrossjoin().getEntitySetNames()) {
         gen.writeString(name);
       }
       gen.writeEndArray();
@@ -140,10 +140,10 @@ public class DebugTabUri implements DebugTab {
   }
 
   private void appendCommonJsonObjects(JsonGenerator gen,
-      final CountOption countOption, final SkipOption skipOption, final TopOption topOption,
-      final FilterOption filterOption, final OrderByOption orderByOption,
-      final SelectOption selectOption, final ExpandOption expandOption, final SearchOption searchOption,
-      final ApplyOption applyOption)
+      CountOption countOption, SkipOption skipOption, TopOption topOption,
+      FilterOption filterOption, OrderByOption orderByOption,
+      SelectOption selectOption, ExpandOption expandOption, SearchOption searchOption,
+      ApplyOption applyOption)
       throws IOException {
     if (countOption != null) {
       gen.writeBooleanField("isCount", countOption.getValue());
@@ -192,7 +192,7 @@ public class DebugTabUri implements DebugTab {
     }
   }
 
-  private void appendURIResourceParts(final JsonGenerator gen, final List<UriResource> uriResourceParts)
+  private void appendURIResourceParts(JsonGenerator gen, List<UriResource> uriResourceParts)
       throws IOException {
     gen.writeStartArray();
     for (UriResource resource : uriResourceParts) {
@@ -226,17 +226,17 @@ public class DebugTabUri implements DebugTab {
     gen.writeEndArray();
   }
 
-  private void appendType(JsonGenerator json, final String name, final EdmType type) throws IOException {
+  private void appendType(JsonGenerator json, String name, EdmType type) throws IOException {
     if (type != null) {
       json.writeStringField(name, type.getFullQualifiedName().getFullQualifiedNameAsString());
     }
   }
 
-  private void appendParameters(final JsonGenerator gen, final String name, final List<UriParameter> parameters)
+  private void appendParameters(JsonGenerator gen, String name, List<UriParameter> parameters)
       throws IOException {
     if (!parameters.isEmpty()) {
       Map<String, String> parameterMap = new LinkedHashMap<>();
-      for (final UriParameter parameter : parameters) {
+      for (UriParameter parameter : parameters) {
         parameterMap.put(parameter.getName(),
             parameter.getText() == null ? parameter.getAlias() : parameter.getText());
       }
@@ -245,9 +245,9 @@ public class DebugTabUri implements DebugTab {
     }
   }
 
-  private void appendOrderByItemsJson(final JsonGenerator gen, final List<OrderByItem> orders) throws IOException {
+  private void appendOrderByItemsJson(JsonGenerator gen, List<OrderByItem> orders) throws IOException {
     gen.writeStartArray();
-    for (final OrderByItem item : orders) {
+    for (OrderByItem item : orders) {
       gen.writeStartObject();
       gen.writeStringField("nodeType", "order");
       gen.writeStringField("sortorder", item.isDescending() ? "desc" : "asc");
@@ -258,7 +258,7 @@ public class DebugTabUri implements DebugTab {
     gen.writeEndArray();
   }
 
-  private void appendExpandedPropertiesJson(final JsonGenerator gen, final List<ExpandItem> expandItems)
+  private void appendExpandedPropertiesJson(JsonGenerator gen, List<ExpandItem> expandItems)
       throws IOException {
     gen.writeStartArray();
     for (ExpandItem item : expandItems) {
@@ -267,7 +267,7 @@ public class DebugTabUri implements DebugTab {
     gen.writeEndArray();
   }
 
-  private void appendExpandItemJson(final JsonGenerator gen, final ExpandItem item) throws IOException {
+  private void appendExpandItemJson(JsonGenerator gen, ExpandItem item) throws IOException {
     gen.writeStartObject();
 
     if (item.isStar()) {
@@ -297,20 +297,20 @@ public class DebugTabUri implements DebugTab {
     gen.writeEndObject();
   }
 
-  private void appendExpressionJson(final JsonGenerator gen, final Expression expression) throws IOException {
+  private void appendExpressionJson(JsonGenerator gen, Expression expression) throws IOException {
     if (expression == null) {
       gen.writeNull();
     } else {
       try {
-        final JsonNode tree = expression.accept(new ExpressionJsonVisitor());
+        JsonNode tree = expression.accept(new ExpressionJsonVisitor());
         gen.writeTree(tree);
-      } catch (final ODataException e) {
+      } catch (ODataException e) {
         gen.writeString("Exception in Debug Expression visitor occurred: " + e.getMessage());
       }
     }
   }
 
-  private void appendSelectedPropertiesJson(final JsonGenerator gen, final List<SelectItem> selectItems)
+  private void appendSelectedPropertiesJson(JsonGenerator gen, List<SelectItem> selectItems)
       throws IOException {
     gen.writeStartArray();
     for (SelectItem selectItem : selectItems) {
@@ -319,7 +319,7 @@ public class DebugTabUri implements DebugTab {
     gen.writeEndArray();
   }
 
-  private String getSelectString(final SelectItem selectItem) {
+  private String getSelectString(SelectItem selectItem) {
     if (selectItem.isStar()) {
       if (selectItem.getAllOperationsInSchemaNameSpace() == null) {
         return "*";
@@ -327,7 +327,7 @@ public class DebugTabUri implements DebugTab {
         return selectItem.getAllOperationsInSchemaNameSpace().getFullQualifiedNameAsString() + ".*";
       }
     } else {
-      final StringBuilder tmp = new StringBuilder();
+      StringBuilder tmp = new StringBuilder();
       for (UriResource resourcePart : selectItem.getResourcePath().getUriResourceParts()) {
         if (tmp.length() > 0) {
           tmp.append('/');
@@ -338,7 +338,7 @@ public class DebugTabUri implements DebugTab {
     }
   }
 
-  private void appendSearchJson(final JsonGenerator json, final SearchExpression searchExpression) throws IOException {
+  private void appendSearchJson(JsonGenerator json, SearchExpression searchExpression) throws IOException {
     json.writeStartObject();
     if (searchExpression.isSearchTerm()) {
       json.writeStringField("nodeType", "searchTerm");
@@ -359,15 +359,15 @@ public class DebugTabUri implements DebugTab {
     json.writeEndObject();
   }
 
-  private void appendApplyItemsJson(JsonGenerator json, final List<ApplyItem> applyItems) throws IOException {
+  private void appendApplyItemsJson(JsonGenerator json, List<ApplyItem> applyItems) throws IOException {
     json.writeStartArray();
-    for (final ApplyItem item : applyItems) {
+    for (ApplyItem item : applyItems) {
       appendApplyItemJson(json, item);
     }
     json.writeEndArray();
   }
 
-  private void appendApplyItemJson(JsonGenerator json, final ApplyItem item) throws IOException {
+  private void appendApplyItemJson(JsonGenerator json, ApplyItem item) throws IOException {
     json.writeStartObject();
 
     json.writeStringField("kind", item.getKind().name());
@@ -385,7 +385,7 @@ public class DebugTabUri implements DebugTab {
     case COMPUTE:
       json.writeFieldName("compute");
       json.writeStartArray();
-      for (final ComputeExpression computeExpression : ((Compute) item).getExpressions()) {
+      for (ComputeExpression computeExpression : ((Compute) item).getExpressions()) {
         json.writeStartObject();
         json.writeFieldName("expression");
         appendExpressionJson(json, computeExpression.getExpression());
@@ -397,7 +397,7 @@ public class DebugTabUri implements DebugTab {
     case CONCAT:
       json.writeFieldName("concat");
       json.writeStartArray();
-      for (final ApplyOption option : ((Concat) item).getApplyOptions()) {
+      for (ApplyOption option : ((Concat) item).getApplyOptions()) {
         appendApplyItemsJson(json, option.getApplyItems());
       }
       json.writeEndArray();
@@ -428,9 +428,9 @@ public class DebugTabUri implements DebugTab {
     json.writeEndObject();
   }
 
-  private void appendGroupByItemsJson(JsonGenerator json, final List<GroupByItem> groupByItems) throws IOException {
+  private void appendGroupByItemsJson(JsonGenerator json, List<GroupByItem> groupByItems) throws IOException {
     json.writeStartArray();
-    for (final GroupByItem groupByItem : groupByItems) {
+    for (GroupByItem groupByItem : groupByItems) {
       json.writeStartObject();
       if (!groupByItem.getPath().isEmpty()) {
         json.writeFieldName("path");
@@ -446,21 +446,21 @@ public class DebugTabUri implements DebugTab {
     json.writeEndArray();
   }
 
-  private void appendAggregateJson(JsonGenerator json, final Aggregate aggregate) throws IOException {
+  private void appendAggregateJson(JsonGenerator json, Aggregate aggregate) throws IOException {
     json.writeFieldName("aggregate");
     appendAggregateExpressionsJson(json, aggregate.getExpressions());
   }
 
-  private void appendAggregateExpressionsJson(JsonGenerator json, final List<AggregateExpression> aggregateExpressions)
+  private void appendAggregateExpressionsJson(JsonGenerator json, List<AggregateExpression> aggregateExpressions)
       throws IOException {
     json.writeStartArray();
-    for (final AggregateExpression aggregateExpression : aggregateExpressions) {
+    for (AggregateExpression aggregateExpression : aggregateExpressions) {
       appendAggregateExpressionJson(json, aggregateExpression);
     }
     json.writeEndArray();
   }
 
-  private void appendAggregateExpressionJson(JsonGenerator json, final AggregateExpression aggregateExpression)
+  private void appendAggregateExpressionJson(JsonGenerator json, AggregateExpression aggregateExpression)
       throws IOException {
     if (aggregateExpression == null) {
       json.writeNull();
@@ -496,9 +496,9 @@ public class DebugTabUri implements DebugTab {
   }
 
   @Override
-  public void appendHtml(final Writer writer) throws IOException {
+  public void appendHtml(Writer writer) throws IOException {
     // factory for JSON generators (the object mapper is necessary to write expression trees)
-    final JsonFactory jsonFactory = new ObjectMapper().getFactory();
+    JsonFactory jsonFactory = new ObjectMapper().getFactory();
     if (uriInfo.getKind() == UriInfoKind.resource) {
       writer.append("<h2>Resource Path</h2>\n")
           .append("<ul>\n<li class=\"json\">");
@@ -510,7 +510,7 @@ public class DebugTabUri implements DebugTab {
     } else if (uriInfo.getKind() == UriInfoKind.crossjoin) {
       writer.append("<h2>Crossjoin EntitySet Names</h2>\n")
           .append("<ul>\n");
-      for (final String name : uriInfo.asUriInfoCrossjoin().getEntitySetNames()) {
+      for (String name : uriInfo.asUriInfoCrossjoin().getEntitySetNames()) {
         writer.append("<li>").append(name).append("</li>\n");
       }
       writer.append("</ul>\n");
@@ -567,7 +567,7 @@ public class DebugTabUri implements DebugTab {
     if (uriInfo.getSelectOption() != null) {
       writer.append("<h2>Selected Properties</h2>\n")
           .append("<ul>\n");
-      for (final SelectItem selectItem : uriInfo.getSelectOption().getSelectItems()) {
+      for (SelectItem selectItem : uriInfo.getSelectOption().getSelectItems()) {
         writer.append("<li>").append(getSelectString(selectItem)).append("</li>\n");
       }
       writer.append("</ul>\n");
@@ -610,9 +610,9 @@ public class DebugTabUri implements DebugTab {
     }
   }
 
-  private Map<String, String> getQueryOptionsMap(final List<? extends QueryOption> queryOptions) {
+  private Map<String, String> getQueryOptionsMap(List<? extends QueryOption> queryOptions) {
     Map<String, String> options = new LinkedHashMap<>();
-    for (final QueryOption option : queryOptions) {
+    for (QueryOption option : queryOptions) {
       if (option != null) {
         options.put(option.getName(), option.getText());
       }

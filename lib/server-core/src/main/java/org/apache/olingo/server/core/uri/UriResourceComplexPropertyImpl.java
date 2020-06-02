@@ -28,7 +28,7 @@ public class UriResourceComplexPropertyImpl extends UriResourceTypedImpl impleme
 
   private final EdmProperty property;
 
-  public UriResourceComplexPropertyImpl(final EdmProperty property) {
+  public UriResourceComplexPropertyImpl(EdmProperty property) {
     super(UriResourceKind.complexProperty);
     this.property = property;
   }

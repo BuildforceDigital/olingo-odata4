@@ -34,7 +34,7 @@ public class ExpandOptionImpl extends SystemQueryOptionImpl implements ExpandOpt
     setKind(SystemQueryOptionKind.EXPAND);
   }
 
-  public ExpandOptionImpl addExpandItem(final ExpandItem expandItem) {
+  public ExpandOptionImpl addExpandItem(ExpandItem expandItem) {
     expandItems.add(expandItem);
     return this;
   }

@@ -35,7 +35,7 @@ public class HttpRequestStatusLineTest {
 
   @Test
   public void absolute() throws BatchDeserializerException {
-    final HttpRequestStatusLine line = parse("http://localhost/odata/ESAllPrim?$top=2");
+    HttpRequestStatusLine line = parse("http://localhost/odata/ESAllPrim?$top=2");
     assertEquals("$top=2", line.getRawQueryPath());
     assertEquals("/ESAllPrim", line.getRawODataPath());
     assertEquals(baseUri + "/ESAllPrim?$top=2", line.getRawRequestUri());
@@ -45,7 +45,7 @@ public class HttpRequestStatusLineTest {
 
   @Test
   public void absoluteWithRelativePath() throws BatchDeserializerException {
-    final HttpRequestStatusLine line = parse("http://localhost/odata/../../ESAllPrim?$top=2");
+    HttpRequestStatusLine line = parse("http://localhost/odata/../../ESAllPrim?$top=2");
     assertEquals("/../../ESAllPrim", line.getRawODataPath());
     assertEquals("$top=2", line.getRawQueryPath());
     assertEquals(baseUri + "/../../ESAllPrim?$top=2", line.getRawRequestUri());
@@ -55,7 +55,7 @@ public class HttpRequestStatusLineTest {
 
   @Test
   public void absolutePath() throws BatchDeserializerException {
-    final HttpRequestStatusLine line = parse("/odata/ESAllPrim");
+    HttpRequestStatusLine line = parse("/odata/ESAllPrim");
     assertEquals("/ESAllPrim", line.getRawODataPath());
     assertEquals(baseUri + "/ESAllPrim", line.getRawRequestUri());
     assertEquals(baseUri, line.getRawBaseUri());
@@ -64,7 +64,7 @@ public class HttpRequestStatusLineTest {
 
   @Test
   public void relativeWithDots() throws BatchDeserializerException {
-    final HttpRequestStatusLine line = parse("../../ESAllPrim?$top=2");
+    HttpRequestStatusLine line = parse("../../ESAllPrim?$top=2");
     assertEquals("/../../ESAllPrim", line.getRawODataPath());
     assertEquals("$top=2", line.getRawQueryPath());
     assertEquals(baseUri + "/../../ESAllPrim?$top=2", line.getRawRequestUri());
@@ -74,7 +74,7 @@ public class HttpRequestStatusLineTest {
 
   @Test
   public void relative() throws BatchDeserializerException {
-    final HttpRequestStatusLine line = parse("ESAllPrim?$top=2");
+    HttpRequestStatusLine line = parse("ESAllPrim?$top=2");
     assertEquals("$top=2", line.getRawQueryPath());
     assertEquals("/ESAllPrim", line.getRawODataPath());
     assertEquals(baseUri + "/ESAllPrim?$top=2", line.getRawRequestUri());
@@ -84,7 +84,7 @@ public class HttpRequestStatusLineTest {
 
   @Test
   public void relativeMultipleSegments() throws BatchDeserializerException {
-    final HttpRequestStatusLine line = parse("ESKeyNav(1)/NavPropertyETTwoKeyNavOne/PropertyComp");
+    HttpRequestStatusLine line = parse("ESKeyNav(1)/NavPropertyETTwoKeyNavOne/PropertyComp");
     assertEquals("", line.getRawQueryPath());
     assertEquals("/ESKeyNav(1)/NavPropertyETTwoKeyNavOne/PropertyComp", line.getRawODataPath());
     assertEquals(baseUri + "/ESKeyNav(1)/NavPropertyETTwoKeyNavOne/PropertyComp", line.getRawRequestUri());
@@ -102,12 +102,12 @@ public class HttpRequestStatusLineTest {
     parseFail("/ESAllPrim", MessageKeys.INVALID_URI);
   }
 
-  private HttpRequestStatusLine parse(final String uri) throws BatchDeserializerException {
+  private HttpRequestStatusLine parse(String uri) throws BatchDeserializerException {
     Line statusline = new Line(HttpMethod.GET.name() + SPACE + uri + SPACE + HTTP_VERSION, 0);
     return new HttpRequestStatusLine(statusline, baseUri, serviceResolutionUri);
   }
 
-  private void parseFail(final String uri, final MessageKeys messageKey) {
+  private void parseFail(String uri, MessageKeys messageKey) {
     try {
       parse(uri);
       fail("Expected exception");

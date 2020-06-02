@@ -39,7 +39,7 @@ public class DebugTabResponse implements DebugTab {
   private final HttpStatusCode status;
   private final Map<String, List<String>> headers;
 
-  public DebugTabResponse(final ODataResponse applicationResponse) {
+  public DebugTabResponse(ODataResponse applicationResponse) {
     response = applicationResponse;
     if (response != null) {
       status = HttpStatusCode.fromStatusCode(response.getStatusCode());
@@ -56,7 +56,7 @@ public class DebugTabResponse implements DebugTab {
   }
 
   @Override
-  public void appendJson(final JsonGenerator gen) throws IOException {
+  public void appendJson(JsonGenerator gen) throws IOException {
     gen.writeStartObject();
 
     if (status != null) {
@@ -82,7 +82,7 @@ public class DebugTabResponse implements DebugTab {
     gen.writeEndObject();
   }
 
-  private Map<String, String> map(final Map<String, List<String>> headers) {
+  private Map<String, String> map(Map<String, List<String>> headers) {
     Map<String, String> result = new HashMap<>();
     for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
       if (entry.getValue().size() == 1) {
@@ -95,7 +95,7 @@ public class DebugTabResponse implements DebugTab {
   }
 
   @Override
-  public void appendHtml(final Writer writer) throws IOException {
+  public void appendHtml(Writer writer) throws IOException {
     writer.append("<h2>Status Code</h2>\n")
     .append("<p>").append(Integer.toString(status.getStatusCode())).append(' ')
     .append(status.getInfo()).append("</p>\n")

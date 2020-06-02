@@ -40,13 +40,13 @@ public class PreconditionException extends ODataLibraryException {
     }
   }
 
-  public PreconditionException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public PreconditionException(String developmentMessage, MessageKey messageKey,
+                               String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
-  public PreconditionException(final String developmentMessage, final Throwable cause,
-      final MessageKey messageKey, final String... parameters) {
+  public PreconditionException(String developmentMessage, Throwable cause,
+                               MessageKey messageKey, String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 

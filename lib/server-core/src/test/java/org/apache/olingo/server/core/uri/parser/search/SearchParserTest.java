@@ -221,7 +221,7 @@ public class SearchParserTest extends SearchParser {
     runEx(SearchParserException.MessageKeys.NO_EXPRESSION_FOUND, emptyArray);
   }
 
-  private void runEx(final MessageKeys key, final Token... tokenArray) {
+  private void runEx(MessageKeys key, Token... tokenArray) {
     try {
       run(tokenArray);
       fail("Expected SearchParserException with key " + key);
@@ -230,14 +230,14 @@ public class SearchParserTest extends SearchParser {
     }
   }
 
-  private SearchExpression run(final Token... tokenArray) throws SearchParserException {
+  private SearchExpression run(Token... tokenArray) throws SearchParserException {
     List<SearchQueryToken> tokenList = prepareTokens(tokenArray);
     SearchExpression se = parse(tokenList);
     assertNotNull(se);
     return se;
   }
 
-  public List<SearchQueryToken> prepareTokens(final Token... tokenArray) {
+  public List<SearchQueryToken> prepareTokens(Token... tokenArray) {
     ArrayList<SearchQueryToken> tokenList = new ArrayList<SearchQueryToken>();
     int wordNumber = 1;
     int phraseNumber = 1;

@@ -35,13 +35,13 @@ public abstract class AbstractEdmAnnotatable implements EdmAnnotatable {
   private List<EdmAnnotation> annotations;
   protected final Edm edm;
 
-  public AbstractEdmAnnotatable(final Edm edm, final CsdlAnnotatable annotatable) {
+  public AbstractEdmAnnotatable(Edm edm, CsdlAnnotatable annotatable) {
     this.edm = edm;
     this.annotatable = annotatable;
   }
 
   @Override
-  public EdmAnnotation getAnnotation(final EdmTerm term, String qualifier) {
+  public EdmAnnotation getAnnotation(EdmTerm term, String qualifier) {
     EdmAnnotation result = null;
     for (EdmAnnotation annotation : getAnnotations()) {
       if (term.getFullQualifiedName().equals(annotation.getTerm().getFullQualifiedName())
@@ -61,7 +61,7 @@ public abstract class AbstractEdmAnnotatable implements EdmAnnotatable {
   @Override
   public List<EdmAnnotation> getAnnotations() {
     if (annotations == null) {
-      final List<EdmAnnotation> annotationsLocal = new ArrayList<EdmAnnotation>();
+      List<EdmAnnotation> annotationsLocal = new ArrayList<EdmAnnotation>();
       if (annotatable != null) {
         for (CsdlAnnotation annotation : annotatable.getAnnotations()) {
           annotationsLocal.add(new EdmAnnotationImpl(edm, annotation));

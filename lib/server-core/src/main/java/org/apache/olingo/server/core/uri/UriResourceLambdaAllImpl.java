@@ -30,7 +30,7 @@ public class UriResourceLambdaAllImpl extends UriResourceTypedImpl implements Ur
   private final String lambdaVariable;
   private final Expression expression;
 
-  public UriResourceLambdaAllImpl(final String lambdaVariable, final Expression expression) {
+  public UriResourceLambdaAllImpl(String lambdaVariable, Expression expression) {
     super(UriResourceKind.lambdaAll);
     this.lambdaVariable = lambdaVariable;
     this.expression = expression;

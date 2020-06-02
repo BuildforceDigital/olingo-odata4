@@ -63,13 +63,13 @@ public class PreferParser {
     // Private constructor for utility classes
   }
 
-  protected static Map<String, Preference> parse(final Collection<String> values) {
+  protected static Map<String, Preference> parse(Collection<String> values) {
     if (values == null || values.isEmpty()) {
       return Collections.emptyMap();
     }
 
     Map<String, Preference> result = new HashMap<>();
-    for (final String value : values) {
+    for (String value : values) {
       if (value != null && !value.isEmpty()) {
         parse(value, result);
       }
@@ -77,7 +77,7 @@ public class PreferParser {
     return result;
   }
 
-  private static void parse(final String value, final Map<String, Preference> result) {
+  private static void parse(String value, Map<String, Preference> result) {
     Map<String, Preference> partResult = new HashMap<>();
     String separator = "";
     int start = 0;
@@ -87,14 +87,14 @@ public class PreferParser {
       if (matcher.group(1) != null) {
         separator = matcher.group(1);
       } else if (separator != null) {
-        final String name = matcher.group(2).toLowerCase(Locale.ROOT);
+        String name = matcher.group(2).toLowerCase(Locale.ROOT);
         // RFC 7240:
         // If any preference is specified more than once, only the first instance is to be
         // considered. All subsequent occurrences SHOULD be ignored without signaling
         // an error or otherwise altering the processing of the request.
         if (!partResult.containsKey(name)) {
-          final String preferenceValue = getValue(matcher.group(3));
-          final Map<String, String> parameters =
+          String preferenceValue = getValue(matcher.group(3));
+          Map<String, String> parameters =
               matcher.group(4) == null || matcher.group(4).isEmpty() ? null :
                 parseParameters(matcher.group(4));
           partResult.put(name, new Preference(preferenceValue, parameters));
@@ -106,7 +106,7 @@ public class PreferParser {
     }
     if (matcher.hitEnd()) {
       // Here we also have to keep already existing preferences.
-      for (final Map.Entry<String, Preference> entry : partResult.entrySet()) {
+      for (Map.Entry<String, Preference> entry : partResult.entrySet()) {
         if (!result.containsKey(entry.getKey())) {
           result.put(entry.getKey(), entry.getValue());
         }
@@ -114,7 +114,7 @@ public class PreferParser {
     }
   }
 
-  private static Map<String, String> parseParameters(final String parameters) {
+  private static Map<String, String> parseParameters(String parameters) {
     Map<String, String> result = new HashMap<>();
     String separator = "";
     int start = 0;
@@ -124,7 +124,7 @@ public class PreferParser {
       if (matcher.group(1) != null) {
         separator = matcher.group(1);
       } else if (separator != null) {
-        final String name = matcher.group(2).toLowerCase(Locale.ROOT);
+        String name = matcher.group(2).toLowerCase(Locale.ROOT);
         // We have to keep already existing parameters.
         if (!result.containsKey(name)) {
           result.put(name, getValue(matcher.group(3)));
@@ -137,7 +137,7 @@ public class PreferParser {
     return matcher.hitEnd() ? Collections.unmodifiableMap(result) : null;
   }
 
-  private static String getValue(final String value) {
+  private static String getValue(String value) {
     if (value == null) {
       return null;
     }

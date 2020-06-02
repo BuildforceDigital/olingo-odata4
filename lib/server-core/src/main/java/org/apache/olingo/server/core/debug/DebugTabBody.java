@@ -42,10 +42,10 @@ public class DebugTabBody implements DebugTab {
   private final ODataResponse response;
   private final ResponseContent responseContent;
 
-  public DebugTabBody(final ODataResponse response) {
+  public DebugTabBody(ODataResponse response) {
     this.response = response;
     if (response != null) {
-      final String contentTypeString = response.getHeader(HttpHeader.CONTENT_TYPE);
+      String contentTypeString = response.getHeader(HttpHeader.CONTENT_TYPE);
       if (contentTypeString != null) {
         if (contentTypeString.startsWith("application/json")) {
           responseContent = ResponseContent.JSON;
@@ -70,7 +70,7 @@ public class DebugTabBody implements DebugTab {
   }
 
   @Override
-  public void appendJson(final JsonGenerator json) throws IOException {
+  public void appendJson(JsonGenerator json) throws IOException {
     if (response == null || response.getContent() == null) {
       json.writeNull();
     } else {
@@ -79,9 +79,9 @@ public class DebugTabBody implements DebugTab {
   }
 
   @Override
-  public void appendHtml(final Writer writer) throws IOException {
+  public void appendHtml(Writer writer) throws IOException {
 
-    final String body =
+    String body =
         response == null || response.getContent() == null ? "ODataLibrary: No body." : getContentString();
     switch (responseContent) {
     case XML:
@@ -110,20 +110,20 @@ public class DebugTabBody implements DebugTab {
 
   private String getContentString() {
     try {
-      final byte[] content = streamToBytes(response.getContent());
+      byte[] content = streamToBytes(response.getContent());
       return responseContent == ResponseContent.IMAGE ?
           Base64.encodeBase64String(content) :
           new String(content, "UTF-8");
-    } catch (final IOException e) {
+    } catch (IOException e) {
       return "Could not parse Body for Debug Output";
     }
   }
 
-  private byte[] streamToBytes(final InputStream input) throws IOException {
+  private byte[] streamToBytes(InputStream input) throws IOException {
     if (input != null) {
       try {
         return new FixedFormatDeserializerImpl().binary(input);
-      } catch (final DeserializerException e) {
+      } catch (DeserializerException e) {
         throw new IOException("Error on reading request content", e);
       }
     }

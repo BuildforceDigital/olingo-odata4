@@ -29,8 +29,8 @@ public class EdmTypeImpl extends AbstractEdmNamed implements EdmType {
   protected final FullQualifiedName typeName;
   protected final EdmTypeKind kind;
 
-  public EdmTypeImpl(final Edm edm, final FullQualifiedName typeName, final EdmTypeKind kind,
-      final CsdlAnnotatable annotatable) {
+  public EdmTypeImpl(Edm edm, FullQualifiedName typeName, EdmTypeKind kind,
+                     CsdlAnnotatable annotatable) {
     super(edm, typeName.getName(), annotatable);
     this.typeName = typeName;
     this.kind = kind;

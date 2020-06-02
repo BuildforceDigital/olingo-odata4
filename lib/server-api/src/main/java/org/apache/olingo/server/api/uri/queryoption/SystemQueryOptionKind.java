@@ -96,7 +96,7 @@ public enum SystemQueryOptionKind {
 
   private final String syntax;
 
-  SystemQueryOptionKind(final String syntax) {
+  SystemQueryOptionKind(String syntax) {
     this.syntax = syntax;
   }
 
@@ -106,8 +106,8 @@ public enum SystemQueryOptionKind {
    * @return system query option kind representing the given option
    *         (or <code>null</code> if the option does not represent a system query option)
    */
-  public static SystemQueryOptionKind get(final String option) {
-    for (final SystemQueryOptionKind kind : values()) {
+  public static SystemQueryOptionKind get(String option) {
+    for (SystemQueryOptionKind kind : values()) {
       if (kind.syntax.equals(option)) {
         return kind;
       }

@@ -85,7 +85,7 @@ public interface Preferences {
     private final String value;
     private final Map<String, String> parameters;
 
-    public Preference(final String value, final Map<String, String> parameters) {
+    public Preference(String value, Map<String, String> parameters) {
       this.value = value;
       this.parameters = parameters;
     }

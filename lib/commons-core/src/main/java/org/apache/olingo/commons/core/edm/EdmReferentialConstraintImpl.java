@@ -26,7 +26,7 @@ public class EdmReferentialConstraintImpl extends AbstractEdmAnnotatable impleme
 
   private final CsdlReferentialConstraint constraint;
 
-  public EdmReferentialConstraintImpl(final Edm edm, final CsdlReferentialConstraint constraint) {
+  public EdmReferentialConstraintImpl(Edm edm, CsdlReferentialConstraint constraint) {
     super(edm, constraint);
     this.constraint = constraint;
   }

@@ -71,7 +71,7 @@ public class SearchTokenizerTest {
     assertQuery("not%22").resultsIn(SearchTokenizerException.MessageKeys.NOT_EXPECTED_TOKEN);
   }
 
-  private Validator.Tuple word(final String literal) {
+  private Validator.Tuple word(String literal) {
     return Validator.tuple(WORD, literal);
   }
 
@@ -304,15 +304,15 @@ public class SearchTokenizerTest {
     assertQuery("abc AND \"something\" )").resultsIn(WORD, AND, PHRASE, CLOSE);
   }
 
-  public void validate(final String query) throws SearchTokenizerException {
+  public void validate(String query) throws SearchTokenizerException {
     new Validator(query);
   }
 
-  public Validator assertQuery(final String query) throws SearchTokenizerException {
+  public Validator assertQuery(String query) throws SearchTokenizerException {
     return new Validator(query);
   }
 
-  public void validate(final String query, final SearchQueryToken.Token... tokens) throws SearchTokenizerException {
+  public void validate(String query, SearchQueryToken.Token... tokens) throws SearchTokenizerException {
     Validator sv = new Validator(query);
     for (SearchQueryToken.Token token : tokens) {
       sv.addExpected(token);
@@ -324,19 +324,19 @@ public class SearchTokenizerTest {
     private List<Tuple> validations = new ArrayList<Tuple>();
     private final String searchQuery;
 
-    public void resultsIn(final SearchQueryToken.Token... tokens) throws SearchTokenizerException {
+    public void resultsIn(SearchQueryToken.Token... tokens) throws SearchTokenizerException {
       addExpected(tokens);
       validate();
     }
 
-    public void resultsIn(final Tuple... tuple) throws SearchTokenizerException {
+    public void resultsIn(Tuple... tuple) throws SearchTokenizerException {
       for (Tuple t : tuple) {
         addExpected(t.token, t.literal);
       }
       validate();
     }
 
-    public static Tuple tuple(final SearchQueryToken.Token token, final String literal) {
+    public static Tuple tuple(SearchQueryToken.Token token, String literal) {
       return new Tuple(token, literal);
     }
 
@@ -344,33 +344,33 @@ public class SearchTokenizerTest {
       final SearchQueryToken.Token token;
       final String literal;
 
-      public Tuple(final SearchQueryToken.Token token, final String literal) {
+      public Tuple(SearchQueryToken.Token token, String literal) {
         this.token = token;
         this.literal = literal;
       }
 
-      public Tuple(final SearchQueryToken.Token token) {
+      public Tuple(SearchQueryToken.Token token) {
         this(token, null);
       }
     }
 
-    private Validator(final String searchQuery) {
+    private Validator(String searchQuery) {
       this.searchQuery = searchQuery;
     }
 
-    private Validator addExpected(final SearchQueryToken.Token token, final String literal) {
+    private Validator addExpected(SearchQueryToken.Token token, String literal) {
       validations.add(new Tuple(token, literal));
       return this;
     }
 
-    private Validator addExpected(final SearchQueryToken.Token... token) {
+    private Validator addExpected(SearchQueryToken.Token... token) {
       for (SearchQueryToken.Token t : token) {
         validations.add(new Tuple(t));
       }
       return this;
     }
 
-    private void resultsIn(final SearchTokenizerException.MessageKey key)
+    private void resultsIn(SearchTokenizerException.MessageKey key)
         throws SearchTokenizerException {
       try {
         validate();

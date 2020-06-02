@@ -42,7 +42,7 @@ public class ServiceDocumentXmlSerializer {
   private final ServiceMetadata metadata;
   private final String serviceRoot;
 
-  public ServiceDocumentXmlSerializer(final ServiceMetadata metadata, final String serviceRoot)
+  public ServiceDocumentXmlSerializer(ServiceMetadata metadata, String serviceRoot)
       throws SerializerException {
     if (metadata == null || metadata.getEdm() == null) {
       throw new SerializerException("Service Metadata and EDM must not be null for a service.",
@@ -52,8 +52,8 @@ public class ServiceDocumentXmlSerializer {
     this.serviceRoot = serviceRoot;
   }
 
-  public void writeServiceDocument(final XMLStreamWriter writer) throws XMLStreamException {
-    final String metadataUri =
+  public void writeServiceDocument(XMLStreamWriter writer) throws XMLStreamException {
+    String metadataUri =
         (serviceRoot == null ? "" : serviceRoot.endsWith("/") ? serviceRoot : (serviceRoot + "/"))
             + Constants.METADATA;
 
@@ -73,7 +73,7 @@ public class ServiceDocumentXmlSerializer {
 
     writer.writeStartElement(APP, "workspace", NS_APP);
 
-    final EdmEntityContainer container = metadata.getEdm().getEntityContainer();
+    EdmEntityContainer container = metadata.getEdm().getEntityContainer();
     if (container != null) {
       writer.writeStartElement(ATOM, Constants.ATOM_ELEM_TITLE, NS_ATOM);
       writer.writeCharacters(container.getFullQualifiedName().getFullQualifiedNameAsString());
@@ -88,14 +88,14 @@ public class ServiceDocumentXmlSerializer {
     writer.writeEndElement(); // end service
   }
 
-  private void writeServiceDocuments(final XMLStreamWriter writer) throws XMLStreamException {
+  private void writeServiceDocuments(XMLStreamWriter writer) throws XMLStreamException {
     for (EdmxReference reference : metadata.getReferences()) {
-      final String referenceString = reference.getUri().toASCIIString();
+      String referenceString = reference.getUri().toASCIIString();
       writeElement(writer, false, "service-document", referenceString, referenceString);
     }
   }
 
-  private void writeEntitySets(final XMLStreamWriter writer, final EdmEntityContainer container)
+  private void writeEntitySets(XMLStreamWriter writer, EdmEntityContainer container)
       throws XMLStreamException {
     for (EdmEntitySet edmEntitySet : container.getEntitySets()) {
       if (edmEntitySet.isIncludeInServiceDocument()) {
@@ -104,7 +104,7 @@ public class ServiceDocumentXmlSerializer {
     }
   }
 
-  private void writeFunctionImports(final XMLStreamWriter writer, final EdmEntityContainer container)
+  private void writeFunctionImports(XMLStreamWriter writer, EdmEntityContainer container)
       throws XMLStreamException {
     for (EdmFunctionImport edmFunctionImport : container.getFunctionImports()) {
       if (edmFunctionImport.isIncludeInServiceDocument()) {
@@ -113,15 +113,15 @@ public class ServiceDocumentXmlSerializer {
     }
   }
 
-  private void writeSingletons(final XMLStreamWriter writer, final EdmEntityContainer container)
+  private void writeSingletons(XMLStreamWriter writer, EdmEntityContainer container)
       throws XMLStreamException {
     for (EdmSingleton edmSingleton : container.getSingletons()) {
       writeElement(writer, false, "singleton", edmSingleton.getName(), edmSingleton.getTitle());
     }
   }
 
-  private void writeElement(final XMLStreamWriter writer, final boolean isApp, final String kind, final String name,
-      final String title) throws XMLStreamException {
+  private void writeElement(XMLStreamWriter writer, boolean isApp, String kind, String name,
+                            String title) throws XMLStreamException {
     if (isApp) {
       writer.writeStartElement(APP, kind, NS_APP);
     } else {

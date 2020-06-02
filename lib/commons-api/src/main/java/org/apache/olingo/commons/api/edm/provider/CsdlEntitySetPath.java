@@ -42,7 +42,7 @@ public class CsdlEntitySetPath {
    * @param bindingParameter the binding parameter
    * @return the binding parameter
    */
-  public CsdlEntitySetPath setBindingParameter(final String bindingParameter) {
+  public CsdlEntitySetPath setBindingParameter(String bindingParameter) {
     this.bindingParameter = bindingParameter;
     return this;
   }
@@ -62,7 +62,7 @@ public class CsdlEntitySetPath {
    * @param path the path
    * @return the path
    */
-  public CsdlEntitySetPath setPath(final String path) {
+  public CsdlEntitySetPath setPath(String path) {
     this.path = path;
     return this;
   }

@@ -30,7 +30,7 @@ public class UriResourceItImpl extends UriResourceWithKeysImpl implements UriRes
   private final EdmType type;
   private final boolean isCollection;
 
-  public UriResourceItImpl(final EdmType type, final boolean isCollection) {
+  public UriResourceItImpl(EdmType type, boolean isCollection) {
     super(UriResourceKind.it);
     this.type = type;
     this.isCollection = isCollection;

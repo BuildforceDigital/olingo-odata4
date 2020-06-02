@@ -41,18 +41,18 @@ public class BatchHandler {
   private static final String RETURN_MINIMAL = "return=minimal";
   private static final String RETURN_REPRESENTATION = "return=representation";
 
-  public BatchHandler(final ODataHandlerImpl oDataHandler, final BatchProcessor batchProcessor) {
+  public BatchHandler(ODataHandlerImpl oDataHandler, BatchProcessor batchProcessor) {
 
     this.batchProcessor = batchProcessor;
     this.oDataHandler = oDataHandler;
   }
 
-  public void process(final ODataRequest request, final ODataResponse response, final boolean isStrict)
+  public void process(ODataRequest request, ODataResponse response, boolean isStrict)
       throws ODataApplicationException, ODataLibraryException {
     validateRequest(request);
     validatePreferHeader(request);
 
-    final BatchFacade operation = new BatchFacadeImpl(oDataHandler, batchProcessor, isStrict);
+    BatchFacade operation = new BatchFacadeImpl(oDataHandler, batchProcessor, isStrict);
     batchProcessor.processBatch(operation, request, response);
   }
   
@@ -61,8 +61,8 @@ public class BatchHandler {
    * @param request
    * @throws ODataHandlerException
    */
-  private void validatePreferHeader(final ODataRequest request) throws ODataHandlerException {
-    final List<String> returnPreference = request.getHeaders(HttpHeader.PREFER);
+  private void validatePreferHeader(ODataRequest request) throws ODataHandlerException {
+    List<String> returnPreference = request.getHeaders(HttpHeader.PREFER);
     if (null != returnPreference) {
       for (String preference : returnPreference) {
         if (preference.equals(RETURN_MINIMAL) || preference.equals(RETURN_REPRESENTATION)) {
@@ -73,17 +73,17 @@ public class BatchHandler {
     }
   }
 
-  private void validateRequest(final ODataRequest request) throws BatchDeserializerException {
+  private void validateRequest(ODataRequest request) throws BatchDeserializerException {
     validateHttpMethod(request);
     validateContentType(request);
   }
 
-  private void validateContentType(final ODataRequest request) throws BatchDeserializerException {
+  private void validateContentType(ODataRequest request) throws BatchDeserializerException {
     // This method does validation.
     BatchParserCommon.parseContentType(request.getHeader(HttpHeader.CONTENT_TYPE), ContentType.MULTIPART_MIXED, 0);
   }
 
-  private void validateHttpMethod(final ODataRequest request) throws BatchDeserializerException {
+  private void validateHttpMethod(ODataRequest request) throws BatchDeserializerException {
     if (request.getMethod() != HttpMethod.POST) {
       throw new BatchDeserializerException("Invalid HTTP method", MessageKeys.INVALID_METHOD, "0");
     }

@@ -55,13 +55,13 @@ public class UriInfoImplTest {
 
   @Test
   public void kind() {
-    final UriInfo uriInfo = new UriInfoImpl().setKind(UriInfoKind.all);
+    UriInfo uriInfo = new UriInfoImpl().setKind(UriInfoKind.all);
     assertEquals(UriInfoKind.all, uriInfo.getKind());
   }
 
   @Test
   public void casts() {
-    final UriInfo uriInfo = new UriInfoImpl();
+    UriInfo uriInfo = new UriInfoImpl();
 
     assertEquals(uriInfo, uriInfo.asUriInfoAll());
     assertEquals(uriInfo, uriInfo.asUriInfoBatch());
@@ -74,7 +74,7 @@ public class UriInfoImplTest {
 
   @Test
   public void entityNames() {
-    final UriInfo uriInfo = new UriInfoImpl()
+    UriInfo uriInfo = new UriInfoImpl()
         .addEntitySetName("A")
         .addEntitySetName("B");
     assertArrayEquals(new String[] { "A", "B" }, uriInfo.getEntitySetNames().toArray());
@@ -84,9 +84,9 @@ public class UriInfoImplTest {
   public void resourceParts() {
     UriInfoImpl uriInfo = new UriInfoImpl();
 
-    final UriResourceAction action = new UriResourceActionImpl((EdmAction) null);
-    final UriResourceEntitySet entitySet0 = new UriResourceEntitySetImpl(null);
-    final UriResourceEntitySet entitySet1 = new UriResourceEntitySetImpl(null);
+    UriResourceAction action = new UriResourceActionImpl((EdmAction) null);
+    UriResourceEntitySet entitySet0 = new UriResourceEntitySetImpl(null);
+    UriResourceEntitySet entitySet1 = new UriResourceEntitySetImpl(null);
 
     uriInfo.addResourcePart(action);
     uriInfo.addResourcePart(entitySet0);
@@ -109,29 +109,29 @@ public class UriInfoImplTest {
 
   @Test
   public void customQueryOption() {
-    final QueryOption apply = new ApplyOptionImpl().setName("");
-    final QueryOption expand = new ExpandOptionImpl().setName("");
-    final QueryOption filter = new FilterOptionImpl().setName("");
-    final QueryOption format = new FormatOptionImpl().setName("");
-    final QueryOption id = new IdOptionImpl().setName("");
-    final QueryOption inlinecount = new CountOptionImpl().setName("");
-    final QueryOption orderby = new OrderByOptionImpl().setName("");
-    final QueryOption search = new SearchOptionImpl().setName("");
-    final QueryOption select = new SelectOptionImpl().setName("");
-    final QueryOption skip = new SkipOptionImpl().setName("");
-    final QueryOption skipToken = new SkipTokenOptionImpl().setName("");
-    final QueryOption top = new TopOptionImpl().setName("");
-    final QueryOption levels = new LevelsOptionImpl().setName("");
-    final QueryOption deltaToken = new DeltaTokenOptionImpl().setName("");
+    QueryOption apply = new ApplyOptionImpl().setName("");
+    QueryOption expand = new ExpandOptionImpl().setName("");
+    QueryOption filter = new FilterOptionImpl().setName("");
+    QueryOption format = new FormatOptionImpl().setName("");
+    QueryOption id = new IdOptionImpl().setName("");
+    QueryOption inlinecount = new CountOptionImpl().setName("");
+    QueryOption orderby = new OrderByOptionImpl().setName("");
+    QueryOption search = new SearchOptionImpl().setName("");
+    QueryOption select = new SelectOptionImpl().setName("");
+    QueryOption skip = new SkipOptionImpl().setName("");
+    QueryOption skipToken = new SkipTokenOptionImpl().setName("");
+    QueryOption top = new TopOptionImpl().setName("");
+    QueryOption levels = new LevelsOptionImpl().setName("");
+    QueryOption deltaToken = new DeltaTokenOptionImpl().setName("");
     
-    final QueryOption customOption0 = new CustomQueryOptionImpl().setName("0").setText("A");
-    final QueryOption customOption1 = new CustomQueryOptionImpl().setName("1").setText("B");
+    QueryOption customOption0 = new CustomQueryOptionImpl().setName("0").setText("A");
+    QueryOption customOption1 = new CustomQueryOptionImpl().setName("1").setText("B");
 
-    final QueryOption initialQueryOption = new CustomQueryOptionImpl();
+    QueryOption initialQueryOption = new CustomQueryOptionImpl();
 
-    final QueryOption alias = new AliasQueryOptionImpl().setName("alias").setText("C");
+    QueryOption alias = new AliasQueryOptionImpl().setName("alias").setText("C");
 
-    final UriInfo uriInfo = new UriInfoImpl()
+    UriInfo uriInfo = new UriInfoImpl()
         .setQueryOption(apply)
         .setQueryOption(expand)
         .setQueryOption(filter)
@@ -175,21 +175,21 @@ public class UriInfoImplTest {
 
   @Test
   public void fragment() {
-    final UriInfo uriInfo = new UriInfoImpl().setFragment("F");
+    UriInfo uriInfo = new UriInfoImpl().setFragment("F");
     assertEquals("F", uriInfo.getFragment());
   }
 
   @Test
   public void entityTypeCast() {
-    final EdmEntityType entityType = Mockito.mock(EdmEntityType.class);
-    final UriInfo uriInfo = new UriInfoImpl()
+    EdmEntityType entityType = Mockito.mock(EdmEntityType.class);
+    UriInfo uriInfo = new UriInfoImpl()
         .setEntityTypeCast(entityType);
     assertEquals(entityType, uriInfo.getEntityTypeCast());
   }
 
   @Test
   public void alias() {
-    final UriInfo uriInfo = new UriInfoImpl()
+    UriInfo uriInfo = new UriInfoImpl()
         .addAlias((AliasQueryOption) new AliasQueryOptionImpl().setName("A").setText("X"))
         .addAlias((AliasQueryOption) new AliasQueryOptionImpl().setName("B").setText("Y"))
         .addAlias((AliasQueryOption) new AliasQueryOptionImpl().setName("C").setText("Z"));
@@ -206,7 +206,7 @@ public class UriInfoImplTest {
 
   @Test(expected = ODataRuntimeException.class)
   public void doubleAlias() {
-    final AliasQueryOption alias = (AliasQueryOption) new AliasQueryOptionImpl().setName("A");
+    AliasQueryOption alias = (AliasQueryOption) new AliasQueryOptionImpl().setName("A");
     new UriInfoImpl()
         .addAlias(alias)
         .addAlias(alias);

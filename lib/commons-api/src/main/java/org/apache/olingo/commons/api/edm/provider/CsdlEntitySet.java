@@ -31,33 +31,33 @@ public class CsdlEntitySet extends CsdlBindingTarget {
   private boolean includeInServiceDocument = true;
 
   @Override
-  public CsdlEntitySet setName(final String name) {
+  public CsdlEntitySet setName(String name) {
     this.name = name;
     return this;
   }
 
   @Override
   public CsdlEntitySet setNavigationPropertyBindings(
-      final List<CsdlNavigationPropertyBinding> navigationPropertyBindings) {
+      List<CsdlNavigationPropertyBinding> navigationPropertyBindings) {
     this.navigationPropertyBindings = navigationPropertyBindings;
     return this;
   }
 
   @Override
-  public CsdlEntitySet setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlEntitySet setAnnotations(List<CsdlAnnotation> annotations) {
     super.setAnnotations(annotations);
     return this;
   }
 
 
   @Override
-  public CsdlEntitySet setType(final String type) {
+  public CsdlEntitySet setType(String type) {
     this.type = new FullQualifiedName(type);
     return this;
   }
 
   @Override
-  public CsdlEntitySet setType(final FullQualifiedName type) {
+  public CsdlEntitySet setType(FullQualifiedName type) {
     this.type = type;
     return this;
   }
@@ -77,7 +77,7 @@ public class CsdlEntitySet extends CsdlBindingTarget {
    * @param includeInServiceDocument the include in service document
    * @return the include in service document
    */
-  public CsdlEntitySet setIncludeInServiceDocument(final boolean includeInServiceDocument) {
+  public CsdlEntitySet setIncludeInServiceDocument(boolean includeInServiceDocument) {
     this.includeInServiceDocument = includeInServiceDocument;
     return this;
   }

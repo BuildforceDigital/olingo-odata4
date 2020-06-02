@@ -23,13 +23,14 @@ import java.io.OutputStream;
 
 import org.apache.olingo.server.api.serializer.ODataSerializer;
 import org.apache.olingo.server.api.serializer.SerializerException;
+import org.apache.olingo.server.api.serializer.SerializerException.MessageKeys;
 
 public abstract class AbstractODataSerializer implements ODataSerializer {
 
   protected static final String IO_EXCEPTION_TEXT = "An I/O exception occurred.";
 
-  protected void closeCircleStreamBufferOutput(final OutputStream outputStream,
-      final SerializerException cachedException)
+  protected void closeCircleStreamBufferOutput(OutputStream outputStream,
+                                               SerializerException cachedException)
       throws SerializerException {
     if (outputStream != null) {
       try {
@@ -38,8 +39,7 @@ public abstract class AbstractODataSerializer implements ODataSerializer {
         if (cachedException != null) {
           throw cachedException;
         } else {
-          throw new SerializerException(IO_EXCEPTION_TEXT, e,
-              SerializerException.MessageKeys.IO_EXCEPTION);
+          throw new SerializerException(IO_EXCEPTION_TEXT, e, MessageKeys.IO_EXCEPTION);
         }
       }
     }

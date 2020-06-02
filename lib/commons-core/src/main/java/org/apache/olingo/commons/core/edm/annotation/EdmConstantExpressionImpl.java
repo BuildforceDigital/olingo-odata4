@@ -43,9 +43,9 @@ public class EdmConstantExpressionImpl extends AbstractEdmExpression implements 
   private List<String> enumMembers;
   // private Geospatial geospatial;
 
-  public EdmConstantExpressionImpl(Edm edm, final CsdlConstantExpression constExprConstruct) {
+  public EdmConstantExpressionImpl(Edm edm, CsdlConstantExpression constExprConstruct) {
     super(edm, constExprConstruct.getType().toString());
-    this.csdlExp = constExprConstruct;
+      csdlExp = constExprConstruct;
   }
 
   @Override
@@ -58,9 +58,9 @@ public class EdmConstantExpressionImpl extends AbstractEdmExpression implements 
       if (csdlExp.getValue() == null) {
         throw new EdmException("Expression value must not be null");
       }
-      final List<String> localEnumValues = new ArrayList<>();
+      List<String> localEnumValues = new ArrayList<>();
       for (String split : csdlExp.getValue().split(" ")) {
-        final String[] enumSplit = split.split("/");
+        String[] enumSplit = split.split("/");
         if (enumSplit.length != 2) {
           throw new EdmException("Enum expression value must consist of enumTypeName/EnumMember.");
         }

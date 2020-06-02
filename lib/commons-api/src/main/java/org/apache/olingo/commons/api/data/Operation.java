@@ -24,9 +24,9 @@ import java.net.URI;
  * Data representation for an operation.
  */
 public class Operation {
-  public enum Type {ACTION, FUNCTION};
-  
-  private String metadataAnchor;
+  public enum Type {ACTION, FUNCTION}
+
+    private String metadataAnchor;
 
   private String title;
 
@@ -48,7 +48,7 @@ public class Operation {
    *
    * @param metadataAnchor metadata anchor.
    */
-  public void setMetadataAnchor(final String metadataAnchor) {
+  public void setMetadataAnchor(String metadataAnchor) {
     this.metadataAnchor = metadataAnchor;
   }
 
@@ -66,7 +66,7 @@ public class Operation {
    *
    * @param title title.
    */
-  public void setTitle(final String title) {
+  public void setTitle(String title) {
     this.title = title;
   }
 
@@ -84,7 +84,7 @@ public class Operation {
    *
    * @param target target.
    */
-  public void setTarget(final URI target) {
+  public void setTarget(URI target) {
     this.target = target;
   }
   

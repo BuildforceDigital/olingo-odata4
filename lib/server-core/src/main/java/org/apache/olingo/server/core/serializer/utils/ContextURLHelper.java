@@ -58,8 +58,8 @@ public final class ContextURLHelper {
    * @return a select-list String
    * @throws SerializerException if an unsupported feature is used
    */
-  public static String buildSelectList(final EdmStructuredType type,
-      final ExpandOption expand, final SelectOption select) throws SerializerException {
+  public static String buildSelectList(EdmStructuredType type,
+                                       ExpandOption expand, SelectOption select) throws SerializerException {
     StringBuilder result = new StringBuilder();
     if (ExpandSelectHelper.hasSelect(select)) {
       handleSelect(type, select, result);
@@ -73,18 +73,18 @@ public final class ContextURLHelper {
     return result.length() == 0 ? null : result.toString();
   }
 
-  private static void handleSelect(EdmStructuredType type, final SelectOption select,
-      final StringBuilder result) {
+  private static void handleSelect(EdmStructuredType type, SelectOption select,
+      StringBuilder result) {
     if (ExpandSelectHelper.isAll(select)) {
       result.append('*');
     } else {
-      final List<SelectItem> selectItems = select.getSelectItems();
+      List<SelectItem> selectItems = select.getSelectItems();
       type = getTypeFromSelectItems(selectItems, type);
-      final Set<String> selectedPropertyNames = ExpandSelectHelper.getSelectedPropertyNames(selectItems);
-      for (final String propertyName : type.getPropertyNames()) {
+      Set<String> selectedPropertyNames = ExpandSelectHelper.getSelectedPropertyNames(selectItems);
+      for (String propertyName : type.getPropertyNames()) {
         constructSelectItemList(type, result, selectItems, selectedPropertyNames, propertyName);
       }
-      for (final String propertyName : type.getNavigationPropertyNames()) {
+      for (String propertyName : type.getNavigationPropertyNames()) {
         constructSelectItemList(type, result, selectItems, selectedPropertyNames, propertyName);
       }
       constructSelectItemListForActionsAndFunctions(type, result, selectItems);
@@ -101,7 +101,7 @@ public final class ContextURLHelper {
   private static void constructSelectItemListForActionsAndFunctions(EdmStructuredType type, StringBuilder result,
       List<SelectItem> selectItems) {
     for (SelectItem item : selectItems) {
-      final UriResource resource = item.getResourcePath().getUriResourceParts().get(0);
+      UriResource resource = item.getResourcePath().getUriResourceParts().get(0);
       if (resource instanceof UriResourceAction) {
         EdmAction action = ((UriResourceAction)resource).getAction();
         if (action != null && action.isBound()) {
@@ -141,7 +141,7 @@ public final class ContextURLHelper {
    */
   private static EdmStructuredType getTypeFromSelectItems(List<SelectItem> selectItems, EdmStructuredType type) {
     EdmStructuredType edmType = type;
-    for (final SelectItem item : selectItems) {
+    for (SelectItem item : selectItems) {
       if (item.getStartTypeFilter() != null && item.getStartTypeFilter() instanceof EdmEntityType) {
         edmType = (EdmEntityType) item.getStartTypeFilter();
       }
@@ -156,14 +156,14 @@ public final class ContextURLHelper {
    * @param selectedPropertyNames
    * @param propertyName
    */
-  private static void constructSelectItemList(final EdmStructuredType type, final StringBuilder result,
-      final List<SelectItem> selectItems, final Set<String> selectedPropertyNames, final String propertyName) {
+  private static void constructSelectItemList(EdmStructuredType type, StringBuilder result,
+                                              List<SelectItem> selectItems, Set<String> selectedPropertyNames, String propertyName) {
     if (selectedPropertyNames.contains(propertyName)) {
       if (result.length() > 0) {
         result.append(',');
       }
-      final EdmProperty edmProperty = type.getStructuralProperty(propertyName);
-      final Set<List<String>> selectedPaths = ExpandSelectHelper.
+      EdmProperty edmProperty = type.getStructuralProperty(propertyName);
+      Set<List<String>> selectedPaths = ExpandSelectHelper.
           getSelectedPathsWithTypeCasts(selectItems, propertyName);
       if (selectedPaths == null) {
         result.append(Encoder.encode(propertyName));
@@ -184,14 +184,14 @@ public final class ContextURLHelper {
         }
         
         boolean first = true;
-        for (final List<String> path : complexSelectedPaths) {
+        for (List<String> path : complexSelectedPaths) {
           if (first) {
             first = false;
           } else {
             result.append(',');
           }
           boolean innerFirst = true;
-          for (final String name : path) {
+          for (String name : path) {
             if (innerFirst) {
               innerFirst = false;
             } else {
@@ -203,7 +203,7 @@ public final class ContextURLHelper {
       }
     } else {
       if (type instanceof EdmEntityType) {
-        final List<String> keyNames = ((EdmEntityType) type).getKeyPredicateNames();
+        List<String> keyNames = ((EdmEntityType) type).getKeyPredicateNames();
         if (keyNames.contains(propertyName)) {
           if (result.length() > 0) {
             result.append(',');
@@ -226,7 +226,7 @@ public final class ContextURLHelper {
   private static int getPositionToAddProperty(List<SelectItem> selectItems, String propertyName,
       Set<List<String>> selectedPaths) {
     for (SelectItem item : selectItems) {
-      final List<UriResource> parts = item.getResourcePath().getUriResourceParts();
+      List<UriResource> parts = item.getResourcePath().getUriResourceParts();
       int i = 0;
       for (UriResource part : parts) {
         if (part instanceof UriResourceComplexProperty && 
@@ -264,18 +264,18 @@ public final class ContextURLHelper {
     return 0;
   }
 
-  private static void handleExpand(final EdmStructuredType type, final ExpandOption expand, final StringBuilder result)
+  private static void handleExpand(EdmStructuredType type, ExpandOption expand, StringBuilder result)
       throws SerializerException {
-    final Set<String> expandedPropertyNames = ExpandSelectHelper.getExpandedPropertyNames(expand.getExpandItems());
-    for (final String propertyName : type.getNavigationPropertyNames()) {
+    Set<String> expandedPropertyNames = ExpandSelectHelper.getExpandedPropertyNames(expand.getExpandItems());
+    for (String propertyName : type.getNavigationPropertyNames()) {
       if (expandedPropertyNames.contains(propertyName)) {
 
 
-        final ExpandItem expandItem = ExpandSelectHelper.getExpandItem(expand.getExpandItems(), propertyName);
+        ExpandItem expandItem = ExpandSelectHelper.getExpandItem(expand.getExpandItems(), propertyName);
         if (ExpandSelectHelper.hasExpand(expandItem.getExpandOption())
             && !(null != ExpandSelectHelper.getExpandAll(expandItem.getExpandOption()))
             || ExpandSelectHelper.hasSelect(expandItem.getSelectOption())) {
-          final String innerSelectList = buildSelectList(type.getNavigationProperty(propertyName).getType(),
+          String innerSelectList = buildSelectList(type.getNavigationProperty(propertyName).getType(),
               expandItem.getExpandOption(), expandItem.getSelectOption());
           if (innerSelectList != null) {
             if (result.length() > 0) {
@@ -284,12 +284,12 @@ public final class ContextURLHelper {
             result.append(Encoder.encode(propertyName)).append('(').append(innerSelectList).append(')');
           }
         } else {
-          final List<UriResource> resourceParts = expandItem.getResourcePath().getUriResourceParts();
+          List<UriResource> resourceParts = expandItem.getResourcePath().getUriResourceParts();
           if (resourceParts.size() > 1) {
             if (result.length() > 0) {
               result.append(',');
             }
-            final List<String> path = getPropertyPath(resourceParts);
+            List<String> path = getPropertyPath(resourceParts);
             String propertyPath = buildPropertyPath(path);
             result.append(Encoder.encode(propertyName));
             result.append("/").append(propertyPath);
@@ -303,9 +303,9 @@ public final class ContextURLHelper {
     }
   }
   
-  private static void handleExpandAll(final EdmStructuredType type,
-      final ExpandOption expand, final StringBuilder result) throws SerializerException {
-    for (final String propertyName : type.getNavigationPropertyNames()) {
+  private static void handleExpandAll(EdmStructuredType type,
+                                      ExpandOption expand, StringBuilder result) throws SerializerException {
+    for (String propertyName : type.getNavigationPropertyNames()) {
       appendExpandedProperty(result, propertyName);
     }
   }
@@ -318,7 +318,7 @@ public final class ContextURLHelper {
     result.append(Encoder.encode(propertyName) + "()");
   }
 
-  private static List<String> getPropertyPath(final List<UriResource> path) {
+  private static List<String> getPropertyPath(List<UriResource> path) {
     List<String> result = new LinkedList<>();
     int index = 1;
     while (index < path.size() && path.get(index) instanceof UriResourceProperty) {
@@ -328,39 +328,39 @@ public final class ContextURLHelper {
     return result;
   }
 
-  private static String buildPropertyPath(final List<String> path) {
+  private static String buildPropertyPath(List<String> path) {
     StringBuilder result = new StringBuilder();
-    for (final String segment : path) {
+    for (String segment : path) {
       result.append(result.length() == 0 ? "" : '/').append(Encoder.encode(segment)); //$NON-NLS-1$
     }
     return result.length() == 0 ? null : result.toString();
   }
 
-  private static List<List<String>> getComplexSelectedPaths(final EdmProperty edmProperty,
-      final Set<List<String>> selectedPaths) {
+  private static List<List<String>> getComplexSelectedPaths(EdmProperty edmProperty,
+                                                            Set<List<String>> selectedPaths) {
     List<List<String>> result = new ArrayList<>();
     if (selectedPaths == null) {
       List<String> path = new LinkedList<>();
       path.add(edmProperty.getName());
       result.add(path);
     } else {
-      final EdmComplexType type = (EdmComplexType) edmProperty.getType();
-      for (final String complexPropertyName : type.getPropertyNames()) {
+      EdmComplexType type = (EdmComplexType) edmProperty.getType();
+      for (String complexPropertyName : type.getPropertyNames()) {
         if (ExpandSelectHelper.isSelected(selectedPaths, complexPropertyName)) {
           List<List<String>> complexSelectedPaths = getComplexSelectedPaths(
               (EdmProperty) type.getProperty(complexPropertyName),
               ExpandSelectHelper.getReducedSelectedPaths(selectedPaths, complexPropertyName));
-          for (final List<String> path : complexSelectedPaths) {
+          for (List<String> path : complexSelectedPaths) {
             path.add(0, edmProperty.getName());
             result.add(path);
           }
         }
       }
-      for (final String complexPropertyName : type.getNavigationPropertyNames()) {
+      for (String complexPropertyName : type.getNavigationPropertyNames()) {
         if (ExpandSelectHelper.isSelected(selectedPaths, complexPropertyName)) {
           List<List<String>> complexSelectedPaths = getComplexSelectedPaths(
               (EdmNavigationProperty) type.getProperty(complexPropertyName));
-          for (final List<String> path : complexSelectedPaths) {
+          for (List<String> path : complexSelectedPaths) {
             path.add(0, edmProperty.getName());
             result.add(path);
           }
@@ -383,14 +383,14 @@ public final class ContextURLHelper {
    * @param keys the keys as a list of {@link UriParameter} instances
    * @return a String with the key predicate
    */
-  public static String buildKeyPredicate(final List<UriParameter> keys) throws SerializerException {
+  public static String buildKeyPredicate(List<UriParameter> keys) throws SerializerException {
     if (keys == null || keys.isEmpty()) {
       return null;
     } else if (keys.size() == 1) {
       return Encoder.encode(keys.get(0).getText());
     } else {
       StringBuilder result = new StringBuilder();
-      for (final UriParameter key : keys) {
+      for (UriParameter key : keys) {
         if (result.length() > 0) {
           result.append(',');
         }

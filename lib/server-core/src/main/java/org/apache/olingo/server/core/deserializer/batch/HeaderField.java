@@ -26,11 +26,11 @@ public class HeaderField implements Cloneable {
   private final int lineNumber;
   private List<String> values;
 
-  public HeaderField(final String fieldName, final int lineNumber) {
+  public HeaderField(String fieldName, int lineNumber) {
     this(fieldName, new ArrayList<String>(), lineNumber);
   }
 
-  public HeaderField(final String fieldName, final List<String> values, final int lineNumber) {
+  public HeaderField(String fieldName, List<String> values, int lineNumber) {
     this.fieldName = fieldName;
     this.values = values;
     this.lineNumber = lineNumber;
@@ -45,9 +45,9 @@ public class HeaderField implements Cloneable {
   }
 
   public String getValue() {
-    final StringBuilder result = new StringBuilder();
+    StringBuilder result = new StringBuilder();
 
-    for (final String value : values) {
+    for (String value : values) {
       result.append(value);
       result.append(", ");
     }
@@ -82,7 +82,7 @@ public class HeaderField implements Cloneable {
   }
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }

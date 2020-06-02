@@ -236,7 +236,7 @@ public class BatchLineReaderTest {
 
   @Test
   public void specialCharacters() throws Exception {
-    final String text = "\r\n"
+    String text = "\r\n"
         + "Content-Type: text/plain; charset=UTF-8\r\n"
         + "\r\n"
         + "ä€\r\n"
@@ -263,7 +263,7 @@ public class BatchLineReaderTest {
       content[i - Byte.MIN_VALUE] = (byte) i;
     }
     BatchLineReader reader = new BatchLineReader(new ByteArrayInputStream(content));
-    final String contentString = reader.readLine()  // initial part up to '\n'
+    String contentString = reader.readLine()  // initial part up to '\n'
         + reader.readLine()  // second part from '\n' to '\r'
         + reader.readLine();  // the rest
     assertArrayEquals(content, contentString.getBytes(Charset.forName("ISO-8859-1")));
@@ -271,11 +271,11 @@ public class BatchLineReaderTest {
     reader.close();
   }
 
-  private BatchLineReader create(final String inputString) throws IOException {
+  private BatchLineReader create(String inputString) throws IOException {
     return new BatchLineReader(new ByteArrayInputStream(inputString.getBytes("UTF-8")));
   }
 
-  private BatchLineReader create(final String inputString, final int bufferSize) throws IOException {
+  private BatchLineReader create(String inputString, int bufferSize) throws IOException {
     return new BatchLineReader(new ByteArrayInputStream(inputString.getBytes("UTF-8")), bufferSize);
   }
 }

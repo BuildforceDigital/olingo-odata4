@@ -112,11 +112,11 @@ public class ContentTypeTest {
             .toContentTypeString());
   }
 
-  private void createWrong(final String value) {
+  private void createWrong(String value) {
     try {
       ContentType.create(value);
       fail("Expected exception not thrown.");
-    } catch (final IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       assertNotNull(e);
     }
   }

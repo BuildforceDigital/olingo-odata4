@@ -74,8 +74,8 @@ public class EdmParameterImplTest {
     EdmProviderImpl edm = new EdmProviderImpl(mock(CsdlEdmProvider.class));
     CsdlParameter parameterProvider = new CsdlParameter();
     parameterProvider.setType(EdmPrimitiveTypeKind.Binary.getFullQualifiedName());
-    final EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
-    final EdmType type = parameter.getType();
+    EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
+    EdmType type = parameter.getType();
     assertEquals(EdmTypeKind.PRIMITIVE, type.getKind());
     assertEquals(EdmPrimitiveType.EDM_NAMESPACE, type.getNamespace());
     assertEquals(EdmPrimitiveTypeKind.Binary.toString(), type.getName());
@@ -85,14 +85,14 @@ public class EdmParameterImplTest {
   public void getTypeReturnsComplexType() throws Exception {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
-    final FullQualifiedName complexTypeName = new FullQualifiedName("ns", "complex");
+    FullQualifiedName complexTypeName = new FullQualifiedName("ns", "complex");
     CsdlComplexType complexTypeProvider = new CsdlComplexType();
     when(provider.getComplexType(complexTypeName)).thenReturn(complexTypeProvider);
     CsdlParameter parameterProvider = new CsdlParameter();
     parameterProvider.setType(complexTypeName);
-    final EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
+    EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
     assertFalse(parameter.isCollection());
-    final EdmType type = parameter.getType();
+    EdmType type = parameter.getType();
     assertEquals(EdmTypeKind.COMPLEX, type.getKind());
     assertEquals("ns", type.getNamespace());
     assertEquals("complex", type.getName());
@@ -102,14 +102,14 @@ public class EdmParameterImplTest {
   public void getTypeReturnsEnumType() throws Exception {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
-    final FullQualifiedName enumTypeName = new FullQualifiedName("ns", "enum");
+    FullQualifiedName enumTypeName = new FullQualifiedName("ns", "enum");
     CsdlEnumType enumTypeProvider = new CsdlEnumType();
     when(provider.getEnumType(enumTypeName)).thenReturn(enumTypeProvider);
     CsdlParameter parameterProvider = new CsdlParameter();
     parameterProvider.setType(enumTypeName);
-    final EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
+    EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
     assertFalse(parameter.isCollection());
-    final EdmType type = parameter.getType();
+    EdmType type = parameter.getType();
     assertEquals(EdmTypeKind.ENUM, type.getKind());
     assertEquals("ns", type.getNamespace());
     assertEquals("enum", type.getName());
@@ -119,14 +119,14 @@ public class EdmParameterImplTest {
   public void getTypeReturnsTypeDefinition() throws Exception {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
-    final FullQualifiedName typeName = new FullQualifiedName("ns", "definition");
+    FullQualifiedName typeName = new FullQualifiedName("ns", "definition");
     CsdlTypeDefinition typeProvider =
         new CsdlTypeDefinition().setUnderlyingType(new FullQualifiedName("Edm", "String"));
     when(provider.getTypeDefinition(typeName)).thenReturn(typeProvider);
     CsdlParameter parameterProvider = new CsdlParameter();
     parameterProvider.setType(typeName);
-    final EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
-    final EdmType type = parameter.getType();
+    EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
+    EdmType type = parameter.getType();
     assertEquals(EdmTypeKind.DEFINITION, type.getKind());
     assertEquals("ns", type.getNamespace());
     assertEquals("definition", type.getName());
@@ -141,7 +141,7 @@ public class EdmParameterImplTest {
     parameterProvider.setScale(12);
     parameterProvider.setMaxLength(128);
     parameterProvider.setNullable(false);
-    final EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
+    EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
     assertNull(parameter.getMapping());
     assertEquals(Integer.valueOf(42), parameter.getPrecision());
     assertEquals(Integer.valueOf(12), parameter.getScale());
@@ -155,7 +155,7 @@ public class EdmParameterImplTest {
     EdmProviderImpl edm = new EdmProviderImpl(mock(CsdlEdmProvider.class));
     CsdlParameter parameterProvider = new CsdlParameter();
     parameterProvider.setType(new FullQualifiedName("Edm", "wrong"));
-    final EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
+    EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
     parameter.getType();
   }
 
@@ -164,7 +164,7 @@ public class EdmParameterImplTest {
     EdmProviderImpl edm = new EdmProviderImpl(mock(CsdlEdmProvider.class));
     CsdlParameter parameterProvider = new CsdlParameter();
     parameterProvider.setType(new FullQualifiedName("wrong", "wrong"));
-    final EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
+    EdmParameter parameter = new EdmParameterImpl(edm, parameterProvider);
     parameter.getType();
   }
 

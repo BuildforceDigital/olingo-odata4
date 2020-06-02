@@ -40,8 +40,8 @@ final class HttpHeaders {
    * @param value value for header
    * @return this container (fluent interface)
    */
-  public HttpHeaders addHeader(final String name, final String value) {
-    final String canonicalName = getCanonicalName(name);
+  public HttpHeaders addHeader(String name, String value) {
+    String canonicalName = getCanonicalName(name);
     List<String> header = headers.get(canonicalName);
     if (header == null) {
       header = new ArrayList<>();
@@ -58,8 +58,8 @@ final class HttpHeaders {
    * @param values values for header
    * @return this container (fluent interface)
    */
-  public HttpHeaders addHeader(final String name, final List<String> values) {
-    final String canonicalName = getCanonicalName(name);
+  public HttpHeaders addHeader(String name, List<String> values) {
+    String canonicalName = getCanonicalName(name);
     List<String> header = headers.get(canonicalName);
     if (header == null) {
       header = new ArrayList<>();
@@ -76,7 +76,7 @@ final class HttpHeaders {
    * @param value value for header
    * @return this container (fluent interface)
    */
-  public HttpHeaders setHeader(final String name, final String value) {
+  public HttpHeaders setHeader(String name, String value) {
     removeHeader(name);
     addHeader(name, value);
     return this;
@@ -87,8 +87,8 @@ final class HttpHeaders {
    * @param name name of header requested
    * @return corresponding header values or null if no values have been found
    */
-  public List<String> getHeader(final String name) {
-    final List<String> values = headers.get(getCanonicalName(name));
+  public List<String> getHeader(String name) {
+    List<String> values = headers.get(getCanonicalName(name));
     return values == null || values.isEmpty() ? null : Collections.unmodifiableList(values);
   }
 
@@ -97,7 +97,7 @@ final class HttpHeaders {
    * @param name name of header to be removed
    * @return removed header values or null if no header was known for this name
    */
-  public List<String> removeHeader(final String name) {
+  public List<String> removeHeader(String name) {
     return headers.remove(getCanonicalName(name));
   }
 
@@ -123,8 +123,8 @@ final class HttpHeaders {
    * converted to all lowercase.
    * @param name HTTP header name
    */
-  private String getCanonicalName(final String name) {
-    for (final String headerName : headers.keySet()) {
+  private String getCanonicalName(String name) {
+    for (String headerName : headers.keySet()) {
       if (headerName.equalsIgnoreCase(name)) {
         return headerName;
       }

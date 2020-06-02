@@ -37,7 +37,7 @@ public class Parameter extends Valuable {
    * Sets the name of the parameter.
    * @param name of the parameter
    */
-  public void setName(final String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
@@ -58,7 +58,7 @@ public class Parameter extends Valuable {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     return super.equals(o)
         && (name == null ? ((Parameter) o).name == null : name.equals(((Parameter) o).name));
   }

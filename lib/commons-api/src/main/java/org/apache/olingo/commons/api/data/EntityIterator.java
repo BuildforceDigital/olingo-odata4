@@ -103,7 +103,7 @@ public abstract class EntityIterator extends AbstractEntityCollection implements
    *
    * @param next next link.
    */
-  public void setNext(final URI next) {
+  public void setNext(URI next) {
     this.next = next;
   }
   
@@ -112,7 +112,7 @@ public abstract class EntityIterator extends AbstractEntityCollection implements
    *
    * @param count count value.
    */
-  public void setCount(final Integer count) {
+  public void setCount(Integer count) {
     this.count = count;
   }
 }

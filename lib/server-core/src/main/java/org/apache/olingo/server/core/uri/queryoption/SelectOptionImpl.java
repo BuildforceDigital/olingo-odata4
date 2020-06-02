@@ -33,7 +33,7 @@ public class SelectOptionImpl extends SystemQueryOptionImpl implements SelectOpt
     setKind(SystemQueryOptionKind.SELECT);
   }
 
-  public SelectOptionImpl setSelectItems(final List<SelectItem> selectItems) {
+  public SelectOptionImpl setSelectItems(List<SelectItem> selectItems) {
     this.selectItems = selectItems;
     return this;
   }

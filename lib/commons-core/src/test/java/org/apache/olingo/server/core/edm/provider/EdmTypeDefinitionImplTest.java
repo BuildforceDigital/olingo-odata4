@@ -56,7 +56,7 @@ public class EdmTypeDefinitionImplTest extends PrimitiveTypeBaseTest {
   @Test
   public void compatibility() {
     assertTrue(instance.isCompatible(instance));
-    for (final EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
+    for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
       if (kind != EdmPrimitiveTypeKind.String) {
         assertFalse(instance.isCompatible(EdmPrimitiveTypeFactory.getInstance(kind)));
       }
@@ -97,10 +97,10 @@ public class EdmTypeDefinitionImplTest extends PrimitiveTypeBaseTest {
   
   @Test
   public void typeDefOnStringNoFacets() throws Exception {
-    final FullQualifiedName typeDefName = new FullQualifiedName("namespace", "name");
-    final CsdlTypeDefinition providerTypeDef =
+    FullQualifiedName typeDefName = new FullQualifiedName("namespace", "name");
+    CsdlTypeDefinition providerTypeDef =
         new CsdlTypeDefinition().setName("typeDef").setUnderlyingType(new FullQualifiedName("Edm", "String"));
-    final EdmTypeDefinition typeDefImpl =
+    EdmTypeDefinition typeDefImpl =
         new EdmTypeDefinitionImpl(mock(EdmProviderImpl.class), typeDefName, providerTypeDef);
 
     assertEquals("name", typeDefImpl.getName());

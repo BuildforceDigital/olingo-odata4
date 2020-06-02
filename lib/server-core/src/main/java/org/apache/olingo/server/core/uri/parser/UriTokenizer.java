@@ -202,7 +202,7 @@ public class UriTokenizer {
   private int savedStartIndex;
   private int savedIndex;
 
-  public UriTokenizer(final String parseString) {
+  public UriTokenizer(String parseString) {
     this.parseString = parseString == null ? "" : parseString;
   }
 
@@ -239,13 +239,13 @@ public class UriTokenizer {
    * @return <code>true</code> if the token is found; <code>false</code> otherwise
    * @see #getText()
    */
-  public boolean next(final TokenKind allowedTokenKind) {
+  public boolean next(TokenKind allowedTokenKind) {
     if (allowedTokenKind == null) {
       return false;
     }
 
     boolean found = false;
-    final int previousIndex = index;
+    int previousIndex = index;
     switch (allowedTokenKind) {
     case EOF:
       found = index >= parseString.length();
@@ -716,7 +716,7 @@ public class UriTokenizer {
    * Moves past the given string constant if found; otherwise leaves the index unchanged.
    * @return whether the constant has been found at the current index
    */
-  private boolean nextConstant(final String constant) {
+  private boolean nextConstant(String constant) {
     if (parseString.startsWith(constant, index)) {
       index += constant.length();
       return true;
@@ -729,8 +729,8 @@ public class UriTokenizer {
    * Moves past the given string constant, ignoring case, if found; otherwise leaves the index unchanged.
    * @return whether the constant has been found at the current index
    */
-  private boolean nextConstantIgnoreCase(final String constant) {
-    final int length = constant.length();
+  private boolean nextConstantIgnoreCase(String constant) {
+    int length = constant.length();
     if (index + length <= parseString.length()
         && constant.equalsIgnoreCase(parseString.substring(index, index + length))) {
       index += length;
@@ -744,7 +744,7 @@ public class UriTokenizer {
    * Moves past the given character if found; otherwise leaves the index unchanged.
    * @return whether the given character has been found at the current index
    */
-  private boolean nextCharacter(final char character) {
+  private boolean nextCharacter(char character) {
     if (index < parseString.length() && parseString.charAt(index) == character) {
       index++;
       return true;
@@ -758,9 +758,9 @@ public class UriTokenizer {
    * otherwise leaves the index unchanged.
    * @return whether the given character has been found at the current index
    */
-  private boolean nextCharacterRange(final char from, final char to) {
+  private boolean nextCharacterRange(char from, char to) {
     if (index < parseString.length()) {
-      final char code = parseString.charAt(index);
+      char code = parseString.charAt(index);
       if (code >= from && code <= to) {
         index++;
         return true;
@@ -848,7 +848,7 @@ public class UriTokenizer {
    * @return whether a qualified name has been found at the current index
    */
   private boolean nextQualifiedName() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (!nextODataIdentifier()) {
       return false;
     }
@@ -873,7 +873,7 @@ public class UriTokenizer {
    * Moves past the given whitespace-surrounded operator constant if found.
    * @return whether the operator has been found at the current index
    */
-  private boolean nextBinaryOperator(final String operator) {
+  private boolean nextBinaryOperator(String operator) {
     return nextWhitespace() && nextConstant(operator) && nextWhitespace();
   }
 
@@ -881,7 +881,7 @@ public class UriTokenizer {
    * Moves past the given whitespace-suffixed operator constant if found.
    * @return whether the operator has been found at the current index
    */
-  private boolean nextUnaryOperator(final String operator) {
+  private boolean nextUnaryOperator(String operator) {
     return nextConstant(operator) && nextWhitespace();
   }
 
@@ -889,7 +889,7 @@ public class UriTokenizer {
    * Moves past the given method name and its immediately following opening parenthesis if found.
    * @return whether the method has been found at the current index
    */
-  private boolean nextMethod(final String methodName) {
+  private boolean nextMethod(String methodName) {
     return nextConstant(methodName) && nextCharacter('(');
   }
 
@@ -897,7 +897,7 @@ public class UriTokenizer {
    * Moves past (required) whitespace and the given suffix name if found.
    * @return whether the suffix has been found at the current index
    */
-  private boolean nextSuffix(final String suffixName) {
+  private boolean nextSuffix(String suffixName) {
     return nextWhitespace() && nextConstant(suffixName);
   }
 
@@ -934,8 +934,8 @@ public class UriTokenizer {
    * @param signed whether a sign character ('+' or '-') at the beginning is allowed
    * @return whether an integer value has been found at the current index
    */
-  private boolean nextIntegerValue(final boolean signed) {
-    final int lastGoodIndex = index;
+  private boolean nextIntegerValue(boolean signed) {
+    int lastGoodIndex = index;
     if (signed) {
       nextSign();
     }
@@ -956,7 +956,7 @@ public class UriTokenizer {
    * Whole numbers must be found with {@link #nextIntegerValue()}.
    */
   private boolean nextDecimalValue() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (nextIntegerValue(true) && nextCharacter('.') && nextIntegerValue(false)) {
       return true;
     } else {
@@ -976,7 +976,7 @@ public class UriTokenizer {
     if (nextConstant("NaN") || nextConstant("-INF") || nextConstant("INF")) {
       return true;
     } else {
-      final int lastGoodIndex = index;
+      int lastGoodIndex = index;
       if (!nextIntegerValue(true)) {
         return false;
       }
@@ -1149,7 +1149,7 @@ public class UriTokenizer {
    * Moves past a geo prefix if found; otherwise leaves the index unchanged.
    * @return whether a geo prefix has been found at the current index
    */
-  private boolean nextGeoPrefix(final boolean isGeography) {
+  private boolean nextGeoPrefix(boolean isGeography) {
     return nextConstantIgnoreCase(isGeography ? "geography" : "geometry");
   }
 
@@ -1158,7 +1158,7 @@ public class UriTokenizer {
    * @return whether an SRID has been found at the current index
    */
   private boolean nextSrid() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (nextConstantIgnoreCase("SRID") && nextCharacter('=') && nextDigit()) {
       // The digit checked above is mandatory, four more digits are optional.
       nextDigit();
@@ -1177,7 +1177,7 @@ public class UriTokenizer {
    * @return whether a geo position has been found at the current index
    */
   private boolean nextPosition() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if ((nextDoubleValue() || nextDecimalValue() || nextIntegerValue(true))
         && nextCharacter(' ')
         && (nextDoubleValue() || nextDecimalValue() || nextIntegerValue(true))) {
@@ -1193,7 +1193,7 @@ public class UriTokenizer {
    * @return whether a geo-point data instance has been found at the current index
    */
   private boolean nextPointData() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (nextCharacter('(') && nextPosition() && nextCharacter(')')) {
       return true;
     } else {
@@ -1206,7 +1206,7 @@ public class UriTokenizer {
     return nextConstantIgnoreCase("Point") && nextPointData();
   }
 
-  private boolean nextGeoPoint(final boolean isGeography) {
+  private boolean nextGeoPoint(boolean isGeography) {
     return nextGeoPrefix(isGeography) && nextCharacter('\'')
         && nextSrid() && nextCharacter(';') && nextPoint()
         && nextCharacter('\'');
@@ -1218,11 +1218,11 @@ public class UriTokenizer {
    *               and the last position must have the same coordinates as the first position)
    * @return whether geo LineString data has been found at the current index
    */
-  private boolean nextLineStringData(final boolean isRing) {
-    final int lastGoodIndex = index;
+  private boolean nextLineStringData(boolean isRing) {
+    int lastGoodIndex = index;
     if (nextCharacter('(') && nextPosition()) {
       int count = 1;
-      final String firstPosition = isRing ? parseString.substring(lastGoodIndex + 1, index) : null;
+      String firstPosition = isRing ? parseString.substring(lastGoodIndex + 1, index) : null;
       int positionStart = -1;
       while (nextCharacter(',')) {
         positionStart = index;
@@ -1238,7 +1238,7 @@ public class UriTokenizer {
         return false;
       }
       if (isRing) {
-        final String lastPosition = parseString.substring(positionStart, index);
+        String lastPosition = parseString.substring(positionStart, index);
         if (!lastPosition.equals(firstPosition)) {
           index = lastGoodIndex;
           return false;
@@ -1259,7 +1259,7 @@ public class UriTokenizer {
     return nextConstantIgnoreCase("LineString") && nextLineStringData(false);
   }
 
-  private boolean nextGeoLineString(final boolean isGeography) {
+  private boolean nextGeoLineString(boolean isGeography) {
     return nextGeoPrefix(isGeography) && nextCharacter('\'')
         && nextSrid() && nextCharacter(';') && nextLineString() 
         && nextCharacter('\'');
@@ -1270,7 +1270,7 @@ public class UriTokenizer {
    * @return whether geo polygon data have been found at the current index
    */
   private boolean nextPolygonData() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (nextCharacter('(') && nextLineStringData(true)) {
       // The polygon can have holes, described by further rings.
       while (nextCharacter(',')) {
@@ -1294,7 +1294,7 @@ public class UriTokenizer {
     return nextConstantIgnoreCase("Polygon") && nextPolygonData();
   }
 
-  private boolean nextGeoPolygon(final boolean isGeography) {
+  private boolean nextGeoPolygon(boolean isGeography) {
     return nextGeoPrefix(isGeography) && nextCharacter('\'')
         && nextSrid() && nextCharacter(';') && nextPolygon() 
         && nextCharacter('\'');
@@ -1311,7 +1311,7 @@ public class UriTokenizer {
     return nextCharacter(')');
   }
 
-  private boolean nextGeoMultiPoint(final boolean isGeography) {
+  private boolean nextGeoMultiPoint(boolean isGeography) {
     return nextGeoPrefix(isGeography) && nextCharacter('\'')
         && nextSrid() && nextCharacter(';') && nextMultiPoint()
         && nextCharacter('\'');
@@ -1328,7 +1328,7 @@ public class UriTokenizer {
     return nextCharacter(')');
   }
 
-  private boolean nextGeoMultiLineString(final boolean isGeography) {
+  private boolean nextGeoMultiLineString(boolean isGeography) {
     return nextGeoPrefix(isGeography) && nextCharacter('\'')
         && nextSrid() && nextCharacter(';') && nextMultiLineString()
         && nextCharacter('\'');
@@ -1345,7 +1345,7 @@ public class UriTokenizer {
     return nextCharacter(')');
   }
 
-  private boolean nextGeoMultiPolygon(final boolean isGeography) {
+  private boolean nextGeoMultiPolygon(boolean isGeography) {
     return nextGeoPrefix(isGeography) && nextCharacter('\'')
         && nextSrid() && nextCharacter(';') && nextMultiPolygon()
         && nextCharacter('\'');
@@ -1356,7 +1356,7 @@ public class UriTokenizer {
    * @return whether geo data has been found at the current index
    */
   private boolean nextGeo() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (nextPoint()) {
       return true;
     } else {
@@ -1406,7 +1406,7 @@ public class UriTokenizer {
     return nextCharacter(')');
   }
 
-  private boolean nextGeoCollection(final boolean isGeography) {
+  private boolean nextGeoCollection(boolean isGeography) {
     return nextGeoPrefix(isGeography) && nextCharacter('\'')
         && nextSrid() && nextCharacter(';') && nextCollection()
         && nextCharacter('\'');
@@ -1417,7 +1417,7 @@ public class UriTokenizer {
    * @return whether a JSON string has been found at the current index
    */
   private boolean nextJsonString() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (nextCharacter('"')) {
       do {
         if (nextCharacter('\\')) {
@@ -1453,7 +1453,7 @@ public class UriTokenizer {
    * @return whether a JSON object member has been found at the current index
    */
   private boolean nextJsonMember() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (nextJsonString() && nextCharacter(':') && nextJsonValue()) {
       return true;
     } else {
@@ -1467,7 +1467,7 @@ public class UriTokenizer {
    * @return whether a JSON array or object has been found at the current index
    */
   private boolean nextJsonArrayOrObject() {
-    final int lastGoodIndex = index;
+    int lastGoodIndex = index;
     if (nextCharacter('[')) {
       if (nextJsonValue()) {
         while (nextCharacter(',')) {
@@ -1505,7 +1505,7 @@ public class UriTokenizer {
 
   private boolean nextAndOperatorSearch() {
     if (nextWhitespace()) {
-      final int lastGoodIndex = index;
+      int lastGoodIndex = index;
       if (nextUnaryOperator("OR")) {
         return false;
       } else if (!(nextUnaryOperator("AND"))) {
@@ -1520,7 +1520,7 @@ public class UriTokenizer {
   private boolean nextWord() {
     int count = 0;
     while (index < parseString.length()) {
-      final int code = parseString.codePointAt(index);
+      int code = parseString.codePointAt(index);
       if (Character.isUnicodeIdentifierStart(code)) {
         count++;
         // Unicode characters outside of the Basic Multilingual Plane are represented as two Java characters.
@@ -1529,7 +1529,7 @@ public class UriTokenizer {
         break;
       }
     }
-    final String word = parseString.substring(index - count, index);
+    String word = parseString.substring(index - count, index);
     return count > 0 && !("OR".equals(word) || "AND".equals(word) || "NOT".equals(word));
   }
 

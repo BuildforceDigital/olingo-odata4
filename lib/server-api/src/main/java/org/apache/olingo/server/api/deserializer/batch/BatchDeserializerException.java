@@ -79,8 +79,8 @@ public class BatchDeserializerException extends DeserializerException {
    * @param messageKey one of the {@link MessageKeys} for the exception text in the resource bundle
    * @param parameters parameters for the exception text
    */
-  public BatchDeserializerException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public BatchDeserializerException(String developmentMessage, MessageKey messageKey,
+                                    String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
@@ -91,8 +91,8 @@ public class BatchDeserializerException extends DeserializerException {
    * @param messageKey one of the {@link MessageKeys} for the exception text in the resource bundle
    * @param parameters parameters for the exception text
    */
-  public BatchDeserializerException(final String developmentMessage, final Throwable cause,
-      final MessageKey messageKey, final String... parameters) {
+  public BatchDeserializerException(String developmentMessage, Throwable cause,
+                                    MessageKey messageKey, String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 }

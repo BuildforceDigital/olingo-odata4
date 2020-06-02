@@ -28,7 +28,7 @@ public class UriResourceSingletonImpl extends UriResourceTypedImpl implements Ur
 
   private final EdmSingleton singleton;
 
-  public UriResourceSingletonImpl(final EdmSingleton singleton) {
+  public UriResourceSingletonImpl(EdmSingleton singleton) {
     super(UriResourceKind.singleton);
     this.singleton = singleton;
   }

@@ -59,7 +59,7 @@ public class BatchResponseSerializerTest {
 
   @Test
   public void batchResponse() throws Exception {
-    final List<ODataResponsePart> parts = new ArrayList<ODataResponsePart>();
+    List<ODataResponsePart> parts = new ArrayList<ODataResponsePart>();
     ODataResponse response = new ODataResponse();
     response.setStatusCode(HttpStatusCode.OK.getStatusCode());
     response.setHeader(HttpHeader.CONTENT_TYPE, ContentType.TEXT_PLAIN.toContentTypeString());
@@ -72,10 +72,10 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(Collections.singletonList(changeSetResponse), true));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
     assertNotNull(content);
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -122,10 +122,10 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(Collections.singletonList(changeSetResponse), true));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
     assertNotNull(content);
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -174,10 +174,10 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(Collections.singletonList(changeSetResponse), true));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
     assertNotNull(content);
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -226,10 +226,10 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(Collections.singletonList(changeSetResponse), true));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
     assertNotNull(content);
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     assertEquals(25, body.size());
@@ -257,10 +257,10 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(Collections.singletonList(changeSetResponse), true));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
     assertNotNull(content);
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -307,10 +307,10 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(Collections.singletonList(changeSetResponse), true));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
     assertNotNull(content);
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -350,12 +350,12 @@ public class BatchResponseSerializerTest {
     response.setContent(IOUtils.toInputStream("Walter Winter"));
     parts.add(new ODataResponsePart(Collections.singletonList(response), false));
 
-    final BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    BatchResponseSerializer serializer = new BatchResponseSerializer();
+    InputStream content = serializer.serialize(parts, BOUNDARY);
 
     assertNotNull(content);
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -383,12 +383,12 @@ public class BatchResponseSerializerTest {
     response.setContent(IOUtils.toInputStream(bigData));
     parts.add(new ODataResponsePart(Collections.singletonList(response), false));
 
-    final BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    BatchResponseSerializer serializer = new BatchResponseSerializer();
+    InputStream content = serializer.serialize(parts, BOUNDARY);
 
     assertNotNull(content);
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -415,12 +415,12 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(Collections.singletonList(response), true));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
 
     assertNotNull(content);
 
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -460,7 +460,7 @@ public class BatchResponseSerializerTest {
         BOUNDARY);
     assertNotNull(batchResponse);
 
-    final String beforeExpected = "--" + BOUNDARY + CRLF
+    String beforeExpected = "--" + BOUNDARY + CRLF
         + "Content-Type: application/http" + CRLF
         + "Content-Transfer-Encoding: binary" + CRLF
         + CRLF
@@ -476,7 +476,7 @@ public class BatchResponseSerializerTest {
     batchResponse.read(binaryContent, 0, binaryContent.length);
     assertArrayEquals(content, binaryContent);
 
-    final String afterExpected = CRLF
+    String afterExpected = CRLF
         + "--" + BOUNDARY + "--" + CRLF;
     byte[] afterContent = new byte[afterExpected.length()];
     batchResponse.read(afterContent, 0, afterExpected.length());
@@ -490,11 +490,11 @@ public class BatchResponseSerializerTest {
    * @param len length of the generated string
    * @return random upper case characters ([A-Z])
    */
-  public static String generateData(final int len) {
+  public static String generateData(int len) {
     Random random = new Random();
     StringBuilder b = new StringBuilder(len);
     for (int j = 0; j < len; j++) {
-      final char c = (char) ('A' + random.nextInt('Z' - 'A' + 1));
+      char c = (char) ('A' + random.nextInt('Z' - 'A' + 1));
       b.append(c);
     }
     return b.toString();
@@ -504,7 +504,7 @@ public class BatchResponseSerializerTest {
   public void testODataContentResponse() throws Exception {
     List<ODataResponsePart> parts = new ArrayList<ODataResponsePart>();
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
-    final EdmEntityType edmEntityType = mock(EdmEntityType.class);
+    EdmEntityType edmEntityType = mock(EdmEntityType.class);
     EntityIterator entityCollection = new EntityIterator() {
       
       @Override
@@ -531,12 +531,12 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(response, false));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
 
     assertNotNull(content);
 
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -556,7 +556,7 @@ public class BatchResponseSerializerTest {
   public void changeSetODataContentResponse() throws Exception {
     List<ODataResponsePart> parts = new ArrayList<ODataResponsePart>();
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
-    final EdmEntityType edmEntityType = mock(EdmEntityType.class);
+    EdmEntityType edmEntityType = mock(EdmEntityType.class);
     EntityIterator entityCollection = new EntityIterator() {
       
       @Override
@@ -584,12 +584,12 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(response, true));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
 
     assertNotNull(content);
 
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;
@@ -622,7 +622,7 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(response, false));
     
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
-    final EdmEntityType edmEntityType = mock(EdmEntityType.class);
+    EdmEntityType edmEntityType = mock(EdmEntityType.class);
     EntityIterator entityCollection = new EntityIterator() {
       
       @Override
@@ -649,12 +649,12 @@ public class BatchResponseSerializerTest {
     parts.add(new ODataResponsePart(response1, false));
 
     BatchResponseSerializer serializer = new BatchResponseSerializer();
-    final InputStream content = serializer.serialize(parts, BOUNDARY);
+    InputStream content = serializer.serialize(parts, BOUNDARY);
 
     assertNotNull(content);
 
-    final BatchLineReader reader = new BatchLineReader(content);
-    final List<String> body = reader.toList();
+    BatchLineReader reader = new BatchLineReader(content);
+    List<String> body = reader.toList();
     reader.close();
 
     int line = 0;

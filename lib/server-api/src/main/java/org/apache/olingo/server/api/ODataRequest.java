@@ -50,7 +50,7 @@ public class ODataRequest {
    * Sets the HTTP method.
    * @param method the HTTP method (GET, PUT, POST ...)
    */
-  public void setMethod(final HttpMethod method) {
+  public void setMethod(HttpMethod method) {
     this.method = method;
   }
 
@@ -62,7 +62,7 @@ public class ODataRequest {
    * @param value value for the given header name
    * @see <a href="http://ietf.org/rfc/rfc7230.txt">RFC 7230, section 3.2.2</a>
    */
-  public void setHeader(final String name, final String value) {
+  public void setHeader(String name, String value) {
     headers.setHeader(name, value);
   }
 
@@ -74,7 +74,7 @@ public class ODataRequest {
    * @param value value for the given header name
    * @see <a href="http://ietf.org/rfc/rfc7230.txt">RFC 7230, section 3.2.2</a>
    */
-  public void addHeader(final String name, final String value) {
+  public void addHeader(String name, String value) {
     headers.addHeader(name, value);
   }
 
@@ -86,7 +86,7 @@ public class ODataRequest {
    * @param values list of values for the given header name
    * @see <a href="http://ietf.org/rfc/rfc7230.txt">RFC 7230, section 3.2.2</a>
    */
-  public void addHeader(final String name, final List<String> values) {
+  public void addHeader(String name, List<String> values) {
     headers.addHeader(name, values);
   }
 
@@ -95,7 +95,7 @@ public class ODataRequest {
    * @param name the header name as a case-insensitive key
    * @return the header value(s) or null if not found
    */
-  public List<String> getHeaders(final String name) {
+  public List<String> getHeaders(String name) {
     return headers.getHeader(name);
   }
 
@@ -104,8 +104,8 @@ public class ODataRequest {
    * @param name the header name as a case-insensitive key
    * @return the first header value or null if not found
    */
-  public String getHeader(final String name) {
-    final List<String> values = getHeaders(name);
+  public String getHeader(String name) {
+    List<String> values = getHeaders(name);
     return values == null || values.isEmpty() ? null : values.get(0);
   }
 
@@ -129,7 +129,7 @@ public class ODataRequest {
    * Sets the body of the request.
    * @param body the request payload as {@link InputStream}
    */
-  public void setBody(final InputStream body) {
+  public void setBody(InputStream body) {
     this.body = body;
   }
 
@@ -146,7 +146,7 @@ public class ODataRequest {
    * Sets the query part of the request URI.
    * @see #getRawQueryPath()
    */
-  public void setRawQueryPath(final String rawQueryPath) {
+  public void setRawQueryPath(String rawQueryPath) {
     this.rawQueryPath = rawQueryPath;
   }
 
@@ -162,7 +162,7 @@ public class ODataRequest {
    * Sets the base URI.
    * @see #getRawBaseUri()
    */
-  public void setRawBaseUri(final String rawBaseUri) {
+  public void setRawBaseUri(String rawBaseUri) {
     this.rawBaseUri = rawBaseUri;
   }
 
@@ -178,7 +178,7 @@ public class ODataRequest {
    * Sets the total request URI.
    * @see #getRawRequestUri()
    */
-  public void setRawRequestUri(final String rawRequestUri) {
+  public void setRawRequestUri(String rawRequestUri) {
     this.rawRequestUri = rawRequestUri;
   }
 
@@ -194,7 +194,7 @@ public class ODataRequest {
    * Sets the path segments of the request URI that belong to OData.
    * @see #getRawODataPath()
    */
-  public void setRawODataPath(final String rawODataPath) {
+  public void setRawODataPath(String rawODataPath) {
     this.rawODataPath = rawODataPath;
   }
 
@@ -210,7 +210,7 @@ public class ODataRequest {
    * Sets the URI part responsible for service resolution.
    * @see #getRawServiceResolutionUri()
    */
-  public void setRawServiceResolutionUri(final String rawServiceResolutionUri) {
+  public void setRawServiceResolutionUri(String rawServiceResolutionUri) {
     this.rawServiceResolutionUri = rawServiceResolutionUri;
   }
 
@@ -226,7 +226,7 @@ public class ODataRequest {
    * @param protocol
    * @see #getProtocol()
    */
-  public void setProtocol(final String protocol) {
+  public void setProtocol(String protocol) {
     this.protocol = protocol;
   }
 

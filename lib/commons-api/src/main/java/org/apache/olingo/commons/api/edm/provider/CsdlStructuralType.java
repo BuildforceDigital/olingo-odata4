@@ -74,7 +74,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param name the name
    * @return the name
    */
-  public CsdlStructuralType setName(final String name) {
+  public CsdlStructuralType setName(String name) {
     this.name = name;
     return this;
   }
@@ -94,7 +94,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param isOpenType the is open type
    * @return the open type
    */
-  public CsdlStructuralType setOpenType(final boolean isOpenType) {
+  public CsdlStructuralType setOpenType(boolean isOpenType) {
     this.isOpenType = isOpenType;
     return this;
   }
@@ -126,7 +126,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param baseType the base type
    * @return the base type
    */
-  public CsdlStructuralType setBaseType(final String baseType) {
+  public CsdlStructuralType setBaseType(String baseType) {
     this.baseType = new FullQualifiedName(baseType);
     return this;
   }
@@ -137,7 +137,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param baseType the base type
    * @return the base type
    */
-  public CsdlStructuralType setBaseType(final FullQualifiedName baseType) {
+  public CsdlStructuralType setBaseType(FullQualifiedName baseType) {
     this.baseType = baseType;
     return this;
   }
@@ -157,7 +157,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param isAbstract the is abstract
    * @return the abstract
    */
-  public CsdlStructuralType setAbstract(final boolean isAbstract) {
+  public CsdlStructuralType setAbstract(boolean isAbstract) {
     this.isAbstract = isAbstract;
     return this;
   }
@@ -177,7 +177,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param name the name
    * @return the property
    */
-  public CsdlProperty getProperty(final String name) {
+  public CsdlProperty getProperty(String name) {
     return getOneByName(name, properties);
   }
 
@@ -187,7 +187,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param properties the properties
    * @return the properties
    */
-  public CsdlStructuralType setProperties(final List<CsdlProperty> properties) {
+  public CsdlStructuralType setProperties(List<CsdlProperty> properties) {
     this.properties = properties;
     return this;
   }
@@ -207,7 +207,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param name the name
    * @return the navigation property
    */
-  public CsdlNavigationProperty getNavigationProperty(final String name) {
+  public CsdlNavigationProperty getNavigationProperty(String name) {
     return getOneByName(name, navigationProperties);
   }
 
@@ -217,7 +217,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param navigationProperties the navigation properties
    * @return the navigation properties
    */
-  public CsdlStructuralType setNavigationProperties(final List<CsdlNavigationProperty> navigationProperties) {
+  public CsdlStructuralType setNavigationProperties(List<CsdlNavigationProperty> navigationProperties) {
     this.navigationProperties = navigationProperties;
     return this;
   }
@@ -232,7 +232,7 @@ public abstract class CsdlStructuralType extends CsdlAbstractEdmItem implements 
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlStructuralType setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlStructuralType setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

@@ -47,8 +47,8 @@ public final class EdmTimeOfDay extends SingletonPrimitiveType {
 
   @SuppressWarnings("unchecked")
   @Override
-  protected <T> T internalValueOfString(final String value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode, final Class<T> returnType)
+  protected <T> T internalValueOfString(String value, Boolean isNullable, Integer maxLength,
+                                        Integer precision, Integer scale, Boolean isUnicode, Class<T> returnType)
       throws EdmPrimitiveTypeException {
     LocalTime time;
     try {
@@ -82,8 +82,8 @@ public final class EdmTimeOfDay extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> String internalValueToString(final T value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value, Boolean isNullable, Integer maxLength,
+                                             Integer precision, Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
     // appropriate types
     if (value instanceof LocalTime) {
       return value.toString();

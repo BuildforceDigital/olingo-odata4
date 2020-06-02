@@ -39,7 +39,7 @@ public final class EdmSingle extends SingletonPrimitiveType {
   }
 
   @Override
-  public boolean isCompatible(final EdmPrimitiveType primitiveType) {
+  public boolean isCompatible(EdmPrimitiveType primitiveType) {
     return primitiveType instanceof EdmByte
         || primitiveType instanceof EdmSByte
         || primitiveType instanceof EdmInt16
@@ -54,9 +54,9 @@ public final class EdmSingle extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode, Class<T> returnType) throws EdmPrimitiveTypeException {
 
     Float result;
     BigDecimal bigDecimalValue = null;
@@ -100,19 +100,19 @@ public final class EdmSingle extends SingletonPrimitiveType {
     } else {
       try {
         return EdmDecimal.convertDecimal(bigDecimalValue, returnType);
-      } catch (final IllegalArgumentException e) {
+      } catch (IllegalArgumentException e) {
         throw new EdmPrimitiveTypeException("The literal '" + value
             + "' cannot be converted to value type " + returnType + ".", e);
-      } catch (final ClassCastException e) {
+      } catch (ClassCastException e) {
         throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.", e);
       }
     }
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     if (value instanceof Long || value instanceof Integer) {
       if (Math.abs(((Number) value).longValue()) < 1L << 22) {
@@ -126,7 +126,7 @@ public final class EdmSingle extends SingletonPrimitiveType {
       if (((Double) value).isInfinite()) {
         return (Double) value == Double.NEGATIVE_INFINITY ? EdmDouble.NEGATIVE_INFINITY : EdmDouble.POSITIVE_INFINITY;
       } else {
-        final String floatString = Float.toString(((Double) value).floatValue());
+        String floatString = Float.toString(((Double) value).floatValue());
         if (floatString.equals(value.toString())) {
           return floatString;
         } else {
@@ -137,7 +137,7 @@ public final class EdmSingle extends SingletonPrimitiveType {
       return (Float) value == Float.NEGATIVE_INFINITY ? EdmDouble.NEGATIVE_INFINITY
           : (Float) value == Float.POSITIVE_INFINITY ? EdmDouble.POSITIVE_INFINITY : value.toString();
     } else if (value instanceof BigDecimal) {
-      final float floatValue = ((BigDecimal) value).floatValue();
+      float floatValue = ((BigDecimal) value).floatValue();
       if (!Float.isInfinite(floatValue) && BigDecimal.valueOf(floatValue).compareTo((BigDecimal) value) == 0) {
         return value.toString();
       } else {

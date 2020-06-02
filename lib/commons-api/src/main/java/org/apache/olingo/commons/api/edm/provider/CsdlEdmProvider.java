@@ -35,7 +35,7 @@ public interface CsdlEdmProvider {
    * @return for given name
    * @throws ODataException
    */
-  CsdlEnumType getEnumType(final FullQualifiedName enumTypeName) throws ODataException;
+  CsdlEnumType getEnumType(FullQualifiedName enumTypeName) throws ODataException;
 
   /**
    * This method should return an {@link CsdlTypeDefinition} or <b>null</b> if nothing is found
@@ -44,7 +44,7 @@ public interface CsdlEdmProvider {
    * @return for given name
    * @throws ODataException 
    */
-  CsdlTypeDefinition getTypeDefinition(final FullQualifiedName typeDefinitionName) throws ODataException;
+  CsdlTypeDefinition getTypeDefinition(FullQualifiedName typeDefinitionName) throws ODataException;
 
   /**
    * This method should return an {@link CsdlEntityType} or <b>null</b> if nothing is found
@@ -53,7 +53,7 @@ public interface CsdlEdmProvider {
    * @return for the given name
    * @throws ODataException 
    */
-  CsdlEntityType getEntityType(final FullQualifiedName entityTypeName) throws ODataException;
+  CsdlEntityType getEntityType(FullQualifiedName entityTypeName) throws ODataException;
 
   /**
    * This method should return a {@link CsdlComplexType} or <b>null</b> if nothing is found.
@@ -62,7 +62,7 @@ public interface CsdlEdmProvider {
    * @return for the given name
    * @throws ODataException 
    */
-  CsdlComplexType getComplexType(final FullQualifiedName complexTypeName) throws ODataException;
+  CsdlComplexType getComplexType(FullQualifiedName complexTypeName) throws ODataException;
 
   /**
    * This method should return a list of all {@link CsdlAction} for the FullQualifiedname
@@ -73,7 +73,7 @@ public interface CsdlEdmProvider {
    * or null
    * @throws ODataException 
    */
-  List<CsdlAction> getActions(final FullQualifiedName actionName) throws ODataException;
+  List<CsdlAction> getActions(FullQualifiedName actionName) throws ODataException;
 
   /**
    * This method should return a list of all {@link CsdlFunction} for the FullQualifiedname or <b>null</b> if nothing is
@@ -84,7 +84,7 @@ public interface CsdlEdmProvider {
    * or null
    * @throws ODataException 
    */
-  List<CsdlFunction> getFunctions(final FullQualifiedName functionName) throws ODataException;
+  List<CsdlFunction> getFunctions(FullQualifiedName functionName) throws ODataException;
 
   /**
    * This method should return a {@link CsdlTerm} for the FullQualifiedName or <b>null</b> if nothing is found.
@@ -92,7 +92,7 @@ public interface CsdlEdmProvider {
    * @return or null
    * @throws ODataException 
    */
-  CsdlTerm getTerm(final FullQualifiedName termName) throws ODataException;
+  CsdlTerm getTerm(FullQualifiedName termName) throws ODataException;
 
   /**
    * This method should return an {@link CsdlEntitySet} or <b>null</b> if nothing is found
@@ -102,7 +102,7 @@ public interface CsdlEdmProvider {
    * @return for the given container and entityset name
    * @throws ODataException 
    */
-  CsdlEntitySet getEntitySet(final FullQualifiedName entityContainer, final String entitySetName)
+  CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName)
       throws ODataException;
 
   /**
@@ -113,7 +113,7 @@ public interface CsdlEdmProvider {
    * @return for given container and singleton name
    * @throws ODataException 
    */
-  CsdlSingleton getSingleton(final FullQualifiedName entityContainer, final String singletonName)
+  CsdlSingleton getSingleton(FullQualifiedName entityContainer, String singletonName)
       throws ODataException;
 
   /**
@@ -124,7 +124,7 @@ public interface CsdlEdmProvider {
    * @return for the given container and ActionImport name
    * @throws ODataException 
    */
-  CsdlActionImport getActionImport(final FullQualifiedName entityContainer, final String actionImportName)
+  CsdlActionImport getActionImport(FullQualifiedName entityContainer, String actionImportName)
       throws ODataException;
 
   /**
@@ -135,7 +135,7 @@ public interface CsdlEdmProvider {
    * @return for the given container name and function import name
    * @throws ODataException 
    */
-  CsdlFunctionImport getFunctionImport(final FullQualifiedName entityContainer, final String functionImportName)
+  CsdlFunctionImport getFunctionImport(FullQualifiedName entityContainer, String functionImportName)
       throws ODataException;
 
   /**
@@ -145,7 +145,7 @@ public interface CsdlEdmProvider {
    * @return for the given name
    * @throws ODataException 
    */
-  CsdlEntityContainerInfo getEntityContainerInfo(final FullQualifiedName entityContainerName)
+  CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName)
       throws ODataException;
 
   /**
@@ -180,4 +180,5 @@ public interface CsdlEdmProvider {
    * @throws ODataException 
    */
   CsdlAnnotations getAnnotationsGroup(FullQualifiedName targetName, String qualifier) throws ODataException;
+
 }

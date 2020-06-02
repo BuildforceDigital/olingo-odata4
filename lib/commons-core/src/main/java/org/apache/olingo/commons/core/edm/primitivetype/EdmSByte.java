@@ -39,28 +39,28 @@ public final class EdmSByte extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode, Class<T> returnType) throws EdmPrimitiveTypeException {
 
     Byte valueByte;
     try {
       valueByte = Byte.parseByte(value);
-    } catch (final NumberFormatException e) {
+    } catch (NumberFormatException e) {
       throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.", e);
     }
 
     try {
       return EdmInt64.convertNumber(valueByte, returnType);
-    } catch (final ClassCastException e) {
+    } catch (ClassCastException e) {
       throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.", e);
     }
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     if (value instanceof Byte) {
       return value.toString();

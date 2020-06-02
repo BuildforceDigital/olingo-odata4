@@ -52,7 +52,7 @@ public class DebugResponseHelperImpl implements DebugResponseHelper {
 
   private final DebugFormat requestedFormat;
 
-  public DebugResponseHelperImpl(final String debugFormat) {
+  public DebugResponseHelperImpl(String debugFormat) {
     if (DebugSupport.ODATA_DEBUG_HTML.equals(debugFormat)) {
       requestedFormat = DebugFormat.HTML;
     } else if (DebugSupport.ODATA_DEBUG_DOWNLOAD.equals(debugFormat)) {
@@ -63,13 +63,13 @@ public class DebugResponseHelperImpl implements DebugResponseHelper {
   }
 
   @Override
-  public ODataResponse createDebugResponse(final DebugInformation debugInfo) {
+  public ODataResponse createDebugResponse(DebugInformation debugInfo) {
     try {
-      final List<DebugTab> parts = createParts(debugInfo);
+      List<DebugTab> parts = createParts(debugInfo);
 
       ODataResponse response = new ODataResponse();
-      final String contentTypeString;
-      final InputStream body;
+      String contentTypeString;
+      InputStream body;
       if (requestedFormat == DebugFormat.DOWNLOAD || requestedFormat == DebugFormat.HTML) {
         String title = debugInfo.getRequest() == null ?
             "V4 Service" : "V4 Service: " + debugInfo.getRequest().getRawODataPath();
@@ -96,7 +96,7 @@ public class DebugResponseHelperImpl implements DebugResponseHelper {
     }
   }
 
-  private List<DebugTab> createParts(final DebugInformation debugInfo) {
+  private List<DebugTab> createParts(DebugInformation debugInfo) {
     List<DebugTab> parts = new ArrayList<>();
 
     // request
@@ -130,7 +130,7 @@ public class DebugResponseHelperImpl implements DebugResponseHelper {
     return parts;
   }
 
-  private InputStream wrapInJson(final List<DebugTab> parts) throws IOException {
+  private InputStream wrapInJson(List<DebugTab> parts) throws IOException {
     OutputStream outputStream = null;
     CircleStreamBuffer csb = new CircleStreamBuffer();
     outputStream = csb.getOutputStream();
@@ -169,14 +169,14 @@ public class DebugResponseHelperImpl implements DebugResponseHelper {
    * @return version field information
    */
   protected static String getVersion() {
-    final Package pack = DebugResponseHelperImpl.class.getPackage();
-    final String name = pack.getImplementationTitle();
-    final String version = pack.getImplementationVersion();
+    Package pack = DebugResponseHelperImpl.class.getPackage();
+    String name = pack.getImplementationTitle();
+    String version = pack.getImplementationVersion();
     return (name == null ? "Olingo" : name)
         + (version == null ? "" : " Version " + version);
   }
 
-  private InputStream wrapInHtml(final List<DebugTab> parts, final String title) throws IOException {
+  private InputStream wrapInHtml(List<DebugTab> parts, String title) throws IOException {
     StringWriter writer = new StringWriter();
 
     writer.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n")
@@ -222,7 +222,7 @@ public class DebugResponseHelperImpl implements DebugResponseHelper {
         .append("</head>\n")
         .append("<body>\n");
     char count = '0';
-    for (final DebugTab part : parts) {
+    for (DebugTab part : parts) {
       writer.append("<div class=\"header\" id=\"sec").append(++count).append("\">\n")
           .append("<h1><a href=\"#sec").append(count).append("\">")
           .append(part.getName())
@@ -239,17 +239,17 @@ public class DebugResponseHelperImpl implements DebugResponseHelper {
     return new ByteArrayInputStream(bytes);
   }
 
-  protected static String escapeHtml(final String value) {
+  protected static String escapeHtml(String value) {
     return value == null ? null : value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
   }
 
-  protected static void appendJsonTable(final JsonGenerator gen, final Map<String, String> entries)
+  protected static void appendJsonTable(JsonGenerator gen, Map<String, String> entries)
       throws IOException {
     if (entries == null || entries.isEmpty()) {
       gen.writeNull();
     } else {
       gen.writeStartObject();
-      for (final Map.Entry<String, String> entry : entries.entrySet()) {
+      for (Map.Entry<String, String> entry : entries.entrySet()) {
         gen.writeFieldName(entry.getKey());
         if (entry.getValue() == null) {
           gen.writeNull();
@@ -261,12 +261,12 @@ public class DebugResponseHelperImpl implements DebugResponseHelper {
     }
   }
 
-  protected static void appendHtmlTable(final Writer writer, final Map<String, String> entries) throws IOException {
+  protected static void appendHtmlTable(Writer writer, Map<String, String> entries) throws IOException {
     writer.append("<table>\n<thead>\n")
         .append("<tr><th class=\"name\">Name</th><th class=\"value\">Value</th></tr>\n")
         .append("</thead>\n<tbody>\n");
     if (entries != null && !entries.isEmpty()) {
-      for (final Map.Entry<String, String> entry : entries.entrySet()) {
+      for (Map.Entry<String, String> entry : entries.entrySet()) {
         writer.append("<tr><td class=\"name\">").append(entry.getKey()).append("</td>")
             .append("<td class=\"value\">")
             .append(escapeHtml(entry.getValue()))

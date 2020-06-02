@@ -26,7 +26,7 @@ public class EdmOnDeleteImpl extends AbstractEdmAnnotatable implements EdmOnDele
   
   private final CsdlOnDelete csdlOnDelete;
   
-  public EdmOnDeleteImpl(final Edm edm, final CsdlOnDelete csdlOnDelete) {
+  public EdmOnDeleteImpl(Edm edm, CsdlOnDelete csdlOnDelete) {
     super(edm, csdlOnDelete);
     this.csdlOnDelete = csdlOnDelete;
   }

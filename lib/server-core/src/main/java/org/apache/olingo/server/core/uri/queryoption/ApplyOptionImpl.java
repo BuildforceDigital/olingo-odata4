@@ -41,13 +41,13 @@ public class ApplyOptionImpl extends SystemQueryOptionImpl implements ApplyOptio
     return Collections.unmodifiableList(transformations);
   }
 
-  public ApplyOptionImpl add(final ApplyItem transformation) {
+  public ApplyOptionImpl add(ApplyItem transformation) {
     transformations.add(transformation);
     return this;
   }
 
   public void setEdmStructuredType(EdmStructuredType referencedType) {
-    this.edmStructuredType = referencedType;
+      edmStructuredType = referencedType;
   }
   
   @Override

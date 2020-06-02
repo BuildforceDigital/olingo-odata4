@@ -67,7 +67,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param isCollection the is collection
    * @return the collection
    */
-  public CsdlNavigationProperty setCollection(final boolean isCollection) {
+  public CsdlNavigationProperty setCollection(boolean isCollection) {
     this.isCollection = isCollection;
     return this;
   }
@@ -78,7 +78,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param name the name
    * @return the name
    */
-  public CsdlNavigationProperty setName(final String name) {
+  public CsdlNavigationProperty setName(String name) {
     this.name = name;
     return this;
   }
@@ -110,7 +110,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param type the type
    * @return the type
    */
-  public CsdlNavigationProperty setType(final FullQualifiedName type) {
+  public CsdlNavigationProperty setType(FullQualifiedName type) {
     this.type = type;
     return this;
   }
@@ -121,7 +121,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param type the type
    * @return the type
    */
-  public CsdlNavigationProperty setType(final String type) {
+  public CsdlNavigationProperty setType(String type) {
     this.type = new FullQualifiedName(type);
     return this;
   }
@@ -141,7 +141,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param partner the partner
    * @return the partner
    */
-  public CsdlNavigationProperty setPartner(final String partner) {
+  public CsdlNavigationProperty setPartner(String partner) {
     this.partner = partner;
     return this;
   }
@@ -161,7 +161,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param containsTarget the contains target
    * @return the contains target
    */
-  public CsdlNavigationProperty setContainsTarget(final boolean containsTarget) {
+  public CsdlNavigationProperty setContainsTarget(boolean containsTarget) {
     this.containsTarget = containsTarget;
     return this;
   }
@@ -182,7 +182,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @return the referential constraints
    */
   public CsdlNavigationProperty setReferentialConstraints(
-      final List<CsdlReferentialConstraint> referentialConstraints) {
+      List<CsdlReferentialConstraint> referentialConstraints) {
     this.referentialConstraints = referentialConstraints;
     return this;
   }
@@ -202,7 +202,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param nullable the nullable
    * @return the nullable
    */
-  public CsdlNavigationProperty setNullable(final Boolean nullable) {
+  public CsdlNavigationProperty setNullable(Boolean nullable) {
     this.nullable = nullable;
     return this;
   }
@@ -222,7 +222,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param onDelete the on delete
    * @return the on delete
    */
-  public CsdlNavigationProperty setOnDelete(final CsdlOnDelete onDelete) {
+  public CsdlNavigationProperty setOnDelete(CsdlOnDelete onDelete) {
     this.onDelete = onDelete;
     return this;
   }
@@ -237,7 +237,7 @@ public class CsdlNavigationProperty extends CsdlAbstractEdmItem implements CsdlN
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlNavigationProperty setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlNavigationProperty setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

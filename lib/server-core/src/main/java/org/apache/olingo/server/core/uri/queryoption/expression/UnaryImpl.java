@@ -32,7 +32,7 @@ public class UnaryImpl implements Unary {
   private final Expression expression;
   private final EdmType type;
 
-  public UnaryImpl(final UnaryOperatorKind operator, final Expression expression, final EdmType type) {
+  public UnaryImpl(UnaryOperatorKind operator, Expression expression, EdmType type) {
     this.operator = operator;
     this.expression = expression;
     this.type = type;
@@ -53,7 +53,7 @@ public class UnaryImpl implements Unary {
   }
 
   @Override
-  public <T> T accept(final ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
+  public <T> T accept(ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
     T operand = expression.accept(visitor);
     return visitor.visitUnaryOperator(operator, operand);
   }

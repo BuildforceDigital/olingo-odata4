@@ -36,7 +36,7 @@ public class SerializerStreamResultImpl implements SerializerStreamResult {
   public static class SerializerResultBuilder {
     private SerializerStreamResultImpl result = new SerializerStreamResultImpl();
 
-    public SerializerResultBuilder content(final ODataContent content) {
+    public SerializerResultBuilder content(ODataContent content) {
       result.oDataContent = content;
       return this;
     }

@@ -40,4 +40,5 @@ public interface CountEntityCollectionProcessor extends EntityCollectionProcesso
    */
   void countEntityCollection(ODataRequest request, ODataResponse response, UriInfo uriInfo)
       throws ODataApplicationException, ODataLibraryException;
+
 }

@@ -69,7 +69,7 @@ public enum ValueType {
     baseType = this;
   }
 
-  ValueType(final ValueType baseType) {
+  ValueType(ValueType baseType) {
     this.baseType = baseType;
   }
 

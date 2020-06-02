@@ -43,14 +43,14 @@ public class ContentNegotiatorException extends ODataLibraryException {
     }
   }
 
-  public ContentNegotiatorException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public ContentNegotiatorException(String developmentMessage, MessageKey messageKey,
+                                    String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
-  public ContentNegotiatorException(final String developmentMessage, final Throwable cause,
-      final MessageKey messageKey,
-      final String... parameters) {
+  public ContentNegotiatorException(String developmentMessage, Throwable cause,
+                                    MessageKey messageKey,
+                                    String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 

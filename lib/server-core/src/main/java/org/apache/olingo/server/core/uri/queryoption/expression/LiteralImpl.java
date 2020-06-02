@@ -29,7 +29,7 @@ public class LiteralImpl implements Literal {
   private final String text;
   private final EdmType type;
 
-  public LiteralImpl(final String text, final EdmType type) {
+  public LiteralImpl(String text, EdmType type) {
     this.text = text;
     this.type = type;
   }
@@ -45,7 +45,7 @@ public class LiteralImpl implements Literal {
   }
 
   @Override
-  public <T> T accept(final ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
+  public <T> T accept(ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
     return visitor.visitLiteral(this);
   }
 

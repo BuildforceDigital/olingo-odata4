@@ -87,7 +87,7 @@ public enum TargetType {
 
   private final Class<?> edmClass;
 
-  TargetType(final Class<?> edmClass) {
+  TargetType(Class<?> edmClass) {
     this.edmClass = edmClass;
   }
 

@@ -41,7 +41,7 @@ public class ODataErrorDetail {
     return code;
   }
 
-  public ODataErrorDetail setCode(final String code) {
+  public ODataErrorDetail setCode(String code) {
     this.code = code;
     return this;
   }
@@ -55,7 +55,7 @@ public class ODataErrorDetail {
     return message;
   }
 
-  public ODataErrorDetail setMessage(final String message) {
+  public ODataErrorDetail setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -75,7 +75,7 @@ public class ODataErrorDetail {
    * @param target the error target
    * @return this ODataErrorDetail instance (fluent builder)
    */
-  public ODataErrorDetail setTarget(final String target) {
+  public ODataErrorDetail setTarget(String target) {
     this.target = target;
     return this;
   }
@@ -85,7 +85,7 @@ public class ODataErrorDetail {
    * @param additionalProperties additionalProperties
    * @return this ODataErrorDetail instance (fluent builder)
    */
-  public ODataErrorDetail setAdditionalProperties(final Map<String, Object> additionalProperties) {
+  public ODataErrorDetail setAdditionalProperties(Map<String, Object> additionalProperties) {
 	  this.additionalProperties = additionalProperties;
 	  return this;
   }
@@ -95,6 +95,6 @@ public class ODataErrorDetail {
    * @return a pair representing server defined object.
    */
   public Map<String, Object> getAdditionalProperties() {
-	  return this.additionalProperties;
+	  return additionalProperties;
   }
 }

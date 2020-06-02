@@ -33,7 +33,7 @@ public class DebugTabStacktrace implements DebugTab {
 
   private final Exception exception;
 
-  public DebugTabStacktrace(final Exception exception) {
+  public DebugTabStacktrace(Exception exception) {
     this.exception = exception;
   }
 
@@ -43,7 +43,7 @@ public class DebugTabStacktrace implements DebugTab {
   }
 
   @Override
-  public void appendJson(final JsonGenerator gen) throws IOException {
+  public void appendJson(JsonGenerator gen) throws IOException {
     gen.writeStartObject();
     gen.writeFieldName("exceptions");
     gen.writeStartArray();
@@ -64,7 +64,7 @@ public class DebugTabStacktrace implements DebugTab {
     gen.writeFieldName("stacktrace");
     gen.writeStartArray();
     if(exception != null){
-      for (final StackTraceElement stackTraceElement : exception.getStackTrace()) {
+      for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
         appendJsonStackTraceElement(gen, stackTraceElement);
       }
     }
@@ -73,7 +73,7 @@ public class DebugTabStacktrace implements DebugTab {
     gen.writeEndObject();
   }
 
-  private String getMessageText(final Throwable throwable) {
+  private String getMessageText(Throwable throwable) {
     String message;
     if (throwable instanceof ODataLibraryException) {
       ODataLibraryException ex = (ODataLibraryException) throwable;
@@ -87,7 +87,7 @@ public class DebugTabStacktrace implements DebugTab {
     return message;
   }
 
-  private void appendJsonStackTraceElement(final JsonGenerator gen, final StackTraceElement element)
+  private void appendJsonStackTraceElement(JsonGenerator gen, StackTraceElement element)
       throws IOException {
     gen.writeStartObject();
     gen.writeStringField("class", element.getClassName());
@@ -97,20 +97,20 @@ public class DebugTabStacktrace implements DebugTab {
   }
 
   @Override
-  public void appendHtml(final Writer writer) throws IOException {
+  public void appendHtml(Writer writer) throws IOException {
     appendException(exception, writer);
     writer.append("<h2>Stacktrace</h2>\n");
     int count = 0;
-    for (final StackTraceElement stackTraceElement : exception.getStackTrace()) {
+    for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
       appendStackTraceElement(stackTraceElement, ++count == 1, count == exception.getStackTrace().length, writer);
     }
   }
 
-  private void appendException(final Throwable throwable, final Writer writer) throws IOException {
+  private void appendException(Throwable throwable, Writer writer) throws IOException {
     if (throwable.getCause() != null) {
       appendException(throwable.getCause(), writer);
     }
-    final StackTraceElement details = throwable.getStackTrace()[0];
+    StackTraceElement details = throwable.getStackTrace()[0];
     writer.append("<h2>").append(throwable.getClass().getCanonicalName()).append("</h2>\n")
     .append("<p>")
     .append(DebugResponseHelperImpl.escapeHtml(getMessageText(throwable)))
@@ -118,8 +118,8 @@ public class DebugTabStacktrace implements DebugTab {
     appendStackTraceElement(details, true, true, writer);
   }
 
-  private void appendStackTraceElement(final StackTraceElement stackTraceElement,
-      final boolean isFirst, final boolean isLast, final Writer writer) throws IOException {
+  private void appendStackTraceElement(StackTraceElement stackTraceElement,
+                                       boolean isFirst, boolean isLast, Writer writer) throws IOException {
     if (isFirst) {
       writer.append("<table>\n<thead>\n")
       .append("<tr>\n<th class=\"name\">Class</th>\n")

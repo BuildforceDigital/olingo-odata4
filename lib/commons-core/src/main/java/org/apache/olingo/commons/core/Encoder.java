@@ -37,7 +37,7 @@ public class Encoder {
    * @param value the Java String
    * @return the encoded String
    */
-  public static String encode(final String value) {
+  public static String encode(String value) {
     return encoder.encodeInternal(value);
   }
 
@@ -75,7 +75,7 @@ public class Encoder {
   /** characters to remain unencoded in addition to {@link #UNRESERVED} */
   private final String unencoded;
 
-  private Encoder(final String unencoded) {
+  private Encoder(String unencoded) {
     this.unencoded = unencoded == null ? "" : unencoded;
   }
 
@@ -94,12 +94,12 @@ public class Encoder {
    * @param input input String
    * @return encoded representation
    */
-  private String encodeInternal(final String input) {
+  private String encodeInternal(String input) {
     StringBuilder resultStr = new StringBuilder();
 
     try {
       for (byte utf8Byte : input.getBytes("UTF-8")) {
-        final char character = (char) utf8Byte;
+        char character = (char) utf8Byte;
         if (isUnreserved(character)) {
           resultStr.append(character);
         } else if (isUnencoded(character)) {
@@ -111,20 +111,20 @@ public class Encoder {
           resultStr.append(hex[256 + utf8Byte]); // index adjusted for the usage of signed bytes
         }
       }
-    } catch (final UnsupportedEncodingException e) { // should never happen; UTF-8 is always there
+    } catch (UnsupportedEncodingException e) { // should never happen; UTF-8 is always there
       return null;
     }
     return resultStr.toString();
   }
 
-  private static boolean isUnreserved(final char character) {
+  private static boolean isUnreserved(char character) {
     return 'A' <= character && character <= 'Z' // case A..Z
         || 'a' <= character && character <= 'z' // case a..z
         || '0' <= character && character <= '9' // case 0..9
         || UNRESERVED.indexOf(character) >= 0;
   }
 
-  private boolean isUnencoded(final char character) {
+  private boolean isUnencoded(char character) {
     return unencoded.indexOf(character) >= 0;
   }
 }

@@ -28,32 +28,32 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 public class CsdlSingleton extends CsdlBindingTarget {
 
   @Override
-  public CsdlSingleton setName(final String name) {
+  public CsdlSingleton setName(String name) {
     this.name = name;
     return this;
   }
 
   @Override
-  public CsdlSingleton setType(final String type) {
+  public CsdlSingleton setType(String type) {
     this.type = new FullQualifiedName(type);
     return this;
   }
 
   @Override
-  public CsdlSingleton setType(final FullQualifiedName type) {
+  public CsdlSingleton setType(FullQualifiedName type) {
     this.type = type;
     return this;
   }
 
   @Override
   public CsdlSingleton setNavigationPropertyBindings(
-      final List<CsdlNavigationPropertyBinding> navigationPropertyBindings) {
+      List<CsdlNavigationPropertyBinding> navigationPropertyBindings) {
     this.navigationPropertyBindings = navigationPropertyBindings;
     return this;
   }
 
   @Override
-  public CsdlSingleton setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlSingleton setAnnotations(List<CsdlAnnotation> annotations) {
     super.setAnnotations(annotations);
     return this;
   }

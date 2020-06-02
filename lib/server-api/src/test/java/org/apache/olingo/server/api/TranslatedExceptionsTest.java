@@ -43,7 +43,7 @@ public class TranslatedExceptionsTest {
       }
     }
 
-    protected TestException(final MessageKey messageKey, final String... parameters) {
+    protected TestException(MessageKey messageKey, String... parameters) {
       super(DEV, messageKey, parameters);
     }
 
@@ -153,8 +153,8 @@ public class TranslatedExceptionsTest {
     assertEquals(Locale.ENGLISH, translatedMessage.getLocale());
   }
 
-  private void checkTranslatedMessage(final ODataErrorMessage translatedMessage,
-      final String expectedText, final Locale expectedLocale) {
+  private void checkTranslatedMessage(ODataErrorMessage translatedMessage,
+                                      String expectedText, Locale expectedLocale) {
     assertNotNull(translatedMessage);
     assertEquals(expectedText, translatedMessage.getMessage());
     assertEquals(expectedLocale, translatedMessage.getLocale());

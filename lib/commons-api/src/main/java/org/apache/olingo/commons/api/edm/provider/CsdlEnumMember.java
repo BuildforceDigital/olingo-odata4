@@ -43,7 +43,7 @@ public class CsdlEnumMember extends CsdlAbstractEdmItem implements CsdlNamed, Cs
    * @param name the name
    * @return the name
    */
-  public CsdlEnumMember setName(final String name) {
+  public CsdlEnumMember setName(String name) {
     this.name = name;
     return this;
   }
@@ -63,7 +63,7 @@ public class CsdlEnumMember extends CsdlAbstractEdmItem implements CsdlNamed, Cs
    * @param value the value
    * @return the value
    */
-  public CsdlEnumMember setValue(final String value) {
+  public CsdlEnumMember setValue(String value) {
     this.value = value;
     return this;
   }
@@ -78,7 +78,7 @@ public class CsdlEnumMember extends CsdlAbstractEdmItem implements CsdlNamed, Cs
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlEnumMember setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlEnumMember setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

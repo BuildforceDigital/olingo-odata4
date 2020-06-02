@@ -235,67 +235,67 @@ public class EdmSchemaImplTest {
   private class LocalProvider implements CsdlEdmProvider {
 
     @Override
-    public CsdlEnumType getEnumType(final FullQualifiedName enumTypeName) throws ODataException {
+    public CsdlEnumType getEnumType(FullQualifiedName enumTypeName) throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public CsdlTypeDefinition getTypeDefinition(final FullQualifiedName typeDefinitionName) throws ODataException {
+    public CsdlTypeDefinition getTypeDefinition(FullQualifiedName typeDefinitionName) throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public CsdlEntityType getEntityType(final FullQualifiedName entityTypeName) throws ODataException {
+    public CsdlEntityType getEntityType(FullQualifiedName entityTypeName) throws ODataException {
       return null;
     }
 
     @Override
-    public CsdlComplexType getComplexType(final FullQualifiedName complexTypeName) throws ODataException {
+    public CsdlComplexType getComplexType(FullQualifiedName complexTypeName) throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public List<CsdlAction> getActions(final FullQualifiedName actionName) throws ODataException {
+    public List<CsdlAction> getActions(FullQualifiedName actionName) throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public List<CsdlFunction> getFunctions(final FullQualifiedName functionName) throws ODataException {
+    public List<CsdlFunction> getFunctions(FullQualifiedName functionName) throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public CsdlTerm getTerm(final FullQualifiedName termName) throws ODataException {
+    public CsdlTerm getTerm(FullQualifiedName termName) throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public CsdlEntitySet getEntitySet(final FullQualifiedName entityContainer, final String entitySetName)
+    public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName)
         throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public CsdlSingleton getSingleton(final FullQualifiedName entityContainer, final String singletonName)
+    public CsdlSingleton getSingleton(FullQualifiedName entityContainer, String singletonName)
         throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public CsdlActionImport getActionImport(final FullQualifiedName entityContainer, final String actionImportName)
+    public CsdlActionImport getActionImport(FullQualifiedName entityContainer, String actionImportName)
         throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public CsdlFunctionImport getFunctionImport(final FullQualifiedName entityContainer,
-        final String functionImportName)
+    public CsdlFunctionImport getFunctionImport(FullQualifiedName entityContainer,
+                                                String functionImportName)
         throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }
 
     @Override
-    public CsdlEntityContainerInfo getEntityContainerInfo(final FullQualifiedName entityContainerName)
+    public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName)
         throws ODataException {
       throw new RuntimeException("Provider must not be called in the schema case");
     }

@@ -29,7 +29,7 @@ public class EdmNullTest extends PrimitiveTypeBaseTest {
   @Test
   public void checkNull() throws Exception {
     for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
-      final EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
+      EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
       assertNull(instance.valueToString(null, null, null, null, null, null));
       assertNull(instance.valueToString(null, true, null, null, null, null));
 
@@ -40,7 +40,7 @@ public class EdmNullTest extends PrimitiveTypeBaseTest {
   @Test
   public void checkValueOfNull() throws Exception {
     for (EdmPrimitiveTypeKind kind : EdmPrimitiveTypeKind.values()) {
-      final EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
+      EdmPrimitiveType instance = EdmPrimitiveTypeFactory.getInstance(kind);
       assertNull(instance.valueOfString(null, null, null, null, null, null, instance.getDefaultType()));
       assertNull(instance.valueOfString(null, true, null, null, null, null, instance.getDefaultType()));
 

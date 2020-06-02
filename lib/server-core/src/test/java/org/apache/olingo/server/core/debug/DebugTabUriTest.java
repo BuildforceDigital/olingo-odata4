@@ -86,14 +86,14 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
   @Test
   public void resourceEntitySet() throws Exception {
     EdmEntitySet edmEntitySet = mock(EdmEntitySet.class);
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.resource)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.resource)
         .addResourcePart(new UriResourceEntitySetImpl(edmEntitySet)));
 
     assertEquals("{\"kind\":\"resource\",\"uriResourceParts\":["
         + "{\"uriResourceKind\":\"entitySet\",\"segment\":null,\"isCollection\":true}]}",
         createJson(tab));
 
-    final String html = createHtml(tab);
+    String html = createHtml(tab);
     assertThat(html, allOf(
         startsWith("<h2>Resource Path</h2>\n"
             + "<ul>\n"
@@ -111,7 +111,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
     EdmFunction edmFunction = mock(EdmFunction.class);
     when(edmFunction.getReturnType()).thenReturn(returnType);
     EdmFunctionImport edmFunctionImport = mock(EdmFunctionImport.class);
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.resource)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.resource)
         .addResourcePart(new UriResourceFunctionImpl(edmFunctionImport, edmFunction,
             Arrays.asList((UriParameter) new UriParameterImpl().setName("parameter1")))));
 
@@ -120,7 +120,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
         + "\"parameters\":{\"parameter1\":null}}]}",
         createJson(tab));
 
-    final String html = createHtml(tab);
+    String html = createHtml(tab);
     assertThat(html, allOf(
         startsWith("<h2>Resource Path</h2>\n"
             + "<ul>\n"
@@ -135,7 +135,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
 
   @Test
   public void crossjoin() throws Exception {
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.crossjoin)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.crossjoin)
         .addEntitySetName("ES1").addEntitySetName("ES2"));
 
     assertEquals("{\"kind\":\"crossjoin\",\"entitySetNames\":[\"ES1\",\"ES2\"]}", createJson(tab));
@@ -152,7 +152,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
   public void entityId() throws Exception {
     EdmEntityType edmEntityType = mock(EdmEntityType.class);
     when(edmEntityType.getFullQualifiedName()).thenReturn(new FullQualifiedName("ns", "entityType"));
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.entityId)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.entityId)
         .setEntityTypeCast(edmEntityType));
 
     assertEquals("{\"kind\":\"entityId\",\"typeCast\":\"ns.entityType\"}", createJson(tab));
@@ -166,7 +166,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
 
   @Test
   public void simpleQueryOptions() throws Exception {
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
         .setQueryOption(new FormatOptionImpl().setFormat("json"))
         .setQueryOption(new IdOptionImpl().setValue("ES(42)").setText("ES(42)"))
         .setQueryOption(new SkipOptionImpl().setValue(123).setText("123"))
@@ -190,7 +190,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
         + "}",
         createJson(tab));
 
-    final String html = createHtml(tab);
+    String html = createHtml(tab);
     assertThat(html, allOf(
         startsWith("<h2>Kind</h2>\n"
             + "<p>all</p>\n"),
@@ -237,7 +237,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
   public void select() throws Exception {
     EdmProperty edmProperty = mock(EdmProperty.class);
     when(edmProperty.getName()).thenReturn("property");
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
         .setSystemQueryOption(new SelectOptionImpl().setSelectItems(Arrays.asList(
             (SelectItem) new SelectItemImpl().setStar(true),
             new SelectItemImpl().setResourcePath(
@@ -259,7 +259,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
   public void expand() throws Exception {
     EdmNavigationProperty edmProperty = mock(EdmNavigationProperty.class);
     when(edmProperty.getName()).thenReturn("property");
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
         .setSystemQueryOption(new ExpandOptionImpl().addExpandItem(
             new ExpandItemImpl().setResourcePath(
                 new UriInfoImpl().setKind(UriInfoKind.resource)
@@ -270,7 +270,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
         + "\"levels\":1}]}",
         createJson(tab));
 
-    final String html = createHtml(tab);
+    String html = createHtml(tab);
     assertThat(html, allOf(
         startsWith("<h2>Kind</h2>\n"
             + "<p>all</p>\n"
@@ -284,7 +284,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
 
   @Test
   public void filter() throws Exception {
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
         .setSystemQueryOption(new FilterOptionImpl().setExpression(
             new BinaryImpl(new LiteralImpl("1", EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Int64)),
                 BinaryOperatorKind.GT,
@@ -334,7 +334,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
 
   @Test
   public void orderby() throws Exception {
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
         .setSystemQueryOption(new OrderByOptionImpl().addOrder(
             new OrderByItemImpl().setExpression(
                 new LiteralImpl("false", EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Boolean)))
@@ -345,7 +345,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
         + "{\"nodeType\":\"literal\",\"type\":\"Edm.Boolean\",\"value\":\"false\"}}]}}",
         createJson(tab));
 
-    final String html = createHtml(tab);
+    String html = createHtml(tab);
     assertThat(html, allOf(
         startsWith("<h2>Kind</h2>\n"
             + "<p>all</p>\n"
@@ -364,7 +364,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
   public void apply() throws Exception {
     EdmProperty edmProperty = mock(EdmProperty.class);
     when(edmProperty.getName()).thenReturn("property");
-    final DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
+    DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
         .setSystemQueryOption(new ApplyOptionImpl().add(new AggregateImpl().addExpression(
             new AggregateExpressionImpl()
                 .setPath(new UriInfoImpl().setKind(UriInfoKind.resource).addResourcePart(
@@ -377,7 +377,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
         + "\"standardMethod\":\"AVERAGE\",\"as\":\"average\"}]}]}",
         createJson(tab));
 
-    final String html = createHtml(tab);
+    String html = createHtml(tab);
     assertThat(html, allOf(
         startsWith("<h2>Kind</h2>\n"
             + "<p>all</p>\n"

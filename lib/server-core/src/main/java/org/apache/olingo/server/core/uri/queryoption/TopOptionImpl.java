@@ -33,7 +33,7 @@ public class TopOptionImpl extends SystemQueryOptionImpl implements TopOption {
     return value;
   }
 
-  public TopOptionImpl setValue(final int value) {
+  public TopOptionImpl setValue(int value) {
     this.value = value;
     return this;
   }

@@ -47,7 +47,7 @@ public class CsdlAnnotations extends CsdlAbstractEdmItem implements CsdlAnnotata
    * @param target the target
    * @return the target
    */
-  public CsdlAnnotations setTarget(final String target) {
+  public CsdlAnnotations setTarget(String target) {
     this.target = target;
     return this;
   }
@@ -67,7 +67,7 @@ public class CsdlAnnotations extends CsdlAbstractEdmItem implements CsdlAnnotata
    * @param qualifier the qualifier
    * @return the qualifier
    */
-  public CsdlAnnotations setQualifier(final String qualifier) {
+  public CsdlAnnotations setQualifier(String qualifier) {
     this.qualifier = qualifier;
     return this;
   }
@@ -82,7 +82,7 @@ public class CsdlAnnotations extends CsdlAbstractEdmItem implements CsdlAnnotata
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlAnnotations setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlAnnotations setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }
@@ -93,7 +93,7 @@ public class CsdlAnnotations extends CsdlAbstractEdmItem implements CsdlAnnotata
    * @param term the term
    * @return the annotation
    */
-  public CsdlAnnotation getAnnotation(final String term) {
+  public CsdlAnnotation getAnnotation(String term) {
     CsdlAnnotation result = null;
     for (CsdlAnnotation annotation : getAnnotations()) {
       if (term.equals(annotation.getTerm())) {

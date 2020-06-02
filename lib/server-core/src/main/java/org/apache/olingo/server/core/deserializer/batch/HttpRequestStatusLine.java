@@ -48,7 +48,7 @@ public class HttpRequestStatusLine {
   private String rawBaseUri;
   private String rawRequestUri;
 
-  public HttpRequestStatusLine(final Line httpStatusLine, final String baseUri, final String serviceResolutionUri)
+  public HttpRequestStatusLine(Line httpStatusLine, String baseUri, String serviceResolutionUri)
       throws BatchDeserializerException {
     statusLine = httpStatusLine;
     requestBaseUri = baseUri;
@@ -58,7 +58,7 @@ public class HttpRequestStatusLine {
   }
 
   private void parse() throws BatchDeserializerException {
-    final String[] parts = statusLine.toString().split(" ");
+    String[] parts = statusLine.toString().split(" ");
 
     //Status line consists of 3 parts: Method, URI and HTTP Version
     if (parts.length == 3) {
@@ -71,29 +71,29 @@ public class HttpRequestStatusLine {
     }
   }
 
-  private void parseUri(final String rawUri, final String baseUri) throws BatchDeserializerException {
+  private void parseUri(String rawUri, String baseUri) throws BatchDeserializerException {
     try {
-      final URI uri = new URI(rawUri);
+      URI uri = new URI(rawUri);
 
       if (uri.isAbsolute()) {
         parseAbsoluteUri(rawUri, baseUri);
       } else {
-        final URI base = URI.create(baseUri);
+        URI base = URI.create(baseUri);
         if (rawUri.startsWith(base.getRawPath())) {
           parseRelativeUri(removeLeadingSlash(rawUri.substring(base.getRawPath().length())));
         } else {
           parseRelativeUri(rawUri);
         }
       }
-    } catch (final URISyntaxException e) {
+    } catch (URISyntaxException e) {
       throw new BatchDeserializerException("Malformed uri", e, MessageKeys.INVALID_URI,
           Integer.toString(statusLine.getLineNumber()));
     }
   }
 
-  private void parseAbsoluteUri(final String rawUri, final String baseUri) throws BatchDeserializerException {
+  private void parseAbsoluteUri(String rawUri, String baseUri) throws BatchDeserializerException {
     if (rawUri.startsWith(baseUri)) {
-      final String relativeUri = removeLeadingSlash(rawUri.substring(baseUri.length()));
+      String relativeUri = removeLeadingSlash(rawUri.substring(baseUri.length()));
       parseRelativeUri(relativeUri);
     } else {
       throw new BatchDeserializerException("Base uri does not match", MessageKeys.INVALID_BASE_URI,
@@ -101,12 +101,12 @@ public class HttpRequestStatusLine {
     }
   }
 
-  private String removeLeadingSlash(final String value) {
+  private String removeLeadingSlash(String value) {
     return (value.length() > 0 && value.charAt(0) == '/') ? value.substring(1) : value;
   }
 
-  private void parseRelativeUri(final String rawUri) throws BatchDeserializerException {
-    final Matcher relativeUriMatcher = PATTERN_RELATIVE_URI.matcher(rawUri);
+  private void parseRelativeUri(String rawUri) throws BatchDeserializerException {
+    Matcher relativeUriMatcher = PATTERN_RELATIVE_URI.matcher(rawUri);
 
     if (relativeUriMatcher.matches()) {
       buildUri(relativeUriMatcher.group(1), relativeUriMatcher.group(2));
@@ -116,7 +116,7 @@ public class HttpRequestStatusLine {
     }
   }
 
-  private void buildUri(final String oDataPath, final String queryOptions) throws BatchDeserializerException {
+  private void buildUri(String oDataPath, String queryOptions) throws BatchDeserializerException {
     rawBaseUri = requestBaseUri;
     rawODataPath = "/" + oDataPath;
     rawRequestUri = requestBaseUri + rawODataPath;
@@ -129,7 +129,7 @@ public class HttpRequestStatusLine {
     }
   }
 
-  private HttpMethod parseMethod(final String method) throws BatchDeserializerException {
+  private HttpMethod parseMethod(String method) throws BatchDeserializerException {
     try {
       return HttpMethod.valueOf(method.trim());
     } catch (IllegalArgumentException e) {
@@ -138,7 +138,7 @@ public class HttpRequestStatusLine {
     }
   }
 
-  private String parseHttpVersion(final String httpVersion) throws BatchDeserializerException {
+  private String parseHttpVersion(String httpVersion) throws BatchDeserializerException {
     if (!HTTP_VERSION.equals(httpVersion.trim())) {
       throw new BatchDeserializerException("Invalid http version", MessageKeys.INVALID_HTTP_VERSION,
           Integer.toString(statusLine.getLineNumber()));
@@ -147,7 +147,7 @@ public class HttpRequestStatusLine {
     }
   }
 
-  public void validateHttpMethod(final boolean isChangeSet) throws BatchDeserializerException {
+  public void validateHttpMethod(boolean isChangeSet) throws BatchDeserializerException {
     if (isChangeSet && !HTTP_CHANGE_SET_METHODS.contains(getMethod())) {
       throw new BatchDeserializerException("Invalid change set method", MessageKeys.INVALID_CHANGESET_METHOD,
           Integer.toString(statusLine.getLineNumber()));

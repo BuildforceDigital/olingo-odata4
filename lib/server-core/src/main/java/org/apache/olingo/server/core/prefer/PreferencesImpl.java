@@ -38,12 +38,12 @@ public class PreferencesImpl implements Preferences {
 
   private final Map<String, Preference> preferences;
 
-  public PreferencesImpl(final Collection<String> preferHeaders) {
+  public PreferencesImpl(Collection<String> preferHeaders) {
     preferences = PreferParser.parse(preferHeaders);
   }
 
   @Override
-  public Preference getPreference(final String name) {
+  public Preference getPreference(String name) {
     return preferences.get(name.toLowerCase(Locale.ROOT));
   }
 
@@ -59,7 +59,7 @@ public class PreferencesImpl implements Preferences {
         && preferences.get(PreferenceName.CALLBACK.getName()).getParameters().get(URL) != null) {
       try {
         return URI.create(preferences.get(PreferenceName.CALLBACK.getName()).getParameters().get(URL));
-      } catch (final IllegalArgumentException e) {
+      } catch (IllegalArgumentException e) {
         return null;
       }
     }
@@ -85,7 +85,7 @@ public class PreferencesImpl implements Preferences {
   @Override
   public Return getReturn() {
     if (preferences.containsKey(PreferenceName.RETURN.getName())) {
-      final String value = preferences.get(PreferenceName.RETURN.getName()).getValue();
+      String value = preferences.get(PreferenceName.RETURN.getName()).getValue();
       if (Return.REPRESENTATION.toString().toLowerCase(Locale.ROOT).equals(value)) {
         return Return.REPRESENTATION;
       } else if (Return.MINIMAL.toString().toLowerCase(Locale.ROOT).equals(value)) {
@@ -105,12 +105,12 @@ public class PreferencesImpl implements Preferences {
     return getNonNegativeIntegerPreference(PreferenceName.WAIT.getName());
   }
 
-  private Integer getNonNegativeIntegerPreference(final String name) {
+  private Integer getNonNegativeIntegerPreference(String name) {
     if (preferences.containsKey(name) && preferences.get(name).getValue() != null) {
       try {
-        final Integer result = Integer.valueOf(preferences.get(name).getValue());
+        Integer result = Integer.valueOf(preferences.get(name).getValue());
         return result < 0 ? null : result;
-      } catch (final NumberFormatException e) {
+      } catch (NumberFormatException e) {
         return null;
       }
     }

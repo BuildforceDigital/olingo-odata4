@@ -41,7 +41,7 @@ public class DeltaLink extends Annotatable {
    * Set source of this link.
    * @param source source of this link
    */
-  public void setSource(final URI source) {
+  public void setSource(URI source) {
     this.source = source;
   }
 
@@ -57,7 +57,7 @@ public class DeltaLink extends Annotatable {
    * Set relationship of this link.
    * @param relationship relationship of this link
    */
-  public void setRelationship(final String relationship) {
+  public void setRelationship(String relationship) {
     this.relationship = relationship;
   }
 
@@ -73,12 +73,12 @@ public class DeltaLink extends Annotatable {
    * Set target of this link.
    * @param target target of this link
    */
-  public void setTarget(final URI target) {
+  public void setTarget(URI target) {
     this.target = target;
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -86,7 +86,7 @@ public class DeltaLink extends Annotatable {
       return false;
     }
 
-    final DeltaLink other = (DeltaLink) o;
+    DeltaLink other = (DeltaLink) o;
     return getAnnotations().equals(other.getAnnotations())
         && (source == null ? other.source == null : source.equals(other.source))
         && (relationship == null ? other.relationship == null : relationship.equals(other.relationship))

@@ -45,7 +45,7 @@ public class EdmAssistedSerializerOptions {
     }
 
     /** Sets the {@link ContextURL}. */
-    public Builder contextURL(final ContextURL contextURL) {
+    public Builder contextURL(ContextURL contextURL) {
       options.contextURL = contextURL;
       return this;
     }

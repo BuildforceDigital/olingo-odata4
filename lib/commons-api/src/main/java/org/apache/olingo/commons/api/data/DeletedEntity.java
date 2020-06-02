@@ -50,7 +50,7 @@ public class DeletedEntity extends Entity{
    * Set id.
    * @param id id
    */
-  public void setId(final URI id) {
+  public void setId(URI id) {
     this.id = id;
   }
 
@@ -66,7 +66,7 @@ public class DeletedEntity extends Entity{
    * Set reason for deletion.
    * @param reason for deletion
    */
-  public void setReason(final Reason reason) {
+  public void setReason(Reason reason) {
     this.reason = reason;
   }
 }

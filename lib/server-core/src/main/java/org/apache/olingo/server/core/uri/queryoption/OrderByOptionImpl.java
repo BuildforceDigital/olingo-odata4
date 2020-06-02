@@ -39,7 +39,7 @@ public class OrderByOptionImpl extends SystemQueryOptionImpl implements OrderByO
     return Collections.unmodifiableList(orders);
   }
 
-  public OrderByOptionImpl addOrder(final OrderByItem order) {
+  public OrderByOptionImpl addOrder(OrderByItem order) {
     orders.add(order);
     return this;
   }

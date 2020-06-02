@@ -26,17 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.olingo.commons.api.Constants;
-import org.apache.olingo.commons.api.data.AbstractEntityCollection;
-import org.apache.olingo.commons.api.data.Annotation;
-import org.apache.olingo.commons.api.data.ComplexValue;
-import org.apache.olingo.commons.api.data.ContextURL;
-import org.apache.olingo.commons.api.data.DeletedEntity;
-import org.apache.olingo.commons.api.data.Delta;
-import org.apache.olingo.commons.api.data.DeltaLink;
-import org.apache.olingo.commons.api.data.Entity;
-import org.apache.olingo.commons.api.data.Link;
-import org.apache.olingo.commons.api.data.Linked;
-import org.apache.olingo.commons.api.data.Property;
+import org.apache.olingo.commons.api.data.*;
 import org.apache.olingo.commons.api.edm.EdmComplexType;
 import org.apache.olingo.commons.api.edm.EdmEntitySet;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
@@ -77,7 +67,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
   private final boolean isODataMetadataNone;
   private final boolean isODataMetadataFull;
 
-  public JsonDeltaSerializerWithNavigations(final ContentType contentType) {
+  public JsonDeltaSerializerWithNavigations(ContentType contentType) {
     isIEEE754Compatible = ContentTypeHelper.isODataIEEE754Compatible(contentType);
     isODataMetadataNone = ContentTypeHelper.isODataMetadataNone(contentType);
     isODataMetadataFull = ContentTypeHelper.isODataMetadataFull(contentType);
@@ -95,7 +85,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
       try (JsonGenerator json = new JsonFactory().createGenerator(outputStream)) {
         json.writeStartObject();
 
-        final ContextURL contextURL = checkContextURL(options == null ? null : options.getContextURL());
+        ContextURL contextURL = checkContextURL(options == null ? null : options.getContextURL());
         writeContextURL(contextURL, json);
 
         if (options != null && options.getCount() != null && options.getCount().getValue()) {
@@ -109,7 +99,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
 
         json.close();
         return SerializerResultImpl.with().content(buffer.getInputStream()).build();
-      } catch (final IOException e) {
+      } catch (IOException e) {
       cachedException =
           new SerializerException(IO_EXCEPTION_TEXT, e, SerializerException.MessageKeys.IO_EXCEPTION);
       throw cachedException;
@@ -119,8 +109,8 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
 
   }
   
-  protected void closeCircleStreamBufferOutput(final OutputStream outputStream,
-      final SerializerException cachedException)
+  protected void closeCircleStreamBufferOutput(OutputStream outputStream,
+                                               SerializerException cachedException)
       throws SerializerException {
     if (outputStream != null) {
       try {
@@ -135,23 +125,23 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
       }
     }
   }
-  protected void writeEntitySet(final ServiceMetadata metadata, final EdmEntityType entityType,
-      final Delta entitySet, final EntityCollectionSerializerOptions options,
-      final JsonGenerator json) throws IOException,
+  protected void writeEntitySet(ServiceMetadata metadata, EdmEntityType entityType,
+                                Delta entitySet, EntityCollectionSerializerOptions options,
+                                JsonGenerator json) throws IOException,
       SerializerException {
     json.writeStartArray();
-    for (final Entity entity : entitySet.getEntities()) {
+    for (Entity entity : entitySet.getEntities()) {
       writeAddedUpdatedEntity(metadata, entityType, entity, options.getExpand(), options.getSelect(),
           options.getContextURL(), false, options.getContextURL().getEntitySetOrSingletonOrType(), json,
           options.isFullRepresentation());
     }
-    for (final DeletedEntity deletedEntity : entitySet.getDeletedEntities()) {
+    for (DeletedEntity deletedEntity : entitySet.getDeletedEntities()) {
       writeDeletedEntity(deletedEntity, json);
     }
-    for (final DeltaLink addedLink : entitySet.getAddedLinks()) {
+    for (DeltaLink addedLink : entitySet.getAddedLinks()) {
       writeLink(addedLink, options, json, true);
     }
-    for (final DeltaLink deletedLink : entitySet.getDeletedLinks()) {
+    for (DeltaLink deletedLink : entitySet.getDeletedLinks()) {
       writeLink(deletedLink, options, json, false);
     }
     json.writeEndArray();
@@ -231,9 +221,9 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
 
   }
 
-  public void writeAddedUpdatedEntity(final ServiceMetadata metadata, final EdmEntityType entityType,
-      final Entity entity, final ExpandOption expand, final SelectOption select, final ContextURL url,
-      final boolean onlyReference, String name, final JsonGenerator json, boolean isFullRepresentation)
+  public void writeAddedUpdatedEntity(ServiceMetadata metadata, EdmEntityType entityType,
+                                      Entity entity, ExpandOption expand, SelectOption select, ContextURL url,
+                                      boolean onlyReference, String name, JsonGenerator json, boolean isFullRepresentation)
       throws IOException, SerializerException {
     json.writeStartObject();
     if (entity.getId() != null && url != null) {
@@ -255,8 +245,8 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
 
   }
 
-  private Property findProperty(final String propertyName, final List<Property> properties) {
-    for (final Property property : properties) {
+  private Property findProperty(String propertyName, List<Property> properties) {
+    for (Property property : properties) {
       if (propertyName.equals(property.getName())) {
         return property;
       }
@@ -264,9 +254,9 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     return null;
   }
 
-  protected void writeProperty(final ServiceMetadata metadata,
-      final EdmProperty edmProperty, final Property property,
-      final Set<List<String>> selectedPaths, final JsonGenerator json)
+  protected void writeProperty(ServiceMetadata metadata,
+                               EdmProperty edmProperty, Property property,
+                               Set<List<String>> selectedPaths, JsonGenerator json)
       throws IOException, SerializerException {
     boolean isStreamProperty = isStreamProperty(edmProperty);
     if (property != null) {
@@ -278,14 +268,14 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
   }
 
   private boolean isStreamProperty(EdmProperty edmProperty) {
-    final EdmType type = edmProperty.getType();
+    EdmType type = edmProperty.getType();
     return (edmProperty.isPrimitive() && type == EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Stream));
   }
 
-  private void writePropertyValue(final ServiceMetadata metadata, final EdmProperty edmProperty,
-      final Property property, final Set<List<String>> selectedPaths, final JsonGenerator json)
+  private void writePropertyValue(ServiceMetadata metadata, EdmProperty edmProperty,
+                                  Property property, Set<List<String>> selectedPaths, JsonGenerator json)
       throws IOException, SerializerException {
-    final EdmType type = edmProperty.getType();
+    EdmType type = edmProperty.getType();
     try {
       if (edmProperty.isPrimitive()
           || type.getKind() == EdmTypeKind.ENUM || type.getKind() == EdmTypeKind.DEFINITION) {
@@ -308,15 +298,15 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
         throw new SerializerException("Property type not yet supported!",
             SerializerException.MessageKeys.UNSUPPORTED_PROPERTY_TYPE, edmProperty.getName());
       }
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       throw new SerializerException("Wrong value for property!", e,
           SerializerException.MessageKeys.WRONG_PROPERTY_VALUE,
           edmProperty.getName(), property.getValue().toString());
     }
   }
 
-  protected EdmComplexType resolveComplexType(final ServiceMetadata metadata, final EdmComplexType baseType,
-      final String derivedTypeName) throws SerializerException {
+  protected EdmComplexType resolveComplexType(ServiceMetadata metadata, EdmComplexType baseType,
+                                              String derivedTypeName) throws SerializerException {
 
     String fullQualifiedName = baseType.getFullQualifiedName().getFullQualifiedNameAsString();
     if (derivedTypeName == null ||
@@ -340,12 +330,12 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
         baseType.getFullQualifiedName().getFullQualifiedNameAsString());
   }
 
-  private void writeComplex(final ServiceMetadata metadata, final EdmComplexType type,
-      final Property property, final Set<List<String>> selectedPaths, final JsonGenerator json)
+  private void writeComplex(ServiceMetadata metadata, EdmComplexType type,
+                            Property property, Set<List<String>> selectedPaths, JsonGenerator json)
       throws IOException, SerializerException {
     json.writeStartObject();
     String derivedName = property.getType();
-    final EdmComplexType resolvedType = resolveComplexType(metadata, (EdmComplexType) type, derivedName);
+    EdmComplexType resolvedType = resolveComplexType(metadata, (EdmComplexType) type, derivedName);
     if (!isODataMetadataNone && !resolvedType.equals(type) || isODataMetadataFull) {
       json.writeStringField(Constants.JSON_TYPE, "#" + property.getType());
     }
@@ -354,9 +344,9 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     json.writeEndObject();
   }
 
-  private void writePrimitiveCollection(final EdmPrimitiveType type, final Property property,
-      final Boolean isNullable, final Integer maxLength, final Integer precision, final Integer scale,
-      final Boolean isUnicode, final JsonGenerator json)
+  private void writePrimitiveCollection(EdmPrimitiveType type, Property property,
+                                        Boolean isNullable, Integer maxLength, Integer precision, Integer scale,
+                                        Boolean isUnicode, JsonGenerator json)
       throws IOException, SerializerException {
     json.writeStartArray();
     for (Object value : property.asCollection()) {
@@ -383,33 +373,31 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     json.writeEndArray();
   }
 
-  private void writeComplexCollection(final ServiceMetadata metadata, final EdmComplexType type,
-      final Property property,
-      final Set<List<String>> selectedPaths, final JsonGenerator json)
+  private void writeComplexCollection(ServiceMetadata metadata, EdmComplexType type,
+                                      Property property,
+                                      Set<List<String>> selectedPaths, JsonGenerator json)
       throws IOException, SerializerException {
     json.writeStartArray();
     for (Object value : property.asCollection()) {
-      switch (property.getValueType()) {
-      case COLLECTION_COMPLEX:
+      if (property.getValueType() == ValueType.COLLECTION_COMPLEX) {
         json.writeStartObject();
         if (isODataMetadataFull) {
           json.writeStringField(Constants.JSON_TYPE, "#" +
-              type.getFullQualifiedName().getFullQualifiedNameAsString());
+                  type.getFullQualifiedName().getFullQualifiedNameAsString());
         }
         writeComplexValue(metadata, type, ((ComplexValue) value).getValue(), selectedPaths, json);
         json.writeEndObject();
-        break;
-      default:
+      } else {
         throw new SerializerException("Property type not yet supported!",
-            SerializerException.MessageKeys.UNSUPPORTED_PROPERTY_TYPE, property.getName());
+                SerializerException.MessageKeys.UNSUPPORTED_PROPERTY_TYPE, property.getName());
       }
     }
     json.writeEndArray();
   }
 
-  private void writePrimitive(final EdmPrimitiveType type, final Property property,
-      final Boolean isNullable, final Integer maxLength, final Integer precision, final Integer scale,
-      final Boolean isUnicode, final JsonGenerator json)
+  private void writePrimitive(EdmPrimitiveType type, Property property,
+                              Boolean isNullable, Integer maxLength, Integer precision, Integer scale,
+                              Boolean isUnicode, JsonGenerator json)
       throws EdmPrimitiveTypeException, IOException, SerializerException {
     if (property.isPrimitive()) {
       writePrimitiveValue(property.getName(), type, property.asPrimitive(),
@@ -426,10 +414,10 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     }
   }
 
-  protected void writePrimitiveValue(final String name, final EdmPrimitiveType type, final Object primitiveValue,
-      final Boolean isNullable, final Integer maxLength, final Integer precision, final Integer scale,
-      final Boolean isUnicode, final JsonGenerator json) throws EdmPrimitiveTypeException, IOException {
-    final String value = type.valueToString(primitiveValue,
+  protected void writePrimitiveValue(String name, EdmPrimitiveType type, Object primitiveValue,
+                                     Boolean isNullable, Integer maxLength, Integer precision, Integer scale,
+                                     Boolean isUnicode, JsonGenerator json) throws EdmPrimitiveTypeException, IOException {
+    String value = type.valueToString(primitiveValue,
         isNullable, maxLength, precision, scale, isUnicode);
     if (value == null) {
       json.writeNull();
@@ -470,13 +458,13 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     }
   }
 
-  protected void writeComplexValue(final ServiceMetadata metadata,
-      final EdmComplexType type, final List<Property> properties,
-      final Set<List<String>> selectedPaths, final JsonGenerator json)
+  protected void writeComplexValue(ServiceMetadata metadata,
+                                   EdmComplexType type, List<Property> properties,
+                                   Set<List<String>> selectedPaths, JsonGenerator json)
       throws IOException, SerializerException {
 
-    for (final String propertyName : type.getPropertyNames()) {
-      final Property property = findProperty(propertyName, properties);
+    for (String propertyName : type.getPropertyNames()) {
+      Property property = findProperty(propertyName, properties);
       if (selectedPaths == null || ExpandSelectHelper.isSelected(selectedPaths, propertyName)) {
         writeProperty(metadata, (EdmProperty) type.getProperty(propertyName), property,
             selectedPaths == null ? null : ExpandSelectHelper.getReducedSelectedPaths(selectedPaths, propertyName),
@@ -485,37 +473,37 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     }
   }
 
-  protected void writeProperties(final ServiceMetadata metadata, final EdmStructuredType type,
-      final List<Property> properties,
-      final SelectOption select, final JsonGenerator json)
+  protected void writeProperties(ServiceMetadata metadata, EdmStructuredType type,
+                                 List<Property> properties,
+                                 SelectOption select, JsonGenerator json)
       throws IOException, SerializerException {
-    final boolean all = ExpandSelectHelper.isAll(select);
-    final Set<String> selected = all ? new HashSet<>() : ExpandSelectHelper.getSelectedPropertyNames(select
+    boolean all = ExpandSelectHelper.isAll(select);
+    Set<String> selected = all ? new HashSet<>() : ExpandSelectHelper.getSelectedPropertyNames(select
         .getSelectItems());
-    for (final String propertyName : type.getPropertyNames()) {
+    for (String propertyName : type.getPropertyNames()) {
       if ((all || selected.contains(propertyName)) && !properties.isEmpty()) {
-        final EdmProperty edmProperty = type.getStructuralProperty(propertyName);
-        final Property property = findProperty(propertyName, properties);
-        final Set<List<String>> selectedPaths = all || edmProperty.isPrimitive() ? null : ExpandSelectHelper
+        EdmProperty edmProperty = type.getStructuralProperty(propertyName);
+        Property property = findProperty(propertyName, properties);
+        Set<List<String>> selectedPaths = all || edmProperty.isPrimitive() ? null : ExpandSelectHelper
             .getSelectedPaths(select.getSelectItems(), propertyName);
         writeProperty(metadata, edmProperty, property, selectedPaths, json);
       }
     }
   }
 
-  protected void writeNavigationProperties(final ServiceMetadata metadata,
-      final EdmStructuredType type, final Linked linked, final ExpandOption expand,
-      final String name, final JsonGenerator json, boolean isFullRepresentation) 
+  protected void writeNavigationProperties(ServiceMetadata metadata,
+                                           EdmStructuredType type, Linked linked, ExpandOption expand,
+                                           String name, JsonGenerator json, boolean isFullRepresentation)
           throws SerializerException, IOException {
     if (ExpandSelectHelper.hasExpand(expand)) {
-      final boolean expandAll = ExpandSelectHelper.getExpandAll(expand) != null;
-      final Set<String> expanded = expandAll ? new HashSet<>() : ExpandSelectHelper.getExpandedPropertyNames(
+      boolean expandAll = ExpandSelectHelper.getExpandAll(expand) != null;
+      Set<String> expanded = expandAll ? new HashSet<>() : ExpandSelectHelper.getExpandedPropertyNames(
           expand.getExpandItems());
-      for (final String propertyName : type.getNavigationPropertyNames()) {
+      for (String propertyName : type.getNavigationPropertyNames()) {
         if (expandAll || expanded.contains(propertyName)) {
-          final EdmNavigationProperty property = type.getNavigationProperty(propertyName);
-          final Link navigationLink = linked.getNavigationLink(property.getName());
-          final ExpandItem innerOptions = expandAll ? null : ExpandSelectHelper.getExpandItem(expand.getExpandItems(),
+          EdmNavigationProperty property = type.getNavigationProperty(propertyName);
+          Link navigationLink = linked.getNavigationLink(property.getName());
+          ExpandItem innerOptions = expandAll ? null : ExpandSelectHelper.getExpandItem(expand.getExpandItems(),
               propertyName);
           if (innerOptions != null && innerOptions.getLevelsOption() != null) {
             throw new SerializerException("Expand option $levels is not supported.",
@@ -564,14 +552,14 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     return null;
   }
 
-  protected void writeEntitySet(final ServiceMetadata metadata, final EdmEntityType entityType,
-      final AbstractEntityCollection entitySet, final ExpandOption expand, final SelectOption select,
-      final boolean onlyReference, String name, final JsonGenerator json, 
-      boolean isFullRepresentation) throws IOException, SerializerException {
+  protected void writeEntitySet(ServiceMetadata metadata, EdmEntityType entityType,
+                                AbstractEntityCollection entitySet, ExpandOption expand, SelectOption select,
+                                boolean onlyReference, String name, JsonGenerator json,
+                                boolean isFullRepresentation) throws IOException, SerializerException {
     if (entitySet instanceof AbstractEntityCollection) {
       AbstractEntityCollection entities = (AbstractEntityCollection)entitySet;
       json.writeStartArray();
-      for (final Entity entity : entities) {
+      for (Entity entity : entities) {
         if (onlyReference) {
           json.writeStartObject();
           json.writeStringField(Constants.JSON_ID, getEntityId(entity, entityType, null));
@@ -591,11 +579,11 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
   }
 
   protected void writeExpandedNavigationProperty(
-      final ServiceMetadata metadata, final EdmNavigationProperty property,
-      final Link navigationLink, final ExpandOption innerExpand,
-      final SelectOption innerSelect, final CountOption innerCount,
-      final boolean writeOnlyCount, final boolean writeOnlyRef, final String name,
-      final JsonGenerator json, boolean isFullRepresentation) throws IOException, SerializerException {
+      ServiceMetadata metadata, EdmNavigationProperty property,
+      Link navigationLink, ExpandOption innerExpand,
+      SelectOption innerSelect, CountOption innerCount,
+      boolean writeOnlyCount, boolean writeOnlyRef, String name,
+      JsonGenerator json, boolean isFullRepresentation) throws IOException, SerializerException {
 
     if (property.isCollection()) {
       if (navigationLink == null || navigationLink.getInlineEntitySet() == null) {
@@ -646,7 +634,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
               || name == null) {
             throw new SerializerException("Entity id is null.", SerializerException.MessageKeys.MISSING_ID);
           } else {
-            final UriHelper uriHelper = new UriHelperImpl();
+            UriHelper uriHelper = new UriHelperImpl();
             entity.setId(URI.create(name + '(' + uriHelper.buildKeyPredicate(entityType, entity) + ')'));
             return entity.getId().toASCIIString();
           }
@@ -660,7 +648,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     }
   }
 
-  void writeInlineCount(final Integer count, final JsonGenerator json)
+  void writeInlineCount(Integer count, JsonGenerator json)
       throws IOException {
     if (count != null) {
       String countValue = isIEEE754Compatible ? String.valueOf(count) : String.valueOf(count);
@@ -668,7 +656,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     }
   }
 
-  ContextURL checkContextURL(final ContextURL contextURL) throws SerializerException {
+  ContextURL checkContextURL(ContextURL contextURL) throws SerializerException {
     if (isODataMetadataNone) {
       return null;
     } else if (contextURL == null) {
@@ -677,14 +665,14 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     return contextURL;
   }
 
-  void writeContextURL(final ContextURL contextURL, final JsonGenerator json) throws IOException {
+  void writeContextURL(ContextURL contextURL, JsonGenerator json) throws IOException {
     if (!isODataMetadataNone && contextURL != null) {
       String context = Constants.AT + Constants.CONTEXT;
       json.writeStringField(context, ContextURLBuilder.create(contextURL).toASCIIString() + Constants.DELTA);
     }
   }
 
-  boolean writeNextLink(final AbstractEntityCollection entitySet, final JsonGenerator json)
+  boolean writeNextLink(AbstractEntityCollection entitySet, JsonGenerator json)
       throws IOException {
     if (entitySet.getNext() != null) {
       json.writeStringField(Constants.NEXTLINK, entitySet.getNext().toASCIIString());
@@ -694,8 +682,8 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
     }
   }
 
-  void writeDeltaLink(final AbstractEntityCollection entitySet, final JsonGenerator json,
-      final boolean pagination)
+  void writeDeltaLink(AbstractEntityCollection entitySet, JsonGenerator json,
+                      boolean pagination)
       throws IOException {
     if (entitySet.getDeltaLink() != null && !pagination) {
       json.writeStringField(Constants.DELTALINK, entitySet.getDeltaLink().toASCIIString());

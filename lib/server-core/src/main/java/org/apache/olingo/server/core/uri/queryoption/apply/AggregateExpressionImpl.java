@@ -46,7 +46,7 @@ public class AggregateExpressionImpl implements AggregateExpression {
     return path == null ? Collections.<UriResource> emptyList() : path.getUriResourceParts();
   }
 
-  public AggregateExpressionImpl setPath(final UriInfo uriInfo) {
+  public AggregateExpressionImpl setPath(UriInfo uriInfo) {
     path = uriInfo;
     return this;
   }
@@ -56,7 +56,7 @@ public class AggregateExpressionImpl implements AggregateExpression {
     return expression;
   }
 
-  public AggregateExpressionImpl setExpression(final Expression expression) {
+  public AggregateExpressionImpl setExpression(Expression expression) {
     this.expression = expression;
     return this;
   }
@@ -66,7 +66,7 @@ public class AggregateExpressionImpl implements AggregateExpression {
     return standardMethod;
   }
 
-  public AggregateExpressionImpl setStandardMethod(final StandardMethod standardMethod) {
+  public AggregateExpressionImpl setStandardMethod(StandardMethod standardMethod) {
     this.standardMethod = standardMethod;
     return this;
   }
@@ -76,7 +76,7 @@ public class AggregateExpressionImpl implements AggregateExpression {
     return customMethod;
   }
 
-  public AggregateExpressionImpl setCustomMethod(final FullQualifiedName customMethod) {
+  public AggregateExpressionImpl setCustomMethod(FullQualifiedName customMethod) {
     this.customMethod = customMethod;
     return this;
   }
@@ -86,7 +86,7 @@ public class AggregateExpressionImpl implements AggregateExpression {
     return inlineAggregateExpression;
   }
 
-  public AggregateExpressionImpl setInlineAggregateExpression(final AggregateExpression aggregateExpression) {
+  public AggregateExpressionImpl setInlineAggregateExpression(AggregateExpression aggregateExpression) {
     inlineAggregateExpression = aggregateExpression;
     return this;
   }
@@ -96,7 +96,7 @@ public class AggregateExpressionImpl implements AggregateExpression {
     return Collections.unmodifiableList(from);
   }
 
-  public AggregateExpressionImpl addFrom(final AggregateExpression from) {
+  public AggregateExpressionImpl addFrom(AggregateExpression from) {
     this.from.add(from);
     return this;
   }
@@ -106,7 +106,7 @@ public class AggregateExpressionImpl implements AggregateExpression {
     return alias;
   }
 
-  public AggregateExpressionImpl setAlias(final String alias) {
+  public AggregateExpressionImpl setAlias(String alias) {
     this.alias = alias;
     return this;
   }

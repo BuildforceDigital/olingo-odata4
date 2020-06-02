@@ -64,7 +64,7 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
 
   private int split = 0;
 
-  public ODataHttpHandlerImpl(final OData odata, final ServiceMetadata serviceMetadata) {
+  public ODataHttpHandlerImpl(OData odata, ServiceMetadata serviceMetadata) {
     debugger = new ServerCoreDebugger(odata);
     handler = new ODataHandlerImpl(odata, serviceMetadata, debugger);
   }
@@ -75,13 +75,13 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
   }
 
   @Override
-  public void process(final HttpServletRequest request, final HttpServletResponse response) {
+  public void process(HttpServletRequest request, HttpServletResponse response) {
     ODataRequest odRequest = new ODataRequest();
     Exception exception = null;
     ODataResponse odResponse;
     debugger.resolveDebugMode(request);
 
-    final int processMethodHandle = debugger.startRuntimeMeasurement("ODataHttpHandlerImpl", "process");
+    int processMethodHandle = debugger.startRuntimeMeasurement("ODataHttpHandlerImpl", "process");
     try {
       fillODataRequest(odRequest, request, split);
 
@@ -107,7 +107,7 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     convertToHttp(response, odResponse);
   }
 
-  private Map<String, String> createEnvironmentVariablesMap(final HttpServletRequest request) {
+  private Map<String, String> createEnvironmentVariablesMap(HttpServletRequest request) {
     Map<String, String> environment = new LinkedHashMap<>();
     environment.put("authType", request.getAuthType());
     environment.put("localAddr", request.getLocalAddr());
@@ -126,16 +126,16 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     return environment;
   }
   
-  private String getIntAsString(final int number) {
+  private String getIntAsString(int number) {
     return number == 0 ? "unknown" : Integer.toString(number);
   }
 
   @Override
-  public void setSplit(final int split) {
+  public void setSplit(int split) {
     this.split = split;
   }
 
-  private ODataResponse handleException(final ODataRequest odRequest, final Exception e) {
+  private ODataResponse handleException(ODataRequest odRequest, Exception e) {
     ODataResponse resp = new ODataResponse();
     ODataServerError serverError;
     if (e instanceof ODataHandlerException) {
@@ -149,7 +149,7 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     return resp;
   }
 
-  static void convertToHttp(final HttpServletResponse response, final ODataResponse odResponse) {
+  static void convertToHttp(HttpServletResponse response, ODataResponse odResponse) {
     response.setStatus(odResponse.getStatusCode());
 
     for (Entry<String, List<String>> entry : odResponse.getAllHeaders().entrySet()) {
@@ -165,7 +165,7 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     }
   }
   
-  static void writeContent(final ODataResponse odataResponse, final HttpServletResponse servletResponse) {
+  static void writeContent(ODataResponse odataResponse, HttpServletResponse servletResponse) {
     try {
       ODataContent res = odataResponse.getODataContent();
       res.write(Channels.newChannel(servletResponse.getOutputStream()));
@@ -174,12 +174,12 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     }
   }
 
-  static void copyContent(final InputStream inputStream, final HttpServletResponse servletResponse) {
+  static void copyContent(InputStream inputStream, HttpServletResponse servletResponse) {
     copyContent(Channels.newChannel(inputStream), servletResponse);
   }
 
-  static void copyContent(final ReadableByteChannel input, final HttpServletResponse servletResponse) {
-    try (WritableByteChannel output = Channels.newChannel(servletResponse.getOutputStream());) {
+  static void copyContent(ReadableByteChannel input, HttpServletResponse servletResponse) {
+    try (WritableByteChannel output = Channels.newChannel(servletResponse.getOutputStream())) {
       ByteBuffer inBuffer = ByteBuffer.allocate(COPY_BUFFER_SIZE);
       while (input.read(inBuffer) > 0) {
         inBuffer.flip();
@@ -193,7 +193,7 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     }
   }
   
-  private static void closeStream(final Channel closeable) {
+  private static void closeStream(Channel closeable) {
     if (closeable != null) {
       try {
         closeable.close();
@@ -203,9 +203,9 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     }
   }
   
-  private ODataRequest fillODataRequest(final ODataRequest odRequest, final HttpServletRequest httpRequest,
-      final int split) throws ODataLibraryException {
-    final int requestHandle = debugger.startRuntimeMeasurement("ODataHttpHandlerImpl", "fillODataRequest");
+  private ODataRequest fillODataRequest(ODataRequest odRequest, HttpServletRequest httpRequest,
+                                        int split) throws ODataLibraryException {
+    int requestHandle = debugger.startRuntimeMeasurement("ODataHttpHandlerImpl", "fillODataRequest");
     try {
       odRequest.setBody(httpRequest.getInputStream());
       odRequest.setProtocol(httpRequest.getProtocol());
@@ -218,7 +218,7 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
       debugger.stopRuntimeMeasurement(innerHandle);
 
       return odRequest;
-    } catch (final IOException e) {
+    } catch (IOException e) {
       throw new DeserializerException("An I/O exception occurred.", e,
           DeserializerException.MessageKeys.IO_EXCEPTION);
     } finally {
@@ -226,8 +226,8 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     }
   }
   
-  static HttpMethod extractMethod(final HttpServletRequest httpRequest) throws ODataLibraryException {
-	    final HttpMethod httpRequestMethod;
+  static HttpMethod extractMethod(HttpServletRequest httpRequest) throws ODataLibraryException {
+	    HttpMethod httpRequestMethod;
 	    try {
 	      httpRequestMethod = HttpMethod.valueOf(httpRequest.getMethod());
 	    } catch (IllegalArgumentException e) {
@@ -261,8 +261,8 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
 	    }
 	  }
   
-  static void fillUriInformation(final ODataRequest odRequest, 
-		  final HttpServletRequest httpRequest, final int split) {
+  static void fillUriInformation(ODataRequest odRequest,
+                                 HttpServletRequest httpRequest, int split) {
     String rawRequestUri = httpRequest.getRequestURL().toString();
     
     String rawServiceResolutionUri = null;
@@ -310,18 +310,18 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
     odRequest.setRawServiceResolutionUri(rawServiceResolutionUri);
   }
 
-  static void copyHeaders(ODataRequest odRequest, final HttpServletRequest req) {
-	  for (final Enumeration<?> headerNames = req.getHeaderNames(); headerNames.hasMoreElements();) {
-	      final String headerName = (String) headerNames.nextElement();
+  static void copyHeaders(ODataRequest odRequest, HttpServletRequest req) {
+	  for (Enumeration<?> headerNames = req.getHeaderNames(); headerNames.hasMoreElements();) {
+	      String headerName = (String) headerNames.nextElement();
 	      @SuppressWarnings("unchecked")
 	      // getHeaders() says it returns an Enumeration of String.
-	      final List<String> headerValues = Collections.list(req.getHeaders(headerName));
+          List<String> headerValues = Collections.list(req.getHeaders(headerName));
 	      odRequest.addHeader(headerName, headerValues);
 	    }
   }
 
   @Override
-  public void register(final Processor processor) {
+  public void register(Processor processor) {
     handler.register(processor);
   }
 
@@ -331,17 +331,17 @@ public class ODataHttpHandlerImpl implements ODataHttpHandler {
   }
 
   @Override
-  public void register(final CustomContentTypeSupport customContentTypeSupport) {
+  public void register(CustomContentTypeSupport customContentTypeSupport) {
     handler.register(customContentTypeSupport);
   }
 
   @Override
-  public void register(final CustomETagSupport customConcurrencyControlSupport) {
+  public void register(CustomETagSupport customConcurrencyControlSupport) {
     handler.register(customConcurrencyControlSupport);
   }
 
   @Override
-  public void register(final DebugSupport debugSupport) {
+  public void register(DebugSupport debugSupport) {
     debugger.setDebugSupportProcessor(debugSupport);
   }
 }

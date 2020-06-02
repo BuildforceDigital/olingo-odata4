@@ -47,7 +47,7 @@ public class CsdlMapping implements EdmMapping {
    * @param mappedJavaClass class to which is mapped
    * @return this for method chaining
    */
-  public CsdlMapping setMappedJavaClass(final Class<?> mappedJavaClass) {
+  public CsdlMapping setMappedJavaClass(Class<?> mappedJavaClass) {
     this.mappedJavaClass = mappedJavaClass;
     return this;
   }

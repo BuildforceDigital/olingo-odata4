@@ -57,11 +57,11 @@ public class EdmEnumTest {
 
   public EdmEnumTest() {
     Edm edm = mock(Edm.class);
-    final List<CsdlEnumMember> memberList = Arrays.asList(
+    List<CsdlEnumMember> memberList = Arrays.asList(
         new CsdlEnumMember().setName("first").setValue("1"),
         new CsdlEnumMember().setName("second").setValue("64"));
 
-    final FullQualifiedName enumName = new FullQualifiedName("namespace", "name");
+    FullQualifiedName enumName = new FullQualifiedName("namespace", "name");
 
     instance = new EdmEnumTypeImpl(edm, enumName,
         new CsdlEnumType().setName("name").setMembers(memberList).setFlags(true)
@@ -77,7 +77,7 @@ public class EdmEnumTest {
         new CsdlEnumType().setName("name").setMembers(memberList).setFlags(false)
             .setUnderlyingType(EdmPrimitiveTypeKind.SByte.getFullQualifiedName()));
 
-    final FullQualifiedName testName = new FullQualifiedName("testNamespace", "testName");
+    FullQualifiedName testName = new FullQualifiedName("testNamespace", "testName");
 
     int16EnumType = new EdmEnumTypeImpl(null, testName,
         new CsdlEnumType().setName("MyEnum")
@@ -264,7 +264,7 @@ public class EdmEnumTest {
         Integer.class));
   }
 
-  private void expectErrorInUnderlyingType(final EdmPrimitiveTypeKind underlyingType) {
+  private void expectErrorInUnderlyingType(EdmPrimitiveTypeKind underlyingType) {
     try {
       new EdmEnumTypeImpl(null,
           new FullQualifiedName("testNamespace", "testName"),
@@ -272,7 +272,7 @@ public class EdmEnumTest {
               .setName("MyEnum")
               .setUnderlyingType(underlyingType.getFullQualifiedName()));
       fail("Expected exception not thrown");
-    } catch (final EdmException e) {
+    } catch (EdmException e) {
       assertNotNull(e.getLocalizedMessage());
       assertThat(e.getLocalizedMessage(), containsString("underlying type"));
     }
@@ -291,60 +291,60 @@ public class EdmEnumTest {
     expectContentErrorInValueToString(int16EnumType, Integer.MAX_VALUE);
   }
 
-  protected void expectErrorInFromUriLiteral(final EdmPrimitiveType instance, final String value) {
+  protected void expectErrorInFromUriLiteral(EdmPrimitiveType instance, String value) {
     try {
       instance.fromUriLiteral(value);
       fail("Expected exception not thrown");
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       assertNotNull(e.getLocalizedMessage());
       assertThat(e.getLocalizedMessage(), containsString("' has illegal content."));
     }
   }
 
-  private void expectErrorInValueToString(final EdmPrimitiveType instance, final Object value,
-      final Boolean isNullable, final String message) {
+  private void expectErrorInValueToString(EdmPrimitiveType instance, Object value,
+                                          Boolean isNullable, String message) {
     try {
       instance.valueToString(value, isNullable, null, null, null, null);
       fail("Expected exception not thrown");
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       assertNotNull(e.getLocalizedMessage());
       assertThat(e.getLocalizedMessage(), containsString(message));
     }
   }
 
-  protected void expectNullErrorInValueToString(final EdmPrimitiveType instance) {
+  protected void expectNullErrorInValueToString(EdmPrimitiveType instance) {
     expectErrorInValueToString(instance, null, false, "The value NULL is not allowed.");
   }
 
-  protected void expectTypeErrorInValueToString(final EdmPrimitiveType instance, final Object value) {
+  protected void expectTypeErrorInValueToString(EdmPrimitiveType instance, Object value) {
     expectErrorInValueToString(instance, value, null, "value type");
   }
 
-  protected void expectContentErrorInValueToString(final EdmPrimitiveType instance, final Object value) {
+  protected void expectContentErrorInValueToString(EdmPrimitiveType instance, Object value) {
     expectErrorInValueToString(instance, value, null, "' is not valid.");
   }
 
-  private void expectErrorInValueOfString(final EdmPrimitiveType instance, final String value,
-      final Boolean isNullable, final Class<?> returnType, final String message) {
+  private void expectErrorInValueOfString(EdmPrimitiveType instance, String value,
+                                          Boolean isNullable, Class<?> returnType, String message) {
     try {
       instance.valueOfString(value, isNullable, null, null, null, null, returnType);
       fail("Expected exception not thrown");
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       assertNotNull(e.getLocalizedMessage());
       assertThat(e.getLocalizedMessage(), containsString(message));
     }
   }
 
-  protected void expectTypeErrorInValueOfString(final EdmPrimitiveType instance, final String value) {
+  protected void expectTypeErrorInValueOfString(EdmPrimitiveType instance, String value) {
     expectErrorInValueOfString(instance, value, null, Class.class,
         "The value type class java.lang.Class is not supported.");
   }
 
-  protected void expectContentErrorInValueOfString(final EdmPrimitiveType instance, final String value) {
+  protected void expectContentErrorInValueOfString(EdmPrimitiveType instance, String value) {
     expectErrorInValueOfString(instance, value, null, instance.getDefaultType(), "illegal content");
   }
 
-  protected void expectNullErrorInValueOfString(final EdmPrimitiveType instance) {
+  protected void expectNullErrorInValueOfString(EdmPrimitiveType instance) {
     expectErrorInValueOfString(instance, null, false, instance.getDefaultType(),
         "The literal 'null' is not allowed.");
   }

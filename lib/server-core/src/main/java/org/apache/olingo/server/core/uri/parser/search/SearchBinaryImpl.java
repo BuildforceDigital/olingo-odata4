@@ -28,8 +28,8 @@ public class SearchBinaryImpl extends SearchExpressionImpl implements SearchBina
   private final SearchExpression left;
   private final SearchExpression right;
 
-  public SearchBinaryImpl(final SearchExpression left, final SearchBinaryOperatorKind operator,
-      final SearchExpression right) {
+  public SearchBinaryImpl(SearchExpression left, SearchBinaryOperatorKind operator,
+                          SearchExpression right) {
     this.left = left;
     this.operator = operator;
     this.right = right;

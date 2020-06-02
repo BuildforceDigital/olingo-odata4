@@ -54,7 +54,7 @@ public class CsdlPropertyValue extends CsdlAbstractEdmItem implements CsdlAnnota
     return property;
   }
 
-  public CsdlPropertyValue setProperty(final String property) {
+  public CsdlPropertyValue setProperty(String property) {
     this.property = property;
     return this;
   }
@@ -67,7 +67,7 @@ public class CsdlPropertyValue extends CsdlAbstractEdmItem implements CsdlAnnota
     return value;
   }
 
-  public CsdlPropertyValue setValue(final CsdlExpression value) {
+  public CsdlPropertyValue setValue(CsdlExpression value) {
     this.value = value;
     return this;
   }
@@ -82,11 +82,11 @@ public class CsdlPropertyValue extends CsdlAbstractEdmItem implements CsdlAnnota
     }
     CsdlPropertyValue csdlPropertyValue = (CsdlPropertyValue) obj;
     
-    return (this.getProperty() == null ? csdlPropertyValue.getProperty() == null :
-      this.getProperty().equalsIgnoreCase(csdlPropertyValue.getProperty()))
-        && (this.getValue() == null ? csdlPropertyValue.getValue() == null :
-          this.getValue().equals(csdlPropertyValue.getValue()))
-        && (this.getAnnotations() == null ? csdlPropertyValue.getAnnotations() == null :
+    return (getProperty() == null ? csdlPropertyValue.getProperty() == null :
+            getProperty().equalsIgnoreCase(csdlPropertyValue.getProperty()))
+        && (getValue() == null ? csdlPropertyValue.getValue() == null :
+            getValue().equals(csdlPropertyValue.getValue()))
+        && (getAnnotations() == null ? csdlPropertyValue.getAnnotations() == null :
             checkAnnotations(csdlPropertyValue.getAnnotations()));
   }
   
@@ -94,9 +94,9 @@ public class CsdlPropertyValue extends CsdlAbstractEdmItem implements CsdlAnnota
     if (csdlPropertyValueAnnot == null) {
       return false;
     }
-    if (this.getAnnotations().size() == csdlPropertyValueAnnot.size()) {
-      for (int i = 0; i < this.getAnnotations().size() ; i++) {
-        if (!this.getAnnotations().get(i).equals(
+    if (getAnnotations().size() == csdlPropertyValueAnnot.size()) {
+      for (int i = 0; i < getAnnotations().size() ; i++) {
+        if (!getAnnotations().get(i).equals(
             csdlPropertyValueAnnot.get(i))) {
           return false;
         }

@@ -27,7 +27,7 @@ import org.apache.olingo.server.api.uri.UriResourceKind;
 public abstract class UriResourceImpl implements UriResource {
   private final UriResourceKind kind;
 
-  public UriResourceImpl(final UriResourceKind kind) {
+  public UriResourceImpl(UriResourceKind kind) {
     this.kind = kind;
   }
 

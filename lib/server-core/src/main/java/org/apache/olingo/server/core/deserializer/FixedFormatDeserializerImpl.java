@@ -47,7 +47,7 @@ public class FixedFormatDeserializerImpl implements FixedFormatDeserializer {
   private static final int DEFAULT_BUFFER_SIZE = 128;
 
   @Override
-  public byte[] binary(final InputStream content) throws DeserializerException {
+  public byte[] binary(InputStream content) throws DeserializerException {
     ByteArrayOutputStream result = new ByteArrayOutputStream();
     byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
     int count;
@@ -56,7 +56,7 @@ public class FixedFormatDeserializerImpl implements FixedFormatDeserializer {
         result.write(buffer, 0, count);
       }
       result.flush();
-    } catch (final IOException e) {
+    } catch (IOException e) {
       throw new DeserializerException("An I/O exception occurred.", e,
           DeserializerException.MessageKeys.IO_EXCEPTION);
     }
@@ -64,7 +64,7 @@ public class FixedFormatDeserializerImpl implements FixedFormatDeserializer {
   }
 
   @Override
-  public Object primitiveValue(final InputStream content, final EdmProperty property) throws DeserializerException {
+  public Object primitiveValue(InputStream content, EdmProperty property) throws DeserializerException {
     if (property == null || !property.isPrimitive()) {
       throw new DeserializerException("Wrong property.", DeserializerException.MessageKeys.NOT_IMPLEMENTED);
     }
@@ -75,30 +75,30 @@ public class FixedFormatDeserializerImpl implements FixedFormatDeserializer {
       while ((c = reader.read()) != -1) {
         writer.append((char) c);
       }
-      final EdmPrimitiveType type = (EdmPrimitiveType) property.getType();
+      EdmPrimitiveType type = (EdmPrimitiveType) property.getType();
       return type.valueOfString(writer.toString(),
           property.isNullable(), property.getMaxLength(), property.getPrecision(), property.getScale(),
           property.isUnicode(), type.getDefaultType());
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       throw new DeserializerException("The value is not valid.", e,
           DeserializerException.MessageKeys.INVALID_VALUE_FOR_PROPERTY, property.getName());
-    } catch (final IOException e) {
+    } catch (IOException e) {
       throw new DeserializerException("An I/O exception occurred.", e,
           DeserializerException.MessageKeys.IO_EXCEPTION);
     }
   }
 
   @Override
-  public Parameter parameter(final String content, final EdmParameter parameter) throws DeserializerException {
-    final EdmType type = parameter.getType();
-    final EdmTypeKind kind = type.getKind();
+  public Parameter parameter(String content, EdmParameter parameter) throws DeserializerException {
+    EdmType type = parameter.getType();
+    EdmTypeKind kind = type.getKind();
     if ((kind == EdmTypeKind.PRIMITIVE || kind == EdmTypeKind.DEFINITION || kind == EdmTypeKind.ENUM)
         && !parameter.isCollection()) {
       // The content is a primitive URI literal.
       Parameter result = new Parameter();
       result.setName(parameter.getName());
       result.setType(type.getFullQualifiedName().getFullQualifiedNameAsString());
-      final EdmPrimitiveType primitiveType = (EdmPrimitiveType) type;
+      EdmPrimitiveType primitiveType = (EdmPrimitiveType) type;
       try {
         if (parameter.getMapping() == null) {
           result.setValue(type.getKind() == EdmTypeKind.ENUM ? ValueType.ENUM : ValueType.PRIMITIVE,
@@ -113,7 +113,7 @@ public class FixedFormatDeserializerImpl implements FixedFormatDeserializer {
                   parameter.getPrecision(), parameter.getScale(), true,
                         parameter.getMapping().getMappedJavaClass()));
         }
-      } catch (final EdmPrimitiveTypeException e) {
+      } catch (EdmPrimitiveTypeException e) {
         throw new DeserializerException(
             "Invalid value '" + content + "' for parameter " + parameter.getName(), e,
             DeserializerException.MessageKeys.INVALID_VALUE_FOR_PROPERTY, parameter.getName());
@@ -126,10 +126,10 @@ public class FixedFormatDeserializerImpl implements FixedFormatDeserializer {
   }
 
   @Override
-  public List<BatchRequestPart> parseBatchRequest(final InputStream content, final String boundary,
-      final BatchOptions options)
+  public List<BatchRequestPart> parseBatchRequest(InputStream content, String boundary,
+                                                  BatchOptions options)
           throws BatchDeserializerException {
-    final BatchParser parser = new BatchParser();
+    BatchParser parser = new BatchParser();
 
     return parser.parseBatchRequest(content, boundary, options);
   }

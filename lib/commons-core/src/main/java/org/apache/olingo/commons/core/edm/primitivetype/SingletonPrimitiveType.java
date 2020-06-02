@@ -28,7 +28,7 @@ public abstract class SingletonPrimitiveType extends AbstractPrimitiveType {
   protected String name;
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     return this == obj || obj != null && getClass() == obj.getClass();
   }
 

@@ -60,7 +60,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void basic() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
         + HttpMethod.GET + " " + PROPERTY_URI + "?$format=json" + HTTP_VERSION + CRLF
@@ -90,14 +90,14 @@ public class BatchRequestParserTest {
         + CRLF
         + CRLF
         + "--" + BOUNDARY + "--";
-    final List<BatchRequestPart> batchRequestParts = parse(batch);
+    List<BatchRequestPart> batchRequestParts = parse(batch);
 
     Assert.assertNotNull(batchRequestParts);
     Assert.assertFalse(batchRequestParts.isEmpty());
 
-    for (final BatchRequestPart object : batchRequestParts) {
+    for (BatchRequestPart object : batchRequestParts) {
       Assert.assertEquals(1, object.getRequests().size());
-      final ODataRequest request = object.getRequests().get(0);
+      ODataRequest request = object.getRequests().get(0);
       Assert.assertEquals(SERVICE_ROOT, request.getRawBaseUri());
       Assert.assertEquals("/" + PROPERTY_URI, request.getRawODataPath());
 
@@ -116,7 +116,7 @@ public class BatchRequestParserTest {
         Assert.assertEquals("100000", request.getHeader(HttpHeader.CONTENT_LENGTH));
         Assert.assertEquals(APPLICATION_JSON, request.getHeader(HttpHeader.CONTENT_TYPE));
 
-        final List<String> acceptHeader = request.getHeaders(HttpHeader.ACCEPT);
+        List<String> acceptHeader = request.getHeaders(HttpHeader.ACCEPT);
         Assert.assertEquals(4, request.getHeaders(HttpHeader.ACCEPT).size());
         Assert.assertEquals("application/atom+xml;q=0.8", acceptHeader.get(2));
         Assert.assertEquals("*/*;q=0.1", acceptHeader.get(3));
@@ -132,8 +132,8 @@ public class BatchRequestParserTest {
   @Ignore
   @Test
   public void imageInContent() throws Exception {
-    final String content = IOUtils.toString(readFile( "/batchWithContent.batch"));
-    final String batch = "--" + BOUNDARY + CRLF
+    String content = IOUtils.toString(readFile( "/batchWithContent.batch"));
+    String batch = "--" + BOUNDARY + CRLF
         + GET_REQUEST
         + "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; boundary=" + CHANGESET_BOUNDARY + CRLF
@@ -151,11 +151,11 @@ public class BatchRequestParserTest {
         + CRLF
         + "--" + CHANGESET_BOUNDARY + "--" + CRLF
         + "--" + BOUNDARY + "--";
-    final List<BatchRequestPart> BatchRequestParts = parse(batch);
+    List<BatchRequestPart> BatchRequestParts = parse(batch);
 
-    for (final BatchRequestPart part : BatchRequestParts) {
+    for (BatchRequestPart part : BatchRequestParts) {
       Assert.assertEquals(1, part.getRequests().size());
-      final ODataRequest request = part.getRequests().get(0);
+      ODataRequest request = part.getRequests().get(0);
       if (!part.isChangeSet()) {
         Assert.assertEquals(HttpMethod.GET, request.getMethod());
         Assert.assertEquals(SERVICE_ROOT + "/" + PROPERTY_URI, request.getRawRequestUri());
@@ -189,7 +189,7 @@ public class BatchRequestParserTest {
     out.write(content);
     out.write((CRLF
         + "--" + BOUNDARY + "--").getBytes());
-    final List<BatchRequestPart> parts = parse(new ByteArrayInputStream(out.toByteArray()), true);
+    List<BatchRequestPart> parts = parse(new ByteArrayInputStream(out.toByteArray()), true);
     Assert.assertEquals(1, parts.size());
     Assert.assertEquals(1, parts.get(0).getRequests().size());
     InputStream body = parts.get(0).getRequests().get(0).getBody();
@@ -199,7 +199,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void postWithoutBody() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -214,12 +214,12 @@ public class BatchRequestParserTest {
         + "--" + CHANGESET_BOUNDARY + "--" + CRLF
         + CRLF
         + "--" + BOUNDARY + "--";
-    final List<BatchRequestPart> batchRequestParts = parse(batch);
+    List<BatchRequestPart> batchRequestParts = parse(batch);
 
     Assert.assertEquals(1, batchRequestParts.size());
     Assert.assertTrue(batchRequestParts.get(0).isChangeSet());
     Assert.assertEquals(1, batchRequestParts.get(0).getRequests().size());
-    final ODataRequest request = batchRequestParts.get(0).getRequests().get(0);
+    ODataRequest request = batchRequestParts.get(0).getRequests().get(0);
     Assert.assertEquals(HttpMethod.POST, request.getMethod());
     Assert.assertEquals("100", request.getHeader(HttpHeader.CONTENT_LENGTH));
     Assert.assertEquals(APPLICATION_OCTET_STREAM, request.getHeader(HttpHeader.CONTENT_TYPE));
@@ -230,10 +230,10 @@ public class BatchRequestParserTest {
   @Test
   public void boundaryParameterWithQuotes() throws Exception {
     final String boundary = "batch_1.2+34:2j)0?";
-    final String batch = "--" + boundary + CRLF
+    String batch = "--" + boundary + CRLF
         + GET_REQUEST
         + "--" + boundary + "--";
-    final List<BatchRequestPart> batchRequestParts = new BatchParser().parseBatchRequest(
+    List<BatchRequestPart> batchRequestParts = new BatchParser().parseBatchRequest(
         IOUtils.toInputStream(batch),
         boundary,
         BatchOptions.with().isStrict(true).rawBaseUri(SERVICE_ROOT).build());
@@ -244,17 +244,17 @@ public class BatchRequestParserTest {
 
   @Test
   public void wrongBoundaryString() throws Exception {
-    final String batch = "--batch_8194-cf13-1f5" + CRLF
+    String batch = "--batch_8194-cf13-1f5" + CRLF
         + GET_REQUEST
         + "--" + BOUNDARY + "--";
 
-    final List<BatchRequestPart> parts = parse(batch);
+    List<BatchRequestPart> parts = parse(batch);
     Assert.assertEquals(0, parts.size());
   }
 
   @Test
   public void missingHttpVersion() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
         + HttpMethod.GET + " ESAllPrim?$format=json" + CRLF
@@ -267,7 +267,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void missingHttpVersion2() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
         + HttpMethod.GET + " ESAllPrim?$format=json " + CRLF
@@ -280,7 +280,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void missingHttpVersion3() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
         + HttpMethod.GET + " ESAllPrim?$format=json SMTP:3.1" + CRLF
@@ -293,7 +293,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void boundaryWithoutHyphen() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + GET_REQUEST
         + BOUNDARY + CRLF
         + GET_REQUEST
@@ -304,7 +304,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void noBoundaryString() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + GET_REQUEST
         // + no boundary string
         + GET_REQUEST
@@ -315,7 +315,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void batchBoundaryEqualsChangeSetBoundary() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + ";boundary=" + BOUNDARY + CRLF
         + CRLF
         + "--" + BOUNDARY + CRLF
@@ -337,7 +337,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void noContentType() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.ODATA_VERSION + ": 4.0" + CRLF
         + CRLF
         + HttpMethod.GET + " " + PROPERTY_URI + HTTP_VERSION + CRLF
@@ -349,7 +349,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void mimeHeaderContentType() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": text/plain" + CRLF
         + CRLF
         + HttpMethod.GET + " " + PROPERTY_URI + HTTP_VERSION + CRLF
@@ -376,7 +376,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void getRequestMissingCRLF() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + HttpHeader.CONTENT_ID + ": 1" + CRLF
         + CRLF
@@ -390,7 +390,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void methodsForIndividualRequests() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
         + HttpMethod.POST + " ESAllPrim" + HTTP_VERSION + CRLF
@@ -427,7 +427,7 @@ public class BatchRequestParserTest {
         + CRLF
         + "--" + BOUNDARY + "--";
 
-    final List<BatchRequestPart> requests = parse(batch);
+    List<BatchRequestPart> requests = parse(batch);
 
     Assert.assertEquals(HttpMethod.POST, requests.get(0).getRequests().get(0).getMethod());
     Assert.assertEquals("/ESAllPrim", requests.get(0).getRequests().get(0).getRawODataPath());
@@ -453,7 +453,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void noBoundaryFound() throws Exception {
-    final String batch = BOUNDARY + CRLF
+    String batch = BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
         + HttpMethod.POST + " ESAllPrim" + HTTP_VERSION + CRLF
@@ -491,7 +491,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void invalidMethodForChangeset() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -511,7 +511,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void invalidChangeSetBoundary() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + ";boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY.substring(0, CHANGESET_BOUNDARY.length() - 1) + CRLF
@@ -525,17 +525,17 @@ public class BatchRequestParserTest {
         + CRLF
         + "--" + BOUNDARY + "--";
 
-    final List<BatchRequestPart> parts = parse(batch);
+    List<BatchRequestPart> parts = parse(batch);
     Assert.assertEquals(1, parts.size());
 
-    final BatchRequestPart part = parts.get(0);
+    BatchRequestPart part = parts.get(0);
     Assert.assertTrue(part.isChangeSet());
     Assert.assertEquals(0, part.getRequests().size());
   }
 
   @Test
   public void nestedChangeset() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + ";boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -559,7 +559,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void missingContentType() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + ";boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -578,7 +578,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void noCloseDelimiter() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + GET_REQUEST;
 
     parseInvalidBatchBody(batch, BatchDeserializerException.MessageKeys.MISSING_CLOSE_DELIMITER);
@@ -586,7 +586,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void noCloseDelimiter2() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + GET_REQUEST;
 
     parseInvalidBatchBody(batch, BatchDeserializerException.MessageKeys.MISSING_CLOSE_DELIMITER);
@@ -594,7 +594,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void noCloseDelimiter3() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + GET_REQUEST
         + "--" + BOUNDARY + "-"/* no hyphen */;
 
@@ -603,14 +603,14 @@ public class BatchRequestParserTest {
 
   @Test
   public void absoluteUri() throws Exception {
-    final List<BatchRequestPart> batchRequestParts = parse(
+    List<BatchRequestPart> batchRequestParts = parse(
         createBatchWithGetRequest(SERVICE_ROOT + "/ESAllPrim?$top=1", null));
 
     Assert.assertEquals(1, batchRequestParts.size());
-    final BatchRequestPart part = batchRequestParts.get(0);
+    BatchRequestPart part = batchRequestParts.get(0);
 
     Assert.assertEquals(1, part.getRequests().size());
-    final ODataRequest request = part.getRequests().get(0);
+    ODataRequest request = part.getRequests().get(0);
 
     Assert.assertEquals("/ESAllPrim", request.getRawODataPath());
     Assert.assertEquals("$top=1", request.getRawQueryPath());
@@ -620,22 +620,22 @@ public class BatchRequestParserTest {
 
   @Test
   public void uriWithAbsolutePath() throws Exception {
-    final List<BatchRequestPart> batchRequestParts = parse(
+    List<BatchRequestPart> batchRequestParts = parse(
         createBatchWithGetRequest("/odata/" + PROPERTY_URI, "Host: localhost"));
-    final BatchRequestPart part = batchRequestParts.get(0);
+    BatchRequestPart part = batchRequestParts.get(0);
     Assert.assertEquals(1, part.getRequests().size());
-    final ODataRequest request = part.getRequests().get(0);
+    ODataRequest request = part.getRequests().get(0);
     Assert.assertEquals("/" + PROPERTY_URI, request.getRawODataPath());
     Assert.assertEquals(SERVICE_ROOT + "/" + PROPERTY_URI, request.getRawRequestUri());
   }
 
   @Test
   public void uriWithAbsolutePathMissingHostHeader() throws Exception {
-    final List<BatchRequestPart> batchRequestParts = parse(
+    List<BatchRequestPart> batchRequestParts = parse(
         createBatchWithGetRequest("/odata/" + PROPERTY_URI, null));
-    final BatchRequestPart part = batchRequestParts.get(0);
+    BatchRequestPart part = batchRequestParts.get(0);
     Assert.assertEquals(1, part.getRequests().size());
-    final ODataRequest request = part.getRequests().get(0);
+    ODataRequest request = part.getRequests().get(0);
     Assert.assertEquals("/" + PROPERTY_URI, request.getRawODataPath());
     Assert.assertEquals(SERVICE_ROOT + "/" + PROPERTY_URI, request.getRawRequestUri());
   }
@@ -686,7 +686,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void negativeContentLengthRequest() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -707,7 +707,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void contentLengthGreatherThanBodyLength() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -722,22 +722,22 @@ public class BatchRequestParserTest {
         + "--" + CHANGESET_BOUNDARY + "--" + CRLF
         + CRLF
         + "--" + BOUNDARY + "--";
-    final List<BatchRequestPart> batchRequestParts = parse(batch);
+    List<BatchRequestPart> batchRequestParts = parse(batch);
 
     Assert.assertNotNull(batchRequestParts);
     Assert.assertEquals(1, batchRequestParts.size());
 
-    final BatchRequestPart part = batchRequestParts.get(0);
+    BatchRequestPart part = batchRequestParts.get(0);
     Assert.assertTrue(part.isChangeSet());
     Assert.assertEquals(1, part.getRequests().size());
 
-    final ODataRequest request = part.getRequests().get(0);
+    ODataRequest request = part.getRequests().get(0);
     Assert.assertEquals("{\"PropertyString\":\"new\"}", IOUtils.toString(request.getBody()));
   }
 
   @Test
   public void contentLengthSmallerThanBodyLength() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -752,22 +752,22 @@ public class BatchRequestParserTest {
         + "--" + CHANGESET_BOUNDARY + "--" + CRLF
         + CRLF
         + "--" + BOUNDARY + "--";
-    final List<BatchRequestPart> batchRequestParts = parse(batch);
+    List<BatchRequestPart> batchRequestParts = parse(batch);
 
     Assert.assertNotNull(batchRequestParts);
     Assert.assertEquals(1, batchRequestParts.size());
 
-    final BatchRequestPart part = batchRequestParts.get(0);
+    BatchRequestPart part = batchRequestParts.get(0);
     Assert.assertTrue(part.isChangeSet());
     Assert.assertEquals(1, part.getRequests().size());
 
-    final ODataRequest request = part.getRequests().get(0);
+    ODataRequest request = part.getRequests().get(0);
     Assert.assertEquals("{\"Property", IOUtils.toString(request.getBody()));
   }
 
   @Test
   public void nonNumericContentLength() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -788,7 +788,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void nonStrictParser() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + ";boundary=" + CHANGESET_BOUNDARY + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
         + MIME_HEADERS
@@ -800,17 +800,17 @@ public class BatchRequestParserTest {
         + "--" + CHANGESET_BOUNDARY + "--" + CRLF
         + "--" + BOUNDARY + "--";
 
-    final List<BatchRequestPart> requests = parse(batch, false);
+    List<BatchRequestPart> requests = parse(batch, false);
 
     Assert.assertNotNull(requests);
     Assert.assertEquals(1, requests.size());
 
-    final BatchRequestPart part = requests.get(0);
+    BatchRequestPart part = requests.get(0);
     Assert.assertTrue(part.isChangeSet());
     Assert.assertNotNull(part.getRequests());
     Assert.assertEquals(1, part.getRequests().size());
 
-    final ODataRequest changeRequest = part.getRequests().get(0);
+    ODataRequest changeRequest = part.getRequests().get(0);
     Assert.assertEquals("{\"PropertyString\":\"new\"}", IOUtils.toString(changeRequest.getBody()));
     Assert.assertEquals(APPLICATION_JSON, changeRequest.getHeader(HttpHeader.CONTENT_TYPE));
     Assert.assertEquals(HttpMethod.PATCH, changeRequest.getMethod());
@@ -818,7 +818,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void nonStrictParserMoreCRLF() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + ";boundary=" + CHANGESET_BOUNDARY + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
         + MIME_HEADERS
@@ -837,7 +837,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void contentId() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
         + HttpMethod.GET + " ESAllPrim" + HTTP_VERSION + CRLF
@@ -870,7 +870,7 @@ public class BatchRequestParserTest {
         + CRLF
         + "--" + BOUNDARY + "--";
 
-    final List<BatchRequestPart> batchRequestParts = parse(batch);
+    List<BatchRequestPart> batchRequestParts = parse(batch);
     Assert.assertNotNull(batchRequestParts);
 
     for (BatchRequestPart multipart : batchRequestParts) {
@@ -893,7 +893,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void noContentId() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
         + HttpMethod.GET + " ESMedia" + HTTP_VERSION + CRLF
@@ -931,7 +931,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void preamble() throws Exception {
-    final String batch = "This is a preamble and must be ignored" + CRLF
+    String batch = "This is a preamble and must be ignored" + CRLF
         + CRLF
         + CRLF
         + "----1242" + CRLF
@@ -971,18 +971,18 @@ public class BatchRequestParserTest {
         + "--" + CHANGESET_BOUNDARY + "--" + CRLF
         + CRLF
         + "--" + BOUNDARY + "--";
-    final List<BatchRequestPart> batchRequestParts = parse(batch);
+    List<BatchRequestPart> batchRequestParts = parse(batch);
 
     Assert.assertNotNull(batchRequestParts);
     Assert.assertEquals(2, batchRequestParts.size());
 
-    final BatchRequestPart getRequestPart = batchRequestParts.get(0);
+    BatchRequestPart getRequestPart = batchRequestParts.get(0);
     Assert.assertEquals(1, getRequestPart.getRequests().size());
 
-    final ODataRequest getRequest = getRequestPart.getRequests().get(0);
+    ODataRequest getRequest = getRequestPart.getRequests().get(0);
     Assert.assertEquals(HttpMethod.GET, getRequest.getMethod());
 
-    final BatchRequestPart changeSetPart = batchRequestParts.get(1);
+    BatchRequestPart changeSetPart = batchRequestParts.get(1);
     Assert.assertEquals(2, changeSetPart.getRequests().size());
     Assert.assertEquals("iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAABmJLR0QA/wD/AP+gvaeTAAAAH0lE"
         + "QVQokWNgGHmA8S4FmpkosXngNDP+PzdANg+cZgBqiQK5mkdWWgAAAABJRU5ErkJggg==" + CRLF,
@@ -992,7 +992,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void contentTypeCaseInsensitive() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; boundary=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -1013,7 +1013,7 @@ public class BatchRequestParserTest {
 
   @Test
   public void contentTypeBoundaryCaseInsensitive() throws Exception {
-    final String batch = "--" + BOUNDARY + CRLF
+    String batch = "--" + BOUNDARY + CRLF
         + HttpHeader.CONTENT_TYPE + ": " + MULTIPART_MIXED + "; bOunDaRy=" + CHANGESET_BOUNDARY + CRLF
         + CRLF
         + "--" + CHANGESET_BOUNDARY + CRLF
@@ -1027,7 +1027,7 @@ public class BatchRequestParserTest {
         + "--" + CHANGESET_BOUNDARY + "--" + CRLF
         + CRLF
         + "--" + BOUNDARY + "--";
-    final List<BatchRequestPart> batchRequestParts = parse(batch);
+    List<BatchRequestPart> batchRequestParts = parse(batch);
 
     Assert.assertNotNull(batchRequestParts);
     Assert.assertEquals(1, batchRequestParts.size());
@@ -1074,7 +1074,7 @@ public class BatchRequestParserTest {
         + CRLF
         + CRLF
         + "----1242";
-    final List<BatchRequestPart> batchRequestParts = parse(batch);
+    List<BatchRequestPart> batchRequestParts = parse(batch);
 
     Assert.assertNotNull(batchRequestParts);
     Assert.assertEquals(2, batchRequestParts.size());
@@ -1134,11 +1134,11 @@ public class BatchRequestParserTest {
     parseBatchWithForbiddenHeader(HttpHeader.TE + ": deflate");
   }
 
-  private void parseBatchWithForbiddenHeader(final String header) {
+  private void parseBatchWithForbiddenHeader(String header) {
     parseInvalidBatchBody(createBatchWithGetRequest(PROPERTY_URI, header), MessageKeys.FORBIDDEN_HEADER);
   }
 
-  private String createBatchWithGetRequest(final String url, final String additionalHeader) {
+  private String createBatchWithGetRequest(String url, String additionalHeader) {
     return "--" + BOUNDARY + CRLF
         + MIME_HEADERS
         + CRLF
@@ -1149,24 +1149,24 @@ public class BatchRequestParserTest {
         + "--" + BOUNDARY + "--";
   }
 
-  private List<BatchRequestPart> parse(final InputStream in, final boolean isStrict)
+  private List<BatchRequestPart> parse(InputStream in, boolean isStrict)
       throws BatchDeserializerException {
-    final List<BatchRequestPart> batchRequestParts =
+    List<BatchRequestPart> batchRequestParts =
         new BatchParser().parseBatchRequest(in, BOUNDARY,
             BatchOptions.with().isStrict(isStrict).rawBaseUri(SERVICE_ROOT).build());
     Assert.assertNotNull(batchRequestParts);
     return batchRequestParts;
   }
 
-  private List<BatchRequestPart> parse(final String batch) throws BatchDeserializerException {
+  private List<BatchRequestPart> parse(String batch) throws BatchDeserializerException {
     return parse(batch, true);
   }
 
-  private List<BatchRequestPart> parse(final String batch, final boolean isStrict) throws BatchDeserializerException {
+  private List<BatchRequestPart> parse(String batch, boolean isStrict) throws BatchDeserializerException {
     return parse(IOUtils.toInputStream(batch), isStrict);
   }
 
-  private void parseInvalidBatchBody(final String batch, final MessageKeys key, final boolean isStrict) {
+  private void parseInvalidBatchBody(String batch, MessageKeys key, boolean isStrict) {
     try {
       new BatchParser().parseBatchRequest(IOUtils.toInputStream(batch), BOUNDARY,
           BatchOptions.with().isStrict(isStrict).rawBaseUri(SERVICE_ROOT).build());
@@ -1176,12 +1176,12 @@ public class BatchRequestParserTest {
     }
   }
 
-  private void parseInvalidBatchBody(final String batch, final MessageKeys key) {
+  private void parseInvalidBatchBody(String batch, MessageKeys key) {
     parseInvalidBatchBody(batch, key, true);
   }
 
-  private InputStream readFile(final String fileName) throws IOException {
-    final InputStream in = ClassLoader.class.getResourceAsStream(fileName);
+  private InputStream readFile(String fileName) throws IOException {
+    InputStream in = ClassLoader.class.getResourceAsStream(fileName);
     if (in == null) {
       throw new IOException("Requested file '" + fileName + "' was not found.");
     }

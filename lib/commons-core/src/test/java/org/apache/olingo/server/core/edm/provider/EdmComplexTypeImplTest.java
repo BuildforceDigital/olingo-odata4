@@ -20,6 +20,7 @@ package org.apache.olingo.server.core.edm.provider;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -56,10 +57,10 @@ public class EdmComplexTypeImplTest {
 
     FullQualifiedName baseName = new FullQualifiedName("namespace", "BaseTypeName");
     CsdlComplexType baseComplexType = new CsdlComplexType();
-    List<CsdlProperty> baseProperties = new ArrayList<CsdlProperty>();
+    List<CsdlProperty> baseProperties = new ArrayList<>();
     baseProperties.add(new CsdlProperty().setName("prop1").setType(
         EdmPrimitiveTypeKind.String.getFullQualifiedName()));
-    List<CsdlNavigationProperty> baseNavigationProperties = new ArrayList<CsdlNavigationProperty>();
+    List<CsdlNavigationProperty> baseNavigationProperties = new ArrayList<>();
     baseNavigationProperties.add(new CsdlNavigationProperty().setName("nav1"));
     baseComplexType.setName("BaseTypeName").setAbstract(false).setOpenType(false).setProperties(baseProperties)
         .setNavigationProperties(baseNavigationProperties);
@@ -69,9 +70,9 @@ public class EdmComplexTypeImplTest {
 
     FullQualifiedName name = new FullQualifiedName("namespace", "typeName");
     CsdlComplexType complexType = new CsdlComplexType().setBaseType(baseName);
-    List<CsdlProperty> properties = new ArrayList<CsdlProperty>();
+    List<CsdlProperty> properties = new ArrayList<>();
     properties.add(new CsdlProperty().setName("prop2").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName()));
-    List<CsdlNavigationProperty> navigationProperties = new ArrayList<CsdlNavigationProperty>();
+    List<CsdlNavigationProperty> navigationProperties = new ArrayList<>();
     navigationProperties.add(new CsdlNavigationProperty().setName("nav2"));
     complexType.setName("BaseTypeName").setAbstract(false).setOpenType(false).setProperties(properties)
         .setNavigationProperties(navigationProperties);
@@ -141,16 +142,16 @@ public class EdmComplexTypeImplTest {
   @Test
   public void propertyCaching() {
     EdmElement property = type.getProperty("prop1");
-    assertTrue(property == type.getProperty("prop1"));
+    assertSame(property, type.getProperty("prop1"));
 
     property = type.getProperty("prop2");
-    assertTrue(property == type.getProperty("prop2"));
+    assertSame(property, type.getProperty("prop2"));
 
     property = type.getProperty("nav1");
-    assertTrue(property == type.getProperty("nav1"));
+    assertSame(property, type.getProperty("nav1"));
 
     property = type.getProperty("nav2");
-    assertTrue(property == type.getProperty("nav2"));
+    assertSame(property, type.getProperty("nav2"));
   }
 
   @Test(expected = EdmException.class)
@@ -166,4 +167,5 @@ public class EdmComplexTypeImplTest {
         new EdmComplexTypeImpl(edm, typeWithNonexistingBaseTypeName, complexTypeForNonexistingBaseType);
     instance.getBaseType();
   }
+
 }

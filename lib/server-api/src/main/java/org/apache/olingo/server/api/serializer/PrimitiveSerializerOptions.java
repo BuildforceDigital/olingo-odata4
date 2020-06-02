@@ -85,43 +85,43 @@ public final class PrimitiveSerializerOptions {
     }
 
     /** Sets the {@link ContextURL}. */
-    public Builder contextURL(final ContextURL contextURL) {
+    public Builder contextURL(ContextURL contextURL) {
       options.contextURL = contextURL;
       return this;
     }
 
     /** Sets the nullable facet. */
-    public Builder nullable(final Boolean isNullable) {
+    public Builder nullable(Boolean isNullable) {
       options.isNullable = isNullable;
       return this;
     }
 
     /** Sets the maxLength facet. */
-    public Builder maxLength(final Integer maxLength) {
+    public Builder maxLength(Integer maxLength) {
       options.maxLength = maxLength;
       return this;
     }
 
     /** Sets the precision facet. */
-    public Builder precision(final Integer precision) {
+    public Builder precision(Integer precision) {
       options.precision = precision;
       return this;
     }
 
     /** Sets the scale facet. */
-    public Builder scale(final Integer scale) {
+    public Builder scale(Integer scale) {
       options.scale = scale;
       return this;
     }
 
     /** Sets the unicode facet. */
-    public Builder unicode(final Boolean isUnicode) {
+    public Builder unicode(Boolean isUnicode) {
       options.isUnicode = isUnicode;
       return this;
     }
 
     /** Sets all facets from an EDM property. */
-    public Builder facetsFrom(final EdmProperty property) {
+    public Builder facetsFrom(EdmProperty property) {
       options.isNullable = property.isNullable();
       options.maxLength = property.getMaxLength();
       options.precision = property.getPrecision();
@@ -131,7 +131,7 @@ public final class PrimitiveSerializerOptions {
     }
 
     /** set the replacement string for xml 1.0 unicode controlled characters that are not allowed */
-    public Builder xml10InvalidCharReplacement(final String replacement) {
+    public Builder xml10InvalidCharReplacement(String replacement) {
       options.xml10InvalidCharReplacement = replacement;
       return this;
     } 

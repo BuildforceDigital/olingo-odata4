@@ -54,8 +54,8 @@ public class EdmFunctionImportImplTest {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
 
-    final FullQualifiedName functionName = new FullQualifiedName("ns", "function");
-    final CsdlFunction functionProvider = new CsdlFunction()
+    FullQualifiedName functionName = new FullQualifiedName("ns", "function");
+    CsdlFunction functionProvider = new CsdlFunction()
         .setName(functionName.getName())
         .setParameters(Collections.<CsdlParameter> emptyList())
         .setBound(false)
@@ -63,26 +63,26 @@ public class EdmFunctionImportImplTest {
         .setReturnType(new CsdlReturnType().setType(EdmPrimitiveTypeKind.Boolean.getFullQualifiedName()));
     when(provider.getFunctions(functionName)).thenReturn(Arrays.asList(functionProvider));
 
-    final FullQualifiedName containerName = new FullQualifiedName("ns", "container");
-    final CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
+    FullQualifiedName containerName = new FullQualifiedName("ns", "container");
+    CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
     when(provider.getEntityContainerInfo(containerName)).thenReturn(containerInfo);
-    final EdmEntityContainer entityContainer = new EdmEntityContainerImpl(edm, provider, containerInfo);
+    EdmEntityContainer entityContainer = new EdmEntityContainerImpl(edm, provider, containerInfo);
 
     final String functionImportName = "functionImport";
-    final CsdlFunctionImport functionImportProvider = new CsdlFunctionImport()
+    CsdlFunctionImport functionImportProvider = new CsdlFunctionImport()
         .setName(functionImportName)
         .setTitle("title")
         .setFunction(functionName)
         .setIncludeInServiceDocument(true);
     when(provider.getFunctionImport(containerName, functionImportName)).thenReturn(functionImportProvider);
 
-    final EdmFunctionImport functionImport = new EdmFunctionImportImpl(edm, entityContainer, functionImportProvider);
+    EdmFunctionImport functionImport = new EdmFunctionImportImpl(edm, entityContainer, functionImportProvider);
     assertEquals(functionImportName, entityContainer.getFunctionImport(functionImportName).getName());
     assertEquals("functionImport", functionImport.getName());
     assertEquals("title", functionImport.getTitle());
     assertEquals(new FullQualifiedName("ns", functionImportName), functionImport.getFullQualifiedName());
     assertTrue(functionImport.isIncludeInServiceDocument());
-    final EdmFunction function = functionImport.getUnboundFunction(Collections.<String> emptyList());
+    EdmFunction function = functionImport.getUnboundFunction(Collections.<String> emptyList());
     assertEquals(functionName.getNamespace(), function.getNamespace());
     assertEquals(functionName.getName(), function.getName());
     assertEquals(functionName, function.getFullQualifiedName());

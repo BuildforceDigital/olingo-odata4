@@ -45,7 +45,7 @@ final class TypeUtil {
   static Map<String, String> createParameterMap() {
     return new TreeMap<String, String>(new Comparator<String>() {
       @Override
-      public int compare(final String o1, final String o2) {
+      public int compare(String o1, String o2) {
         return o1.compareToIgnoreCase(o2);
       }
     });
@@ -66,10 +66,10 @@ final class TypeUtil {
    * @param parameters as <code>;</code> separated <code>key=value</code> pairs
    * @param parameterMap map to which all parsed parameters are added
    */
-  static void parseParameters(final String parameters, final Map<String, String> parameterMap) {
+  static void parseParameters(String parameters, Map<String, String> parameterMap) {
     if (parameters != null) {
       for (String parameter : parameters.split(TypeUtil.PARAMETER_SEPARATOR)) {
-        final String[] keyValue = parseParameter(parameter);
+        String[] keyValue = parseParameter(parameter);
         parameterMap.put(keyValue[0], keyValue[1]);
       }
     }
@@ -89,7 +89,7 @@ final class TypeUtil {
    * @param parameter as <code>key=value</code> pair
    * @return <code>key</code> as first array value (as lower case) and <code>value</code> as second array value
    */
-  static String[] parseParameter(final String parameter) {
+  static String[] parseParameter(String parameter) {
     if (parameter.isEmpty()) {
       throw new IllegalArgumentException("An empty parameter is not allowed.");
     }
@@ -114,7 +114,7 @@ final class TypeUtil {
    * @param parameterValue value
    * @throws IllegalArgumentException if one of the above requirements is not met
    */
-  static void validateParameterNameAndValue(final String parameterName, final String parameterValue)
+  static void validateParameterNameAndValue(String parameterName, String parameterValue)
       throws IllegalArgumentException {
     if (parameterName == null || parameterName.isEmpty() || parameterName.indexOf(WHITESPACE_CHAR) >= 0) {
       throw new IllegalArgumentException("Illegal parameter name '" + parameterName + "'.");

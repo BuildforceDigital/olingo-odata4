@@ -30,7 +30,7 @@ public class ODataNotSupportedException extends ODataRuntimeException {
    *
    * @param msg message text for exception
    */
-  public ODataNotSupportedException(final String msg) {
+  public ODataNotSupportedException(String msg) {
     super(msg);
   }
 
@@ -40,7 +40,7 @@ public class ODataNotSupportedException extends ODataRuntimeException {
    * @param msg message text for exception
    * @param cause cause of exception
    */
-  public ODataNotSupportedException(final String msg, final Exception cause) {
+  public ODataNotSupportedException(String msg, Exception cause) {
     super(msg, cause);
   }
 
@@ -49,7 +49,7 @@ public class ODataNotSupportedException extends ODataRuntimeException {
    *
    * @param cause cause of exception
    */
-  public ODataNotSupportedException(final Exception cause) {
+  public ODataNotSupportedException(Exception cause) {
     super(cause);
   }
 

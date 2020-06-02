@@ -39,25 +39,25 @@ public class BatchFacadeImpl implements BatchFacade {
    * @param batchProcessor batch processor
    * @param isStrict       mode switch (currently not used)
    */
-  public BatchFacadeImpl(final ODataHandler oDataHandler, final BatchProcessor batchProcessor,
-                         final boolean isStrict) {
+  public BatchFacadeImpl(ODataHandler oDataHandler, BatchProcessor batchProcessor,
+                         boolean isStrict) {
     partHandler = new BatchPartHandler(oDataHandler, batchProcessor, this);
   }
 
   @Override
-  public ODataResponse handleODataRequest(final ODataRequest request)
+  public ODataResponse handleODataRequest(ODataRequest request)
       throws ODataApplicationException, ODataLibraryException {
     return partHandler.handleODataRequest(request);
   }
 
   @Override
-  public ODataResponsePart handleBatchRequest(final BatchRequestPart request)
+  public ODataResponsePart handleBatchRequest(BatchRequestPart request)
       throws ODataApplicationException, ODataLibraryException {
     return partHandler.handleBatchRequest(request);
   }
 
   @Override
-  public String extractBoundaryFromContentType(final String contentType) throws BatchDeserializerException {
+  public String extractBoundaryFromContentType(String contentType) throws BatchDeserializerException {
     return BatchParserCommon.getBoundary(contentType, 0);
   }
 }

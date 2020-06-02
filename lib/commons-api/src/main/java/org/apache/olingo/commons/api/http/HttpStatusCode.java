@@ -71,7 +71,7 @@ public enum HttpStatusCode {
   private final int code;
   private final String info;
 
-  HttpStatusCode(final int statusCode, final String info) {
+  HttpStatusCode(int statusCode, String info) {
     code = statusCode;
     this.info = info;
   }
@@ -81,8 +81,8 @@ public enum HttpStatusCode {
    * @param statusCode the numerical status code
    * @return the matching status enum object or null if no matching enum is defined
    */
-  public static HttpStatusCode fromStatusCode(final int statusCode) {
-    for (final HttpStatusCode s : HttpStatusCode.values()) {
+  public static HttpStatusCode fromStatusCode(int statusCode) {
+    for (HttpStatusCode s : HttpStatusCode.values()) {
       if (s.code == statusCode) {
         return s;
       }

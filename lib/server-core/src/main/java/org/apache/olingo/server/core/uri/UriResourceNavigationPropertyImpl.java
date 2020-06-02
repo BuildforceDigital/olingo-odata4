@@ -27,7 +27,7 @@ public class UriResourceNavigationPropertyImpl extends UriResourceWithKeysImpl i
 
   private final EdmNavigationProperty navigationProperty;
 
-  public UriResourceNavigationPropertyImpl(final EdmNavigationProperty property) {
+  public UriResourceNavigationPropertyImpl(EdmNavigationProperty property) {
     super(UriResourceKind.navigationProperty);
     navigationProperty = property;
   }

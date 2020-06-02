@@ -65,7 +65,7 @@ public class FixedFormatDeserializerTest {
     Mockito.when(property.isPrimitive()).thenReturn(true);
     Mockito.when(property.isUnicode()).thenReturn(true);
     Mockito.when(property.getMaxLength()).thenReturn(61);
-    final String value = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+    String value = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
         + "ÄÖÜ€\uFDFC\n"
         + String.valueOf(Character.toChars(0x1F603));
     assertEquals(value, deserializer.primitiveValue(IOUtils.toInputStream(value), property));

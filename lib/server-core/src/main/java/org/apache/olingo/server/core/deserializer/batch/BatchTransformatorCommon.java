@@ -32,9 +32,9 @@ public class BatchTransformatorCommon {
     // Private Utility Constructor
   }
 
-  public static void validateContentType(final Header headers, final ContentType expected)
+  public static void validateContentType(Header headers, ContentType expected)
       throws BatchDeserializerException {
-    final List<String> contentTypes = headers.getHeaders(HttpHeader.CONTENT_TYPE);
+    List<String> contentTypes = headers.getHeaders(HttpHeader.CONTENT_TYPE);
 
     if (contentTypes.isEmpty()) {
       throw new BatchDeserializerException("Missing content type", MessageKeys.MISSING_CONTENT_TYPE,
@@ -43,11 +43,11 @@ public class BatchTransformatorCommon {
     BatchParserCommon.parseContentType(contentTypes.get(0), expected, headers.getLineNumber());
   }
 
-  public static void validateContentTransferEncoding(final Header headers) throws BatchDeserializerException {
-    final HeaderField contentTransferField = headers.getHeaderField(BatchParserCommon.CONTENT_TRANSFER_ENCODING);
+  public static void validateContentTransferEncoding(Header headers) throws BatchDeserializerException {
+    HeaderField contentTransferField = headers.getHeaderField(BatchParserCommon.CONTENT_TRANSFER_ENCODING);
 
     if (contentTransferField != null) {
-      final List<String> contentTransferValues = contentTransferField.getValues();
+      List<String> contentTransferValues = contentTransferField.getValues();
       if (contentTransferValues.size() > 1
           || !BatchParserCommon.BINARY_ENCODING.equalsIgnoreCase(contentTransferValues.get(0))) {
         throw new BatchDeserializerException("Invalid Content-Transfer-Encoding header",
@@ -56,12 +56,12 @@ public class BatchTransformatorCommon {
     }
   }
 
-  public static int getContentLength(final Header headers) throws BatchDeserializerException {
-    final HeaderField contentLengthField = headers.getHeaderField(HttpHeader.CONTENT_LENGTH);
+  public static int getContentLength(Header headers) throws BatchDeserializerException {
+    HeaderField contentLengthField = headers.getHeaderField(HttpHeader.CONTENT_LENGTH);
 
     if (contentLengthField != null && contentLengthField.getValues().size() == 1) {
       try {
-        final int contentLength = Integer.parseInt(contentLengthField.getValues().get(0));
+        int contentLength = Integer.parseInt(contentLengthField.getValues().get(0));
 
         if (contentLength < 0) {
           throw new BatchDeserializerException("Invalid content length", MessageKeys.INVALID_CONTENT_LENGTH,
@@ -78,8 +78,8 @@ public class BatchTransformatorCommon {
     return -1;
   }
 
-  public static void validateHost(final Header headers, final String baseUri) throws BatchDeserializerException {
-    final HeaderField hostField = headers.getHeaderField(HttpHeader.HOST);
+  public static void validateHost(Header headers, String baseUri) throws BatchDeserializerException {
+    HeaderField hostField = headers.getHeaderField(HttpHeader.HOST);
 
     if (hostField != null &&
         (hostField.getValues().size() > 1

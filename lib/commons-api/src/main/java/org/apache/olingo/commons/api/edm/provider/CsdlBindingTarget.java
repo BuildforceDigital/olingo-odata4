@@ -67,7 +67,7 @@ public abstract class CsdlBindingTarget extends CsdlAbstractEdmItem implements C
    * @param name the name
    * @return the name
    */
-  public CsdlBindingTarget setName(final String name) {
+  public CsdlBindingTarget setName(String name) {
     this.name = name;
     return this;
   }
@@ -96,7 +96,7 @@ public abstract class CsdlBindingTarget extends CsdlAbstractEdmItem implements C
    * @param type the type
    * @return the type
    */
-  public CsdlBindingTarget setType(final String type) {
+  public CsdlBindingTarget setType(String type) {
     this.type = new FullQualifiedName(type);
     return this;
   }
@@ -107,7 +107,7 @@ public abstract class CsdlBindingTarget extends CsdlAbstractEdmItem implements C
    * @param type the type
    * @return the type
    */
-  public CsdlBindingTarget setType(final FullQualifiedName type) {
+  public CsdlBindingTarget setType(FullQualifiedName type) {
     this.type = type;
     return this;
   }
@@ -128,7 +128,7 @@ public abstract class CsdlBindingTarget extends CsdlAbstractEdmItem implements C
    * @return the navigation property bindings
    */
   public CsdlBindingTarget setNavigationPropertyBindings(
-      final List<CsdlNavigationPropertyBinding> navigationPropertyBindings) {
+      List<CsdlNavigationPropertyBinding> navigationPropertyBindings) {
     this.navigationPropertyBindings = navigationPropertyBindings;
     return this;
   }
@@ -143,7 +143,7 @@ public abstract class CsdlBindingTarget extends CsdlAbstractEdmItem implements C
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlBindingTarget setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlBindingTarget setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

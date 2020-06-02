@@ -29,7 +29,7 @@ public class DefaultDebugSupport implements DebugSupport {
   private OData odata;
 
   @Override
-  public void init(final OData odata) {
+  public void init(OData odata) {
     this.odata = odata;
   }
 
@@ -39,7 +39,7 @@ public class DefaultDebugSupport implements DebugSupport {
   }
 
   @Override
-  public ODataResponse createDebugResponse(final String debugFormat, final DebugInformation debugInfo) {
+  public ODataResponse createDebugResponse(String debugFormat, DebugInformation debugInfo) {
     // Check if debugFormat is supported by the library
     if (DebugSupport.ODATA_DEBUG_JSON.equalsIgnoreCase(debugFormat)
         || DebugSupport.ODATA_DEBUG_HTML.equalsIgnoreCase(debugFormat)

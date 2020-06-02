@@ -43,17 +43,17 @@ public class EdmTypeInfo {
     private Edm edm;
 	private boolean includeAnnotations;
 
-    public Builder setTypeExpression(final String typeExpression) {
+    public Builder setTypeExpression(String typeExpression) {
       this.typeExpression = typeExpression;
       return this;
     }
 
-    public Builder setEdm(final Edm edm) {
+    public Builder setEdm(Edm edm) {
       this.edm = edm;
       return this;
     }
 
-	public Builder setIncludeAnnotations(final boolean includeAnnotations) {
+	public Builder setIncludeAnnotations(boolean includeAnnotations) {
       this.includeAnnotations = includeAnnotations;
       return this;
     }
@@ -71,10 +71,10 @@ public class EdmTypeInfo {
   private EdmComplexType complexType;
   private EdmEntityType entityType;
 
-  private EdmTypeInfo(final Edm edm, final String typeExpression, final boolean includeAnnotations) {
+  private EdmTypeInfo(Edm edm, String typeExpression, boolean includeAnnotations) {
     String baseType;
-    final int collStartIdx = typeExpression.indexOf("Collection(");
-    final int collEndIdx = typeExpression.lastIndexOf(')');
+    int collStartIdx = typeExpression.indexOf("Collection(");
+    int collEndIdx = typeExpression.lastIndexOf(')');
     if (collStartIdx == -1) {
       baseType = typeExpression;
       collection = false;
@@ -94,7 +94,7 @@ public class EdmTypeInfo {
     String typeName;
     String namespace;
 
-    final int lastDotIdx = baseType.lastIndexOf('.');
+    int lastDotIdx = baseType.lastIndexOf('.');
     if (lastDotIdx == -1) {
       namespace = EdmPrimitiveType.EDM_NAMESPACE;
       typeName = baseType;
@@ -138,7 +138,7 @@ public class EdmTypeInfo {
     return serialize(true);
   }
 
-  private String serialize(final boolean external) {
+  private String serialize(boolean external) {
     StringBuilder serialize = new StringBuilder();
 
     if (external && (!isPrimitiveType() || isCollection())) {
@@ -217,7 +217,7 @@ public class EdmTypeInfo {
         null;
   }
 
-  public static EdmPrimitiveTypeKind determineTypeKind(final Object value) {
+  public static EdmPrimitiveTypeKind determineTypeKind(Object value) {
     if (value == null) {
       return null;
     } else if (value instanceof Boolean) {

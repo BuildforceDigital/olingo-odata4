@@ -34,7 +34,7 @@ public class BatchBodyPart implements BatchPart {
   private boolean isChangeSet;
   private List<BatchQueryOperation> requests;
 
-  public BatchBodyPart(final List<Line> message, final String boundary, final boolean isStrict) {
+  public BatchBodyPart(List<Line> message, String boundary, boolean isStrict) {
     this.boundary = boundary;
     this.isStrict = isStrict;
     remainingMessage.addAll(message);
@@ -49,8 +49,8 @@ public class BatchBodyPart implements BatchPart {
     return this;
   }
 
-  private boolean isChangeSet(final Header headers) throws BatchDeserializerException {
-    final List<String> contentTypes = headers.getHeaders(HttpHeader.CONTENT_TYPE);
+  private boolean isChangeSet(Header headers) throws BatchDeserializerException {
+    List<String> contentTypes = headers.getHeaders(HttpHeader.CONTENT_TYPE);
 
     if (contentTypes.isEmpty()) {
       throw new BatchDeserializerException("Missing content type",
@@ -67,15 +67,15 @@ public class BatchBodyPart implements BatchPart {
     return changeSet;
   }
 
-  private List<BatchQueryOperation> consumeRequest(final List<Line> remainingMessage)
+  private List<BatchQueryOperation> consumeRequest(List<Line> remainingMessage)
       throws BatchDeserializerException {
     return isChangeSet ? consumeChangeSet(remainingMessage) : consumeQueryOperation(remainingMessage);
   }
 
-  private List<BatchQueryOperation> consumeChangeSet(final List<Line> remainingMessage)
+  private List<BatchQueryOperation> consumeChangeSet(List<Line> remainingMessage)
       throws BatchDeserializerException {
-    final List<List<Line>> changeRequests = splitChangeSet(remainingMessage);
-    final List<BatchQueryOperation> requestList = new LinkedList<>();
+    List<List<Line>> changeRequests = splitChangeSet(remainingMessage);
+    List<BatchQueryOperation> requestList = new LinkedList<>();
 
     for (List<Line> changeRequest : changeRequests) {
       requestList.add(new BatchChangeSetPart(changeRequest, isStrict).parse());
@@ -84,17 +84,17 @@ public class BatchBodyPart implements BatchPart {
     return requestList;
   }
 
-  private List<List<Line>> splitChangeSet(final List<Line> remainingMessage) throws BatchDeserializerException {
+  private List<List<Line>> splitChangeSet(List<Line> remainingMessage) throws BatchDeserializerException {
 
-    final HeaderField contentTypeField = headers.getHeaderField(HttpHeader.CONTENT_TYPE);
-    final String changeSetBoundary = BatchParserCommon.getBoundary(contentTypeField.getValue(),
+    HeaderField contentTypeField = headers.getHeaderField(HttpHeader.CONTENT_TYPE);
+    String changeSetBoundary = BatchParserCommon.getBoundary(contentTypeField.getValue(),
         contentTypeField.getLineNumber());
     validateChangeSetBoundary(changeSetBoundary, headers);
 
     return BatchParserCommon.splitMessageByBoundary(remainingMessage, changeSetBoundary);
   }
 
-  private void validateChangeSetBoundary(final String changeSetBoundary, final Header header)
+  private void validateChangeSetBoundary(String changeSetBoundary, Header header)
       throws BatchDeserializerException {
     if (changeSetBoundary.equals(boundary)) {
       throw new BatchDeserializerException("Change set boundary is equals to batch request boundary",
@@ -103,19 +103,19 @@ public class BatchBodyPart implements BatchPart {
     }
   }
 
-  private List<BatchQueryOperation> consumeQueryOperation(final List<Line> remainingMessage)
+  private List<BatchQueryOperation> consumeQueryOperation(List<Line> remainingMessage)
       throws BatchDeserializerException {
-    final List<BatchQueryOperation> requestList = new LinkedList<>();
+    List<BatchQueryOperation> requestList = new LinkedList<>();
     requestList.add(new BatchQueryOperation(remainingMessage, isStrict).parse());
 
     return requestList;
   }
 
-  private boolean isContentTypeMultiPartMixed(final String contentType) {
+  private boolean isContentTypeMultiPartMixed(String contentType) {
     try {
       BatchParserCommon.parseContentType(contentType, ContentType.MULTIPART_MIXED, 0);
       return true;
-    } catch (final BatchDeserializerException e) {
+    } catch (BatchDeserializerException e) {
       return false;
     }
   }

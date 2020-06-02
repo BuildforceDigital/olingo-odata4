@@ -45,7 +45,7 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
       Collections.synchronizedMap(new LinkedHashMap<String, EdmKeyPropertyRef>());
   private List<EdmKeyPropertyRef> keyPropertyRefsList;
 
-  public EdmEntityTypeImpl(final Edm edm, final FullQualifiedName name, final CsdlEntityType entityType) {
+  public EdmEntityTypeImpl(Edm edm, FullQualifiedName name, CsdlEntityType entityType) {
     super(edm, name, EdmTypeKind.ENTITY, entityType);
     this.entityType = entityType;
     hasStream = entityType.hasStream();
@@ -60,9 +60,9 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
       }
       if (baseType == null
           || (baseType.isAbstract() && ((EdmEntityType) baseType).getKeyPropertyRefs().isEmpty())) {
-        final List<CsdlPropertyRef> key = entityType.getKey();
+        List<CsdlPropertyRef> key = entityType.getKey();
         if (key != null) {
-          final List<EdmKeyPropertyRef> edmKey = new ArrayList<EdmKeyPropertyRef>();
+          List<EdmKeyPropertyRef> edmKey = new ArrayList<EdmKeyPropertyRef>();
           for (CsdlPropertyRef ref : key) {
             edmKey.add(new EdmKeyPropertyRefImpl(this, ref));
           }
@@ -73,7 +73,7 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
     }
   }
 
-  protected void setEdmKeyPropertyRef(final List<EdmKeyPropertyRef> edmKey) {
+  protected void setEdmKeyPropertyRef(List<EdmKeyPropertyRef> edmKey) {
     for (EdmKeyPropertyRef ref : edmKey) {
       if (ref.getAlias() == null) {
         keyPredicateNames.add(ref.getName());
@@ -86,7 +86,7 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
   }
 
   @Override
-  protected EdmStructuredType buildBaseType(final FullQualifiedName baseTypeName) {
+  protected EdmStructuredType buildBaseType(FullQualifiedName baseTypeName) {
     EdmEntityType baseType = null;
     if (baseTypeName != null) {
       baseType = edm.getEntityType(baseTypeName);
@@ -125,9 +125,9 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
   }
 
   @Override
-  public EdmKeyPropertyRef getKeyPropertyRef(final String keyPredicateName) {
+  public EdmKeyPropertyRef getKeyPropertyRef(String keyPredicateName) {
     checkBaseType();
-    final EdmKeyPropertyRef edmKeyPropertyRef = keyPropertyRefs.get(keyPredicateName);
+    EdmKeyPropertyRef edmKeyPropertyRef = keyPropertyRefs.get(keyPredicateName);
     if (edmKeyPropertyRef == null && entityBaseType != null) {
       return entityBaseType.getKeyPropertyRef(keyPredicateName);
     }

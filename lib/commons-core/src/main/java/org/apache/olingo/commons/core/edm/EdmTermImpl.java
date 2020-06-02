@@ -39,7 +39,7 @@ public class EdmTermImpl extends AbstractEdmNamed implements EdmTerm {
   private EdmTerm baseTerm;
   private List<TargetType> appliesTo;
 
-  public EdmTermImpl(final Edm edm, final String namespace, final CsdlTerm term) {
+  public EdmTermImpl(Edm edm, String namespace, CsdlTerm term) {
     super(edm, term.getName(), term);
     this.term = term;
     fqn = new FullQualifiedName(namespace, term.getName());

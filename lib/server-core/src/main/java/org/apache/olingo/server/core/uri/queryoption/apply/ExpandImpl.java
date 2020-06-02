@@ -38,7 +38,7 @@ public class ExpandImpl implements Expand {
     return expandOption;
   }
 
-  public ExpandImpl setExpandOption(final ExpandOption expandOption) {
+  public ExpandImpl setExpandOption(ExpandOption expandOption) {
     this.expandOption = expandOption;
     return this;
   }

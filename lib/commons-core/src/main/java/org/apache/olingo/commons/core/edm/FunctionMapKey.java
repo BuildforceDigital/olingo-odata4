@@ -35,8 +35,8 @@ public final class FunctionMapKey {
 
   private final List<String> parameterNames;
 
-  public FunctionMapKey(final FullQualifiedName functionName, final FullQualifiedName bindingParameterTypeName,
-      final Boolean isBindingParameterCollection, final List<String> parameterNames) {
+  public FunctionMapKey(FullQualifiedName functionName, FullQualifiedName bindingParameterTypeName,
+                        Boolean isBindingParameterCollection, List<String> parameterNames) {
 
     this.functionName = functionName;
     if (bindingParameterTypeName != null && isBindingParameterCollection == null) {
@@ -62,14 +62,14 @@ public final class FunctionMapKey {
   }
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
-    if ((obj == null) || !(obj instanceof FunctionMapKey)) {
+    if (!(obj instanceof FunctionMapKey)) {
       return false;
     }
-    final FunctionMapKey other = (FunctionMapKey) obj;
+    FunctionMapKey other = (FunctionMapKey) obj;
 
     if (functionName.equals(other.functionName)
         && (bindingParameterTypeName == null && other.bindingParameterTypeName == null)

@@ -63,24 +63,24 @@ public class ExpandParser {
   private final Map<String, AliasQueryOption> aliases;
   private final Collection<String> crossjoinEntitySetNames;
 
-  public ExpandParser(final Edm edm, final OData odata, final Map<String, AliasQueryOption> aliases,
-      final Collection<String> crossjoinEntitySetNames) {
+  public ExpandParser(Edm edm, OData odata, Map<String, AliasQueryOption> aliases,
+                      Collection<String> crossjoinEntitySetNames) {
     this.edm = edm;
     this.odata = odata;
     this.aliases = aliases;
     this.crossjoinEntitySetNames = crossjoinEntitySetNames;
   }
 
-  public ExpandOption parse(UriTokenizer tokenizer, final EdmStructuredType referencedType)
+  public ExpandOption parse(UriTokenizer tokenizer, EdmStructuredType referencedType)
       throws UriParserException, UriValidationException {
     ExpandOptionImpl expandOption = new ExpandOptionImpl();
     do {
       // In the crossjoin case the start has to be an EntitySet name which will dictate the reference type
       if (crossjoinEntitySetNames != null && !crossjoinEntitySetNames.isEmpty()) {
-        final ExpandItem item = parseCrossJoinItem(tokenizer);
+        ExpandItem item = parseCrossJoinItem(tokenizer);
         expandOption.addExpandItem(item);
       } else {
-        final ExpandItem item = parseItem(tokenizer, referencedType);
+        ExpandItem item = parseItem(tokenizer, referencedType);
         expandOption.addExpandItem(item);
       }
     } while (tokenizer.next(TokenKind.COMMA));
@@ -96,7 +96,7 @@ public class ExpandParser {
       String entitySetName = tokenizer.getText();
       if (crossjoinEntitySetNames.contains(entitySetName)) {
         UriInfoImpl resource = new UriInfoImpl().setKind(UriInfoKind.resource);
-        final UriResourceEntitySetImpl entitySetResourceSegment =
+        UriResourceEntitySetImpl entitySetResourceSegment =
             new UriResourceEntitySetImpl(edm.getEntityContainer().getEntitySet(entitySetName));
         resource.addResourcePart(entitySetResourceSegment);
 
@@ -113,7 +113,7 @@ public class ExpandParser {
     return item;
   }
 
-  private ExpandItem parseItem(UriTokenizer tokenizer, final EdmStructuredType referencedType)
+  private ExpandItem parseItem(UriTokenizer tokenizer, EdmStructuredType referencedType)
       throws UriParserException, UriValidationException {
     ExpandItemImpl item = new ExpandItemImpl();
     if (tokenizer.next(TokenKind.STAR)) {
@@ -129,7 +129,7 @@ public class ExpandParser {
       }
 
     } else {
-      final EdmStructuredType typeCast = ParserHelper.parseTypeCast(tokenizer, edm, referencedType);
+      EdmStructuredType typeCast = ParserHelper.parseTypeCast(tokenizer, edm, referencedType);
       if (typeCast != null) {
         item.setTypeFilter(typeCast);
         ParserHelper.requireNext(tokenizer, TokenKind.SLASH);
@@ -145,7 +145,7 @@ public class ExpandParser {
         hasSlash = true;
         if (lastPart instanceof UriResourceNavigation) {
           UriResourceNavigationPropertyImpl navigationResource = (UriResourceNavigationPropertyImpl) lastPart;
-          final EdmNavigationProperty navigationProperty = navigationResource.getProperty();
+          EdmNavigationProperty navigationProperty = navigationResource.getProperty();
           typeCastSuffix = ParserHelper.parseTypeCast(tokenizer, edm, navigationProperty.getType());
           if (typeCastSuffix != null) {
             if (navigationProperty.isCollection()) {
@@ -161,9 +161,9 @@ public class ExpandParser {
         if(lastPart instanceof UriResourcePrimitivePropertyImpl){     
           item.setResourcePath(resource);
         }else{
-        final EdmStructuredType newReferencedType = typeCastSuffix != null ? typeCastSuffix 
+        EdmStructuredType newReferencedType = typeCastSuffix != null ? typeCastSuffix
           : (EdmStructuredType) lastPart.getType();
-        final boolean newReferencedIsCollection = lastPart.isCollection();
+        boolean newReferencedIsCollection = lastPart.isCollection();
         if (hasSlash || tokenizer.next(TokenKind.SLASH)) {
           if (tokenizer.next(TokenKind.REF)) {
             resource.addResourcePart(new UriResourceRefImpl());
@@ -186,20 +186,20 @@ public class ExpandParser {
     return item;
   }
 
-  protected static UriInfoImpl parseExpandPath(UriTokenizer tokenizer, final Edm edm,
-      final EdmStructuredType referencedType, ExpandItemImpl item) throws UriParserException {
+  protected static UriInfoImpl parseExpandPath(UriTokenizer tokenizer, Edm edm,
+      EdmStructuredType referencedType, ExpandItemImpl item) throws UriParserException {
     UriInfoImpl resource = new UriInfoImpl().setKind(UriInfoKind.resource);
 
     EdmStructuredType type = referencedType;
     String name = null;
     while (tokenizer.next(TokenKind.ODataIdentifier)) {
       name = tokenizer.getText();
-      final EdmProperty property = type.getStructuralProperty(name);
+      EdmProperty property = type.getStructuralProperty(name);
       if (property != null && property.getType().getKind() == EdmTypeKind.COMPLEX) {
         type = (EdmStructuredType) property.getType();
         UriResourceComplexPropertyImpl complexResource = new UriResourceComplexPropertyImpl(property);
         ParserHelper.requireNext(tokenizer, TokenKind.SLASH);
-        final EdmStructuredType typeCast = ParserHelper.parseTypeCast(tokenizer, edm, type);
+        EdmStructuredType typeCast = ParserHelper.parseTypeCast(tokenizer, edm, type);
         if (typeCast != null) {
           complexResource.setTypeFilter(typeCast);
           ParserHelper.requireNext(tokenizer, TokenKind.SLASH);
@@ -209,10 +209,10 @@ public class ExpandParser {
       }
     }
 
-    final EdmNavigationProperty navigationProperty = type.getNavigationProperty(name);
+    EdmNavigationProperty navigationProperty = type.getNavigationProperty(name);
     if (navigationProperty == null) {
       //For handling $expand with Stream Properties in version 4.01
-      final EdmProperty streamProperty = (EdmProperty) type.getProperty(name);
+      EdmProperty streamProperty = (EdmProperty) type.getProperty(name);
       if(streamProperty != null && streamProperty.getType() ==  EdmPrimitiveTypeFactory.
           getInstance(EdmPrimitiveTypeKind.Stream)){
         resource.addResourcePart(new UriResourcePrimitivePropertyImpl(streamProperty));
@@ -231,9 +231,9 @@ public class ExpandParser {
   }
 
   private void parseOptions(UriTokenizer tokenizer,
-      final EdmStructuredType referencedType, final boolean referencedIsCollection,
+      EdmStructuredType referencedType, boolean referencedIsCollection,
       ExpandItemImpl item,
-      final boolean forRef, final boolean forCount) throws UriParserException, UriValidationException {
+      boolean forRef, boolean forCount) throws UriParserException, UriValidationException {
     if (tokenizer.next(TokenKind.OPEN)) {
       do {
         SystemQueryOption systemQueryOption;
@@ -273,7 +273,7 @@ public class ExpandParser {
         } else if (!forCount && tokenizer.next(TokenKind.SKIP)) {
           ParserHelper.requireNext(tokenizer, TokenKind.EQ);
           ParserHelper.requireNext(tokenizer, TokenKind.IntegerValue);
-          final int value = ParserHelper.parseNonNegativeInteger(SystemQueryOptionKind.SKIP.toString(),
+          int value = ParserHelper.parseNonNegativeInteger(SystemQueryOptionKind.SKIP.toString(),
               tokenizer.getText(), true);
           SkipOptionImpl skipOption = new SkipOptionImpl();
           skipOption.setText(tokenizer.getText());
@@ -283,7 +283,7 @@ public class ExpandParser {
         } else if (!forCount && tokenizer.next(TokenKind.TOP)) {
           ParserHelper.requireNext(tokenizer, TokenKind.EQ);
           ParserHelper.requireNext(tokenizer, TokenKind.IntegerValue);
-          final int value = ParserHelper.parseNonNegativeInteger(SystemQueryOptionKind.TOP.toString(),
+          int value = ParserHelper.parseNonNegativeInteger(SystemQueryOptionKind.TOP.toString(),
               tokenizer.getText(), true);
           TopOptionImpl topOption = new TopOptionImpl();
           topOption.setText(tokenizer.getText());
@@ -302,7 +302,7 @@ public class ExpandParser {
         }
         try {
           item.setSystemQueryOption(systemQueryOption);
-        } catch (final ODataRuntimeException e) {
+        } catch (ODataRuntimeException e) {
           throw new UriParserSyntaxException("Double system query option '" + systemQueryOption.getName() + "'.", e,
               UriParserSyntaxException.MessageKeys.DOUBLE_SYSTEM_QUERY_OPTION, systemQueryOption.getName());
         }
@@ -312,7 +312,7 @@ public class ExpandParser {
   }
 
   private LevelsExpandOption parseLevels(UriTokenizer tokenizer) throws UriParserException {
-    final LevelsOptionImpl option = new LevelsOptionImpl();
+    LevelsOptionImpl option = new LevelsOptionImpl();
     if (tokenizer.next(TokenKind.MAX)) {
       option.setText(tokenizer.getText());
       option.setMax();

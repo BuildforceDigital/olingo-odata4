@@ -27,11 +27,11 @@ import org.apache.olingo.server.api.etag.PreconditionException;
 public class ETagHelperImpl implements ETagHelper {
 
   @Override
-  public boolean checkReadPreconditions(final String eTag,
-      final Collection<String> ifMatchHeaders, final Collection<String> ifNoneMatchHeaders)
+  public boolean checkReadPreconditions(String eTag,
+                                        Collection<String> ifMatchHeaders, Collection<String> ifNoneMatchHeaders)
           throws PreconditionException {
     if (eTag != null) {
-      final ETagInformation ifMatch = createETagInformation(ifMatchHeaders);
+      ETagInformation ifMatch = createETagInformation(ifMatchHeaders);
       if (!ifMatch.isMatchedBy(eTag) && !ifMatch.getETags().isEmpty()) {
         throw new PreconditionException("The If-Match precondition is not fulfilled.",
             PreconditionException.MessageKeys.FAILED);
@@ -42,12 +42,12 @@ public class ETagHelperImpl implements ETagHelper {
   }
 
   @Override
-  public void checkChangePreconditions(final String eTag,
-      final Collection<String> ifMatchHeaders, final Collection<String> ifNoneMatchHeaders)
+  public void checkChangePreconditions(String eTag,
+                                       Collection<String> ifMatchHeaders, Collection<String> ifNoneMatchHeaders)
           throws PreconditionException {
     if (eTag != null) {
-      final ETagInformation ifMatch = createETagInformation(ifMatchHeaders);
-      final ETagInformation ifNoneMatch = createETagInformation(ifNoneMatchHeaders);
+      ETagInformation ifMatch = createETagInformation(ifMatchHeaders);
+      ETagInformation ifNoneMatch = createETagInformation(ifNoneMatchHeaders);
       if (!ifMatch.isMatchedBy(eTag) && !ifMatch.getETags().isEmpty()
           || ifNoneMatch.isMatchedBy(eTag)) {
         throw new PreconditionException("The preconditions are not fulfilled.",
@@ -63,9 +63,9 @@ public class ETagHelperImpl implements ETagHelper {
    * @param values the collection of header values
    * @return an {@link ETagInformation} instance
    */
-  protected ETagInformation createETagInformation(final Collection<String> values) {
-    final Collection<String> eTags = ETagParser.parse(values);
-    final boolean isAll = eTags.size() == 1 && "*".equals(eTags.iterator().next());
+  protected ETagInformation createETagInformation(Collection<String> values) {
+    Collection<String> eTags = ETagParser.parse(values);
+    boolean isAll = eTags.size() == 1 && "*".equals(eTags.iterator().next());
     return new ETagInformation(isAll,
         isAll ? Collections.<String> emptySet() : Collections.unmodifiableCollection(eTags));
   }

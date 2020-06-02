@@ -177,7 +177,7 @@ public class EdmImplCallCreateTest {
   private class LocalEdm extends AbstractEdm {
 
     @Override
-    public EdmEntityContainer createEntityContainer(final FullQualifiedName fqn) {
+    public EdmEntityContainer createEntityContainer(FullQualifiedName fqn) {
       if (fqn == null || FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmEntityContainer container = mock(EdmEntityContainer.class);
         when(container.getNamespace()).thenReturn(FQN.getNamespace());
@@ -188,7 +188,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    public EdmEnumType createEnumType(final FullQualifiedName fqn) {
+    public EdmEnumType createEnumType(FullQualifiedName fqn) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmEnumType enumType = mock(EdmEnumType.class);
         when(enumType.getNamespace()).thenReturn(fqn.getNamespace());
@@ -199,7 +199,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    public EdmTypeDefinition createTypeDefinition(final FullQualifiedName fqn) {
+    public EdmTypeDefinition createTypeDefinition(FullQualifiedName fqn) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmTypeDefinition typeDefinition = mock(EdmTypeDefinition.class);
         when(typeDefinition.getNamespace()).thenReturn(fqn.getNamespace());
@@ -210,7 +210,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    public EdmEntityType createEntityType(final FullQualifiedName fqn) {
+    public EdmEntityType createEntityType(FullQualifiedName fqn) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmEntityType entityType = mock(EdmEntityType.class);
         when(entityType.getNamespace()).thenReturn(fqn.getNamespace());
@@ -221,7 +221,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    public EdmComplexType createComplexType(final FullQualifiedName fqn) {
+    public EdmComplexType createComplexType(FullQualifiedName fqn) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmComplexType complexType = mock(EdmComplexType.class);
         when(complexType.getNamespace()).thenReturn(fqn.getNamespace());
@@ -232,8 +232,8 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    public EdmAction createBoundAction(final FullQualifiedName fqn, final FullQualifiedName bindingParameterTypeName,
-        final Boolean isBindingParameterCollection) {
+    public EdmAction createBoundAction(FullQualifiedName fqn, FullQualifiedName bindingParameterTypeName,
+                                       Boolean isBindingParameterCollection) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmAction action = mock(EdmAction.class);
         when(action.getNamespace()).thenReturn(fqn.getNamespace());
@@ -244,9 +244,9 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    public EdmFunction createBoundFunction(final FullQualifiedName fqn,
-        final FullQualifiedName bindingParameterTypeName,
-        final Boolean isBindingParameterCollection, final List<String> bindingParameterNames) {
+    public EdmFunction createBoundFunction(FullQualifiedName fqn,
+                                           FullQualifiedName bindingParameterTypeName,
+                                           Boolean isBindingParameterCollection, List<String> bindingParameterNames) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmFunction function = mock(EdmFunction.class);
         when(function.getNamespace()).thenReturn(fqn.getNamespace());
@@ -262,7 +262,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    protected EdmAction createUnboundAction(final FullQualifiedName fqn) {
+    protected EdmAction createUnboundAction(FullQualifiedName fqn) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmAction action = mock(EdmAction.class);
         when(action.getNamespace()).thenReturn(fqn.getNamespace());
@@ -273,7 +273,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    protected List<EdmFunction> createUnboundFunctions(final FullQualifiedName fqn) {
+    protected List<EdmFunction> createUnboundFunctions(FullQualifiedName fqn) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmFunction function = mock(EdmFunction.class);
         when(function.getNamespace()).thenReturn(fqn.getNamespace());
@@ -284,7 +284,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    protected EdmFunction createUnboundFunction(final FullQualifiedName fqn, final List<String> parameterNames) {
+    protected EdmFunction createUnboundFunction(FullQualifiedName fqn, List<String> parameterNames) {
       if (FQN.getNamespace().equals(fqn.getNamespace()) && FQN.getName().equals(fqn.getName())) {
         EdmFunction function = mock(EdmFunction.class);
         when(function.getNamespace()).thenReturn(fqn.getNamespace());
@@ -300,7 +300,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    protected EdmTerm createTerm(final FullQualifiedName termName) {
+    protected EdmTerm createTerm(FullQualifiedName termName) {
       if (FQN.equals(termName)) {
         EdmTerm term = mock(EdmTerm.class);
         when(term.getFullQualifiedName()).thenReturn(FQN);
@@ -310,7 +310,7 @@ public class EdmImplCallCreateTest {
     }
 
     @Override
-    protected EdmAnnotations createAnnotationGroup(final FullQualifiedName targetName, String qualifier) {
+    protected EdmAnnotations createAnnotationGroup(FullQualifiedName targetName, String qualifier) {
       if (FQN.equals(targetName) && qualifier == null) {
         EdmAnnotations annotationGroup = mock(EdmAnnotations.class);
         when(annotationGroup.getQualifier()).thenReturn(qualifier);

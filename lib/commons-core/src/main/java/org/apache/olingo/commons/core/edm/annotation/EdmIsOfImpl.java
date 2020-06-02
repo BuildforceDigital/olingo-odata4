@@ -34,7 +34,7 @@ public class EdmIsOfImpl extends AbstractEdmAnnotatableDynamicExpression impleme
   private EdmExpression value;
   private EdmType type;
 
-  public EdmIsOfImpl(final Edm edm, final CsdlIsOf isOf) {
+  public EdmIsOfImpl(Edm edm, CsdlIsOf isOf) {
     super(edm, "IsOf", isOf);
     this.edm = edm;
     this.isOf = isOf;
@@ -66,7 +66,7 @@ public class EdmIsOfImpl extends AbstractEdmAnnotatableDynamicExpression impleme
       if(isOf.getType() == null){
         throw new EdmException("Must specify a type for an IsOf expression.");
       }
-      final EdmTypeInfo typeInfo = new EdmTypeInfo.Builder().setEdm(edm).setTypeExpression(isOf.getType()).build();
+      EdmTypeInfo typeInfo = new EdmTypeInfo.Builder().setEdm(edm).setTypeExpression(isOf.getType()).build();
       type = typeInfo.getType();
     }
     return type;

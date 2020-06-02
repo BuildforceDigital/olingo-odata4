@@ -38,7 +38,7 @@ public class DynamicProperty implements EdmProperty {
   private Integer scale;
 
   /** Creates a dynamic property with a mandatory name and an optional type. */
-  public DynamicProperty(final String name, final EdmType type) {
+  public DynamicProperty(String name, EdmType type) {
     this.name = name;
     propertyType = type;
   }
@@ -109,7 +109,7 @@ public class DynamicProperty implements EdmProperty {
   }
 
   @Override
-  public EdmAnnotation getAnnotation(final EdmTerm term, final String qualifier) {
+  public EdmAnnotation getAnnotation(EdmTerm term, String qualifier) {
     return null;
   }
 

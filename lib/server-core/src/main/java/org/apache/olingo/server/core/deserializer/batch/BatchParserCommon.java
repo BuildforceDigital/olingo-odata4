@@ -53,7 +53,7 @@ public class BatchParserCommon {
   //                      / DIGIT / ALPHA
   // For the field-name the specification is followed strictly,
   // but for the field-value the pattern currently accepts more than specified.
-  private static final Pattern PATTERN_HEADER_LINE = Pattern.compile("((?:\\w|[!#$%\\&'*+\\-.^`|~])+):\\s?(.*)\\s*");
+  private static final Pattern PATTERN_HEADER_LINE = Pattern.compile("((?:\\w|[!#$%&'*+\\-.^`|~])+):\\s?(.*)\\s*");
 
   public static final String CONTENT_TRANSFER_ENCODING = "Content-Transfer-Encoding";
 
@@ -62,14 +62,14 @@ public class BatchParserCommon {
 
   private BatchParserCommon() { /* private constructor for helper class */ }
 
-  public static String getBoundary(final String contentType, final int line) throws BatchDeserializerException {
-    final ContentType type = parseContentType(contentType, ContentType.MULTIPART_MIXED, line);
-    final String boundary = type.getParameter(BOUNDARY);
+  public static String getBoundary(String contentType, int line) throws BatchDeserializerException {
+    ContentType type = parseContentType(contentType, ContentType.MULTIPART_MIXED, line);
+    String boundary = type.getParameter(BOUNDARY);
     if (boundary == null) {
       throw new BatchDeserializerException("Missing boundary.",
           BatchDeserializerException.MessageKeys.MISSING_BOUNDARY_DELIMITER, Integer.toString(line));
     }
-    final Matcher matcher = PATTERN_BOUNDARY.matcher(boundary);
+    Matcher matcher = PATTERN_BOUNDARY.matcher(boundary);
     if (matcher.matches()) {
       return matcher.group(1) == null ? matcher.group(2) : matcher.group(1);
     } else {
@@ -89,7 +89,7 @@ public class BatchParserCommon {
    * @return the parsed content type or if not compatible or parseable an exception is thrown (never returns null)
    * @throws BatchDeserializerException
    */
-  public static ContentType parseContentType(final String contentType, final ContentType expected, final int line)
+  public static ContentType parseContentType(String contentType, ContentType expected, int line)
       throws BatchDeserializerException {
     if (contentType == null) {
       throw new BatchDeserializerException("Missing content type",
@@ -98,7 +98,7 @@ public class BatchParserCommon {
     ContentType type;
     try {
       type = ContentType.create(contentType);
-    } catch (final IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       throw new BatchDeserializerException("Invalid content type.", e,
           BatchDeserializerException.MessageKeys.INVALID_CONTENT_TYPE, Integer.toString(line));
     }
@@ -111,15 +111,15 @@ public class BatchParserCommon {
     }
   }
 
-  public static List<List<Line>> splitMessageByBoundary(final List<Line> message, final String boundary)
+  public static List<List<Line>> splitMessageByBoundary(List<Line> message, String boundary)
       throws BatchDeserializerException {
-    final List<List<Line>> messageParts = new LinkedList<>();
+    List<List<Line>> messageParts = new LinkedList<>();
     List<Line> currentPart = new LinkedList<>();
     boolean isEndReached = false;
 
-    final String quotedBoundary = Pattern.quote(boundary);
-    final Pattern boundaryDelimiterPattern = Pattern.compile("--" + quotedBoundary + "--\\s*");
-    final Pattern boundaryPattern = Pattern.compile("--" + quotedBoundary + "\\s*");
+    String quotedBoundary = Pattern.quote(boundary);
+    Pattern boundaryDelimiterPattern = Pattern.compile("--" + quotedBoundary + "--\\s*");
+    Pattern boundaryPattern = Pattern.compile("--" + quotedBoundary + "\\s*");
 
     for (Line currentLine : message) {
       if (boundaryDelimiterPattern.matcher(currentLine.toString()).matches()) {
@@ -145,7 +145,7 @@ public class BatchParserCommon {
     }
 
     if (!isEndReached) {
-      final int lineNumber = (!message.isEmpty()) ? message.get(0).getLineNumber() : 0;
+      int lineNumber = (!message.isEmpty()) ? message.get(0).getLineNumber() : 0;
       throw new BatchDeserializerException("Missing close boundary delimiter",
           BatchDeserializerException.MessageKeys.MISSING_CLOSE_DELIMITER, Integer.toString(lineNumber));
     }
@@ -153,14 +153,14 @@ public class BatchParserCommon {
     return messageParts;
   }
 
-  private static void removeEndingCRLFFromList(final List<Line> list) {
+  private static void removeEndingCRLFFromList(List<Line> list) {
     if (!list.isEmpty()) {
       Line lastLine = list.remove(list.size() - 1);
       list.add(removeEndingCRLF(lastLine));
     }
   }
 
-  public static Line removeEndingCRLF(final Line line) {
+  public static Line removeEndingCRLF(Line line) {
     Matcher matcher = PATTERN_LAST_CRLF.matcher(line.toString());
     if (matcher.matches()) {
       return new Line(matcher.group(1), line.getLineNumber());
@@ -169,16 +169,16 @@ public class BatchParserCommon {
     }
   }
 
-  public static Header consumeHeaders(final List<Line> remainingMessage) {
-    final int headerLineNumber = !remainingMessage.isEmpty() ? remainingMessage.get(0).getLineNumber() : 0;
-    final Header headers = new Header(headerLineNumber);
-    final Iterator<Line> iter = remainingMessage.iterator();
+  public static Header consumeHeaders(List<Line> remainingMessage) {
+    int headerLineNumber = !remainingMessage.isEmpty() ? remainingMessage.get(0).getLineNumber() : 0;
+    Header headers = new Header(headerLineNumber);
+    Iterator<Line> iter = remainingMessage.iterator();
     Line currentLine;
     boolean isHeader = true;
 
     while (iter.hasNext() && isHeader) {
       currentLine = iter.next();
-      final Matcher headerMatcher = PATTERN_HEADER_LINE.matcher(currentLine.toString());
+      Matcher headerMatcher = PATTERN_HEADER_LINE.matcher(currentLine.toString());
 
       if (headerMatcher.matches() && headerMatcher.groupCount() == 2) {
         iter.remove();
@@ -195,27 +195,27 @@ public class BatchParserCommon {
     return headers;
   }
 
-  public static void consumeBlankLine(final List<Line> remainingMessage, final boolean isStrict)
+  public static void consumeBlankLine(List<Line> remainingMessage, boolean isStrict)
       throws BatchDeserializerException {
     if (!remainingMessage.isEmpty() && remainingMessage.get(0).toString().matches("\\s*\r?\n\\s*")) {
       remainingMessage.remove(0);
     } else {
       if (isStrict) {
-        final int lineNumber = (!remainingMessage.isEmpty()) ? remainingMessage.get(0).getLineNumber() : 0;
+        int lineNumber = (!remainingMessage.isEmpty()) ? remainingMessage.get(0).getLineNumber() : 0;
         throw new BatchDeserializerException("Missing blank line",
             BatchDeserializerException.MessageKeys.MISSING_BLANK_LINE, "[None]", Integer.toString(lineNumber));
       }
     }
   }
 
-  public static InputStream convertLineListToInputStream(final List<Line> messageList, final Charset charset) {
-    final String message = lineListToString(messageList);
+  public static InputStream convertLineListToInputStream(List<Line> messageList, Charset charset) {
+    String message = lineListToString(messageList);
 
     return new ByteArrayInputStream(message.getBytes(charset));
   }
 
-  private static String lineListToString(final List<Line> messageList) {
-    final StringBuilder builder = new StringBuilder();
+  private static String lineListToString(List<Line> messageList) {
+    StringBuilder builder = new StringBuilder();
 
     for (Line currentLine : messageList) {
       builder.append(currentLine.toString());
@@ -224,16 +224,16 @@ public class BatchParserCommon {
     return builder.toString();
   }
 
-  public static String trimLineListToLength(final List<Line> list, final int length) {
-    final String message = lineListToString(list);
-    final int lastIndex = Math.min(length, message.length());
+  public static String trimLineListToLength(List<Line> list, int length) {
+    String message = lineListToString(list);
+    int lastIndex = Math.min(length, message.length());
 
     return (lastIndex > 0) ? message.substring(0, lastIndex) : "";
   }
 
-  public static InputStream convertLineListToInputStream(final List<Line> list, final Charset charset,
-      final int length) {
-    final String message = trimLineListToLength(list, length);
+  public static InputStream convertLineListToInputStream(List<Line> list, Charset charset,
+                                                         int length) {
+    String message = trimLineListToLength(list, length);
 
     return new ByteArrayInputStream(message.getBytes(charset));
   }

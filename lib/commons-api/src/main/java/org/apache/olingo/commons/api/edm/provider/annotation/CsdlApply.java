@@ -56,7 +56,7 @@ public class CsdlApply extends CsdlDynamicExpression implements CsdlAnnotatable 
     return function;
   }
 
-  public CsdlApply setFunction(final String function) {
+  public CsdlApply setFunction(String function) {
     this.function = function;
     return this;
   }
@@ -83,11 +83,11 @@ public class CsdlApply extends CsdlDynamicExpression implements CsdlAnnotatable 
       return false;
     }
     CsdlApply annotApply = (CsdlApply) obj;
-    return (this.getFunction() == null ? annotApply.getFunction() == null :
-      this.getFunction().equals(annotApply.getFunction()))
-      && (this.getParameters() == null ? annotApply.getParameters() == null :
+    return (getFunction() == null ? annotApply.getFunction() == null :
+            getFunction().equals(annotApply.getFunction()))
+      && (getParameters() == null ? annotApply.getParameters() == null :
         checkParamaters(annotApply.getParameters()))
-        && (this.getAnnotations() == null ? annotApply.getAnnotations() == null :
+        && (getAnnotations() == null ? annotApply.getAnnotations() == null :
           checkAnnotations(annotApply.getAnnotations()));
   }
   
@@ -95,9 +95,9 @@ public class CsdlApply extends CsdlDynamicExpression implements CsdlAnnotatable 
     if (annotApplyannotations == null) {
       return false;
     }
-    if (this.getAnnotations().size() == annotApplyannotations.size()) {
-      for (int i = 0; i < this.getAnnotations().size(); i++) {
-        if (!this.getAnnotations().get(i).equals(annotApplyannotations.get(i))) {
+    if (getAnnotations().size() == annotApplyannotations.size()) {
+      for (int i = 0; i < getAnnotations().size(); i++) {
+        if (!getAnnotations().get(i).equals(annotApplyannotations.get(i))) {
           return false;
         }
       }
@@ -111,9 +111,9 @@ public class CsdlApply extends CsdlDynamicExpression implements CsdlAnnotatable 
     if (annotApplyParams == null) {
       return false;
     }
-    if (this.getParameters().size() == annotApplyParams.size()) {
-      for (int i = 0; i < this.getParameters().size(); i++) {
-        if (!this.getParameters().get(i).equals(annotApplyParams.get(i))) {
+    if (getParameters().size() == annotApplyParams.size()) {
+      for (int i = 0; i < getParameters().size(); i++) {
+        if (!getParameters().get(i).equals(annotApplyParams.get(i))) {
           return false;
         }
       }

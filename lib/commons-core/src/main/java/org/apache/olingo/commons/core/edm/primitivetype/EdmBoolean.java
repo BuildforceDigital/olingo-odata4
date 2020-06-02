@@ -37,21 +37,21 @@ public final class EdmBoolean extends SingletonPrimitiveType {
   }
 
   @Override
-  public boolean validate(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) {
+  public boolean validate(String value,
+                          Boolean isNullable, Integer maxLength, Integer precision,
+                          Integer scale, Boolean isUnicode) {
 
     return value == null ? isNullable == null || isNullable : validateLiteral(value);
   }
 
-  private static boolean validateLiteral(final String value) {
+  private static boolean validateLiteral(String value) {
     return "true".equals(value) || "false".equals(value);
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode, Class<T> returnType) throws EdmPrimitiveTypeException {
 
     if (validateLiteral(value)) {
       if (returnType.isAssignableFrom(Boolean.class)) {
@@ -65,9 +65,9 @@ public final class EdmBoolean extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     if (value instanceof Boolean) {
       return Boolean.toString((Boolean) value);

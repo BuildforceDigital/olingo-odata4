@@ -32,7 +32,7 @@ public class EdmLabeledElementImpl
 
   public EdmLabeledElementImpl(Edm edm, CsdlLabeledElement csdlExp) {
     super(edm, "LabeledElement", csdlExp);
-    this.csdlLableledElement = csdlExp;
+      csdlLableledElement = csdlExp;
   }
 
   @Override

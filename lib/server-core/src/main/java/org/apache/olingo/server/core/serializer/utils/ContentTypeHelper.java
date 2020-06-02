@@ -26,19 +26,19 @@ public class ContentTypeHelper {
     // Private constructor for utility classes
   }
 
-  public static boolean isODataMetadataNone(final ContentType contentType) {
+  public static boolean isODataMetadataNone(ContentType contentType) {
     return contentType.isCompatible(ContentType.APPLICATION_JSON)
         && ContentType.VALUE_ODATA_METADATA_NONE.equalsIgnoreCase(
             contentType.getParameter(ContentType.PARAMETER_ODATA_METADATA));
   }
 
-  public static boolean isODataMetadataFull(final ContentType contentType) {
+  public static boolean isODataMetadataFull(ContentType contentType) {
     return contentType.isCompatible(ContentType.APPLICATION_JSON)
         && ContentType.VALUE_ODATA_METADATA_FULL.equalsIgnoreCase(
             contentType.getParameter(ContentType.PARAMETER_ODATA_METADATA));
   }
 
-  public static boolean isODataIEEE754Compatible(final ContentType contentType) {
+  public static boolean isODataIEEE754Compatible(ContentType contentType) {
     return Boolean.TRUE.toString().equalsIgnoreCase(
         contentType.getParameter(ContentType.PARAMETER_IEEE754_COMPATIBLE));
   }

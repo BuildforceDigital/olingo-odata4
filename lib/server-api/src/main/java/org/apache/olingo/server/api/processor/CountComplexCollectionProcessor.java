@@ -40,4 +40,5 @@ public interface CountComplexCollectionProcessor extends ComplexCollectionProces
    */
   void countComplexCollection(ODataRequest request, ODataResponse response, UriInfo uriInfo)
       throws ODataApplicationException, ODataLibraryException;
+
 }

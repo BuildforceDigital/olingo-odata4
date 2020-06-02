@@ -38,9 +38,9 @@ public class EdmRecordImpl extends AbstractEdmAnnotatableDynamicExpression imple
   private EdmStructuredType type;
   private CsdlRecord record;
 
-  public EdmRecordImpl(final Edm edm, CsdlRecord csdlExp) {
+  public EdmRecordImpl(Edm edm, CsdlRecord csdlExp) {
     super(edm, "Record", csdlExp);
-    this.record = csdlExp;
+      record = csdlExp;
   }
 
   @Override
@@ -61,7 +61,7 @@ public class EdmRecordImpl extends AbstractEdmAnnotatableDynamicExpression imple
   public EdmStructuredType getType() {
     if (type == null && record.getType() != null) {
       // record MAY have a type information.
-      final EdmTypeInfo typeInfo = new EdmTypeInfo.Builder().setEdm(edm).setTypeExpression(record.getType()).build();
+      EdmTypeInfo typeInfo = new EdmTypeInfo.Builder().setEdm(edm).setTypeExpression(record.getType()).build();
       if (typeInfo.isEntityType() || typeInfo.isComplexType()) {
         type = typeInfo.isEntityType() ? typeInfo.getEntityType() : typeInfo.getComplexType();
       } else {

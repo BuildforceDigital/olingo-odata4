@@ -27,7 +27,7 @@ public class UriResourceRootImpl extends UriResourceWithKeysImpl implements UriR
   private final EdmType type;
   private final boolean isCollection;
 
-  public UriResourceRootImpl(final EdmType type, final boolean isCollection) {
+  public UriResourceRootImpl(EdmType type, boolean isCollection) {
     super(UriResourceKind.root);
     this.type = type;
     this.isCollection = isCollection;

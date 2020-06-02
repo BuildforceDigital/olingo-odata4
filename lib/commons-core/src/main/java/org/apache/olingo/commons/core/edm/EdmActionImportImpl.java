@@ -28,7 +28,7 @@ public class EdmActionImportImpl extends AbstractEdmOperationImport implements E
 
   private final CsdlActionImport actionImport;
 
-  public EdmActionImportImpl(final Edm edm, final EdmEntityContainer container, final CsdlActionImport actionImport) {
+  public EdmActionImportImpl(Edm edm, EdmEntityContainer container, CsdlActionImport actionImport) {
 
     super(edm, container, actionImport);
     this.actionImport = actionImport;

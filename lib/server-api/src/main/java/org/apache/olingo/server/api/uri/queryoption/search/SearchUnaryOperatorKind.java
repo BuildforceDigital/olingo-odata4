@@ -21,7 +21,7 @@ package org.apache.olingo.server.api.uri.queryoption.search;
 public enum SearchUnaryOperatorKind {
   NOT;
 
-  public static SearchUnaryOperatorKind get(final String operator) {
+  public static SearchUnaryOperatorKind get(String operator) {
     return NOT.name().equals(operator) ? NOT : null;
   }
 }

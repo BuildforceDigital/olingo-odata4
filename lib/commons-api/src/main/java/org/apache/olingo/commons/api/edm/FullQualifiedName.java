@@ -37,7 +37,7 @@ public final class FullQualifiedName implements Serializable {
    * @param namespace namespace of FQN
    * @param name name of FQN
    */
-  public FullQualifiedName(final String namespace, final String name) {
+  public FullQualifiedName(String namespace, String name) {
     this.namespace = namespace;
     this.name = name;
     fqn = namespace + "." + name;
@@ -47,8 +47,8 @@ public final class FullQualifiedName implements Serializable {
    * Create the FQN with given namespace and name (which is split of last <code>.</code> of the parameter).
    * @param namespaceAndName namespace and name of FQN
    */
-  public FullQualifiedName(final String namespaceAndName) {
-    final int dotIdx = namespaceAndName.lastIndexOf('.');
+  public FullQualifiedName(String namespaceAndName) {
+    int dotIdx = namespaceAndName.lastIndexOf('.');
     if (dotIdx == -1 || dotIdx == 0 || dotIdx == namespaceAndName.length() - 1) {
       throw new IllegalArgumentException(
           "Malformed " + FullQualifiedName.class.getSimpleName() + ": " + namespaceAndName);
@@ -89,7 +89,7 @@ public final class FullQualifiedName implements Serializable {
       return false;
     }
 
-    final FullQualifiedName that = (FullQualifiedName) o;
+    FullQualifiedName that = (FullQualifiedName) o;
     return (namespace == null ? that.namespace == null : namespace.equals(that.namespace))
         && (name == null ? that.name == null : name.equals(that.name));
   }

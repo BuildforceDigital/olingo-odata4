@@ -36,9 +36,9 @@ public class DebugTabRuntime implements DebugTab {
   private static final int TO_MILLIS_DIVISOR = 1000;
   private final RuntimeNode rootNode;
 
-  public DebugTabRuntime(final List<RuntimeMeasurement> runtimeInformation) {
+  public DebugTabRuntime(List<RuntimeMeasurement> runtimeInformation) {
     rootNode = new RuntimeNode();
-    for (final RuntimeMeasurement runtimeMeasurement : runtimeInformation) {
+    for (RuntimeMeasurement runtimeMeasurement : runtimeInformation) {
       rootNode.add(runtimeMeasurement);
     }
     rootNode.combineRuntimeMeasurements();
@@ -50,11 +50,11 @@ public class DebugTabRuntime implements DebugTab {
   }
 
   @Override
-  public void appendJson(final JsonGenerator gen) throws IOException {
+  public void appendJson(JsonGenerator gen) throws IOException {
     appendJsonChildren(gen, rootNode);
   }
 
-  private void appendJsonChildren(final JsonGenerator gen, final RuntimeNode node) throws IOException {
+  private void appendJsonChildren(JsonGenerator gen, RuntimeNode node) throws IOException {
     gen.writeStartArray();
     for (RuntimeNode child : node.children) {
       appendJsonNode(gen, child);
@@ -62,7 +62,7 @@ public class DebugTabRuntime implements DebugTab {
     gen.writeEndArray();
   }
 
-  private void appendJsonNode(final JsonGenerator gen, final RuntimeNode node) throws IOException {
+  private void appendJsonNode(JsonGenerator gen, RuntimeNode node) throws IOException {
     gen.writeStartObject();
     gen.writeStringField("class", node.className);
     gen.writeStringField("method", node.methodName);
@@ -83,11 +83,11 @@ public class DebugTabRuntime implements DebugTab {
   }
 
   @Override
-  public void appendHtml(final Writer writer) throws IOException {
+  public void appendHtml(Writer writer) throws IOException {
     appendRuntimeNode(rootNode, "", true, writer);
   }
 
-  private void appendRuntimeNode(final RuntimeNode node, final String draw, final boolean isLast, final Writer writer)
+  private void appendRuntimeNode(RuntimeNode node, String draw, boolean isLast, Writer writer)
       throws IOException {
     if (node.className != null) {
       writer.append("<li>\n")
@@ -105,7 +105,7 @@ public class DebugTabRuntime implements DebugTab {
     }
     if (!node.children.isEmpty()) {
       writer.append("<ol class=\"tree\">\n");
-      for (final RuntimeNode childNode : node.children) {
+      for (RuntimeNode childNode : node.children) {
         appendRuntimeNode(childNode,
             node.className == null ? draw : draw + (isLast ? "&nbsp;" : "&#x2502;") + "&nbsp;&nbsp;",
                 node.children.indexOf(childNode) == node.children.size() - 1,
@@ -131,14 +131,14 @@ public class DebugTabRuntime implements DebugTab {
       timeStopped = Long.MAX_VALUE;
     }
 
-    private RuntimeNode(final RuntimeMeasurement runtimeMeasurement) {
+    private RuntimeNode(RuntimeMeasurement runtimeMeasurement) {
       className = runtimeMeasurement.getClassName();
       methodName = runtimeMeasurement.getMethodName();
       timeStarted = runtimeMeasurement.getTimeStarted();
       timeStopped = runtimeMeasurement.getTimeStopped();
     }
 
-    protected boolean add(final RuntimeMeasurement runtimeMeasurement) {
+    protected boolean add(RuntimeMeasurement runtimeMeasurement) {
       if (timeStarted <= runtimeMeasurement.getTimeStarted()
           && timeStopped != 0
           && timeStopped > runtimeMeasurement.getTimeStarted() // in case the stop time has not been set
@@ -163,7 +163,7 @@ public class DebugTabRuntime implements DebugTab {
     protected void combineRuntimeMeasurements() {
       RuntimeNode preceding = null;
       for (Iterator<RuntimeNode> iterator = children.iterator(); iterator.hasNext();) {
-        final RuntimeNode child = iterator.next();
+        RuntimeNode child = iterator.next();
         if (preceding != null
             && preceding.timeStopped != 0 && child.timeStopped != 0
             && preceding.timeStopped <= child.timeStarted

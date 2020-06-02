@@ -50,7 +50,7 @@ public class CsdlNull extends CsdlDynamicExpression implements CsdlAnnotatable {
       return false;
     }
     CsdlNull csdlNull = (CsdlNull) obj;
-    return (this.getAnnotations() == null ? csdlNull.getAnnotations() == null :
+    return (getAnnotations() == null ? csdlNull.getAnnotations() == null :
         checkAnnotations(csdlNull.getAnnotations()));
   }
   
@@ -58,9 +58,9 @@ public class CsdlNull extends CsdlDynamicExpression implements CsdlAnnotatable {
     if (csdlNullAnnot == null) {
       return false;
     }
-    if (this.getAnnotations().size() == csdlNullAnnot.size()) {
-      for (int i = 0; i < this.getAnnotations().size() ; i++) {
-        if (!this.getAnnotations().get(i).equals(csdlNullAnnot.get(i))) {
+    if (getAnnotations().size() == csdlNullAnnot.size()) {
+      for (int i = 0; i < getAnnotations().size() ; i++) {
+        if (!getAnnotations().get(i).equals(csdlNullAnnot.get(i))) {
           return false;
         }
       }

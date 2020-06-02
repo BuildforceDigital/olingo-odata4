@@ -41,7 +41,7 @@ public final class EdmDecimal extends SingletonPrimitiveType {
   }
 
   @Override
-  public boolean isCompatible(final EdmPrimitiveType primitiveType) {
+  public boolean isCompatible(EdmPrimitiveType primitiveType) {
     return primitiveType instanceof EdmByte
         || primitiveType instanceof EdmSByte
         || primitiveType instanceof EdmInt16
@@ -58,21 +58,21 @@ public final class EdmDecimal extends SingletonPrimitiveType {
   }
 
   @Override
-  public boolean validate(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) {
+  public boolean validate(String value,
+                          Boolean isNullable, Integer maxLength, Integer precision,
+                          Integer scale, Boolean isUnicode) {
 
     return value == null
         ? isNullable == null || isNullable
         : validateLiteral(value) && validatePrecisionAndScale(value, precision, scale);
   }
 
-  private static boolean validateLiteral(final String value) {
+  private static boolean validateLiteral(String value) {
     return PATTERN.matcher(value).matches();
   }
 
-  private static boolean validatePrecisionAndScale(final String value, final Integer precision,
-      final Integer scale) {
+  private static boolean validatePrecisionAndScale(String value, Integer precision,
+                                                   Integer scale) {
 
     Matcher matcher = PATTERN.matcher(value);
     matcher.matches();
@@ -81,15 +81,15 @@ public final class EdmDecimal extends SingletonPrimitiveType {
 		matcher = PATTERN.matcher(plainValue);
 		matcher.matches();
 	}
-    final int significantIntegerDigits = "0".equals(matcher.group(1)) ? 0 : matcher.group(1).length();
-    final int decimals = matcher.group(2) == null ? 0 : matcher.group(2).length();
+    int significantIntegerDigits = "0".equals(matcher.group(1)) ? 0 : matcher.group(1).length();
+    int decimals = matcher.group(2) == null ? 0 : matcher.group(2).length();
     return (precision == null || significantIntegerDigits <= precision - (scale == null ? 0 : scale)) && decimals <= (scale == null ? 0 : scale);
   }
   
   @Override
-  public boolean validateDecimals(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final String scale, final Boolean isUnicode) {
+  public boolean validateDecimals(String value,
+                                  Boolean isNullable, Integer maxLength, Integer precision,
+                                  String scale, Boolean isUnicode) {
 
     return value == null
         ? isNullable == null || isNullable
@@ -137,9 +137,9 @@ public final class EdmDecimal extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode, Class<T> returnType) throws EdmPrimitiveTypeException {
 
     if (!validateLiteral(value)) {
       throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.");
@@ -150,10 +150,10 @@ public final class EdmDecimal extends SingletonPrimitiveType {
 
     try {
       return convertDecimal(new BigDecimal(value), returnType);
-    } catch (final IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       throw new EdmPrimitiveTypeException("The literal '" + value
           + "' cannot be converted to value type " + returnType + ".", e);
-    } catch (final ClassCastException e) {
+    } catch (ClassCastException e) {
       throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.", e);
     }
   }
@@ -168,20 +168,20 @@ public final class EdmDecimal extends SingletonPrimitiveType {
    * @throws IllegalArgumentException if the conversion is not possible or would lead to loss of data
    * @throws ClassCastException if the return type is not allowed
    */
-  protected static <T> T convertDecimal(final BigDecimal value, final Class<T> returnType)
+  protected static <T> T convertDecimal(BigDecimal value, Class<T> returnType)
       throws IllegalArgumentException, ClassCastException {
 
     if (returnType.isAssignableFrom(BigDecimal.class)) {
       return returnType.cast(value);
     } else if (returnType.isAssignableFrom(Double.class)) {
-      final double doubleValue = value.doubleValue();
+      double doubleValue = value.doubleValue();
       if (BigDecimal.valueOf(doubleValue).compareTo(value) == 0) {
         return returnType.cast(doubleValue);
       } else {
         throw new IllegalArgumentException();
       }
     } else if (returnType.isAssignableFrom(Float.class)) {
-      final float floatValue = value.floatValue();
+      float floatValue = value.floatValue();
       if (BigDecimal.valueOf(floatValue).compareTo(value) == 0) {
         return returnType.cast(floatValue);
       } else {
@@ -202,22 +202,22 @@ public final class EdmDecimal extends SingletonPrimitiveType {
         } else {
           throw new ClassCastException("unsupported return type " + returnType.getSimpleName());
         }
-      } catch (final ArithmeticException e) {
+      } catch (ArithmeticException e) {
         throw new IllegalArgumentException(e);
       }
     }
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     String result;
     if (value instanceof Long || value instanceof Integer || value instanceof Short
         || value instanceof Byte || value instanceof BigInteger) {
       result = value.toString();
-      final int digits = result.startsWith("-") ? result.length() - 1 : result.length();
+      int digits = result.startsWith("-") ? result.length() - 1 : result.length();
       if (precision != null && precision < digits) {
         throw new EdmPrimitiveTypeException("The value '" + value + "' does not match the facets' constraints.");
       }
@@ -227,11 +227,11 @@ public final class EdmDecimal extends SingletonPrimitiveType {
       try {
         bigDecimalValue = value instanceof Double ? BigDecimal.valueOf((Double) value)
             : value instanceof Float ? BigDecimal.valueOf((Float) value) : (BigDecimal) value;
-      } catch (final NumberFormatException e) {
+      } catch (NumberFormatException e) {
         throw new EdmPrimitiveTypeException("The value '" + value + "' is not valid.", e);
       }
 
-      final int digits = bigDecimalValue.scale() >= 0
+      int digits = bigDecimalValue.scale() >= 0
           ? Math.max(bigDecimalValue.precision(), bigDecimalValue.scale())
               : bigDecimalValue.precision() - bigDecimalValue.scale();
           if ((precision == null || precision >= digits) && (bigDecimalValue.scale() <= (scale == null ? 0 : scale))) {

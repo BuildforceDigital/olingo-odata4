@@ -42,13 +42,13 @@ public class SearchTokenizerException extends UriParserSyntaxException {
     }
   }
 
-  public SearchTokenizerException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public SearchTokenizerException(String developmentMessage, MessageKey messageKey,
+                                  String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
-  public SearchTokenizerException(final String developmentMessage, final Throwable cause, final MessageKey messageKey,
-      final String... parameters) {
+  public SearchTokenizerException(String developmentMessage, Throwable cause, MessageKey messageKey,
+                                  String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 }

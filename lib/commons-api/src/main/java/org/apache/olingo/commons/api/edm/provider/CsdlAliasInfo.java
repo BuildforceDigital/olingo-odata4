@@ -40,7 +40,7 @@ public class CsdlAliasInfo {
    * @param namespace the namespace of the alias
    * @return this instance
    */
-  public CsdlAliasInfo setNamespace(final String namespace) {
+  public CsdlAliasInfo setNamespace(String namespace) {
     this.namespace = namespace;
     return this;
   }
@@ -58,7 +58,7 @@ public class CsdlAliasInfo {
    * @param alias Alias
    * @return this instance
    */
-  public CsdlAliasInfo setAlias(final String alias) {
+  public CsdlAliasInfo setAlias(String alias) {
     this.alias = alias;
     return this;
   }

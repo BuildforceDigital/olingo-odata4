@@ -26,7 +26,7 @@ public class EdmAnnotationsImpl extends AbstractEdmAnnotatable implements EdmAnn
 
   private final CsdlAnnotations annotationGroup;
 
-  public EdmAnnotationsImpl(final Edm edm, final CsdlAnnotations annotationGroup) {
+  public EdmAnnotationsImpl(Edm edm, CsdlAnnotations annotationGroup) {
     super(edm, annotationGroup);
     this.annotationGroup = annotationGroup;
   }

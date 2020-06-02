@@ -102,7 +102,7 @@ public final class ContentType {
    * @param subtype    subtype
    * @param parameters parameters as map from names to values
    */
-  private ContentType(final String type, final String subtype, final Map<String, String> parameters) {
+  private ContentType(String type, String subtype, Map<String, String> parameters) {
     this.type = validateType(type);
     this.subtype = validateType(subtype);
 
@@ -114,7 +114,7 @@ public final class ContentType {
     }
   }
 
-  private String validateType(final String type) throws IllegalArgumentException {
+  private String validateType(String type) throws IllegalArgumentException {
     if (type == null || type.isEmpty() || "*".equals(type)) {
       throw new IllegalArgumentException("Illegal type '" + type + "'.");
     }
@@ -131,8 +131,8 @@ public final class ContentType {
    * @param parameterValue the value of the additional parameter
    * @return a new {@link ContentType} object
    */
-  public static ContentType create(final ContentType contentType,
-      final String parameterName, final String parameterValue) throws IllegalArgumentException {
+  public static ContentType create(ContentType contentType,
+                                   String parameterName, String parameterValue) throws IllegalArgumentException {
     TypeUtil.validateParameterNameAndValue(parameterName, parameterValue);
 
     ContentType type = new ContentType(contentType.type, contentType.subtype, contentType.parameters);
@@ -148,7 +148,7 @@ public final class ContentType {
    * @return a new {@link ContentType} object
    * @throws IllegalArgumentException if input string is not parseable
    */
-  public static ContentType create(final String format) throws IllegalArgumentException {
+  public static ContentType create(String format) throws IllegalArgumentException {
     if (format == null) {
       throw new IllegalArgumentException("Parameter format MUST NOT be NULL.");
     }
@@ -167,7 +167,7 @@ public final class ContentType {
    * @param format a string in format as defined in RFC 7231, chapter 3.1.1.1
    * @return a new <code>ContentType</code> object
    */
-  public static ContentType parse(final String format) {
+  public static ContentType parse(String format) {
     try {
       return ContentType.create(format);
     } catch (IllegalArgumentException e) {
@@ -175,14 +175,14 @@ public final class ContentType {
     }
   }
 
-  private static void parse(final String format, List<String> typeSubtype, Map<String, String> parameters)
+  private static void parse(String format, List<String> typeSubtype, Map<String, String> parameters)
       throws IllegalArgumentException {
-    final String[] typesAndParameters = format.split(TypeUtil.PARAMETER_SEPARATOR, 2);
-    final String types = typesAndParameters[0];
-    final String params = (typesAndParameters.length > 1 ? typesAndParameters[1] : null);
+    String[] typesAndParameters = format.split(TypeUtil.PARAMETER_SEPARATOR, 2);
+    String types = typesAndParameters[0];
+    String params = (typesAndParameters.length > 1 ? typesAndParameters[1] : null);
 
     if (types.contains(TypeUtil.TYPE_SUBTYPE_SEPARATOR)) {
-      final String[] tokens = types.split(TypeUtil.TYPE_SUBTYPE_SEPARATOR);
+      String[] tokens = types.split(TypeUtil.TYPE_SUBTYPE_SEPARATOR);
       if (tokens.length == 2) {
         if (tokens[0] == null || tokens[0].isEmpty()) {
           throw new IllegalArgumentException("No type found in format '" + format + "'.");
@@ -228,7 +228,7 @@ public final class ContentType {
    * @param name the name of the parameter to get (case-insensitive)
    * @return the value of the parameter or <code>null</code> if the parameter is not present
    */
-  public String getParameter(final String name) {
+  public String getParameter(String name) {
     return parameters.get(name.toLowerCase(Locale.ROOT));
   }
 
@@ -242,7 +242,7 @@ public final class ContentType {
    * have the same value.
    */
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     // basic checks
     if (this == obj) {
       return true;
@@ -251,7 +251,7 @@ public final class ContentType {
       return false;
     }
 
-    final ContentType other = (ContentType) obj;
+    ContentType other = (ContentType) obj;
 
     // type/subtype checks
     if (!isCompatible(other)) {
@@ -260,11 +260,11 @@ public final class ContentType {
 
     // parameter checks
     if (parameters.size() == other.parameters.size()) {
-      final Iterator<Entry<String, String>> entries = parameters.entrySet().iterator();
-      final Iterator<Entry<String, String>> otherEntries = other.parameters.entrySet().iterator();
+      Iterator<Entry<String, String>> entries = parameters.entrySet().iterator();
+      Iterator<Entry<String, String>> otherEntries = other.parameters.entrySet().iterator();
       while (entries.hasNext()) {
-        final Entry<String, String> e = entries.next();
-        final Entry<String, String> oe = otherEntries.next();
+        Entry<String, String> e = entries.next();
+        Entry<String, String> oe = otherEntries.next();
         if (!areEqual(e.getKey(), oe.getKey())
             || !areEqual(e.getValue(), oe.getValue())) {
           return false;
@@ -283,7 +283,7 @@ public final class ContentType {
    * (for compare with parameters see {@link #equals(Object)}).</p>
    * @return <code>true</code> if both instances are compatible (see definition above), otherwise <code>false</code>.
    */
-  public boolean isCompatible(final ContentType other) {
+  public boolean isCompatible(ContentType other) {
     return type.equalsIgnoreCase(other.type) && subtype.equalsIgnoreCase(other.subtype);
   }
 
@@ -293,7 +293,7 @@ public final class ContentType {
    * @param second second string
    * @return <code>true</code> if both strings are equal (ignoring the case), otherwise <code>false</code>
    */
-  private static boolean areEqual(final String first, final String second) {
+  private static boolean areEqual(String first, String second) {
     return first == null && second == null || (first != null && first.equalsIgnoreCase(second));
   }
 
@@ -303,7 +303,7 @@ public final class ContentType {
    * @return string representation of {@link ContentType} object
    */
   public String toContentTypeString() {
-    final StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
 
     sb.append(type).append(TypeUtil.TYPE_SUBTYPE_SEPARATOR).append(subtype);
 

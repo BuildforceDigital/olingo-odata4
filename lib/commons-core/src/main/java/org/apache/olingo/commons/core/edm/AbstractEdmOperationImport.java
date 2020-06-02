@@ -32,8 +32,8 @@ public abstract class AbstractEdmOperationImport extends AbstractEdmNamed implem
   private final Target entitySet;
   private EdmEntitySet returnedEntitySet;
 
-  public AbstractEdmOperationImport(final Edm edm, final EdmEntityContainer container,
-      final CsdlOperationImport operationImport) {
+  public AbstractEdmOperationImport(Edm edm, EdmEntityContainer container,
+                                    CsdlOperationImport operationImport) {
     super(edm, operationImport.getName(), operationImport);
     this.container = container;
     if (operationImport.getEntitySet() != null) {

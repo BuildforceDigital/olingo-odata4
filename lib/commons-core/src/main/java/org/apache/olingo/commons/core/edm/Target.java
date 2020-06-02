@@ -30,8 +30,8 @@ public class Target {
   private String targetName;
   private FullQualifiedName entityContainer;
 
-  public Target(final String target, final EdmEntityContainer defaultContainer) {
-    final String[] bindingTargetParts = target.split("/");
+  public Target(String target, EdmEntityContainer defaultContainer) {
+    String[] bindingTargetParts = target.split("/");
     if (bindingTargetParts.length == 1) {
       entityContainer = defaultContainer.getFullQualifiedName();
       targetName = bindingTargetParts[0];

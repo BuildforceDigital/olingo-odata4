@@ -38,7 +38,7 @@ public class MethodImpl implements Method {
   private final MethodKind method;
   private final List<Expression> parameters;
 
-  public MethodImpl(final MethodKind method, final List<Expression> parameters) {
+  public MethodImpl(MethodKind method, List<Expression> parameters) {
     this.method = method;
     this.parameters = parameters;
   }
@@ -124,10 +124,10 @@ public class MethodImpl implements Method {
   }
 
   @Override
-  public <T> T accept(final ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
+  public <T> T accept(ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
     List<T> userParameters = new ArrayList<>();
     if (parameters != null) {
-      for (final Expression parameter : parameters) {
+      for (Expression parameter : parameters) {
         userParameters.add(parameter.accept(visitor));
       }
     }

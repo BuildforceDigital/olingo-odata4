@@ -32,7 +32,7 @@ public class EdmPropertyImpl extends AbstractEdmNamed implements EdmProperty {
   private EdmTypeInfo typeInfo;
   private EdmType propertyType;
 
-  public EdmPropertyImpl(final Edm edm, final CsdlProperty property) {
+  public EdmPropertyImpl(Edm edm, CsdlProperty property) {
     super(edm, property.getName(), property);
 
     this.property = property;

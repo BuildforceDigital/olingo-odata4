@@ -47,7 +47,7 @@ public class CsdlReferentialConstraint extends CsdlAbstractEdmItem implements Cs
    * @param property the property
    * @return the property
    */
-  public CsdlReferentialConstraint setProperty(final String property) {
+  public CsdlReferentialConstraint setProperty(String property) {
     this.property = property;
     return this;
   }
@@ -67,7 +67,7 @@ public class CsdlReferentialConstraint extends CsdlAbstractEdmItem implements Cs
    * @param referencedProperty the referenced property
    * @return the referenced property
    */
-  public CsdlReferentialConstraint setReferencedProperty(final String referencedProperty) {
+  public CsdlReferentialConstraint setReferencedProperty(String referencedProperty) {
     this.referencedProperty = referencedProperty;
     return this;
   }
@@ -82,7 +82,7 @@ public class CsdlReferentialConstraint extends CsdlAbstractEdmItem implements Cs
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlReferentialConstraint setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlReferentialConstraint setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

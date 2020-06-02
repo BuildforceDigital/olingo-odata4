@@ -30,7 +30,7 @@ public class ODataRuntimeException extends RuntimeException {
    *
    * @param msg message text for exception
    */
-  public ODataRuntimeException(final String msg) {
+  public ODataRuntimeException(String msg) {
     super(msg);
   }
 
@@ -40,7 +40,7 @@ public class ODataRuntimeException extends RuntimeException {
    * @param msg message text for exception
    * @param cause cause of exception
    */
-  public ODataRuntimeException(final String msg, final Exception cause) {
+  public ODataRuntimeException(String msg, Exception cause) {
     super(msg, cause);
   }
 
@@ -49,7 +49,7 @@ public class ODataRuntimeException extends RuntimeException {
    *
    * @param cause cause of exception
    */
-  public ODataRuntimeException(final Exception cause) {
+  public ODataRuntimeException(Exception cause) {
     super(cause);
   }
 

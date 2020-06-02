@@ -70,7 +70,7 @@ public class AsyncResponseSerializerTest {
         + testData, result);
   }
 
-  private String testData(final int amount) {
+  private String testData(int amount) {
     StringBuilder result = new StringBuilder();
     Random r = new Random();
     for (int i = 0; i < amount; i++) {

@@ -29,8 +29,8 @@ public class ActionMapKey {
 
   private final Boolean isBindingParameterCollection;
 
-  public ActionMapKey(final FullQualifiedName actionName, final FullQualifiedName bindingParameterTypeName,
-      final Boolean isBindingParameterCollection) {
+  public ActionMapKey(FullQualifiedName actionName, FullQualifiedName bindingParameterTypeName,
+                      Boolean isBindingParameterCollection) {
 
     if (actionName == null || bindingParameterTypeName == null || isBindingParameterCollection == null) {
       throw new EdmException("Action name, binding parameter type and binding parameter collection "
@@ -43,25 +43,26 @@ public class ActionMapKey {
 
   @Override
   public int hashCode() {
-    final String forHash = actionName.toString()
+    String forHash = actionName.toString()
         + bindingParameterTypeName.toString()
         + isBindingParameterCollection.toString();
     return forHash.hashCode();
   }
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
-    if ((obj == null) || !(obj instanceof ActionMapKey)) {
+    if (!(obj instanceof ActionMapKey)) {
       return false;
     }
-    final ActionMapKey other = (ActionMapKey) obj;
+    ActionMapKey other = (ActionMapKey) obj;
     if (actionName.equals(other.actionName) && bindingParameterTypeName.equals(other.bindingParameterTypeName)
         && isBindingParameterCollection.equals(other.isBindingParameterCollection)) {
       return true;
     }
     return false;
   }
+
 }

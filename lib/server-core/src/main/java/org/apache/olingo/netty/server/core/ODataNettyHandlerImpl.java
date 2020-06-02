@@ -69,12 +69,12 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
 
   private int split = 0;
 
-  public ODataNettyHandlerImpl(final OData odata, final ServiceMetadata serviceMetadata) {
+  public ODataNettyHandlerImpl(OData odata, ServiceMetadata serviceMetadata) {
     debugger = new ServerCoreDebugger(odata);
     handler = new ODataHandlerImpl(odata, serviceMetadata, debugger);
   }
   
-  private ODataResponse handleException(final ODataRequest odRequest, final Exception e) {
+  private ODataResponse handleException(ODataRequest odRequest, Exception e) {
     ODataResponse resp = new ODataResponse();
     ODataServerError serverError;
     if (e instanceof ODataHandlerException) {
@@ -93,7 +93,7 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
    * @param response
    * @param odResponse
    */
-  static void convertToHttp(final HttpResponse response, final ODataResponse odResponse) {
+  static void convertToHttp(HttpResponse response, ODataResponse odResponse) {
 	    response.setStatus(HttpResponseStatus.valueOf(odResponse.getStatusCode()));
 
 	    for (Entry<String, List<String>> entry : odResponse.getAllHeaders().entrySet()) {
@@ -114,12 +114,12 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
    * @param odataResponse
    * @param response
    */
-  static void writeContent(final ODataResponse odataResponse, final HttpResponse response) {
+  static void writeContent(ODataResponse odataResponse, HttpResponse response) {
     ODataContent res = odataResponse.getODataContent();
     res.write(Channels.newChannel(new ByteBufOutputStream(((HttpContent)response).content())));
   }
   
-  static void copyContent(final InputStream inputStream, final HttpResponse response) {
+  static void copyContent(InputStream inputStream, HttpResponse response) {
 	    copyContent(Channels.newChannel(inputStream), response);
 	  }
 
@@ -128,7 +128,7 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
    * @param input
    * @param response
    */
-  static void copyContent(final ReadableByteChannel input, final HttpResponse response) {
+  static void copyContent(ReadableByteChannel input, HttpResponse response) {
     try (WritableByteChannel output = Channels.newChannel(new ByteBufOutputStream(((HttpContent)response).content()))){
         ByteBuffer inBuffer = ByteBuffer.allocate(COPY_BUFFER_SIZE);
         while (input.read(inBuffer) > 0) {
@@ -144,7 +144,7 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
       }
   }
 
-  private static void closeStream(final Channel closeable) {
+  private static void closeStream(Channel closeable) {
     if (closeable != null) {
       try {
         closeable.close();
@@ -163,9 +163,9 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
    * @return
    * @throws ODataLibraryException
    */
-  private ODataRequest fillODataRequest(final ODataRequest odRequest, final HttpRequest httpRequest,
-	      final int split, final String contextPath) throws ODataLibraryException {
-	    final int requestHandle = debugger.startRuntimeMeasurement("ODataHttpHandlerImpl", "fillODataRequest");
+  private ODataRequest fillODataRequest(ODataRequest odRequest, HttpRequest httpRequest,
+                                        int split, String contextPath) throws ODataLibraryException {
+	    int requestHandle = debugger.startRuntimeMeasurement("ODataHttpHandlerImpl", "fillODataRequest");
 	    try {
 	    	ByteBuf byteBuf = ((HttpContent)httpRequest).content();
 	    	ByteBufInputStream inputStream = new ByteBufInputStream(byteBuf);
@@ -186,8 +186,8 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
 	    }
 	  }
   
-  static HttpMethod extractMethod(final HttpRequest httpRequest) throws ODataLibraryException {
-    final HttpMethod httpRequestMethod;
+  static HttpMethod extractMethod(HttpRequest httpRequest) throws ODataLibraryException {
+    HttpMethod httpRequestMethod;
     	try {
     	      httpRequestMethod = HttpMethod.valueOf(httpRequest.method().name());
     	    } catch (IllegalArgumentException e) {
@@ -234,8 +234,8 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
    * @param split
    * @param contextPath
    */
-  static void fillUriInformationFromHttpRequest(final ODataRequest odRequest, final HttpRequest httpRequest, 
-		  final int split, final String contextPath) {
+  static void fillUriInformationFromHttpRequest(ODataRequest odRequest, HttpRequest httpRequest,
+                                                int split, String contextPath) {
 	    String rawRequestUri = httpRequest.uri();
 	    if (rawRequestUri.indexOf("?") != -1) {
 	    	rawRequestUri = rawRequestUri.substring(0, rawRequestUri.indexOf("?"));
@@ -285,12 +285,12 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
    * @param odRequest
    * @param req
    */
-  static void copyHeaders(ODataRequest odRequest, final HttpRequest req) {
-	  final Set<String> headers = req.headers().names();
+  static void copyHeaders(ODataRequest odRequest, HttpRequest req) {
+	  Set<String> headers = req.headers().names();
 	  Iterator<String> headerNames = headers.iterator();
 	  while (headerNames.hasNext()) {
-		  final String headerName = headerNames.next();
-		  final List<String> headerValues = req.headers().getAll(headerName);
+		  String headerName = headerNames.next();
+		  List<String> headerValues = req.headers().getAll(headerName);
 	      odRequest.addHeader(headerName, headerValues);
 	  }
   }
@@ -303,7 +303,7 @@ public void processNettyRequest(HttpRequest request, HttpResponse response,
     Exception exception = null;
     ODataResponse odResponse;
     
-    final int processMethodHandle = 
+    int processMethodHandle =
     		debugger.startRuntimeMeasurement("ODataNettyHandlerImpl", "process");
     try {
       fillODataRequest(odRequest, request, 

@@ -37,7 +37,7 @@ public class Decoder {
    * @throws NumberFormatException if the two characters after a percent character
    * are not hexadecimal digits
    */
-  public static String decode(final String value) throws IllegalArgumentException, NumberFormatException {
+  public static String decode(String value) throws IllegalArgumentException, NumberFormatException {
     if (value == null) {
       return value;
     }
@@ -51,7 +51,7 @@ public class Decoder {
     byte[] result = new byte[value.length()];
     int position = 0;
     byte encodedPart = -2;
-    for (final char c : value.toCharArray()) {
+    for (char c : value.toCharArray()) {
       if (c <= Byte.MAX_VALUE) {
         if (c == '%') {
           if (encodedPart == -2) {
@@ -62,7 +62,7 @@ public class Decoder {
         } else if (encodedPart == -1) {
           encodedPart = (byte) c;
         } else if (encodedPart >= 0) {
-          final int i = Integer.parseInt(String.valueOf(new char[] { (char) encodedPart, c }), 16);
+          int i = Integer.parseInt(String.valueOf(new char[] { (char) encodedPart, c }), 16);
           if (i >= 0) {
             result[position++] = (byte) i;
           } else {

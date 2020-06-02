@@ -32,8 +32,8 @@ public class BatchParser {
 
   private BatchOptions options;
 
-  public List<BatchRequestPart> parseBatchRequest(final InputStream content, final String boundary,
-      final BatchOptions options)
+  public List<BatchRequestPart> parseBatchRequest(InputStream content, String boundary,
+                                                  BatchOptions options)
       throws BatchDeserializerException {
     this.options = options;
 
@@ -42,8 +42,8 @@ public class BatchParser {
     return parse(content, boundary, transformator);
   }
 
-  private List<BatchRequestPart> parse(final InputStream in, final String boundary,
-      final BatchRequestTransformator transformator)
+  private List<BatchRequestPart> parse(InputStream in, String boundary,
+                                       BatchRequestTransformator transformator)
       throws BatchDeserializerException {
     try {
       return parseBatch(in, boundary, transformator);
@@ -52,10 +52,10 @@ public class BatchParser {
     }
   }
 
-  private List<BatchRequestPart> parseBatch(final InputStream in, final String boundary,
-      final BatchRequestTransformator transformator) throws IOException, BatchDeserializerException {
-    final List<BatchRequestPart> resultList = new LinkedList<>();
-    final List<List<Line>> bodyPartStrings = splitBodyParts(in, boundary);
+  private List<BatchRequestPart> parseBatch(InputStream in, String boundary,
+                                            BatchRequestTransformator transformator) throws IOException, BatchDeserializerException {
+    List<BatchRequestPart> resultList = new LinkedList<>();
+    List<List<Line>> bodyPartStrings = splitBodyParts(in, boundary);
 
     for (List<Line> bodyPartString : bodyPartStrings) {
       BatchBodyPart bodyPart = new BatchBodyPart(bodyPartString, boundary, options.isStrict()).parse();
@@ -65,10 +65,10 @@ public class BatchParser {
     return resultList;
   }
 
-  private List<List<Line>> splitBodyParts(final InputStream in, final String boundary) throws IOException,
+  private List<List<Line>> splitBodyParts(InputStream in, String boundary) throws IOException,
       BatchDeserializerException {
-    final BatchLineReader reader = new BatchLineReader(in);
-    final List<Line> message = reader.toLineList();
+    BatchLineReader reader = new BatchLineReader(in);
+    List<Line> message = reader.toLineList();
     reader.close();
 
     return BatchParserCommon.splitMessageByBoundary(message, boundary);

@@ -34,8 +34,8 @@ public abstract class CsdlAbstractEdmItem {
    * @param items the items
    * @return the one by name
    */
-  protected <T extends CsdlNamed> T getOneByName(final String name, final Collection<T> items) {
-    final List<T> result = getAllByName(name, items);
+  protected <T extends CsdlNamed> T getOneByName(String name, Collection<T> items) {
+    List<T> result = getAllByName(name, items);
     return result.isEmpty() ? null : result.get(0);
   }
 
@@ -46,8 +46,8 @@ public abstract class CsdlAbstractEdmItem {
    * @param items the items
    * @return the all by name
    */
-  protected <T extends CsdlNamed> List<T> getAllByName(final String name, final Collection<T> items) {
-    final List<T> result = new ArrayList<T>();
+  protected <T extends CsdlNamed> List<T> getAllByName(String name, Collection<T> items) {
+    List<T> result = new ArrayList<T>();
     for (T type : items) {
       if (name.equals(type.getName())) {
         result.add(type);

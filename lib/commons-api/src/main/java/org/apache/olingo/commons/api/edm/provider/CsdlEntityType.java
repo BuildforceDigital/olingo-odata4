@@ -56,7 +56,7 @@ public class CsdlEntityType extends CsdlStructuralType {
    * @param hasStream the has stream
    * @return the has stream
    */
-  public CsdlEntityType setHasStream(final boolean hasStream) {
+  public CsdlEntityType setHasStream(boolean hasStream) {
     this.hasStream = hasStream;
     return this;
   }
@@ -76,55 +76,55 @@ public class CsdlEntityType extends CsdlStructuralType {
    * @param key the key
    * @return the key
    */
-  public CsdlEntityType setKey(final List<CsdlPropertyRef> key) {
+  public CsdlEntityType setKey(List<CsdlPropertyRef> key) {
     this.key = key;
     return this;
   }
 
   @Override
-  public CsdlEntityType setName(final String name) {
+  public CsdlEntityType setName(String name) {
     this.name = name;
     return this;
   }
 
   @Override
-  public CsdlEntityType setOpenType(final boolean isOpenType) {
+  public CsdlEntityType setOpenType(boolean isOpenType) {
     this.isOpenType = isOpenType;
     return this;
   }
 
   @Override
-  public CsdlEntityType setBaseType(final String baseType) {
+  public CsdlEntityType setBaseType(String baseType) {
     this.baseType = new FullQualifiedName(baseType);
     return this;
   }
 
   @Override
-  public CsdlEntityType setBaseType(final FullQualifiedName baseType) {
+  public CsdlEntityType setBaseType(FullQualifiedName baseType) {
     this.baseType = baseType;
     return this;
   }
 
   @Override
-  public CsdlEntityType setAbstract(final boolean isAbstract) {
+  public CsdlEntityType setAbstract(boolean isAbstract) {
     this.isAbstract = isAbstract;
     return this;
   }
 
   @Override
-  public CsdlEntityType setProperties(final List<CsdlProperty> properties) {
+  public CsdlEntityType setProperties(List<CsdlProperty> properties) {
     this.properties = properties;
     return this;
   }
 
   @Override
-  public CsdlEntityType setNavigationProperties(final List<CsdlNavigationProperty> navigationProperties) {
+  public CsdlEntityType setNavigationProperties(List<CsdlNavigationProperty> navigationProperties) {
     this.navigationProperties = navigationProperties;
     return this;
   }
 
   @Override
-  public CsdlEntityType setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlEntityType setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

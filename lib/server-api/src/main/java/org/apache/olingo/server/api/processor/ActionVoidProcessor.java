@@ -40,4 +40,5 @@ public interface ActionVoidProcessor extends Processor {
    */
   void processActionVoid(ODataRequest request, ODataResponse response, UriInfo uriInfo, ContentType requestFormat)
       throws ODataApplicationException, ODataLibraryException;
+
 }

@@ -210,11 +210,11 @@ public class ContentNegotiatorTest {
       try {
         testContentNegotiation(useCase, RepresentationType.COLLECTION_ENTITY);
         fail("Exception expected for '" + useCase[1] + '|' + useCase[2] + '|' + useCase[3] + "'!");
-      } catch (final AcceptHeaderContentNegotiatorException e) {
+      } catch (AcceptHeaderContentNegotiatorException e) {
         // Expected Exception
-      } catch (final ContentNegotiatorException e) {
+      } catch (ContentNegotiatorException e) {
         // Expected Exception
-      } catch (final IllegalArgumentException e) {
+      } catch (IllegalArgumentException e) {
         // Expected Exception
       }
     }
@@ -226,7 +226,7 @@ public class ContentNegotiatorTest {
       try {
         testContentNegotiation(useCase, RepresentationType.METADATA);
         fail("Unsupported $format = " + useCase[1] + '|' + useCase[2] + '|' + useCase[3] + "'!");
-      } catch (final ContentNegotiatorException e) {
+      } catch (ContentNegotiatorException e) {
         // Expected Exception
       }
     }
@@ -239,7 +239,7 @@ public class ContentNegotiatorTest {
     try {
       ContentNegotiator.checkSupport(ContentType.APPLICATION_SVG_XML, null, RepresentationType.ENTITY);
       fail("Exception expected.");
-    } catch (final ContentNegotiatorException e) {
+    } catch (ContentNegotiatorException e) {
       assertEquals(ContentNegotiatorException.MessageKeys.UNSUPPORTED_CONTENT_TYPE, e.getMessageKey());
     }
 
@@ -252,12 +252,12 @@ public class ContentNegotiatorTest {
       ContentNegotiator.checkSupport(ContentType.create("a/b"), createCustomContentTypeSupport("a/b;c=d"),
           RepresentationType.ENTITY);
       fail("Exception expected.");
-    } catch (final ContentNegotiatorException e) {
+    } catch (ContentNegotiatorException e) {
       assertEquals(ContentNegotiatorException.MessageKeys.UNSUPPORTED_CONTENT_TYPE, e.getMessageKey());
     }
   }
 
-  private void testContentNegotiation(final String[] useCase, final RepresentationType representationType)
+  private void testContentNegotiation(String[] useCase, RepresentationType representationType)
       throws Exception {
 
     FormatOption formatOption = null;
@@ -277,9 +277,9 @@ public class ContentNegotiatorTest {
       }
     }
 
-    final CustomContentTypeSupport customContentTypeSupport = useCase[3] == null ? null :
+    CustomContentTypeSupport customContentTypeSupport = useCase[3] == null ? null :
       createCustomContentTypeSupport(useCase[3]);
-    final ContentType requestedContentType = ContentNegotiator.doContentNegotiation(
+    ContentType requestedContentType = ContentNegotiator.doContentNegotiation(
           formatOption, request, customContentTypeSupport, representationType);
     assertNotNull(requestedContentType);
     if (useCase[0] != null) {
@@ -287,8 +287,8 @@ public class ContentNegotiatorTest {
     }
   }
 
-  private CustomContentTypeSupport createCustomContentTypeSupport(final String contentTypeString) {
-    final String[] contentTypes = contentTypeString.split(",");
+  private CustomContentTypeSupport createCustomContentTypeSupport(String contentTypeString) {
+    String[] contentTypes = contentTypeString.split(",");
 
     List<ContentType> types = new ArrayList<ContentType>();
     for (String contentType : contentTypes) {
@@ -315,11 +315,11 @@ public class ContentNegotiatorTest {
       try {
         testContentNegotiation(useCase, RepresentationType.ENTITY);
         fail("Exception expected for '" + useCase[1] + '|' + useCase[2] + '|' + useCase[3] + "'!");
-      } catch (final AcceptHeaderContentNegotiatorException e) {
+      } catch (AcceptHeaderContentNegotiatorException e) {
         // Expected Exception
-      } catch (final ContentNegotiatorException e) {
+      } catch (ContentNegotiatorException e) {
         // Expected Exception
-      } catch (final IllegalArgumentException e) {
+      } catch (IllegalArgumentException e) {
         // Expected Exception
       }
     }

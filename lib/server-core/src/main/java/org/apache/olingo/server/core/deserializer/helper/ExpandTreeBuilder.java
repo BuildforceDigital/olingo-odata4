@@ -30,7 +30,7 @@ public abstract class ExpandTreeBuilder {
 
   public abstract ExpandOption build();
   
-  protected ExpandItemImpl buildExpandItem(final EdmNavigationProperty edmNavigationProperty) {
+  protected ExpandItemImpl buildExpandItem(EdmNavigationProperty edmNavigationProperty) {
     return new ExpandItemImpl()
         .setResourcePath(new UriInfoImpl()
             .addResourcePart(new UriResourceNavigationPropertyImpl(edmNavigationProperty)));

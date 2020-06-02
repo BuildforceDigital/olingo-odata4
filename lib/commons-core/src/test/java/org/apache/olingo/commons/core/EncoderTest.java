@@ -84,18 +84,18 @@ public class EncoderTest {
   public void charactersOutsideBmp() {
     // Unicode characters outside the Basic Multilingual Plane are stored
     // in a Java String in two surrogate characters.
-    final String s = String.valueOf(Character.toChars(0x1F603));
+    String s = String.valueOf(Character.toChars(0x1F603));
     assertEquals("%F0%9F%98%83", Encoder.encode(s));
   }
 
   @Test
   public void uriDecoding() throws URISyntaxException {
-    final String decodedValue = RFC3986_UNRESERVED + RFC3986_RESERVED + "0..1..a..z..A..Z..@"
+    String decodedValue = RFC3986_UNRESERVED + RFC3986_RESERVED + "0..1..a..z..A..Z..@"
         + "\u2323\uFDFC" + String.valueOf(Character.toChars(0x1F603));
 
-    final String encodedPath = Encoder.encode(decodedValue) + "/" + Encoder.encode(decodedValue);
-    final String encodedQuery = Encoder.encode(decodedValue);
-    final URI uri = new URI("http://host:80/" + encodedPath + "?" + encodedQuery + "=" + encodedQuery);
+    String encodedPath = Encoder.encode(decodedValue) + "/" + Encoder.encode(decodedValue);
+    String encodedQuery = Encoder.encode(decodedValue);
+    URI uri = new URI("http://host:80/" + encodedPath + "?" + encodedQuery + "=" + encodedQuery);
 
     assertEquals(uri.getPath(), "/" + decodedValue + "/" + decodedValue);
     assertEquals(uri.getQuery(), decodedValue + "=" + decodedValue);

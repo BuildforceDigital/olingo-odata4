@@ -49,19 +49,19 @@ public class EdmSingletonImplTest {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
 
-    final FullQualifiedName typeName = new FullQualifiedName("ns", "entityType");
-    final CsdlEntityType entityTypeProvider = new CsdlEntityType()
+    FullQualifiedName typeName = new FullQualifiedName("ns", "entityType");
+    CsdlEntityType entityTypeProvider = new CsdlEntityType()
         .setName(typeName.getName())
         .setKey(Arrays.asList(new CsdlPropertyRef().setName("Id")));
     when(provider.getEntityType(typeName)).thenReturn(entityTypeProvider);
 
-    final FullQualifiedName containerName = new FullQualifiedName("ns", "container");
-    final CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
+    FullQualifiedName containerName = new FullQualifiedName("ns", "container");
+    CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
     when(provider.getEntityContainerInfo(containerName)).thenReturn(containerInfo);
-    final EdmEntityContainer entityContainer = new EdmEntityContainerImpl(edm, provider, containerInfo);
+    EdmEntityContainer entityContainer = new EdmEntityContainerImpl(edm, provider, containerInfo);
 
     final String singletonName = "singleton";
-    final CsdlSingleton singletonProvider =
+    CsdlSingleton singletonProvider =
         new CsdlSingleton()
             .setName(singletonName)
             .setTitle("title")
@@ -72,16 +72,16 @@ public class EdmSingletonImplTest {
                         containerName.getFullQualifiedNameAsString() + "/" + singletonName)));
     when(provider.getSingleton(containerName, singletonName)).thenReturn(singletonProvider);
 
-    final EdmSingleton singleton = new EdmSingletonImpl(edm, entityContainer, singletonProvider);
+    EdmSingleton singleton = new EdmSingletonImpl(edm, entityContainer, singletonProvider);
     assertEquals(singletonName, entityContainer.getSingleton(singletonName).getName());
     assertEquals(singletonName, singleton.getName());
     assertEquals("title", singleton.getTitle());
-    final EdmEntityType entityType = singleton.getEntityType();
+    EdmEntityType entityType = singleton.getEntityType();
     assertEquals(typeName.getNamespace(), entityType.getNamespace());
     assertEquals(typeName.getName(), entityType.getName());
     assertEquals(entityContainer, singleton.getEntityContainer());
     assertNull(singleton.getRelatedBindingTarget(null));
-    final EdmBindingTarget target = singleton.getRelatedBindingTarget("path");
+    EdmBindingTarget target = singleton.getRelatedBindingTarget("path");
     assertEquals(singletonName, target.getName());
   }
 
@@ -90,18 +90,18 @@ public class EdmSingletonImplTest {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
 
-    final FullQualifiedName containerName = new FullQualifiedName("ns", "container");
-    final CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
+    FullQualifiedName containerName = new FullQualifiedName("ns", "container");
+    CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
     when(provider.getEntityContainerInfo(containerName)).thenReturn(containerInfo);
 
     final String singletonName = "singleton";
-    final CsdlSingleton singletonProvider = new CsdlSingleton()
+    CsdlSingleton singletonProvider = new CsdlSingleton()
         .setNavigationPropertyBindings(Arrays.asList(
             new CsdlNavigationPropertyBinding().setPath("path")
                 .setTarget(containerName.getFullQualifiedNameAsString() + "/wrong")));
     when(provider.getSingleton(containerName, singletonName)).thenReturn(singletonProvider);
 
-    final EdmSingleton singleton = new EdmSingletonImpl(edm, null, singletonProvider);
+    EdmSingleton singleton = new EdmSingletonImpl(edm, null, singletonProvider);
     singleton.getRelatedBindingTarget("path");
   }
 
@@ -110,14 +110,14 @@ public class EdmSingletonImplTest {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
 
-    final FullQualifiedName containerName = new FullQualifiedName("ns", "container");
+    FullQualifiedName containerName = new FullQualifiedName("ns", "container");
     final String singletonName = "singleton";
-    final CsdlSingleton singletonProvider = new CsdlSingleton()
+    CsdlSingleton singletonProvider = new CsdlSingleton()
         .setNavigationPropertyBindings(Arrays.asList(
             new CsdlNavigationPropertyBinding().setPath("path").setTarget("ns.wrongContainer/" + singletonName)));
     when(provider.getSingleton(containerName, singletonName)).thenReturn(singletonProvider);
 
-    final EdmSingleton singleton = new EdmSingletonImpl(edm, null, singletonProvider);
+    EdmSingleton singleton = new EdmSingletonImpl(edm, null, singletonProvider);
     singleton.getRelatedBindingTarget("path");
   }
 
@@ -127,7 +127,7 @@ public class EdmSingletonImplTest {
     EdmProviderImpl edm = new EdmProviderImpl(provider);
 
     CsdlSingleton singleton = new CsdlSingleton().setName("name");
-    final EdmSingleton edmSingleton = new EdmSingletonImpl(edm, null, singleton);
+    EdmSingleton edmSingleton = new EdmSingletonImpl(edm, null, singleton);
     edmSingleton.getEntityType();
   }
 }

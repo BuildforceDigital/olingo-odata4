@@ -37,27 +37,27 @@ abstract class AbstractPrimitiveType implements EdmPrimitiveType {
   }
 
   @Override
-  public boolean isCompatible(final EdmPrimitiveType primitiveType) {
+  public boolean isCompatible(EdmPrimitiveType primitiveType) {
     return equals(primitiveType);
   }
 
   @Override
-  public boolean validate(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision, final Integer scale,
-      final Boolean isUnicode) {
+  public boolean validate(String value,
+                          Boolean isNullable, Integer maxLength, Integer precision, Integer scale,
+                          Boolean isUnicode) {
 
     try {
       valueOfString(value, isNullable, maxLength, precision, scale, isUnicode, getDefaultType());
       return true;
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       return false;
     }
   }
 
   @Override
-  public final <T> T valueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType)
+  public final <T> T valueOfString(String value,
+                                   Boolean isNullable, Integer maxLength, Integer precision,
+                                   Integer scale, Boolean isUnicode, Class<T> returnType)
           throws EdmPrimitiveTypeException {
 
     if (value == null) {
@@ -74,9 +74,9 @@ abstract class AbstractPrimitiveType implements EdmPrimitiveType {
       Class<T> returnType) throws EdmPrimitiveTypeException;
 
   @Override
-  public final String valueToString(final Object value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  public final String valueToString(Object value,
+                                    Boolean isNullable, Integer maxLength, Integer precision,
+                                    Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
     if (value == null) {
       if (isNullable != null && !isNullable) {
         throw new EdmPrimitiveTypeException("The value NULL is not allowed.");
@@ -94,13 +94,13 @@ abstract class AbstractPrimitiveType implements EdmPrimitiveType {
                                                       Boolean isUnicode) throws EdmPrimitiveTypeException;
 
   @Override
-  public String toUriLiteral(final String literal) {
+  public String toUriLiteral(String literal) {
     return literal == null ? null :
       uriPrefix.isEmpty() && uriSuffix.isEmpty() ? literal : uriPrefix + literal + uriSuffix;
   }
 
   @Override
-  public String fromUriLiteral(final String literal) throws EdmPrimitiveTypeException {
+  public String fromUriLiteral(String literal) throws EdmPrimitiveTypeException {
     if (literal == null) {
       return null;
     } else if (uriPrefix.isEmpty() && uriSuffix.isEmpty()) {

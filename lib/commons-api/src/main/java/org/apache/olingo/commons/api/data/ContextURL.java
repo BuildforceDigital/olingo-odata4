@@ -81,7 +81,7 @@ public final class ContextURL {
 
     private final String representation;
 
-    Suffix(final String representation) {
+    Suffix(String representation) {
       this.representation = representation;
     }
     
@@ -247,7 +247,7 @@ public final class ContextURL {
      * @param serviceRoot the service root
      * @return Builder
      */
-    public Builder serviceRoot(final URI serviceRoot) {
+    public Builder serviceRoot(URI serviceRoot) {
       contextURL.serviceRoot = serviceRoot;
       return this;
     }
@@ -257,7 +257,7 @@ public final class ContextURL {
      * @param entitySet the edm entity set
      * @return Builder
      */
-    public Builder entitySet(final EdmEntitySet entitySet) {
+    public Builder entitySet(EdmEntitySet entitySet) {
       contextURL.entitySetOrSingletonOrType = entitySet.getName();
       return this;
     }
@@ -267,7 +267,7 @@ public final class ContextURL {
      * @param keyPath the key path
      * @return Builder
      */
-    public Builder keyPath(final String keyPath) {
+    public Builder keyPath(String keyPath) {
       contextURL.keyPath = keyPath;
       return this;
     }
@@ -277,7 +277,7 @@ public final class ContextURL {
      * @param entitySetOrSingletonOrType the entity set / singleton / type name
      * @return Builder
      */
-    public Builder entitySetOrSingletonOrType(final String entitySetOrSingletonOrType) {
+    public Builder entitySetOrSingletonOrType(String entitySetOrSingletonOrType) {
       contextURL.entitySetOrSingletonOrType = entitySetOrSingletonOrType;
       return this;
     }
@@ -287,7 +287,7 @@ public final class ContextURL {
      * @param type the edm entity type
      * @return Builder
      */
-    public Builder type(final EdmType type) {
+    public Builder type(EdmType type) {
       contextURL.entitySetOrSingletonOrType = type.getFullQualifiedName().toString();
       return this;
     }
@@ -306,7 +306,7 @@ public final class ContextURL {
      * @param derivedType the derived edm entity type
      * @return Builder
      */
-    public Builder derived(final EdmEntityType derivedType) {
+    public Builder derived(EdmEntityType derivedType) {
       contextURL.derivedEntity = derivedType.getFullQualifiedName().getFullQualifiedNameAsString();
       return this;
     }
@@ -316,7 +316,7 @@ public final class ContextURL {
      * @param derivedEntity the derived entity name
      * @return Builder
      */
-    public Builder derivedEntity(final String derivedEntity) {
+    public Builder derivedEntity(String derivedEntity) {
       contextURL.derivedEntity = derivedEntity;
       return this;
     }
@@ -326,7 +326,7 @@ public final class ContextURL {
      * @param navOrPropertyPath the navigation or property path
      * @return Builder
      */
-    public Builder navOrPropertyPath(final String navOrPropertyPath) {
+    public Builder navOrPropertyPath(String navOrPropertyPath) {
       contextURL.navOrPropertyPath = navOrPropertyPath;
       return this;
     }
@@ -336,7 +336,7 @@ public final class ContextURL {
      * @param selectList the select list
      * @return Builder
      */
-    public Builder selectList(final String selectList) {
+    public Builder selectList(String selectList) {
       contextURL.selectList = selectList;
       return this;
     }
@@ -346,7 +346,7 @@ public final class ContextURL {
      * @param suffix the suffix
      * @return Builder
      */
-    public Builder suffix(final Suffix suffix) {
+    public Builder suffix(Suffix suffix) {
       contextURL.suffix = suffix;
       return this;
     }

@@ -31,7 +31,7 @@ public class BatchQueryOperation implements BatchPart {
   protected int bodySize;
   protected List<Line> message;
 
-  public BatchQueryOperation(final List<Line> message, final boolean isStrict) {
+  public BatchQueryOperation(List<Line> message, boolean isStrict) {
     this.isStrict = isStrict;
     this.message = message;
   }
@@ -45,14 +45,14 @@ public class BatchQueryOperation implements BatchPart {
     return this;
   }
 
-  protected Line consumeHttpStatusLine(final List<Line> message) throws BatchDeserializerException {
+  protected Line consumeHttpStatusLine(List<Line> message) throws BatchDeserializerException {
     if (!message.isEmpty() && !"".equals(message.get(0).toString().trim())) {
-      final Line method = message.get(0);
+      Line method = message.get(0);
       message.remove(0);
 
       return method;
     } else {
-      final int line = (!message.isEmpty()) ? message.get(0).getLineNumber() : 0;
+      int line = (!message.isEmpty()) ? message.get(0).getLineNumber() : 0;
       throw new BatchDeserializerException("Missing http request line",
           BatchDeserializerException.MessageKeys.INVALID_STATUS_LINE, "" + line);
     }

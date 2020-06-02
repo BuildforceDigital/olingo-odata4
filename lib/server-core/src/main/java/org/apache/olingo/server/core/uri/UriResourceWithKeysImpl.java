@@ -32,7 +32,7 @@ public abstract class UriResourceWithKeysImpl extends UriResourceImpl implements
   protected List<UriParameter> keyPredicates = null;
   private EdmType entryTypeFilter = null;
 
-  public UriResourceWithKeysImpl(final UriResourceKind kind) {
+  public UriResourceWithKeysImpl(UriResourceKind kind) {
     super(kind);
   }
 
@@ -50,23 +50,23 @@ public abstract class UriResourceWithKeysImpl extends UriResourceImpl implements
         Collections.unmodifiableList(keyPredicates);
   }
 
-  public UriResourceWithKeysImpl setKeyPredicates(final List<UriParameter> list) {
+  public UriResourceWithKeysImpl setKeyPredicates(List<UriParameter> list) {
     keyPredicates = list;
     return this;
   }
 
-  public UriResourceWithKeysImpl setEntryTypeFilter(final EdmType entryTypeFilter) {
+  public UriResourceWithKeysImpl setEntryTypeFilter(EdmType entryTypeFilter) {
     this.entryTypeFilter = entryTypeFilter;
     return this;
   }
 
-  public UriResourceWithKeysImpl setCollectionTypeFilter(final EdmType collectionTypeFilter) {
+  public UriResourceWithKeysImpl setCollectionTypeFilter(EdmType collectionTypeFilter) {
     this.collectionTypeFilter = collectionTypeFilter;
     return this;
   }
 
   @Override
-  public String getSegmentValue(final boolean includeFilters) {
+  public String getSegmentValue(boolean includeFilters) {
     if (includeFilters) {
       StringBuilder tmp = new StringBuilder();
       if (collectionTypeFilter != null) {
@@ -90,11 +90,11 @@ public abstract class UriResourceWithKeysImpl extends UriResourceImpl implements
   }
 
   @Override
-  public String toString(final boolean includeFilters) {
+  public String toString(boolean includeFilters) {
     return getSegmentValue(includeFilters);
   }
 
-  private String getFQN(final EdmType type) {
+  private String getFQN(EdmType type) {
     return type.getFullQualifiedName().getFullQualifiedNameAsString();
   }
 

@@ -29,57 +29,57 @@ public class Header implements Iterable<HeaderField>, Cloneable {
   private Map<String, HeaderField> headers = new HashMap<>();
   private int lineNumber;
 
-  public Header(final int lineNumer) {
+  public Header(int lineNumer) {
     lineNumber = lineNumer;
   }
 
-  public void addHeader(final String name, final String value, final int lineNumber) {
-    final HeaderField headerField = getHeaderFieldOrDefault(name, lineNumber);
-    final List<String> headerValues = headerField.getValues();
+  public void addHeader(String name, String value, int lineNumber) {
+    HeaderField headerField = getHeaderFieldOrDefault(name, lineNumber);
+    List<String> headerValues = headerField.getValues();
 
     if (!headerValues.contains(value)) {
       headerValues.add(value);
     }
   }
 
-  public void addHeader(final String name, final List<String> values, final int lineNumber) {
-    final HeaderField headerField = getHeaderFieldOrDefault(name, lineNumber);
-    final List<String> headerValues = headerField.getValues();
+  public void addHeader(String name, List<String> values, int lineNumber) {
+    HeaderField headerField = getHeaderFieldOrDefault(name, lineNumber);
+    List<String> headerValues = headerField.getValues();
 
-    for (final String value : values) {
+    for (String value : values) {
       if (!headerValues.contains(value)) {
         headerValues.add(value);
       }
     }
   }
 
-  public void replaceHeaderField(final HeaderField headerField) {
+  public void replaceHeaderField(HeaderField headerField) {
     headers.put(headerField.getFieldName().toLowerCase(Locale.ENGLISH), headerField);
   }
 
-  public boolean exists(final String name) {
-    final HeaderField field = headers.get(name.toLowerCase(Locale.ENGLISH));
+  public boolean exists(String name) {
+    HeaderField field = headers.get(name.toLowerCase(Locale.ENGLISH));
 
     return field != null && !field.getValues().isEmpty();
   }
 
-  public void removeHeader(final String name) {
+  public void removeHeader(String name) {
     headers.remove(name.toLowerCase(Locale.ENGLISH));
   }
 
-  public String getHeader(final String name) {
-    final HeaderField headerField = getHeaderField(name);
+  public String getHeader(String name) {
+    HeaderField headerField = getHeaderField(name);
 
     return (headerField == null) ? null : headerField.getValue();
   }
 
-  public List<String> getHeaders(final String name) {
-    final HeaderField headerField = getHeaderField(name);
+  public List<String> getHeaders(String name) {
+    HeaderField headerField = getHeaderField(name);
 
     return (headerField == null) ? new ArrayList<>() : headerField.getValues();
   }
 
-  public HeaderField getHeaderField(final String name) {
+  public HeaderField getHeaderField(String name) {
     return headers.get(name.toLowerCase(Locale.ENGLISH));
   }
 
@@ -88,9 +88,9 @@ public class Header implements Iterable<HeaderField>, Cloneable {
   }
 
   public Map<String, String> toSingleMap() {
-    final Map<String, String> singleMap = new HashMap<>();
+    Map<String, String> singleMap = new HashMap<>();
 
-    for (final Map.Entry<String, HeaderField> entries : headers.entrySet()) {
+    for (Map.Entry<String, HeaderField> entries : headers.entrySet()) {
       HeaderField field = entries.getValue();
       singleMap.put(field.getFieldName(), getHeader(entries.getKey()));
     }
@@ -99,9 +99,9 @@ public class Header implements Iterable<HeaderField>, Cloneable {
   }
 
   public Map<String, List<String>> toMultiMap() {
-    final Map<String, List<String>> singleMap = new HashMap<>();
+    Map<String, List<String>> singleMap = new HashMap<>();
 
-    for (final Map.Entry<String, HeaderField> entries : headers.entrySet()) {
+    for (Map.Entry<String, HeaderField> entries : headers.entrySet()) {
       HeaderField field = entries.getValue();
       singleMap.put(field.getFieldName(), field.getValues());
     }
@@ -109,7 +109,7 @@ public class Header implements Iterable<HeaderField>, Cloneable {
     return singleMap;
   }
 
-  private HeaderField getHeaderFieldOrDefault(final String name, final int lineNumber) {
+  private HeaderField getHeaderFieldOrDefault(String name, int lineNumber) {
     HeaderField headerField = headers.get(name.toLowerCase(Locale.ENGLISH));
     if (headerField == null) {
       headerField = new HeaderField(name, lineNumber);
@@ -124,7 +124,7 @@ public class Header implements Iterable<HeaderField>, Cloneable {
     Header clone = (Header) super.clone();
     clone.lineNumber = lineNumber;
     clone.headers = new HashMap<>();
-    for (final Map.Entry<String, HeaderField> entries : headers.entrySet()) {
+    for (Map.Entry<String, HeaderField> entries : headers.entrySet()) {
       clone.headers.put(entries.getKey(), entries.getValue().clone());
     }
 
@@ -153,11 +153,11 @@ public class Header implements Iterable<HeaderField>, Cloneable {
     };
   }
 
-  public static List<String> splitValuesByComma(final String headerValue) {
-    final List<String> singleValues = new ArrayList<>();
+  public static List<String> splitValuesByComma(String headerValue) {
+    List<String> singleValues = new ArrayList<>();
 
     String[] parts = headerValue.split(",");
-    for (final String value : parts) {
+    for (String value : parts) {
       singleValues.add(value.trim());
     }
 

@@ -40,7 +40,7 @@ public class ComplexValue extends Linked {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     return super.equals(o) && value.equals(((ComplexValue) o).value);
   }
 
@@ -68,7 +68,7 @@ public class ComplexValue extends Linked {
    * Set string representation of type.
    * @param type string representation of type
    */
-  public void setTypeName(final String typeName) {
+  public void setTypeName(String typeName) {
     this.typeName = typeName;
   }
 }

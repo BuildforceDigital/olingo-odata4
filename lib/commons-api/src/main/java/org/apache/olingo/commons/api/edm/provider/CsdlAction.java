@@ -26,37 +26,37 @@ import java.util.List;
 public class CsdlAction extends CsdlOperation {
 
   @Override
-  public CsdlAction setName(final String name) {
+  public CsdlAction setName(String name) {
     this.name = name;
     return this;
   }
 
   @Override
-  public CsdlAction setBound(final boolean isBound) {
+  public CsdlAction setBound(boolean isBound) {
     this.isBound = isBound;
     return this;
   }
 
   @Override
-  public CsdlAction setEntitySetPath(final String entitySetPath) {
+  public CsdlAction setEntitySetPath(String entitySetPath) {
     this.entitySetPath = entitySetPath;
     return this;
   }
 
   @Override
-  public CsdlAction setParameters(final List<CsdlParameter> parameters) {
+  public CsdlAction setParameters(List<CsdlParameter> parameters) {
     this.parameters = parameters;
     return this;
   }
 
   @Override
-  public CsdlAction setReturnType(final CsdlReturnType returnType) {
+  public CsdlAction setReturnType(CsdlReturnType returnType) {
     this.returnType = returnType;
     return this;
   }
 
   @Override
-  public CsdlAction setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlAction setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

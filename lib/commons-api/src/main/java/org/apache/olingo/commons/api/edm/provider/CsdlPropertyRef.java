@@ -38,7 +38,7 @@ public class CsdlPropertyRef extends CsdlAbstractEdmItem implements CsdlNamed {
    * @param name the name
    * @return the name
    */
-  public CsdlPropertyRef setName(final String name) {
+  public CsdlPropertyRef setName(String name) {
     this.name = name;
     return this;
   }
@@ -58,7 +58,7 @@ public class CsdlPropertyRef extends CsdlAbstractEdmItem implements CsdlNamed {
    * @param alias the alias
    * @return the alias
    */
-  public CsdlPropertyRef setAlias(final String alias) {
+  public CsdlPropertyRef setAlias(String alias) {
     this.alias = alias;
     return this;
   }

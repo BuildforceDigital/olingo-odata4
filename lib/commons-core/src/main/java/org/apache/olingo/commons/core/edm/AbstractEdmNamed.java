@@ -26,7 +26,7 @@ public abstract class AbstractEdmNamed extends AbstractEdmAnnotatable implements
 
   private final String name;
 
-  public AbstractEdmNamed(final Edm edm, final String name, final CsdlAnnotatable annotatable) {
+  public AbstractEdmNamed(Edm edm, String name, CsdlAnnotatable annotatable) {
     super(edm, annotatable);
     this.name = name;
   }

@@ -47,13 +47,13 @@ public class UriParserSyntaxException extends UriParserException {
     }
   }
 
-  public UriParserSyntaxException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public UriParserSyntaxException(String developmentMessage, MessageKey messageKey,
+                                  String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
-  public UriParserSyntaxException(final String developmentMessage, final Throwable cause, final MessageKey messageKey,
-      final String... parameters) {
+  public UriParserSyntaxException(String developmentMessage, Throwable cause, MessageKey messageKey,
+                                  String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 }

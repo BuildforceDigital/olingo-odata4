@@ -36,17 +36,17 @@ public class FilterParser {
   private final Edm edm;
   private final OData odata;
 
-  public FilterParser(final Edm edm, final OData odata) {
+  public FilterParser(Edm edm, OData odata) {
     this.edm = edm;
     this.odata = odata;
   }
 
-  public FilterOption parse(UriTokenizer tokenizer, final EdmType referencedType,
-      final Collection<String> crossjoinEntitySetNames, final Map<String, AliasQueryOption> aliases)
+  public FilterOption parse(UriTokenizer tokenizer, EdmType referencedType,
+      Collection<String> crossjoinEntitySetNames, Map<String, AliasQueryOption> aliases)
       throws UriParserException, UriValidationException {
-    final Expression filterExpression = new ExpressionParser(edm, odata)
+    Expression filterExpression = new ExpressionParser(edm, odata)
         .parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
-    final EdmType type = ExpressionParser.getType(filterExpression);
+    EdmType type = ExpressionParser.getType(filterExpression);
     if (type == null || type.equals(odata.createPrimitiveTypeInstance(EdmPrimitiveTypeKind.Boolean))) {
       return new FilterOptionImpl().setExpression(filterExpression);
     } else {

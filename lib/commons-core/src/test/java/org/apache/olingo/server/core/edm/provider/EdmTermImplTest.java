@@ -255,4 +255,5 @@ public class EdmTermImplTest {
       assertEquals("Invalid AppliesTo value: Invalid", e.getMessage());
     }
   }
+
 }

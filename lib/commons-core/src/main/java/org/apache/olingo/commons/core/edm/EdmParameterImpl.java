@@ -31,7 +31,7 @@ public class EdmParameterImpl extends AbstractEdmNamed implements EdmParameter {
   private final CsdlParameter parameter;
   private EdmType typeImpl;
 
-  public EdmParameterImpl(final Edm edm, final CsdlParameter parameter) {
+  public EdmParameterImpl(Edm edm, CsdlParameter parameter) {
     super(edm, parameter.getName(), parameter);
     this.parameter = parameter;
   }

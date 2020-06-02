@@ -35,7 +35,7 @@ public class CsdlNavigationPropertyPath extends CsdlDynamicExpression {
     return value;
   }
 
-  public CsdlNavigationPropertyPath setValue(final String value) {
+  public CsdlNavigationPropertyPath setValue(String value) {
     this.value = value;
     return this;
   }
@@ -49,8 +49,8 @@ public class CsdlNavigationPropertyPath extends CsdlDynamicExpression {
       return false;
     }
     CsdlNavigationPropertyPath csdlNavPropPath = (CsdlNavigationPropertyPath) obj;
-    return (this.getValue() == null ? csdlNavPropPath.getValue() == null :
-      this.getValue().equals(csdlNavPropPath.getValue()));
+    return (getValue() == null ? csdlNavPropPath.getValue() == null :
+            getValue().equals(csdlNavPropPath.getValue()));
   }
   
   @Override

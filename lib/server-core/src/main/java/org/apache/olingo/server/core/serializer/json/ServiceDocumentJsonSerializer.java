@@ -41,8 +41,8 @@ public class ServiceDocumentJsonSerializer {
   private final String serviceRoot;
   private final boolean isODataMetadataNone;
 
-  public ServiceDocumentJsonSerializer(final ServiceMetadata metadata, final String serviceRoot,
-      final boolean isODataMetadataNone) throws SerializerException {
+  public ServiceDocumentJsonSerializer(ServiceMetadata metadata, String serviceRoot,
+                                       boolean isODataMetadataNone) throws SerializerException {
     if (metadata == null || metadata.getEdm() == null) {
       throw new SerializerException("Service Metadata and EDM must not be null for a service.",
           SerializerException.MessageKeys.NULL_METADATA_OR_EDM);
@@ -52,11 +52,11 @@ public class ServiceDocumentJsonSerializer {
     this.isODataMetadataNone = isODataMetadataNone;
   }
 
-  public void writeServiceDocument(final JsonGenerator gen) throws IOException {
+  public void writeServiceDocument(JsonGenerator gen) throws IOException {
     gen.writeStartObject();
 
     if (!isODataMetadataNone) {
-      final String metadataUri =
+      String metadataUri =
           (serviceRoot == null ? "" :
               serviceRoot.endsWith("/") ? serviceRoot : (serviceRoot + "/"))
               + Constants.METADATA;
@@ -72,7 +72,7 @@ public class ServiceDocumentJsonSerializer {
 
     gen.writeArrayFieldStart(Constants.VALUE);
     if(metadata != null){
-      final EdmEntityContainer container = metadata.getEdm().getEntityContainer();
+      EdmEntityContainer container = metadata.getEdm().getEntityContainer();
       if (container != null) {
         writeEntitySets(gen, container);
         writeFunctionImports(gen, container);
@@ -81,7 +81,7 @@ public class ServiceDocumentJsonSerializer {
     }
   }
 
-  private void writeEntitySets(final JsonGenerator gen, final EdmEntityContainer container) throws IOException {
+  private void writeEntitySets(JsonGenerator gen, EdmEntityContainer container) throws IOException {
     for (EdmEntitySet edmEntitySet : container.getEntitySets()) {
       if (edmEntitySet.isIncludeInServiceDocument()) {
         writeElement(gen, null, edmEntitySet.getName(), edmEntitySet.getName(), edmEntitySet.getTitle());
@@ -89,7 +89,7 @@ public class ServiceDocumentJsonSerializer {
     }
   }
 
-  private void writeFunctionImports(final JsonGenerator gen, final EdmEntityContainer container) throws IOException {
+  private void writeFunctionImports(JsonGenerator gen, EdmEntityContainer container) throws IOException {
     for (EdmFunctionImport edmFI : container.getFunctionImports()) {
       if (edmFI.isIncludeInServiceDocument()) {
         writeElement(gen, FUNCTION_IMPORT, edmFI.getName(), edmFI.getName(), edmFI.getTitle());
@@ -97,14 +97,14 @@ public class ServiceDocumentJsonSerializer {
     }
   }
 
-  private void writeSingletons(final JsonGenerator gen, final EdmEntityContainer container) throws IOException {
+  private void writeSingletons(JsonGenerator gen, EdmEntityContainer container) throws IOException {
     for (EdmSingleton edmSingleton : container.getSingletons()) {
       writeElement(gen, SINGLETON, edmSingleton.getName(), edmSingleton.getName(), edmSingleton.getTitle());
     }
   }
 
-  private void writeElement(final JsonGenerator gen, final String kind, final String reference, final String name,
-      final String title)
+  private void writeElement(JsonGenerator gen, String kind, String reference, String name,
+                            String title)
       throws IOException {
     gen.writeStartObject();
     gen.writeObjectField(Constants.JSON_NAME, name);

@@ -50,7 +50,7 @@ public class SearchParser {
     SearchExpression left = processExprAnd(tokenizer);
 
     while (tokenizer.next(TokenKind.OrOperatorSearch)) {
-      final SearchExpression right = processExprAnd(tokenizer);
+      SearchExpression right = processExprAnd(tokenizer);
       left = new SearchBinaryImpl(left, SearchBinaryOperatorKind.OR, right);
     }
 
@@ -62,7 +62,7 @@ public class SearchParser {
 
     while (tokenizer.next(TokenKind.AndOperatorSearch)) { 
       // Could be whitespace or whitespace-surrounded 'AND'.
-      final SearchExpression right = processTerm(tokenizer);
+      SearchExpression right = processTerm(tokenizer);
       left = new SearchBinaryImpl(left, SearchBinaryOperatorKind.AND, right);
     }
 
@@ -72,7 +72,7 @@ public class SearchParser {
   private SearchExpression processTerm(UriTokenizer tokenizer) throws SearchParserException {
     if (tokenizer.next(TokenKind.OPEN)) {
       ParserHelper.bws(tokenizer);
-      final SearchExpression expr = processExprOr(tokenizer);
+      SearchExpression expr = processExprOr(tokenizer);
       ParserHelper.bws(tokenizer);
       if (!tokenizer.next(TokenKind.CLOSE)) {
         throw new SearchParserException("Missing close parenthesis after open parenthesis.",
@@ -103,7 +103,7 @@ public class SearchParser {
   }
 
   private SearchTerm processPhrase(UriTokenizer tokenizer) {
-    final String literal = tokenizer.getText();
+    String literal = tokenizer.getText();
     return new SearchTermImpl(literal.substring(1, literal.length() - 1)
         .replace("\\\"", "\"")
         .replace("\\\\", "\\"));

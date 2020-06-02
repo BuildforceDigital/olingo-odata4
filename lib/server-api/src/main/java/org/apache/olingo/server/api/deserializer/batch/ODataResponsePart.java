@@ -42,7 +42,7 @@ public class ODataResponsePart {
    * @param responses A list of {@link ODataResponse}
    * @param isChangeSet whether this ODataResponsePart represents a change set
    */
-  public ODataResponsePart(final List<ODataResponse> responses, final boolean isChangeSet) {
+  public ODataResponsePart(List<ODataResponse> responses, boolean isChangeSet) {
     this.responses = responses;
     this.isChangeSet = isChangeSet;
   }
@@ -57,7 +57,7 @@ public class ODataResponsePart {
    * @param response A single {@link ODataResponse}
    * @param isChangeSet whether this ODataResponsePart represents a change set
    */
-  public ODataResponsePart(final ODataResponse response, final boolean isChangeSet) {
+  public ODataResponsePart(ODataResponse response, boolean isChangeSet) {
     responses = Arrays.asList(response);
     this.isChangeSet = isChangeSet;
   }

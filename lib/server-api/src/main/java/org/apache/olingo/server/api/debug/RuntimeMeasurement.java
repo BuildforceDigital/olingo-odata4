@@ -35,7 +35,7 @@ public class RuntimeMeasurement {
    * Sets the class name.
    * @param className the name of the class that is measured
    */
-  public void setClassName(final String className) {
+  public void setClassName(String className) {
     this.className = className;
   }
 
@@ -45,13 +45,13 @@ public class RuntimeMeasurement {
    */
   public String getClassName() {
     return className;
-  };
+  }
 
-  /**
+    /**
    * Sets the method name.
    * @param methodName the name of the method that is measured
    */
-  public void setMethodName(final String methodName) {
+  public void setMethodName(String methodName) {
     this.methodName = methodName;
   }
 
@@ -68,7 +68,7 @@ public class RuntimeMeasurement {
    * @param timeStarted the start time in nanoseconds
    * @see System#nanoTime()
    */
-  public void setTimeStarted(final long timeStarted) {
+  public void setTimeStarted(long timeStarted) {
     this.timeStarted = timeStarted;
   }
 
@@ -86,7 +86,7 @@ public class RuntimeMeasurement {
    * @param timeStopped the stop time in nanoseconds
    * @see System#nanoTime()
    */
-  public void setTimeStopped(final long timeStopped) {
+  public void setTimeStopped(long timeStopped) {
     this.timeStopped = timeStopped;
   }
 

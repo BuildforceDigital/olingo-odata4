@@ -26,7 +26,7 @@ public class ODataException extends Exception {
    * Creates exception with <code>message</code>.
    * @param msg message text for exception
    */
-  public ODataException(final String msg) {
+  public ODataException(String msg) {
     super(msg);
   }
 
@@ -35,7 +35,7 @@ public class ODataException extends Exception {
    * @param msg   message text for exception
    * @param cause cause of exception
    */
-  public ODataException(final String msg, final Throwable cause) {
+  public ODataException(String msg, Throwable cause) {
     super(msg, cause);
   }
 
@@ -43,7 +43,7 @@ public class ODataException extends Exception {
    * Creates exception with <code>cause</code> of exception.
    * @param cause cause of exception
    */
-  public ODataException(final Throwable cause) {
+  public ODataException(Throwable cause) {
     super(cause);
   }
 

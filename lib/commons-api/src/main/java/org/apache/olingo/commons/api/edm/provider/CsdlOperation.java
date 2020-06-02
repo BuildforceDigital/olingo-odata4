@@ -67,7 +67,7 @@ public abstract class CsdlOperation extends CsdlAbstractEdmItem implements CsdlN
    * @param name the name
    * @return the name
    */
-  public CsdlOperation setName(final String name) {
+  public CsdlOperation setName(String name) {
     this.name = name;
     return this;
   }
@@ -87,7 +87,7 @@ public abstract class CsdlOperation extends CsdlAbstractEdmItem implements CsdlN
    * @param isBound the is bound
    * @return the bound
    */
-  public CsdlOperation setBound(final boolean isBound) {
+  public CsdlOperation setBound(boolean isBound) {
     this.isBound = isBound;
     return this;
   }
@@ -107,7 +107,7 @@ public abstract class CsdlOperation extends CsdlAbstractEdmItem implements CsdlN
    * @param entitySetPath the entity set path
    * @return the entity set path
    */
-  public CsdlOperation setEntitySetPath(final String entitySetPath) {
+  public CsdlOperation setEntitySetPath(String entitySetPath) {
     this.entitySetPath = entitySetPath;
     return this;
   }
@@ -127,7 +127,7 @@ public abstract class CsdlOperation extends CsdlAbstractEdmItem implements CsdlN
    * @param name the name
    * @return the parameter
    */
-  public CsdlParameter getParameter(final String name) {
+  public CsdlParameter getParameter(String name) {
     return getOneByName(name, getParameters());
   }
 
@@ -137,7 +137,7 @@ public abstract class CsdlOperation extends CsdlAbstractEdmItem implements CsdlN
    * @param parameters the parameters
    * @return the parameters
    */
-  public CsdlOperation setParameters(final List<CsdlParameter> parameters) {
+  public CsdlOperation setParameters(List<CsdlParameter> parameters) {
     this.parameters = parameters;
     return this;
   }
@@ -157,7 +157,7 @@ public abstract class CsdlOperation extends CsdlAbstractEdmItem implements CsdlN
    * @param returnType the return type
    * @return the return type
    */
-  public CsdlOperation setReturnType(final CsdlReturnType returnType) {
+  public CsdlOperation setReturnType(CsdlReturnType returnType) {
     this.returnType = returnType;
     return this;
   }
@@ -172,7 +172,7 @@ public abstract class CsdlOperation extends CsdlAbstractEdmItem implements CsdlN
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlOperation setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlOperation setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

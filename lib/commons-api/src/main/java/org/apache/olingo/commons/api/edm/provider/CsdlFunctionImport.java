@@ -43,13 +43,13 @@ public class CsdlFunctionImport extends CsdlOperationImport {
   }
 
   @Override
-  public CsdlFunctionImport setName(final String name) {
+  public CsdlFunctionImport setName(String name) {
     this.name = name;
     return this;
   }
 
   @Override
-  public CsdlFunctionImport setEntitySet(final String entitySet) {
+  public CsdlFunctionImport setEntitySet(String entitySet) {
     this.entitySet = entitySet;
     return this;
   }
@@ -78,7 +78,7 @@ public class CsdlFunctionImport extends CsdlOperationImport {
    * @param function the function
    * @return the function
    */
-  public CsdlFunctionImport setFunction(final FullQualifiedName function) {
+  public CsdlFunctionImport setFunction(FullQualifiedName function) {
     this.function = function;
     return this;
   }
@@ -89,7 +89,7 @@ public class CsdlFunctionImport extends CsdlOperationImport {
    * @param function the function
    * @return the function
    */
-  public CsdlFunctionImport setFunction(final String function) {
+  public CsdlFunctionImport setFunction(String function) {
     this.function = new FullQualifiedName(function);
     return this;
   }
@@ -109,13 +109,13 @@ public class CsdlFunctionImport extends CsdlOperationImport {
    * @param includeInServiceDocument the include in service document
    * @return the include in service document
    */
-  public CsdlFunctionImport setIncludeInServiceDocument(final boolean includeInServiceDocument) {
+  public CsdlFunctionImport setIncludeInServiceDocument(boolean includeInServiceDocument) {
     this.includeInServiceDocument = includeInServiceDocument;
     return this;
   }
 
   @Override
-  public CsdlFunctionImport setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlFunctionImport setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

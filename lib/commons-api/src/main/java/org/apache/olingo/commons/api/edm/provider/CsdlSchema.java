@@ -65,7 +65,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param namespace the namespace
    * @return the namespace
    */
-  public CsdlSchema setNamespace(final String namespace) {
+  public CsdlSchema setNamespace(String namespace) {
     this.namespace = namespace;
     return this;
   }
@@ -85,7 +85,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param alias the alias
    * @return the alias
    */
-  public CsdlSchema setAlias(final String alias) {
+  public CsdlSchema setAlias(String alias) {
     this.alias = alias;
     return this;
   }
@@ -105,7 +105,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param name the name
    * @return the enum type
    */
-  public CsdlEnumType getEnumType(final String name) {
+  public CsdlEnumType getEnumType(String name) {
     return getOneByName(name, getEnumTypes());
   }
 
@@ -115,7 +115,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param enumTypes the enum types
    * @return the enum types
    */
-  public CsdlSchema setEnumTypes(final List<CsdlEnumType> enumTypes) {
+  public CsdlSchema setEnumTypes(List<CsdlEnumType> enumTypes) {
     this.enumTypes = enumTypes;
     return this;
   }
@@ -135,7 +135,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param name the name
    * @return the type definition
    */
-  public CsdlTypeDefinition getTypeDefinition(final String name) {
+  public CsdlTypeDefinition getTypeDefinition(String name) {
     return getOneByName(name, getTypeDefinitions());
   }
 
@@ -145,7 +145,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param typeDefinitions the type definitions
    * @return the type definitions
    */
-  public CsdlSchema setTypeDefinitions(final List<CsdlTypeDefinition> typeDefinitions) {
+  public CsdlSchema setTypeDefinitions(List<CsdlTypeDefinition> typeDefinitions) {
     this.typeDefinitions = typeDefinitions;
     return this;
   }
@@ -165,7 +165,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param name the name
    * @return the entity type
    */
-  public CsdlEntityType getEntityType(final String name) {
+  public CsdlEntityType getEntityType(String name) {
     return getOneByName(name, getEntityTypes());
   }
 
@@ -175,7 +175,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param entityTypes the entity types
    * @return the entity types
    */
-  public CsdlSchema setEntityTypes(final List<CsdlEntityType> entityTypes) {
+  public CsdlSchema setEntityTypes(List<CsdlEntityType> entityTypes) {
     this.entityTypes = entityTypes;
     return this;
   }
@@ -195,7 +195,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param name the name
    * @return the complex type
    */
-  public CsdlComplexType getComplexType(final String name) {
+  public CsdlComplexType getComplexType(String name) {
     return getOneByName(name, getComplexTypes());
   }
 
@@ -205,7 +205,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param complexTypes the complex types
    * @return the complex types
    */
-  public CsdlSchema setComplexTypes(final List<CsdlComplexType> complexTypes) {
+  public CsdlSchema setComplexTypes(List<CsdlComplexType> complexTypes) {
     this.complexTypes = complexTypes;
     return this;
   }
@@ -224,7 +224,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param name the name
    * @return a list of actions
    */
-  public List<CsdlAction> getActions(final String name) {
+  public List<CsdlAction> getActions(String name) {
     return getAllByName(name, getActions());
   }
 
@@ -234,7 +234,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param actions the actions
    * @return the actions
    */
-  public CsdlSchema setActions(final List<CsdlAction> actions) {
+  public CsdlSchema setActions(List<CsdlAction> actions) {
     this.actions = actions;
     return this;
   }
@@ -253,7 +253,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param name the name
    * @return a list of functions
    */
-  public List<CsdlFunction> getFunctions(final String name) {
+  public List<CsdlFunction> getFunctions(String name) {
     return getAllByName(name, getFunctions());
   }
 
@@ -263,7 +263,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param functions the functions
    * @return the functions
    */
-  public CsdlSchema setFunctions(final List<CsdlFunction> functions) {
+  public CsdlSchema setFunctions(List<CsdlFunction> functions) {
     this.functions = functions;
     return this;
   }
@@ -283,7 +283,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param entityContainer the entity container
    * @return the entity container
    */
-  public CsdlSchema setEntityContainer(final CsdlEntityContainer entityContainer) {
+  public CsdlSchema setEntityContainer(CsdlEntityContainer entityContainer) {
     this.entityContainer = entityContainer;
     return this;
   }
@@ -303,7 +303,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param name the name
    * @return the term
    */
-  public CsdlTerm getTerm(final String name) {
+  public CsdlTerm getTerm(String name) {
     return getOneByName(name, getTerms());
   }
 
@@ -313,7 +313,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param terms the terms
    * @return the terms
    */
-  public CsdlSchema setTerms(final List<CsdlTerm> terms) {
+  public CsdlSchema setTerms(List<CsdlTerm> terms) {
     this.terms = terms;
     return this;
   }
@@ -332,7 +332,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param annotationGroups list of annotations
    * @return this instance
    */
-  public CsdlSchema setAnnotationsGroup(final List<CsdlAnnotations> annotationGroups) {
+  public CsdlSchema setAnnotationsGroup(List<CsdlAnnotations> annotationGroups) {
     this.annotationGroups = annotationGroups;
     return this;
   }
@@ -343,7 +343,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param target the target
    * @return the annotation group
    */
-  public CsdlAnnotations getAnnotationGroup(final String target, final String qualifier) {
+  public CsdlAnnotations getAnnotationGroup(String target, String qualifier) {
     CsdlAnnotations result = null;
     for (CsdlAnnotations annots : getAnnotationGroups()) {
       if (target.equals(annots.getTarget())
@@ -360,7 +360,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param term the term
    * @return the annotation
    */
-  public CsdlAnnotation getAnnotation(final String term) {
+  public CsdlAnnotation getAnnotation(String term) {
     CsdlAnnotation result = null;
     for (CsdlAnnotation annot : getAnnotations()) {
       if (term.equals(annot.getTerm())) {
@@ -380,7 +380,7 @@ public class CsdlSchema extends CsdlAbstractEdmItem implements CsdlAnnotatable {
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlSchema setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlSchema setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

@@ -54,7 +54,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param name the name
    * @return the name
    */
-  public CsdlEntityContainer setName(final String name) {
+  public CsdlEntityContainer setName(String name) {
     this.name = name;
     return this;
   }
@@ -86,7 +86,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param extendsContainer the extends container
    * @return the extends container
    */
-  public CsdlEntityContainer setExtendsContainer(final String extendsContainer) {
+  public CsdlEntityContainer setExtendsContainer(String extendsContainer) {
     this.extendsContainer = new FullQualifiedName(extendsContainer);
     return this;
   }
@@ -106,7 +106,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param name the name
    * @return the entity set
    */
-  public CsdlEntitySet getEntitySet(final String name) {
+  public CsdlEntitySet getEntitySet(String name) {
     return getOneByName(name, getEntitySets());
   }
 
@@ -116,7 +116,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param entitySets the entity sets
    * @return the entity sets
    */
-  public CsdlEntityContainer setEntitySets(final List<CsdlEntitySet> entitySets) {
+  public CsdlEntityContainer setEntitySets(List<CsdlEntitySet> entitySets) {
     this.entitySets = entitySets;
     return this;
   }
@@ -136,7 +136,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param name name.
    * @return action import.
    */
-  public CsdlActionImport getActionImport(final String name) {
+  public CsdlActionImport getActionImport(String name) {
     return getOneByName(name, getActionImports());
   }
 
@@ -146,7 +146,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param name name.
    * @return action imports.
    */
-  public List<CsdlActionImport> getActionImports(final String name) {
+  public List<CsdlActionImport> getActionImports(String name) {
     return getAllByName(name, getActionImports());
   }
 
@@ -156,7 +156,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param actionImports the action imports
    * @return the action imports
    */
-  public CsdlEntityContainer setActionImports(final List<CsdlActionImport> actionImports) {
+  public CsdlEntityContainer setActionImports(List<CsdlActionImport> actionImports) {
     this.actionImports = actionImports;
     return this;
   }
@@ -176,7 +176,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param name name.
    * @return function import.
    */
-  public CsdlFunctionImport getFunctionImport(final String name) {
+  public CsdlFunctionImport getFunctionImport(String name) {
     return getOneByName(name, getFunctionImports());
   }
 
@@ -186,7 +186,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param name name.
    * @return function imports.
    */
-  public List<CsdlFunctionImport> getFunctionImports(final String name) {
+  public List<CsdlFunctionImport> getFunctionImports(String name) {
     return getAllByName(name, getFunctionImports());
   }
 
@@ -196,7 +196,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param functionImports the function imports
    * @return the function imports
    */
-  public CsdlEntityContainer setFunctionImports(final List<CsdlFunctionImport> functionImports) {
+  public CsdlEntityContainer setFunctionImports(List<CsdlFunctionImport> functionImports) {
     this.functionImports = functionImports;
     return this;
   }
@@ -216,7 +216,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param name the name
    * @return the singleton
    */
-  public CsdlSingleton getSingleton(final String name) {
+  public CsdlSingleton getSingleton(String name) {
     return getOneByName(name, getSingletons());
   }
 
@@ -226,7 +226,7 @@ public class CsdlEntityContainer extends CsdlAbstractEdmItem implements CsdlName
    * @param singletons the singletons
    * @return the singletons
    */
-  public CsdlEntityContainer setSingletons(final List<CsdlSingleton> singletons) {
+  public CsdlEntityContainer setSingletons(List<CsdlSingleton> singletons) {
     this.singletons = singletons;
     return this;
   }

@@ -61,7 +61,7 @@ public enum MethodKind {
    * Constructor for enumeration value
    * @param syntax used in the URI
    */
-  MethodKind(final String syntax) {
+  MethodKind(String syntax) {
     this.syntax = syntax;
   }
 
@@ -78,7 +78,7 @@ public enum MethodKind {
    * @param method Method in the syntax used in the URI
    * @return Method kind which represents the given syntax
    */
-  public static MethodKind get(final String method) {
+  public static MethodKind get(String method) {
     for (MethodKind op : MethodKind.values()) {
 
       if (op.toString().equals(method)) {

@@ -78,4 +78,5 @@ public interface MediaEntityProcessor extends EntityProcessor {
    */
   void deleteMediaEntity(ODataRequest request, ODataResponse response, UriInfo uriInfo)
       throws ODataApplicationException, ODataLibraryException;
+
 }

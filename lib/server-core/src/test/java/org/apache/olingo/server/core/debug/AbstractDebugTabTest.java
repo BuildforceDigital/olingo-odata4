@@ -34,7 +34,7 @@ public abstract class AbstractDebugTabTest {
     return create(tab, false);
   }
 
-  private String create(DebugTab tab, final boolean html) throws IOException {
+  private String create(DebugTab tab, boolean html) throws IOException {
     StringWriter writer = new StringWriter();
     if (html) {
       tab.appendHtml(writer);

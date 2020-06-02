@@ -42,7 +42,7 @@ public class BottomTopImpl implements BottomTop {
     return method;
   }
 
-  public BottomTopImpl setMethod(final Method method) {
+  public BottomTopImpl setMethod(Method method) {
     this.method = method;
     return this;
   }
@@ -52,7 +52,7 @@ public class BottomTopImpl implements BottomTop {
     return number;
   }
 
-  public BottomTopImpl setNumber(final Expression number) {
+  public BottomTopImpl setNumber(Expression number) {
     this.number = number;
     return this;
   }
@@ -62,7 +62,7 @@ public class BottomTopImpl implements BottomTop {
     return value;
   }
 
-  public BottomTopImpl setValue(final Expression value) {
+  public BottomTopImpl setValue(Expression value) {
     this.value = value;
     return this;
   }

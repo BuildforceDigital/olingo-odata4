@@ -59,8 +59,8 @@ public class TranslatedExceptionSubclassesTest {
     testException(UriParserSyntaxException.class, UriParserSyntaxException.MessageKeys.values());
   }
 
-  private void testException(final Class<? extends ODataLibraryException> clazz,
-      final ODataLibraryException.MessageKey[] messageKeys) throws Exception {
+  private void testException(Class<? extends ODataLibraryException> clazz,
+                             ODataLibraryException.MessageKey[] messageKeys) throws Exception {
 
     for (ODataLibraryException.MessageKey messageKey : messageKeys) {
       String propKey = clazz.getSimpleName() + "." + messageKey.toString();
@@ -89,7 +89,7 @@ public class TranslatedExceptionSubclassesTest {
     }
   }
 
-  private int countParameters(final String value) {
+  private int countParameters(String value) {
     char[] chars = value.toCharArray();
     int count = 0;
     for (char aChar : chars) {

@@ -39,7 +39,7 @@ public class EntityCollection extends AbstractEntityCollection {
    *
    * @param count number of entries
    */
-  public void setCount(final Integer count) {
+  public void setCount(Integer count) {
     this.count = count;
   }
 
@@ -67,7 +67,7 @@ public class EntityCollection extends AbstractEntityCollection {
    *
    * @param next next link.
    */
-  public void setNext(final URI next) {
+  public void setNext(URI next) {
     this.next = next;
   }
 
@@ -96,7 +96,7 @@ public class EntityCollection extends AbstractEntityCollection {
    *
    * @param deltaLink delta link.
    */
-  public void setDeltaLink(final URI deltaLink) {
+  public void setDeltaLink(URI deltaLink) {
     this.deltaLink = deltaLink;
   }
   
@@ -112,15 +112,15 @@ public class EntityCollection extends AbstractEntityCollection {
 
   @Override
   public Iterator<Entity> iterator() {
-    return this.entities.iterator();
+    return entities.iterator();
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (!super.equals(o)) {
       return false;
     }
-    final EntityCollection other = (EntityCollection) o;
+    EntityCollection other = (EntityCollection) o;
     return entities.equals(other.entities)
         && (count == null ? other.count == null : count.equals(other.count))
         && (next == null ? other.next == null : next.equals(other.next))

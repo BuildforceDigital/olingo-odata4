@@ -40,7 +40,7 @@ public abstract class AbstractEdmBindingTarget extends AbstractEdmNamed implemen
 
   private List<EdmNavigationPropertyBinding> navigationPropertyBindings;
 
-  public AbstractEdmBindingTarget(final Edm edm, final EdmEntityContainer container, final CsdlBindingTarget target) {
+  public AbstractEdmBindingTarget(Edm edm, EdmEntityContainer container, CsdlBindingTarget target) {
     super(edm, target.getName(), target);
     this.container = container;
     this.target = target;
@@ -50,7 +50,7 @@ public abstract class AbstractEdmBindingTarget extends AbstractEdmNamed implemen
   public List<EdmNavigationPropertyBinding> getNavigationPropertyBindings() {
     if (navigationPropertyBindings == null) {
       List<CsdlNavigationPropertyBinding> providerBindings = target.getNavigationPropertyBindings();
-      final List<EdmNavigationPropertyBinding> navigationPropertyBindingsLocal =
+      List<EdmNavigationPropertyBinding> navigationPropertyBindingsLocal =
           new ArrayList<EdmNavigationPropertyBinding>();
       if (providerBindings != null) {
         for (CsdlNavigationPropertyBinding binding : providerBindings) {
@@ -70,7 +70,7 @@ public abstract class AbstractEdmBindingTarget extends AbstractEdmNamed implemen
 
   @Override
   public EdmEntityType getEntityType() {
-    final EdmEntityType entityType = edm.getEntityType(target.getTypeFQN());
+    EdmEntityType entityType = edm.getEntityType(target.getTypeFQN());
     if (entityType == null) {
       throw new EdmException("Can´t find entity type: " + target.getTypeFQN() + " for entity set or singleton: "
           + getName());
@@ -80,7 +80,7 @@ public abstract class AbstractEdmBindingTarget extends AbstractEdmNamed implemen
 
   @Override
   public EdmEntityType getEntityTypeWithAnnotations() {
-    final EdmEntityType entityType = ((AbstractEdm)edm).
+    EdmEntityType entityType = ((AbstractEdm)edm).
         getEntityTypeWithAnnotations(target.getTypeFQN(), true);
     if (entityType == null) {
       throw new EdmException("Can´t find entity type: " + target.getTypeFQN() + " for entity set or singleton: "
@@ -90,23 +90,23 @@ public abstract class AbstractEdmBindingTarget extends AbstractEdmNamed implemen
   }
   
   @Override
-  public EdmBindingTarget getRelatedBindingTarget(final String path) {
+  public EdmBindingTarget getRelatedBindingTarget(String path) {
     if (path == null) {
       return null;
     }
     EdmBindingTarget bindingTarget = null;
     boolean found = false;
-    for (final Iterator<EdmNavigationPropertyBinding> itor = getNavigationPropertyBindings().iterator(); itor.hasNext()
+    for (Iterator<EdmNavigationPropertyBinding> itor = getNavigationPropertyBindings().iterator(); itor.hasNext()
         && !found;) {
 
-      final EdmNavigationPropertyBinding binding = itor.next();
+      EdmNavigationPropertyBinding binding = itor.next();
       if (binding.getPath() == null || binding.getTarget() == null) {
         throw new EdmException("Path or Target in navigation property binding must not be null!");
       }
       if (path.equals(binding.getPath())) {
-        final Target edmTarget = new Target(binding.getTarget(), container);
+        Target edmTarget = new Target(binding.getTarget(), container);
 
-        final EdmEntityContainer entityContainer = edm.getEntityContainer(edmTarget.getEntityContainer());
+        EdmEntityContainer entityContainer = edm.getEntityContainer(edmTarget.getEntityContainer());
         if (entityContainer == null) {
           throw new EdmException("Cannot find entity container with name: " + edmTarget.getEntityContainer());
         }

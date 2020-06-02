@@ -41,8 +41,8 @@ public final class EdmStream extends SingletonPrimitiveType {
   }
 
   @Override
-  public boolean validate(final String value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode) {
+  public boolean validate(String value, Boolean isNullable, Integer maxLength,
+                          Integer precision, Integer scale, Boolean isUnicode) {
 
     if (value == null) {
       return isNullable == null || isNullable;
@@ -51,20 +51,20 @@ public final class EdmStream extends SingletonPrimitiveType {
     try {
       new URI(value);
       return true;
-    } catch (final URISyntaxException e) {
+    } catch (URISyntaxException e) {
       return false;
     }
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode, Class<T> returnType) throws EdmPrimitiveTypeException {
 
     URI stream = null;
     try {
       stream = new URI(value);
-    } catch (final URISyntaxException e) {
+    } catch (URISyntaxException e) {
       throw new EdmPrimitiveTypeException("The literal '" + value + "' has illegal content.", e);
     }
 
@@ -80,9 +80,9 @@ public final class EdmStream extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     if (value instanceof URI) {
       return ((URI) value).toASCIIString();

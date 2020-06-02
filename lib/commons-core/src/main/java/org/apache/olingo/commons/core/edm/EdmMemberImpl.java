@@ -26,7 +26,7 @@ public class EdmMemberImpl extends AbstractEdmNamed implements EdmMember {
 
   private final CsdlEnumMember member;
 
-  public EdmMemberImpl(final Edm edm, final CsdlEnumMember member) {
+  public EdmMemberImpl(Edm edm, CsdlEnumMember member) {
     super(edm, member.getName(), member);
     this.member = member;
   }

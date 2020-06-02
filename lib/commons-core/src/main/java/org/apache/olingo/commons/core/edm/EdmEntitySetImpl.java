@@ -27,7 +27,7 @@ public class EdmEntitySetImpl extends AbstractEdmBindingTarget implements EdmEnt
 
   private CsdlEntitySet entitySet;
 
-  public EdmEntitySetImpl(final Edm edm, final EdmEntityContainer container, final CsdlEntitySet entitySet) {
+  public EdmEntitySetImpl(Edm edm, EdmEntityContainer container, CsdlEntitySet entitySet) {
     super(edm, container, entitySet);
     this.entitySet = entitySet;
   }

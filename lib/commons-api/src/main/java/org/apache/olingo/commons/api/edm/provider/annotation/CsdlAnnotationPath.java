@@ -25,7 +25,7 @@ public class CsdlAnnotationPath extends CsdlDynamicExpression {
 
   private String value;
 
-  public CsdlAnnotationPath setValue(final String value) {
+  public CsdlAnnotationPath setValue(String value) {
     this.value = value;
     return this;
   }
@@ -48,8 +48,8 @@ public class CsdlAnnotationPath extends CsdlDynamicExpression {
     }
     CsdlAnnotationPath csdlAnnotPath = (CsdlAnnotationPath) obj;
      
-    return this.getValue() == null ? csdlAnnotPath.getValue() == null : 
-      this.getValue().equals(csdlAnnotPath.getValue());
+    return getValue() == null ? csdlAnnotPath.getValue() == null :
+            getValue().equals(csdlAnnotPath.getValue());
   }
   
   @Override

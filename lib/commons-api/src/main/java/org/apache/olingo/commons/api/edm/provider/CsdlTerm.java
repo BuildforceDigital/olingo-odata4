@@ -62,7 +62,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param name the name
    * @return the name
    */
-  public CsdlTerm setName(final String name) {
+  public CsdlTerm setName(String name) {
     this.name = name;
     return this;
   }
@@ -82,7 +82,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param type the type
    * @return the type
    */
-  public CsdlTerm setType(final String type) {
+  public CsdlTerm setType(String type) {
     this.type = type;
     return this;
   }
@@ -102,7 +102,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param baseTerm the base term
    * @return the base term
    */
-  public CsdlTerm setBaseTerm(final String baseTerm) {
+  public CsdlTerm setBaseTerm(String baseTerm) {
     this.baseTerm = baseTerm;
     return this;
   }
@@ -122,7 +122,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param appliesTo the applies to
    * @return the applies to
    */
-  public CsdlTerm setAppliesTo(final List<String> appliesTo) {
+  public CsdlTerm setAppliesTo(List<String> appliesTo) {
     this.appliesTo = appliesTo;
     return this;
   }
@@ -142,7 +142,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param defaultValue the default value
    * @return the default value
    */
-  public CsdlTerm setDefaultValue(final String defaultValue) {
+  public CsdlTerm setDefaultValue(String defaultValue) {
     this.defaultValue = defaultValue;
     return this;
   }
@@ -162,7 +162,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param nullable the nullable
    * @return the nullable
    */
-  public CsdlTerm setNullable(final boolean nullable) {
+  public CsdlTerm setNullable(boolean nullable) {
     this.nullable = nullable;
     return this;
   }
@@ -182,7 +182,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param maxLength the max length
    * @return the max length
    */
-  public CsdlTerm setMaxLength(final Integer maxLength) {
+  public CsdlTerm setMaxLength(Integer maxLength) {
     this.maxLength = maxLength;
     return this;
   }
@@ -202,7 +202,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param precision the precision
    * @return the precision
    */
-  public CsdlTerm setPrecision(final Integer precision) {
+  public CsdlTerm setPrecision(Integer precision) {
     this.precision = precision;
     return this;
   }
@@ -222,7 +222,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param scale the scale
    * @return the scale
    */
-  public CsdlTerm setScale(final Integer scale) {
+  public CsdlTerm setScale(Integer scale) {
     this.scale = scale;
     return this;
   }
@@ -238,7 +238,7 @@ public class CsdlTerm extends CsdlAbstractEdmItem implements CsdlNamed, CsdlAnno
    * @param annotations the annotations
    * @return the annotations
    */
-  public CsdlTerm setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlTerm setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

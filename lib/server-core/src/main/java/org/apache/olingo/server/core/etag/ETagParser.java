@@ -48,14 +48,14 @@ public class ETagParser {
     // Private constructor for utility classes
   }
 
-  protected static Collection<String> parse(final Collection<String> values) {
+  protected static Collection<String> parse(Collection<String> values) {
     if (values == null) {
       return Collections.<String> emptySet();
     }
 
     Set<String> result = new HashSet<>();
-    for (final String value : values) {
-      final Collection<String> part = parse(value);
+    for (String value : values) {
+      Collection<String> part = parse(value);
       if (part.size() == 1 && "*".equals(part.iterator().next())) {
         return part;
       } else {
@@ -65,7 +65,7 @@ public class ETagParser {
     return result;
   }
 
-  private static Collection<String> parse(final String value) {
+  private static Collection<String> parse(String value) {
     if ("*".equals(value.trim())) {
       return Collections.singleton("*");
     } else {

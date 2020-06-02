@@ -55,7 +55,7 @@ public final class ContentNegotiator {
 
   private ContentNegotiator() {}
 
-  private static List<ContentType> getDefaultSupportedContentTypes(final RepresentationType type) {
+  private static List<ContentType> getDefaultSupportedContentTypes(RepresentationType type) {
     switch (type) {
     case METADATA:
       return Collections.unmodifiableList(Arrays.asList(ContentType.APPLICATION_XML,
@@ -74,10 +74,10 @@ public final class ContentNegotiator {
   }
 
   private static List<ContentType> getSupportedContentTypes(
-      final CustomContentTypeSupport customContentTypeSupport, final RepresentationType representationType)
+      CustomContentTypeSupport customContentTypeSupport, RepresentationType representationType)
           throws ContentNegotiatorException {
-    final List<ContentType> defaultSupportedContentTypes = getDefaultSupportedContentTypes(representationType);
-    final List<ContentType> result = customContentTypeSupport == null ? defaultSupportedContentTypes :
+    List<ContentType> defaultSupportedContentTypes = getDefaultSupportedContentTypes(representationType);
+    List<ContentType> result = customContentTypeSupport == null ? defaultSupportedContentTypes :
       customContentTypeSupport.modifySupportedContentTypes(defaultSupportedContentTypes, representationType);
     if (result == null || result.isEmpty()) {
       throw new ContentNegotiatorException("No content type has been specified as supported.",
@@ -87,26 +87,26 @@ public final class ContentNegotiator {
     }
   }
 
-  public static ContentType doContentNegotiation(final FormatOption formatOption, final ODataRequest request,
-      final CustomContentTypeSupport customContentTypeSupport, final RepresentationType representationType)
+  public static ContentType doContentNegotiation(FormatOption formatOption, ODataRequest request,
+                                                 CustomContentTypeSupport customContentTypeSupport, RepresentationType representationType)
           throws ContentNegotiatorException {
-    final List<ContentType> supportedContentTypes =
+    List<ContentType> supportedContentTypes =
         getSupportedContentTypes(customContentTypeSupport, representationType);
-    final String acceptHeaderValue = request.getHeader(HttpHeader.ACCEPT);
+    String acceptHeaderValue = request.getHeader(HttpHeader.ACCEPT);
     String acceptCharset = request.getHeader(HttpHeader.ACCEPT_CHARSET);
     List<AcceptCharset> charsets = null;
       
     ContentType result = null;
 
     if (formatOption != null && formatOption.getFormat() != null) {
-      final String formatString = formatOption.getFormat().trim();
-      final ContentType contentType = mapContentType(formatString, representationType);
+      String formatString = formatOption.getFormat().trim();
+      ContentType contentType = mapContentType(formatString, representationType);
       boolean isCharsetInFormat = false;
       List<AcceptType> formatTypes = null;
       try {
       formatTypes = AcceptType.fromContentType(contentType == null ?
           ContentType.create(formatOption.getFormat()) : contentType);
-      } catch (final IllegalArgumentException e) {
+      } catch (IllegalArgumentException e) {
         throw new AcceptHeaderContentNegotiatorException(
             "Unsupported $format=" + formatString, e,
             AcceptHeaderContentNegotiatorException.MessageKeys.UNSUPPORTED_FORMAT_OPTION, formatString);
@@ -123,15 +123,15 @@ public final class ContentNegotiator {
           charsets = getAcceptCharset(formatParameters.get(ContentType.PARAMETER_CHARSET));
         }
         result = getAcceptedType(formatTypes, supportedContentTypes, charsets);
-      } catch (final IllegalArgumentException e) {
+      } catch (IllegalArgumentException e) {
         throw new AcceptHeaderContentNegotiatorException(
             "Unsupported $format=" + formatString, e,
             AcceptHeaderContentNegotiatorException.MessageKeys.UNSUPPORTED_FORMAT_OPTION, formatString);
-      } catch (final AcceptHeaderContentNegotiatorException e) {
+      } catch (AcceptHeaderContentNegotiatorException e) {
         throw new AcceptHeaderContentNegotiatorException (
             "Unsupported $format=" + formatString, e,
             AcceptHeaderContentNegotiatorException.MessageKeys.UNSUPPORTED_FORMAT_OPTION, formatString);
-      } catch (final ContentNegotiatorException e) {
+      } catch (ContentNegotiatorException e) {
         throw new ContentNegotiatorException (
             "Unsupported $format=" + formatString, e, 
             ContentNegotiatorException.MessageKeys.UNSUPPORTED_FORMAT_OPTION, formatString);
@@ -145,7 +145,7 @@ public final class ContentNegotiator {
       try {
         result = getAcceptedType(AcceptType.create(acceptHeaderValue), 
             supportedContentTypes, charsets);
-      } catch (final IllegalArgumentException e) {
+      } catch (IllegalArgumentException e) {
         throw new AcceptHeaderContentNegotiatorException(e.getMessage(), e,
             AcceptHeaderContentNegotiatorException.MessageKeys.UNSUPPORTED_ACCEPT_TYPES, 
             e.getMessage().substring(e.getMessage().lastIndexOf(COLON) + 1));
@@ -159,7 +159,7 @@ public final class ContentNegotiator {
       }
     } else {
       charsets = getAcceptCharset(acceptCharset);
-      final ContentType requestedContentType = getDefaultSupportedContentTypes(representationType).get(0);
+      ContentType requestedContentType = getDefaultSupportedContentTypes(representationType).get(0);
       result = getAcceptedType(AcceptType.fromContentType(requestedContentType), 
           supportedContentTypes, charsets);
       
@@ -198,8 +198,8 @@ public final class ContentNegotiator {
     return charsets;
   }
 
-  private static ContentType mapContentType(final String formatString, 
-      RepresentationType representationType) {
+  private static ContentType mapContentType(String formatString,
+                                            RepresentationType representationType) {
     if (representationType.name().equals(METADATA)) {
       return JSON.equalsIgnoreCase(formatString) ||
           APPLICATION_JSON.equalsIgnoreCase(formatString) ? ContentType.APPLICATION_JSON :
@@ -213,8 +213,8 @@ public final class ContentNegotiator {
     }
   }
 
-  private static ContentType getAcceptedType(final List<AcceptType> acceptedContentTypes,
-      final List<ContentType> supportedContentTypes, List<AcceptCharset> charsets) throws ContentNegotiatorException {
+  private static ContentType getAcceptedType(List<AcceptType> acceptedContentTypes,
+                                             List<ContentType> supportedContentTypes, List<AcceptCharset> charsets) throws ContentNegotiatorException {
     if (charsets != null) {
       for (AcceptCharset charset : charsets) {
         return getContentType(acceptedContentTypes, supportedContentTypes, charset);
@@ -227,10 +227,10 @@ public final class ContentNegotiator {
 
   private static ContentType getContentType(List<AcceptType> acceptedContentTypes,
       List<ContentType> supportedContentTypes, AcceptCharset charset) throws ContentNegotiatorException {
-    for (final AcceptType acceptedType : acceptedContentTypes) {
-      for (final ContentType supportedContentType : supportedContentTypes) {
+    for (AcceptType acceptedType : acceptedContentTypes) {
+      for (ContentType supportedContentType : supportedContentTypes) {
         ContentType contentType = supportedContentType;
-        final String charSetValue = acceptedType.getParameter(ContentType.PARAMETER_CHARSET);
+        String charSetValue = acceptedType.getParameter(ContentType.PARAMETER_CHARSET);
         if (charset != null) {
           if ("*".equals(charset.toString())) {
             contentType = ContentType.create(contentType, ContentType.PARAMETER_CHARSET, "utf-8");
@@ -253,7 +253,7 @@ public final class ContentNegotiator {
           }
         }
 
-        final String ieee754compatibleValue = acceptedType.getParameter(ContentType.PARAMETER_IEEE754_COMPATIBLE);
+        String ieee754compatibleValue = acceptedType.getParameter(ContentType.PARAMETER_IEEE754_COMPATIBLE);
         if ("true".equalsIgnoreCase(ieee754compatibleValue)) {
           contentType = ContentType.create(contentType, ContentType.PARAMETER_IEEE754_COMPATIBLE, "true");
         } else if ("false".equalsIgnoreCase(ieee754compatibleValue)) {
@@ -271,8 +271,8 @@ public final class ContentNegotiator {
     return null;
   }
 
-  public static void checkSupport(final ContentType contentType,
-      final CustomContentTypeSupport customContentTypeSupport, final RepresentationType representationType)
+  public static void checkSupport(ContentType contentType,
+                                  CustomContentTypeSupport customContentTypeSupport, RepresentationType representationType)
           throws ContentNegotiatorException {
     for (ContentType supportedContentType : getSupportedContentTypes(customContentTypeSupport, representationType)) {
       if (AcceptType.fromContentType(supportedContentType).get(0).matches(contentType)) {
@@ -283,9 +283,9 @@ public final class ContentNegotiator {
         ContentNegotiatorException.MessageKeys.UNSUPPORTED_CONTENT_TYPE, contentType.toContentTypeString());
   }
 
-  public static boolean isSupported(final ContentType contentType,
-      final CustomContentTypeSupport customContentTypeSupport,
-      final RepresentationType representationType) throws ContentNegotiatorException {
+  public static boolean isSupported(ContentType contentType,
+                                    CustomContentTypeSupport customContentTypeSupport,
+                                    RepresentationType representationType) throws ContentNegotiatorException {
 
     for (ContentType supportedContentType : getSupportedContentTypes(customContentTypeSupport, representationType)) {
       if (AcceptType.fromContentType(supportedContentType).get(0).matches(contentType)) {

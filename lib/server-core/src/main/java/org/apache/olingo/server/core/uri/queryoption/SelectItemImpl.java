@@ -38,7 +38,7 @@ public class SelectItemImpl implements SelectItem {
     return path;
   }
 
-  public SelectItemImpl setResourcePath(final UriInfoResource path) {
+  public SelectItemImpl setResourcePath(UriInfoResource path) {
     this.path = path;
     return this;
   }
@@ -48,7 +48,7 @@ public class SelectItemImpl implements SelectItem {
     return isStar;
   }
 
-  public SelectItemImpl setStar(final boolean isStar) {
+  public SelectItemImpl setStar(boolean isStar) {
     this.isStar = isStar;
     return this;
   }
@@ -63,7 +63,7 @@ public class SelectItemImpl implements SelectItem {
     return addOperationsInSchemaNameSpace;
   }
 
-  public void addAllOperationsInSchema(final FullQualifiedName addOperationsInSchemaNameSpace) {
+  public void addAllOperationsInSchema(FullQualifiedName addOperationsInSchemaNameSpace) {
     this.addOperationsInSchemaNameSpace = addOperationsInSchemaNameSpace;
   }
 
@@ -72,7 +72,7 @@ public class SelectItemImpl implements SelectItem {
     return startTypeFilter;
   }
 
-  public SelectItemImpl setTypeFilter(final EdmType startTypeFilter) {
+  public SelectItemImpl setTypeFilter(EdmType startTypeFilter) {
     this.startTypeFilter = startTypeFilter;
     return this;
   }

@@ -25,7 +25,7 @@ import org.apache.olingo.server.api.deserializer.batch.BatchDeserializerExceptio
 public class BatchChangeSetPart extends BatchQueryOperation {
   private BatchQueryOperation request;
 
-  public BatchChangeSetPart(final List<Line> message, final boolean isStrict) throws BatchDeserializerException {
+  public BatchChangeSetPart(List<Line> message, boolean isStrict) throws BatchDeserializerException {
     super(message, isStrict);
   }
 

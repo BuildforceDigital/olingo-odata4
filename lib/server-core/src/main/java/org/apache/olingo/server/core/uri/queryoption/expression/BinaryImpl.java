@@ -37,22 +37,22 @@ public class BinaryImpl implements Binary {
   private final EdmType type;
   private final List<Expression> expressions;
 
-  public BinaryImpl(final Expression left, final BinaryOperatorKind operator, final Expression right,
-      final EdmType type) {
+  public BinaryImpl(Expression left, BinaryOperatorKind operator, Expression right,
+                    EdmType type) {
     this.left = left;
     this.operator = operator;
     this.right = right;
     this.type = type;
-    this.expressions = null;
+    expressions = null;
   }
   
-  public BinaryImpl(final Expression left, final BinaryOperatorKind operator, final List<Expression> right,
-      final EdmType type) {
+  public BinaryImpl(Expression left, BinaryOperatorKind operator, List<Expression> right,
+                    EdmType type) {
     this.left = left;
     this.operator = operator;
     this.right = null;
     this.type = type;
-    this.expressions = right;
+    expressions = right;
   }
 
   @Override
@@ -75,14 +75,14 @@ public class BinaryImpl implements Binary {
   }
 
   @Override
-  public <T> T accept(final ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
-    T localLeft = this.left.accept(visitor);
-    if (this.right != null) {
-      T localRight = this.right.accept(visitor);
+  public <T> T accept(ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
+    T localLeft = left.accept(visitor);
+    if (right != null) {
+      T localRight = right.accept(visitor);
       return visitor.visitBinaryOperator(operator, localLeft, localRight);
-    } else if (this.expressions != null) {
+    } else if (expressions != null) {
       List<T> expressions = new ArrayList<>();
-      for (final Expression expression : this.expressions) {
+      for (Expression expression : this.expressions) {
         expressions.add(expression.accept(visitor));
       }
       return visitor.visitBinaryOperator(operator, localLeft, expressions);

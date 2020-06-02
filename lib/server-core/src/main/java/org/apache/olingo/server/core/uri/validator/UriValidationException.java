@@ -68,13 +68,13 @@ public class UriValidationException extends ODataLibraryException {
     }
   }
 
-  public UriValidationException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public UriValidationException(String developmentMessage, MessageKey messageKey,
+                                String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
-  public UriValidationException(final String developmentMessage, final Throwable cause, final MessageKey messageKey,
-      final String... parameters) {
+  public UriValidationException(String developmentMessage, Throwable cause, MessageKey messageKey,
+                                String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 

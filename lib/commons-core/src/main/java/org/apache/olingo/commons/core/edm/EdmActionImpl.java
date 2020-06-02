@@ -26,7 +26,7 @@ import org.apache.olingo.commons.api.edm.provider.CsdlAction;
 
 public class EdmActionImpl extends AbstractEdmOperation implements EdmAction {
 
-  public EdmActionImpl(final Edm edm, final FullQualifiedName name, final CsdlAction action) {
+  public EdmActionImpl(Edm edm, FullQualifiedName name, CsdlAction action) {
     super(edm, name, action, EdmTypeKind.ACTION);
   }
 }

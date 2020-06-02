@@ -40,12 +40,12 @@ import org.apache.olingo.server.core.ODataWritableContent;
 public class FixedFormatSerializerImpl implements FixedFormatSerializer {
 
   @Override
-  public InputStream binary(final byte[] binary) throws SerializerException {
+  public InputStream binary(byte[] binary) throws SerializerException {
     return new ByteArrayInputStream(binary);
   }
   
-  protected void binary(final EntityMediaObject mediaEntity, 
-		  OutputStream outputStream) throws SerializerException {
+  protected void binary(EntityMediaObject mediaEntity,
+                        OutputStream outputStream) throws SerializerException {
 	  try {
 		outputStream.write(mediaEntity.getBytes());
 	} catch (IOException e) {
@@ -53,8 +53,8 @@ public class FixedFormatSerializerImpl implements FixedFormatSerializer {
 	}
   }
   
-  public void binaryIntoStreamed(final EntityMediaObject mediaEntity, 
-		  final OutputStream outputStream) throws SerializerException {
+  public void binaryIntoStreamed(EntityMediaObject mediaEntity,
+                                 OutputStream outputStream) throws SerializerException {
 	binary(mediaEntity, outputStream);
   }
   
@@ -64,7 +64,7 @@ public class FixedFormatSerializerImpl implements FixedFormatSerializer {
   }
 
   @Override
-  public InputStream count(final Integer count) throws SerializerException {
+  public InputStream count(Integer count) throws SerializerException {
     try {
       return new ByteArrayInputStream(count.toString().getBytes("UTF-8"));
     } catch (UnsupportedEncodingException e) {
@@ -74,33 +74,33 @@ public class FixedFormatSerializerImpl implements FixedFormatSerializer {
   }
 
   @Override
-  public InputStream primitiveValue(final EdmPrimitiveType type, final Object value,
-      final PrimitiveValueSerializerOptions options) throws SerializerException {
+  public InputStream primitiveValue(EdmPrimitiveType type, Object value,
+                                    PrimitiveValueSerializerOptions options) throws SerializerException {
     try {
-      final String result = type.valueToString(value,
+      String result = type.valueToString(value,
           options.isNullable(), options.getMaxLength(),
           options.getPrecision(), options.getScale(), options.isUnicode());
       return new ByteArrayInputStream(result.getBytes("UTF-8"));
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       throw new SerializerException("Error in primitive-value formatting.", e,
           SerializerException.MessageKeys.WRONG_PRIMITIVE_VALUE,
           type.getFullQualifiedName().getFullQualifiedNameAsString(), value.toString());
-    } catch (final UnsupportedEncodingException e) {
+    } catch (UnsupportedEncodingException e) {
       throw new SerializerException("Encoding exception.", e, SerializerException.MessageKeys.IO_EXCEPTION);
     }
   }
 
   @Override
-  public InputStream asyncResponse(final ODataResponse odataResponse) throws SerializerException {
+  public InputStream asyncResponse(ODataResponse odataResponse) throws SerializerException {
     AsyncResponseSerializer serializer = new AsyncResponseSerializer();
     return serializer.serialize(odataResponse);
   }
 
   // TODO: Signature refactoring for writeBatchResponse
   @Override
-  public InputStream batchResponse(final List<ODataResponsePart> batchResponses, final String boundary)
+  public InputStream batchResponse(List<ODataResponsePart> batchResponses, String boundary)
       throws BatchSerializerException {
-    final BatchResponseSerializer serializer = new BatchResponseSerializer();
+    BatchResponseSerializer serializer = new BatchResponseSerializer();
 
     return serializer.serialize(batchResponses, boundary);
   }

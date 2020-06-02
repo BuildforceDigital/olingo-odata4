@@ -38,7 +38,7 @@ public class FilterImpl implements Filter {
     return filterOption;
   }
 
-  public FilterImpl setFilterOption(final FilterOption filterOption) {
+  public FilterImpl setFilterOption(FilterOption filterOption) {
     this.filterOption = filterOption;
     return this;
   }

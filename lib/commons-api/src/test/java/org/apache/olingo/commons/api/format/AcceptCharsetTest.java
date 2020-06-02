@@ -121,13 +121,13 @@ public class AcceptCharsetTest {
     expectCreateError("iso-8859-5, unicode-1-1;q=0.8");
   }
   
-  private void expectCreateError(final String value) {
+  private void expectCreateError(String value) {
     try {
       AcceptCharset.create(value);
       fail("Expected exception not thrown.");
     } catch (UnsupportedCharsetException e) {
       assertNotNull(e);
-    } catch (final IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       assertNotNull(e);
     }
   }

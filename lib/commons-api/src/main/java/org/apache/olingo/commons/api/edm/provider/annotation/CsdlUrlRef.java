@@ -51,7 +51,7 @@ public class CsdlUrlRef extends CsdlDynamicExpression implements CsdlAnnotatable
     return value;
   }
 
-  public CsdlUrlRef setValue(final CsdlExpression value) {
+  public CsdlUrlRef setValue(CsdlExpression value) {
     this.value = value;
     return this;
   }
@@ -65,9 +65,9 @@ public class CsdlUrlRef extends CsdlDynamicExpression implements CsdlAnnotatable
       return false;
     }
     CsdlUrlRef csdlUrlRef = (CsdlUrlRef) obj;
-    return (this.getValue() == null ? csdlUrlRef.getValue() == null :
-      this.getValue().equals(csdlUrlRef.getValue()))
-        && (this.getAnnotations() == null ? csdlUrlRef.getAnnotations() == null :
+    return (getValue() == null ? csdlUrlRef.getValue() == null :
+            getValue().equals(csdlUrlRef.getValue()))
+        && (getAnnotations() == null ? csdlUrlRef.getAnnotations() == null :
             checkAnnotations(csdlUrlRef.getAnnotations()));
   }
   
@@ -75,9 +75,9 @@ public class CsdlUrlRef extends CsdlDynamicExpression implements CsdlAnnotatable
     if (csdlUrlRefAnnot == null) {
       return false;
     }
-    if (this.getAnnotations().size() == csdlUrlRefAnnot.size()) {
-      for (int i = 0; i < this.getAnnotations().size() ; i++) {
-        if (!this.getAnnotations().get(i).equals(csdlUrlRefAnnot.get(i))) {
+    if (getAnnotations().size() == csdlUrlRefAnnot.size()) {
+      for (int i = 0; i < getAnnotations().size() ; i++) {
+        if (!getAnnotations().get(i).equals(csdlUrlRefAnnot.get(i))) {
           return false;
         }
       }

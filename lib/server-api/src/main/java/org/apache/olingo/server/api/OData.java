@@ -56,17 +56,17 @@ public abstract class OData {
    */
   public static OData newInstance() {
     try {
-      final Class<?> clazz = Class.forName(OData.IMPLEMENTATION);
+      Class<?> clazz = Class.forName(OData.IMPLEMENTATION);
 
       /*
        * We explicitly do not use the singleton pattern to keep the server state free
        * and avoid class loading issues also during hot deployment.
        */
-      final Object object = clazz.newInstance();
+      Object object = clazz.newInstance();
 
       return (OData) object;
 
-    } catch (final Exception e) {
+    } catch (Exception e) {
       throw new ODataRuntimeException(e);
     }
   }
@@ -87,7 +87,7 @@ public abstract class OData {
    * @param versions any v4 version supported by Olingo (4.0, 4.01 ...)
    */
   public abstract ODataSerializer createSerializer(ContentType contentType, 
-      final List<String> versions) throws SerializerException;
+      List<String> versions) throws SerializerException;
 
   /**
    * Creates a new serializer object for rendering content in a fixed format, e.g., for binary output or multipart/mixed
@@ -168,7 +168,7 @@ public abstract class OData {
     * @param service version
    */
   public abstract ODataDeserializer createDeserializer(ContentType contentType, 
-      final List<String> versions) throws DeserializerException;
+      List<String> versions) throws DeserializerException;
 
   /**
    * Creates a new deserializer object for reading content in the specified format.
@@ -179,7 +179,7 @@ public abstract class OData {
    * @param service version
    */
   public abstract ODataDeserializer createDeserializer(ContentType contentType,
-      ServiceMetadata metadata, final List<String> versions) throws DeserializerException;
+      ServiceMetadata metadata, List<String> versions) throws DeserializerException;
   
   /**
    * Creates a primitive-type instance.
@@ -214,7 +214,7 @@ public abstract class OData {
    * for rendering content in the specified format.
    * @param contentType a content type supported by Olingo
    */
-  public abstract EdmAssistedSerializer createEdmAssistedSerializer(final ContentType contentType)
+  public abstract EdmAssistedSerializer createEdmAssistedSerializer(ContentType contentType)
       throws SerializerException;
   
   /**
@@ -223,6 +223,6 @@ public abstract class OData {
    * @param contentType a content type supported by Olingo
    * @param version versions supported by Olingo
    */
-  public abstract EdmDeltaSerializer createEdmDeltaSerializer(final ContentType contentType,
-      final List<String> versions) throws SerializerException;
+  public abstract EdmDeltaSerializer createEdmDeltaSerializer(ContentType contentType,
+                                                              List<String> versions) throws SerializerException;
 }

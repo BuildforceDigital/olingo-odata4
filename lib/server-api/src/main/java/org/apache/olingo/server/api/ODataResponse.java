@@ -37,7 +37,7 @@ public class ODataResponse {
    * Sets the status code.
    * @see HttpStatusCode
    */
-  public void setStatusCode(final int statusCode) {
+  public void setStatusCode(int statusCode) {
     this.statusCode = statusCode;
   }
 
@@ -57,7 +57,7 @@ public class ODataResponse {
    * @param value value for the given header name
    * @see <a href="http://ietf.org/rfc/rfc7230.txt">RFC 7230, section 3.2.2</a>
    */
-  public void setHeader(final String name, final String value) {
+  public void setHeader(String name, String value) {
     headers.setHeader(name, value);
   }
 
@@ -69,7 +69,7 @@ public class ODataResponse {
    * @param value value for the given header name
    * @see <a href="http://ietf.org/rfc/rfc7230.txt">RFC 7230, section 3.2.2</a>
    */
-  public void addHeader(final String name, final String value) {
+  public void addHeader(String name, String value) {
     headers.setHeader(name, value);
   }
 
@@ -81,7 +81,7 @@ public class ODataResponse {
    * @param values list of values for the given header name
    * @see <a href="http://ietf.org/rfc/rfc7230.txt">RFC 7230, section 3.2.2</a>
    */
-  public void addHeader(final String name, final List<String> values) {
+  public void addHeader(String name, List<String> values) {
     headers.addHeader(name, values);
   }
 
@@ -99,7 +99,7 @@ public class ODataResponse {
    * @param name the header name as a case-insensitive key
    * @return the header value(s) or null if not found
    */
-  public List<String> getHeaders(final String name) {
+  public List<String> getHeaders(String name) {
     return headers.getHeader(name);
   }
 
@@ -110,8 +110,8 @@ public class ODataResponse {
    * @param name the header name as a case-insensitive key
    * @return the first header value or null if not found
    */
-  public String getHeader(final String name) {
-    final List<String> values = getHeaders(name);
+  public String getHeader(String name) {
+    List<String> values = getHeaders(name);
     return values == null || values.isEmpty() ? null : values.get(0);
   }
 
@@ -119,7 +119,7 @@ public class ODataResponse {
    * Sets the content (body).
    * @param content the content as {@link InputStream}
    */
-  public void setContent(final InputStream content) {
+  public void setContent(InputStream content) {
     this.content = content;
   }
 

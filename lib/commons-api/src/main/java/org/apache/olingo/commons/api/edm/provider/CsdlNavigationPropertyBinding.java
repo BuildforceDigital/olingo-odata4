@@ -42,7 +42,7 @@ public class CsdlNavigationPropertyBinding extends CsdlAbstractEdmItem {
    * @param path the path
    * @return the path
    */
-  public CsdlNavigationPropertyBinding setPath(final String path) {
+  public CsdlNavigationPropertyBinding setPath(String path) {
     this.path = path;
     return this;
   }
@@ -62,7 +62,7 @@ public class CsdlNavigationPropertyBinding extends CsdlAbstractEdmItem {
    * @param target the target
    * @return the target
    */
-  public CsdlNavigationPropertyBinding setTarget(final String target) {
+  public CsdlNavigationPropertyBinding setTarget(String target) {
     this.target = target;
     return this;
   }

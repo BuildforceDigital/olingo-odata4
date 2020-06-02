@@ -54,13 +54,13 @@ public class ODataNettyImpl extends ODataNetty {
 
   static {
     try {
-      final Class<?> clazz = Class.forName(IMPLEMENTATION);
+      Class<?> clazz = Class.forName(IMPLEMENTATION);
 
       /*
        * We explicitly do not use the singleton pattern to keep the server state free
        * and avoid class loading issues also during hot deployment.
        */
-      final Object object = clazz.newInstance();
+      Object object = clazz.newInstance();
       odata = (OData) object;
     } catch (Exception e) {
       throw new ODataRuntimeException(e);
@@ -78,8 +78,8 @@ public class ODataNettyImpl extends ODataNetty {
   }
   
   @Override
-  public ODataSerializer createSerializer(final ContentType contentType, 
-      final List<String> versions) throws SerializerException {
+  public ODataSerializer createSerializer(ContentType contentType,
+                                          List<String> versions) throws SerializerException {
     return odata.createSerializer(contentType, versions);
   }
 

@@ -94,7 +94,7 @@ public class UriValidator {
 
     private final int idx;
 
-    UriType(final int i) {
+    UriType(int i) {
       idx = i;
     }
 
@@ -123,8 +123,8 @@ public class UriValidator {
     OPTION_INDEX = Collections.unmodifiableMap(temp);
   }
 
-  public void validate(final UriInfo uriInfo, final HttpMethod httpMethod) throws UriValidationException {
-    final UriType uriType = getUriType(uriInfo);
+  public void validate(UriInfo uriInfo, HttpMethod httpMethod) throws UriValidationException {
+    UriType uriType = getUriType(uriInfo);
     if (HttpMethod.GET == httpMethod) {
       validateReadQueryOptions(uriType, uriInfo.getSystemQueryOptions());
     } else {
@@ -133,7 +133,7 @@ public class UriValidator {
     }
   }
 
-  private UriType getUriType(final UriInfo uriInfo) throws UriValidationException {
+  private UriType getUriType(UriInfo uriInfo) throws UriValidationException {
     UriType uriType;
 
     switch (uriInfo.getKind()) {
@@ -171,8 +171,8 @@ public class UriValidator {
    * The URI parser has already made sure that there are enough segments for a given type of the last segment,
    * but don't try to extract always the second-to-last segment, it could cause an {@link IndexOutOfBoundsException}.
    */
-  private UriType getUriTypeForResource(final List<UriResource> segments) throws UriValidationException {
-    final UriResource lastPathSegment = segments.get(segments.size() - 1);
+  private UriType getUriTypeForResource(List<UriResource> segments) throws UriValidationException {
+    UriResource lastPathSegment = segments.get(segments.size() - 1);
 
     UriType uriType;
     switch (lastPathSegment.getKind()) {
@@ -212,7 +212,7 @@ public class UriValidator {
     return uriType;
   }
 
-  private UriType getUriTypeForValue(final UriResource secondLastPathSegment) throws UriValidationException {
+  private UriType getUriTypeForValue(UriResource secondLastPathSegment) throws UriValidationException {
     UriType uriType;
     switch (secondLastPathSegment.getKind()) {
     case primitiveProperty:
@@ -225,7 +225,7 @@ public class UriValidator {
       break;
     case function:
       UriResourceFunction uriFunction = (UriResourceFunction) secondLastPathSegment;
-      final EdmFunction function = uriFunction.getFunction();
+      EdmFunction function = uriFunction.getFunction();
       uriType = function.getReturnType().getType().getKind() == EdmTypeKind.ENTITY ?
           UriType.mediaStream : UriType.propertyPrimitiveValue;
       break;
@@ -237,11 +237,11 @@ public class UriValidator {
     return uriType;
   }
 
-  private UriType getUriTypeForRef(final UriResource secondLastPathSegment) throws UriValidationException {
+  private UriType getUriTypeForRef(UriResource secondLastPathSegment) throws UriValidationException {
     return isCollection(secondLastPathSegment) ? UriType.references : UriType.reference;
   }
 
-  private boolean isCollection(final UriResource pathSegment) throws UriValidationException {
+  private boolean isCollection(UriResource pathSegment) throws UriValidationException {
     if (pathSegment instanceof UriResourcePartTyped) {
       return ((UriResourcePartTyped) pathSegment).isCollection();
     } else {
@@ -251,14 +251,14 @@ public class UriValidator {
     }
   }
 
-  private UriType getUriTypeForPrimitiveProperty(final UriResource lastPathSegment) throws UriValidationException {
+  private UriType getUriTypeForPrimitiveProperty(UriResource lastPathSegment) throws UriValidationException {
     return isCollection(lastPathSegment) ? UriType.propertyPrimitiveCollection : UriType.propertyPrimitive;
   }
 
-  private UriType getUriTypeForFunction(final UriResource lastPathSegment) throws UriValidationException {
-    final UriResourceFunction uriFunction = (UriResourceFunction) lastPathSegment;
-    final boolean isCollection = uriFunction.isCollection();
-    final EdmTypeKind typeKind = uriFunction.getFunction().getReturnType().getType().getKind();
+  private UriType getUriTypeForFunction(UriResource lastPathSegment) throws UriValidationException {
+    UriResourceFunction uriFunction = (UriResourceFunction) lastPathSegment;
+    boolean isCollection = uriFunction.isCollection();
+    EdmTypeKind typeKind = uriFunction.getFunction().getReturnType().getType().getKind();
     UriType uriType;
     switch (typeKind) {
     case ENTITY:
@@ -280,16 +280,16 @@ public class UriValidator {
     return uriType;
   }
 
-  private UriType getUriTypeForEntitySet(final UriResource lastPathSegment) throws UriValidationException {
+  private UriType getUriTypeForEntitySet(UriResource lastPathSegment) throws UriValidationException {
     return isCollection(lastPathSegment) ? UriType.entitySet : UriType.entity;
   }
 
-  private UriType getUriTypeForComplexProperty(final UriResource lastPathSegment) throws UriValidationException {
+  private UriType getUriTypeForComplexProperty(UriResource lastPathSegment) throws UriValidationException {
     return isCollection(lastPathSegment) ? UriType.propertyComplexCollection : UriType.propertyComplex;
   }
 
-  private UriType getUriTypeForAction(final UriResource lastPathSegment) throws UriValidationException {
-    final EdmReturnType rt = ((UriResourceAction) lastPathSegment).getAction().getReturnType();
+  private UriType getUriTypeForAction(UriResource lastPathSegment) throws UriValidationException {
+    EdmReturnType rt = ((UriResourceAction) lastPathSegment).getAction().getReturnType();
     if (rt == null) {
       return UriType.none;
     }
@@ -313,7 +313,7 @@ public class UriValidator {
     return uriType;
   }
 
-  private UriType getUriTypeForCount(final UriResource secondLastPathSegment) throws UriValidationException {
+  private UriType getUriTypeForCount(UriResource secondLastPathSegment) throws UriValidationException {
     UriType uriType;
     switch (secondLastPathSegment.getKind()) {
     case entitySet:
@@ -327,9 +327,9 @@ public class UriValidator {
       uriType = UriType.propertyPrimitiveCollectionCount;
       break;
     case function:
-      final UriResourceFunction uriFunction = (UriResourceFunction) secondLastPathSegment;
-      final EdmFunction function = uriFunction.getFunction();
-      final EdmType returnType = function.getReturnType().getType();
+      UriResourceFunction uriFunction = (UriResourceFunction) secondLastPathSegment;
+      EdmFunction function = uriFunction.getFunction();
+      EdmType returnType = function.getReturnType().getType();
       switch (returnType.getKind()) {
       case ENTITY:
         uriType = UriType.entitySetCount;
@@ -355,12 +355,12 @@ public class UriValidator {
     return uriType;
   }
 
-  private void validateReadQueryOptions(final UriType uriType, final List<SystemQueryOption> options)
+  private void validateReadQueryOptions(UriType uriType, List<SystemQueryOption> options)
       throws UriValidationException {
-    for (final SystemQueryOption option : options) {
-      final SystemQueryOptionKind kind = option.getKind();
+    for (SystemQueryOption option : options) {
+      SystemQueryOptionKind kind = option.getKind();
       if (OPTION_INDEX.containsKey(kind)) {
-        final int columnIndex = OPTION_INDEX.get(kind);
+        int columnIndex = OPTION_INDEX.get(kind);
         if (!decisionMatrix[uriType.getIndex()][columnIndex]) {
           throw new UriValidationException("System query option not allowed: " + option.getName(),
               UriValidationException.MessageKeys.SYSTEM_QUERY_OPTION_NOT_ALLOWED, option.getName());
@@ -372,8 +372,8 @@ public class UriValidator {
     }
   }
 
-  private void validateNonReadQueryOptions(final UriType uriType, final boolean isAction,
-      final List<SystemQueryOption> options, final HttpMethod httpMethod) throws UriValidationException {
+  private void validateNonReadQueryOptions(UriType uriType, boolean isAction,
+                                           List<SystemQueryOption> options, HttpMethod httpMethod) throws UriValidationException {
     if (httpMethod == HttpMethod.POST && isAction) {
       // From the OData specification:
       // For POST requests to an action URL the return type of the action determines the applicable
@@ -382,7 +382,7 @@ public class UriValidator {
 
     } else if (httpMethod == HttpMethod.DELETE && uriType == UriType.references) {
       // Only $id is allowed as SystemQueryOption for DELETE on a reference collection.
-      for (final SystemQueryOption option : options) {
+      for (SystemQueryOption option : options) {
         if (SystemQueryOptionKind.ID != option.getKind()) {
           throw new UriValidationException(
               "System query option " + option.getName() + " is not allowed for method " + httpMethod,
@@ -393,7 +393,7 @@ public class UriValidator {
 
     } else if (!options.isEmpty()) {
       StringBuilder optionsString = new StringBuilder();
-      for (final SystemQueryOption option : options) {
+      for (SystemQueryOption option : options) {
         optionsString.append(option.getName()).append(' ');
       }
       throw new UriValidationException(
@@ -403,23 +403,23 @@ public class UriValidator {
     }
   }
 
-  private boolean isAction(final UriInfo uriInfo) {
+  private boolean isAction(UriInfo uriInfo) {
     List<UriResource> uriResourceParts = uriInfo.getUriResourceParts();
     return !uriResourceParts.isEmpty()
         && UriResourceKind.action == uriResourceParts.get(uriResourceParts.size() - 1).getKind();
   }
 
-  private void validatePropertyOperations(final UriInfo uriInfo, final HttpMethod method)
+  private void validatePropertyOperations(UriInfo uriInfo, HttpMethod method)
       throws UriValidationException {
-    final List<UriResource> parts = uriInfo.getUriResourceParts();
-    final UriResource last = !parts.isEmpty() ? parts.get(parts.size() - 1) : null;
-    final UriResource previous = parts.size() > 1 ? parts.get(parts.size() - 2) : null;
+    List<UriResource> parts = uriInfo.getUriResourceParts();
+    UriResource last = !parts.isEmpty() ? parts.get(parts.size() - 1) : null;
+    UriResource previous = parts.size() > 1 ? parts.get(parts.size() - 2) : null;
     if (last != null
         && (last.getKind() == UriResourceKind.primitiveProperty
         || last.getKind() == UriResourceKind.complexProperty
         || (last.getKind() == UriResourceKind.value
             && previous != null && previous.getKind() == UriResourceKind.primitiveProperty))) {
-      final EdmProperty property = ((UriResourceProperty)
+      EdmProperty property = ((UriResourceProperty)
           (last.getKind() == UriResourceKind.value ? previous : last)).getProperty();
       if (method == HttpMethod.PATCH && property.isCollection()) {
         throw new UriValidationException("Attempt to patch collection property.",

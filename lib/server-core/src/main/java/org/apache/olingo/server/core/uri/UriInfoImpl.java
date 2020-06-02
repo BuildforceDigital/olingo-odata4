@@ -75,7 +75,7 @@ public class UriInfoImpl implements UriInfo {
 
   private String fragment;
 
-  public UriInfoImpl setKind(final UriInfoKind kind) {
+  public UriInfoImpl setKind(UriInfoKind kind) {
     this.kind = kind;
     return this;
   }
@@ -120,7 +120,7 @@ public class UriInfoImpl implements UriInfo {
     return this;
   }
 
-  public UriInfoImpl addEntitySetName(final String entitySet) {
+  public UriInfoImpl addEntitySetName(String entitySet) {
     entitySetNames.add(entitySet);
     return this;
   }
@@ -130,7 +130,7 @@ public class UriInfoImpl implements UriInfo {
     return Collections.unmodifiableList(entitySetNames);
   }
 
-  public UriInfoImpl setEntityTypeCast(final EdmEntityType type) {
+  public UriInfoImpl setEntityTypeCast(EdmEntityType type) {
     entityTypeCast = type;
     return this;
   }
@@ -140,7 +140,7 @@ public class UriInfoImpl implements UriInfo {
     return entityTypeCast;
   }
 
-  public UriInfoImpl addResourcePart(final UriResource uriPathInfo) {
+  public UriInfoImpl addResourcePart(UriResource uriPathInfo) {
     pathParts.add(uriPathInfo);
     lastResourcePart = uriPathInfo;
     return this;
@@ -155,7 +155,7 @@ public class UriInfoImpl implements UriInfo {
     return Collections.unmodifiableList(pathParts);
   }
 
-  public UriInfoImpl setQueryOption(final QueryOption option) {
+  public UriInfoImpl setQueryOption(QueryOption option) {
     if (option instanceof SystemQueryOption) {
       setSystemQueryOption((SystemQueryOption) option);
     } else if (option instanceof AliasQueryOption) {
@@ -173,8 +173,8 @@ public class UriInfoImpl implements UriInfo {
    * @throws ODataRuntimeException if an unsupported option is provided
    * or an option of this kind has been added before
    */
-  public UriInfoImpl setSystemQueryOption(final SystemQueryOption systemOption) {
-    final SystemQueryOptionKind systemQueryOptionKind = systemOption.getKind();
+  public UriInfoImpl setSystemQueryOption(SystemQueryOption systemOption) {
+    SystemQueryOptionKind systemQueryOptionKind = systemOption.getKind();
     if (systemQueryOptions.containsKey(systemQueryOptionKind)) {
       throw new ODataRuntimeException("Double System Query Option: " + systemOption.getName());
     }
@@ -267,7 +267,7 @@ public class UriInfoImpl implements UriInfo {
     return Collections.unmodifiableList(new ArrayList<SystemQueryOption>(systemQueryOptions.values()));
   }
 
-  public UriInfoImpl addAlias(final AliasQueryOption alias) {
+  public UriInfoImpl addAlias(AliasQueryOption alias) {
     if (aliases.containsKey(alias.getName())) {
       throw new ODataRuntimeException("Alias " + alias.getName() + " is already there.");
     } else {
@@ -277,8 +277,8 @@ public class UriInfoImpl implements UriInfo {
   }
 
   @Override
-  public String getValueForAlias(final String alias) {
-    final AliasQueryOption aliasQueryOption = aliases.get(alias);
+  public String getValueForAlias(String alias) {
+    AliasQueryOption aliasQueryOption = aliases.get(alias);
     return aliasQueryOption == null ? null : aliasQueryOption.getText();
   }
 
@@ -291,7 +291,7 @@ public class UriInfoImpl implements UriInfo {
     return Collections.unmodifiableList(new ArrayList<AliasQueryOption>(aliases.values()));
   }
 
-  public UriInfoImpl addCustomQueryOption(final CustomQueryOption option) {
+  public UriInfoImpl addCustomQueryOption(CustomQueryOption option) {
     if (option.getName() != null && !option.getName().isEmpty()) {
       customQueryOptions.add(option);
     }
@@ -303,7 +303,7 @@ public class UriInfoImpl implements UriInfo {
     return Collections.unmodifiableList(customQueryOptions);
   }
 
-  public UriInfoImpl setFragment(final String fragment) {
+  public UriInfoImpl setFragment(String fragment) {
     this.fragment = fragment;
     return this;
   }

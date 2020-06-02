@@ -49,18 +49,18 @@ public class BatchResponseSerializer {
   private static final String SP = " ";
   private static final String CRLF = "\r\n";
 
-  public InputStream serialize(final List<ODataResponsePart> responses, final String boundary)
+  public InputStream serialize(List<ODataResponsePart> responses, String boundary)
       throws BatchSerializerException {
     BodyBuilder builder = createBody(responses, boundary);
 
     return new ByteArrayInputStream(builder.getContent());
   }
 
-  private BodyBuilder createBody(final List<ODataResponsePart> batchResponses, final String boundary)
+  private BodyBuilder createBody(List<ODataResponsePart> batchResponses, String boundary)
       throws BatchSerializerException {
-    final BodyBuilder builder = new BodyBuilder();
+    BodyBuilder builder = new BodyBuilder();
 
-    for (final ODataResponsePart part : batchResponses) {
+    for (ODataResponsePart part : batchResponses) {
       builder.append(getDashBoundary(boundary));
 
       if (part.isChangeSet()) {
@@ -74,14 +74,14 @@ public class BatchResponseSerializer {
     return builder;
   }
 
-  private void appendChangeSet(final ODataResponsePart part, final BodyBuilder builder)
+  private void appendChangeSet(ODataResponsePart part, BodyBuilder builder)
       throws BatchSerializerException {
-    final String changeSetBoundary = generateBoundary("changeset");
+    String changeSetBoundary = generateBoundary("changeset");
 
     appendChangeSetHeader(builder, changeSetBoundary);
     builder.append(CRLF);
 
-    for (final ODataResponse response : part.getResponses()) {
+    for (ODataResponse response : part.getResponses()) {
       builder.append(getDashBoundary(changeSetBoundary));
       appendBodyPart(response, builder, true);
     }
@@ -89,7 +89,7 @@ public class BatchResponseSerializer {
     builder.append(getCloseDelimiter(changeSetBoundary));
   }
 
-  private void appendBodyPart(final ODataResponse response, final BodyBuilder builder, final boolean isChangeSet)
+  private void appendBodyPart(ODataResponse response, BodyBuilder builder, boolean isChangeSet)
       throws BatchSerializerException {
 
     appendBodyPartHeader(response, builder, isChangeSet);
@@ -104,12 +104,12 @@ public class BatchResponseSerializer {
     builder.append(CRLF);
   }
 
-  private void appendChangeSetHeader(final BodyBuilder builder, final String changeSetBoundary) {
+  private void appendChangeSetHeader(BodyBuilder builder, String changeSetBoundary) {
     appendHeader(HttpHeader.CONTENT_TYPE, ContentType.MULTIPART_MIXED
         + "; boundary=" + changeSetBoundary, builder);
   }
 
-  private void appendHeader(final String name, final String value, final BodyBuilder builder) {
+  private void appendHeader(String name, String value, BodyBuilder builder) {
     builder.append(name)
         .append(COLON)
         .append(SP)
@@ -117,7 +117,7 @@ public class BatchResponseSerializer {
         .append(CRLF);
   }
 
-  private void appendStatusLine(final ODataResponse response, final BodyBuilder builder) {
+  private void appendStatusLine(ODataResponse response, BodyBuilder builder) {
     builder.append("HTTP/1.1")
         .append(SP)
         .append(response.getStatusCode())
@@ -126,7 +126,7 @@ public class BatchResponseSerializer {
         .append(CRLF);
   }
 
-  private String getStatusCodeInfo(final ODataResponse response) {
+  private String getStatusCodeInfo(ODataResponse response) {
     HttpStatusCode status = HttpStatusCode.fromStatusCode(response.getStatusCode());
     if (status == null) {
       throw new ODataRuntimeException("Invalid status code in response '" + response.getStatusCode() + "'");
@@ -134,11 +134,11 @@ public class BatchResponseSerializer {
     return status.getInfo();
   }
 
-  private void appendResponseHeader(final ODataResponse response, final int contentLength,
-      final BodyBuilder builder) {
-    final Map<String, List<String>> header = response.getAllHeaders();
+  private void appendResponseHeader(ODataResponse response, int contentLength,
+                                    BodyBuilder builder) {
+    Map<String, List<String>> header = response.getAllHeaders();
 
-    for (final Map.Entry<String, List<String>> entry : header.entrySet()) {
+    for (Map.Entry<String, List<String>> entry : header.entrySet()) {
       // Requests never have a content id header.
       if (!entry.getKey().equalsIgnoreCase(HttpHeader.CONTENT_ID)) {
         appendHeader(entry.getKey(), entry.getValue().get(0), builder);
@@ -148,8 +148,8 @@ public class BatchResponseSerializer {
     appendHeader(HttpHeader.CONTENT_LENGTH, Integer.toString(contentLength), builder);
   }
 
-  private void appendBodyPartHeader(final ODataResponse response, final BodyBuilder builder,
-      final boolean isChangeSet) throws BatchSerializerException {
+  private void appendBodyPartHeader(ODataResponse response, BodyBuilder builder,
+                                    boolean isChangeSet) throws BatchSerializerException {
     appendHeader(HttpHeader.CONTENT_TYPE, ContentType.APPLICATION_HTTP.toContentTypeString(), builder);
     appendHeader(BatchParserCommon.CONTENT_TRANSFER_ENCODING, BatchParserCommon.BINARY_ENCODING, builder);
 
@@ -162,15 +162,15 @@ public class BatchResponseSerializer {
     }
   }
 
-  private String getDashBoundary(final String boundary) {
+  private String getDashBoundary(String boundary) {
     return DOUBLE_DASH + boundary + CRLF;
   }
 
-  private String getCloseDelimiter(final String boundary) {
+  private String getCloseDelimiter(String boundary) {
     return DOUBLE_DASH + boundary + DOUBLE_DASH + CRLF;
   }
 
-  private String generateBoundary(final String value) {
+  private String generateBoundary(String value) {
     return value + "_" + UUID.randomUUID().toString();
   }
 
@@ -190,13 +190,13 @@ public class BatchResponseSerializer {
       return tmp;
     }
 
-    public BodyBuilder append(final String string) {
+    public BodyBuilder append(String string) {
       byte[] b = string.getBytes(CHARSET_ISO_8859_1);
       put(b);
       return this;
     }
 
-    private void put(final byte[] b) {
+    private void put(byte[] b) {
       if (isClosed) {
         throw new ODataRuntimeException("BodyBuilder is closed.");
       }
@@ -210,11 +210,11 @@ public class BatchResponseSerializer {
       buffer.put(b);
     }
 
-    public BodyBuilder append(final int statusCode) {
+    public BodyBuilder append(int statusCode) {
       return append(String.valueOf(statusCode));
     }
 
-    public BodyBuilder append(final Body body) {
+    public BodyBuilder append(Body body) {
       put(body.getContent());
       return this;
     }
@@ -231,7 +231,7 @@ public class BatchResponseSerializer {
   private static class Body {
     private final byte[] content;
 
-    Body(final ODataResponse response) {
+    Body(ODataResponse response) {
       content = getBody(response);
     }
 
@@ -243,7 +243,7 @@ public class BatchResponseSerializer {
       return content; //NOSONAR
     }
 
-    private byte[] getBody(final ODataResponse response) {
+    private byte[] getBody(ODataResponse response) {
       if (response == null || (response.getContent() == null && 
           response.getODataContent() == null)) {
         return new byte[0];

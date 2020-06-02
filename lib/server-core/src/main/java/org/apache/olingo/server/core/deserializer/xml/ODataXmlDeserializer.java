@@ -85,38 +85,38 @@ public class ODataXmlDeserializer implements ODataDeserializer {
   public ODataXmlDeserializer() {
   }
 
-  public ODataXmlDeserializer(final ServiceMetadata serviceMetadata) {
+  public ODataXmlDeserializer(ServiceMetadata serviceMetadata) {
     this.serviceMetadata = serviceMetadata;
   }
   
   public void setMetadata(ServiceMetadata metadata) {
-    this.serviceMetadata = metadata;
+    serviceMetadata = metadata;
   }
   
-  protected XMLEventReader getReader(final InputStream input) throws XMLStreamException {
+  protected XMLEventReader getReader(InputStream input) throws XMLStreamException {
     FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
     FACTORY.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
     return FACTORY.createXMLEventReader(input);
   }
 
-  private Object primitive(final XMLEventReader reader, final StartElement start,
-      final EdmType type, final boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final boolean isUnicode) throws XMLStreamException, EdmPrimitiveTypeException,
+  private Object primitive(XMLEventReader reader, StartElement start,
+                           EdmType type, boolean isNullable, Integer maxLength, Integer precision,
+                           Integer scale, boolean isUnicode) throws XMLStreamException, EdmPrimitiveTypeException,
       DeserializerException {
 
     Object value = null;
 
     boolean foundEndProperty = false;
     while (reader.hasNext() && !foundEndProperty) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
 
       if (event.isCharacters() && !event.asCharacters().isWhiteSpace()) {
        /* if (type instanceof AbstractGeospatialType<?>) {
           throw new DeserializerException("geo types support not implemented",
               DeserializerException.MessageKeys.NOT_IMPLEMENTED);
         }*/
-        final EdmPrimitiveType primitiveType = (EdmPrimitiveType) type;
-        final String stringValue = event.asCharacters().getData();
+        EdmPrimitiveType primitiveType = (EdmPrimitiveType) type;
+        String stringValue = event.asCharacters().getData();
         value = primitiveType.valueOfString(stringValue,
             isNullable,
             maxLength,
@@ -133,17 +133,17 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return value;
   }
 
-  private Object complex(final XMLEventReader reader, final StartElement start, final EdmComplexType edmComplex)
+  private Object complex(XMLEventReader reader, StartElement start, EdmComplexType edmComplex)
       throws XMLStreamException, EdmPrimitiveTypeException, DeserializerException {
     ComplexValue value = new ComplexValue();
     EdmType resolvedType = edmComplex;
     boolean foundEndProperty = false;
     while (reader.hasNext() && !foundEndProperty) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
       
       if (event.isStartElement()) {        
         //Get the derived type from the element tag
-        final Attribute attrType = start.getAttributeByName(typeQName);
+        Attribute attrType = start.getAttributeByName(typeQName);
         if (attrType != null ) {
           String type = new EdmTypeInfo.Builder().setTypeExpression(attrType.getValue()).build().internal();
           if (type.startsWith("Collection(") && type.endsWith(")")) {
@@ -166,15 +166,15 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return value;
   }
 
-  private void collection(final Valuable valuable, final XMLEventReader reader, final StartElement start,
-      final EdmType edmType, final boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final boolean isUnicode) throws XMLStreamException, EdmPrimitiveTypeException,
+  private void collection(Valuable valuable, XMLEventReader reader, StartElement start,
+                          EdmType edmType, boolean isNullable, Integer maxLength, Integer precision,
+                          Integer scale, boolean isUnicode) throws XMLStreamException, EdmPrimitiveTypeException,
       DeserializerException {
 
     List<Object> values = new ArrayList<>();
     boolean foundEndProperty = false;
     while (reader.hasNext() && !foundEndProperty) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
       if (event.isStartElement()) {
         if (edmType instanceof EdmPrimitiveType) {
           values.add(primitive(reader, event.asStartElement(), edmType, isNullable,
@@ -192,18 +192,18 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     valuable.setValue(getValueType(edmType, true), values);
   }
 
-  private Property property(final XMLEventReader reader, final StartElement start, final EdmType edmType,
-      final boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final boolean isUnicode, final boolean isCollection)
+  private Property property(XMLEventReader reader, StartElement start, EdmType edmType,
+                            boolean isNullable, Integer maxLength, Integer precision,
+                            Integer scale, boolean isUnicode, boolean isCollection)
           throws XMLStreamException, EdmPrimitiveTypeException, DeserializerException {
 
-    final Property property = new Property();
+    Property property = new Property();
 
     if (propertyValueQName.equals(start.getName())) {
       // retrieve name from context
-      final Attribute context = start.getAttributeByName(contextQName);
+      Attribute context = start.getAttributeByName(contextQName);
       if (context != null && context.getValue() != null) {
-        final int pos = context.getValue().lastIndexOf('/');
+        int pos = context.getValue().lastIndexOf('/');
         property.setName(pos == -1 ? "" : context.getValue().substring(pos + 1));
       }
     } else {
@@ -211,7 +211,7 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     }
     
     EdmType resolvedType = edmType;
-    final Attribute attrType = start.getAttributeByName(typeQName);
+    Attribute attrType = start.getAttributeByName(typeQName);
     if (attrType != null && (edmType instanceof EdmComplexType)) {
       String type = new EdmTypeInfo.Builder().setTypeExpression(attrType.getValue()).build().internal();
       if (type.startsWith("Collection(") && type.endsWith(")")) {
@@ -223,7 +223,7 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return property;
   }
 
-  private ValueType getValueType(final EdmType edmType, final boolean isCollection) {
+  private ValueType getValueType(EdmType edmType, boolean isCollection) {
     if (edmType instanceof EdmPrimitiveType) {
       if (edmType instanceof EdmEnumType) {
         return isCollection ? ValueType.COLLECTION_ENUM : ValueType.ENUM;
@@ -237,17 +237,17 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     }
   }
 
-  private void valuable(final Valuable valuable, final XMLEventReader reader, final StartElement start,
-      final EdmType edmType, final boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final boolean isUnicode, final boolean isCollection) throws XMLStreamException,
+  private void valuable(Valuable valuable, XMLEventReader reader, StartElement start,
+                        EdmType edmType, boolean isNullable, Integer maxLength, Integer precision,
+                        Integer scale, boolean isUnicode, boolean isCollection) throws XMLStreamException,
       EdmPrimitiveTypeException, DeserializerException {
 
-    final Attribute nullAttr = start.getAttributeByName(nullQName);
+    Attribute nullAttr = start.getAttributeByName(nullQName);
     if (nullAttr != null) {
       // found null
       boolean foundEndProperty = false;
       while (reader.hasNext() && !foundEndProperty) {
-        final XMLEvent event = reader.nextEvent();
+        XMLEvent event = reader.nextEvent();
         if (event.isEndElement() && start.getName().equals(event.asEndElement().getName())) {
           foundEndProperty = true;
         }
@@ -256,7 +256,7 @@ public class ODataXmlDeserializer implements ODataDeserializer {
       return;
     }
 
-    final String typeName = edmType.getFullQualifiedName().getFullQualifiedNameAsString();
+    String typeName = edmType.getFullQualifiedName().getFullQualifiedNameAsString();
     valuable.setType(isCollection ? ("Collection(" + typeName + ")") : typeName);
     if (isCollection) {
       collection(valuable, reader, start, edmType, isNullable, maxLength, precision, scale, isUnicode);
@@ -272,11 +272,11 @@ public class ODataXmlDeserializer implements ODataDeserializer {
   }
 
   @Override
-  public DeserializerResult property(final InputStream input, final EdmProperty edmProperty)
+  public DeserializerResult property(InputStream input, EdmProperty edmProperty)
       throws DeserializerException {
     try {
-      final XMLEventReader reader = getReader(input);
-      final StartElement start = skipBeforeFirstStartElement(reader);
+      XMLEventReader reader = getReader(input);
+      StartElement start = skipBeforeFirstStartElement(reader);
       Property property = property(reader, start,
           edmProperty.getType(),
           edmProperty.isNullable(),
@@ -289,16 +289,16 @@ public class ODataXmlDeserializer implements ODataDeserializer {
           .build();
     } catch (XMLStreamException e) {
       throw new DeserializerException(e.getMessage(), e, DeserializerException.MessageKeys.IO_EXCEPTION);
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       throw new DeserializerException(e.getMessage(), e,
           DeserializerException.MessageKeys.INVALID_VALUE_FOR_PROPERTY);
     }
   }
 
-  private StartElement skipBeforeFirstStartElement(final XMLEventReader reader) throws XMLStreamException {
+  private StartElement skipBeforeFirstStartElement(XMLEventReader reader) throws XMLStreamException {
     StartElement startEvent = null;
     while (reader.hasNext() && startEvent == null) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
       if (event.isStartElement()) {
         startEvent = event.asStartElement();
       }
@@ -310,12 +310,12 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return startEvent;
   }
 
-  private void common(final XMLEventReader reader, final StartElement start,
-      final AbstractODataObject object, final String key) throws XMLStreamException {
+  private void common(XMLEventReader reader, StartElement start,
+                      AbstractODataObject object, String key) throws XMLStreamException {
 
     boolean foundEndElement = false;
     while (reader.hasNext() && !foundEndElement) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
 
       if (event.isCharacters() && !event.asCharacters().isWhiteSpace()) {
         object.setCommonProperty(key, event.asCharacters().getData());
@@ -327,14 +327,14 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     }
   }
 
-  private void inline(final XMLEventReader reader, final StartElement start, final Link link,
-      final EdmEntityType edmEntityType) throws XMLStreamException, EdmPrimitiveTypeException,
+  private void inline(XMLEventReader reader, StartElement start, Link link,
+                      EdmEntityType edmEntityType) throws XMLStreamException, EdmPrimitiveTypeException,
       DeserializerException {
 
     boolean foundEndElement = false;
     EdmNavigationProperty navigationProperty = edmEntityType.getNavigationProperty(link.getTitle());
     while (reader.hasNext() && !foundEndElement) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
 
       if (event.isStartElement()) {
         if (inlineQName.equals(event.asStartElement().getName())) {
@@ -383,12 +383,12 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     }
   }
 
-  private List<String> entityRefCollection(final XMLEventReader reader, final StartElement start)
+  private List<String> entityRefCollection(XMLEventReader reader, StartElement start)
       throws XMLStreamException {
     boolean foundEndElement = false;
     ArrayList<String> references = new ArrayList<String>();
     while (reader.hasNext() && !foundEndElement) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
 
       if (event.isStartElement() && entryRefQName.equals(event.asStartElement().getName())) {
         references.add(entityRef(reader, event.asStartElement()));
@@ -401,11 +401,11 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return references;
   }
 
-  private String entityRef(final XMLEventReader reader, final StartElement start) throws XMLStreamException {
+  private String entityRef(XMLEventReader reader, StartElement start) throws XMLStreamException {
     boolean foundEndElement = false;
-    final Attribute entityRefId = start.getAttributeByName(Constants.QNAME_ATOM_ATTR_ID);
+    Attribute entityRefId = start.getAttributeByName(Constants.QNAME_ATOM_ATTR_ID);
     while (reader.hasNext() && !foundEndElement) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
       if (event.isEndElement() && start.getName().equals(event.asEndElement().getName())) {
         foundEndElement = true;
       }
@@ -413,9 +413,9 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return entityRefId.getValue();
   }
 
-  private StartElement getStartElement(final XMLEventReader reader) throws XMLStreamException {
+  private StartElement getStartElement(XMLEventReader reader) throws XMLStreamException {
     while (reader.hasNext()) {
-      final XMLEvent innerEvent = reader.peek();
+      XMLEvent innerEvent = reader.peek();
       if (innerEvent.isCharacters() && innerEvent.asCharacters().isWhiteSpace()) {
         reader.nextEvent();
       } else if (innerEvent.isStartElement()) {
@@ -427,13 +427,13 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return null;
   }
 
-  private void properties(final XMLEventReader reader, final StartElement start, final Entity entity,
-      final EdmEntityType edmEntityType)
+  private void properties(XMLEventReader reader, StartElement start, Entity entity,
+                          EdmEntityType edmEntityType)
           throws XMLStreamException, EdmPrimitiveTypeException, DeserializerException {
 
     boolean foundEndProperties = false;
     while (reader.hasNext() && !foundEndProperties) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
 
       if (event.isStartElement()) {
         String propertyName = event.asStartElement().getName().getLocalPart();
@@ -458,10 +458,10 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     }
   }
 
-  private Entity entityRef(final StartElement start) throws XMLStreamException {
-    final Entity entity = new Entity();
+  private Entity entityRef(StartElement start) throws XMLStreamException {
+    Entity entity = new Entity();
 
-    final Attribute entityRefId = start.getAttributeByName(Constants.QNAME_ATOM_ATTR_ID);
+    Attribute entityRefId = start.getAttributeByName(Constants.QNAME_ATOM_ATTR_ID);
     if (entityRefId != null) {
       entity.setId(URI.create(entityRefId.getValue()));
     }
@@ -469,7 +469,7 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return entity;
   }
 
-  private Entity entity(final XMLEventReader reader, final StartElement start, final EdmEntityType edmEntityType)
+  private Entity entity(XMLEventReader reader, StartElement start, EdmEntityType edmEntityType)
       throws XMLStreamException, EdmPrimitiveTypeException, DeserializerException {
     Entity entity = null;
     EdmEntityType resolvedType = edmEntityType;
@@ -477,45 +477,45 @@ public class ODataXmlDeserializer implements ODataDeserializer {
       entity = entityRef(start);
     } else if (Constants.QNAME_ATOM_ELEM_ENTRY.equals(start.getName())) {
       entity = new Entity();
-      final Attribute xmlBase = start.getAttributeByName(Constants.QNAME_ATTR_XML_BASE);
+      Attribute xmlBase = start.getAttributeByName(Constants.QNAME_ATTR_XML_BASE);
       if (xmlBase != null) {
         entity.setBaseURI(URI.create(xmlBase.getValue()));
       }
 
-      final Attribute etag = start.getAttributeByName(etagQName);
+      Attribute etag = start.getAttributeByName(etagQName);
       if (etag != null) {
         entity.setETag(etag.getValue());
       }
 
       boolean foundEndEntry = false;
       while (reader.hasNext() && !foundEndEntry) {
-        final XMLEvent event = reader.nextEvent();
+        XMLEvent event = reader.nextEvent();
 
         if (event.isStartElement()) {
           if (Constants.QNAME_ATOM_ELEM_ID.equals(event.asStartElement().getName())) {
             common(reader, event.asStartElement(), entity, "id");
           } else if (Constants.QNAME_ATOM_ELEM_CATEGORY.equals(event.asStartElement().getName())) {
-            final Attribute term = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATOM_ATTR_TERM));
+            Attribute term = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATOM_ATTR_TERM));
             if (term != null) {
               String type = new EdmTypeInfo.Builder().setTypeExpression(term.getValue()).build().internal();
               entity.setType(type);
               resolvedType = (EdmEntityType)getDerivedType(edmEntityType, type);
             }
           } else if (Constants.QNAME_ATOM_ELEM_LINK.equals(event.asStartElement().getName())) {
-            final Link link = new Link();
-            final Attribute rel = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_REL));
+            Link link = new Link();
+            Attribute rel = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_REL));
             if (rel != null) {
               link.setRel(rel.getValue());
             }
-            final Attribute title = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_TITLE));
+            Attribute title = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_TITLE));
             if (title != null) {
               link.setTitle(title.getValue());
             }
-            final Attribute href = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_HREF));
+            Attribute href = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_HREF));
             if (href != null) {
               link.setBindingLink(href.getValue());
             }
-            final Attribute linktype = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_TYPE));
+            Attribute linktype = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_TYPE));
             if (linktype != null) {
               link.setType(linktype.getValue());
             }
@@ -524,7 +524,7 @@ public class ODataXmlDeserializer implements ODataDeserializer {
             } else if (Constants.EDIT_LINK_REL.equals(link.getRel())) {
               entity.setEditLink(link);
             } else if (Constants.EDITMEDIA_LINK_REL.equals(link.getRel())) {
-              final Attribute mediaETag = event.asStartElement().getAttributeByName(etagQName);
+              Attribute mediaETag = event.asStartElement().getAttributeByName(etagQName);
               if (mediaETag != null) {
                 entity.setMediaETag(mediaETag.getValue());
               }
@@ -559,21 +559,21 @@ public class ODataXmlDeserializer implements ODataDeserializer {
               entity.getAssociationLinks().add(link);
             } else if (link.getRel().startsWith(Constants.NS_MEDIA_EDIT_LINK_REL) ||
                 link.getRel().startsWith(Constants.NS_MEDIA_READ_LINK_REL)) {
-              final Attribute metag = event.asStartElement().getAttributeByName(etagQName);
+              Attribute metag = event.asStartElement().getAttributeByName(etagQName);
               if (metag != null) {
                 link.setMediaETag(metag.getValue());
               }
               entity.getMediaEditLinks().add(link);
             }
           } else if (Constants.QNAME_ATOM_ELEM_CONTENT.equals(event.asStartElement().getName())) {
-            final Attribute contenttype = event.asStartElement()
+            Attribute contenttype = event.asStartElement()
                 .getAttributeByName(QName.valueOf(Constants.ATTR_TYPE));
             if (contenttype == null || ContentType.APPLICATION_XML.toContentTypeString()
                 .equals(contenttype.getValue())) {
               properties(reader, skipBeforeFirstStartElement(reader), entity, resolvedType);
             } else {
               entity.setMediaContentType(contenttype.getValue());
-              final Attribute src = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATOM_ATTR_SRC));
+              Attribute src = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATOM_ATTR_SRC));
               if (src != null) {
                 entity.setMediaContentSource(URI.create(src.getValue()));
               }
@@ -592,12 +592,12 @@ public class ODataXmlDeserializer implements ODataDeserializer {
   }
 
   @Override
-  public DeserializerResult entity(final InputStream input, final EdmEntityType edmEntityType)
+  public DeserializerResult entity(InputStream input, EdmEntityType edmEntityType)
       throws DeserializerException {
     try {
-      final XMLEventReader reader = getReader(input);
-      final StartElement start = skipBeforeFirstStartElement(reader);
-      final Entity entity = entity(reader, start, edmEntityType);
+      XMLEventReader reader = getReader(input);
+      StartElement start = skipBeforeFirstStartElement(reader);
+      Entity entity = entity(reader, start, edmEntityType);
       if (entity == null) {
         throw new DeserializerException("No entity found!", DeserializerException.MessageKeys.INVALID_ENTITY);
       }
@@ -606,18 +606,18 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     } catch (XMLStreamException e) {
       throw new DeserializerException(e.getMessage(), e,
           DeserializerException.MessageKeys.IO_EXCEPTION);
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       throw new DeserializerException(e.getMessage(), e,
           DeserializerException.MessageKeys.INVALID_ENTITY);
     }
   }
 
-  private void count(final XMLEventReader reader, final StartElement start, final EntityCollection entitySet)
+  private void count(XMLEventReader reader, StartElement start, EntityCollection entitySet)
       throws XMLStreamException {
 
     boolean foundEndElement = false;
     while (reader.hasNext() && !foundEndElement) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
       if (event.isCharacters() && !event.asCharacters().isWhiteSpace()) {
         entitySet.setCount(Integer.valueOf(event.asCharacters().getData()));
       }
@@ -627,37 +627,37 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     }
   }
 
-  private EntityCollection entitySet(final XMLEventReader reader, final StartElement start,
-      final EdmEntityType edmEntityType) throws XMLStreamException, EdmPrimitiveTypeException,
+  private EntityCollection entitySet(XMLEventReader reader, StartElement start,
+                                     EdmEntityType edmEntityType) throws XMLStreamException, EdmPrimitiveTypeException,
       DeserializerException {
     if (!Constants.QNAME_ATOM_ELEM_FEED.equals(start.getName())) {
       return null;
     }
-    final EntityCollection entitySet = new EntityCollection();
-    final Attribute xmlBase = start.getAttributeByName(Constants.QNAME_ATTR_XML_BASE);
+    EntityCollection entitySet = new EntityCollection();
+    Attribute xmlBase = start.getAttributeByName(Constants.QNAME_ATTR_XML_BASE);
     if (xmlBase != null) {
       entitySet.setBaseURI(URI.create(xmlBase.getValue()));
     }
 
     boolean foundEndFeed = false;
     while (reader.hasNext() && !foundEndFeed) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
       if (event.isStartElement()) {
         if (countQName.equals(event.asStartElement().getName())) {
           count(reader, event.asStartElement(), entitySet);
         } else if (Constants.QNAME_ATOM_ELEM_ID.equals(event.asStartElement().getName())) {
           common(reader, event.asStartElement(), entitySet, "id");
         } else if (Constants.QNAME_ATOM_ELEM_LINK.equals(event.asStartElement().getName())) {
-          final Attribute rel = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_REL));
+          Attribute rel = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_REL));
           if (rel != null) {
             if (Constants.NEXT_LINK_REL.equals(rel.getValue())) {
-              final Attribute href = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_HREF));
+              Attribute href = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_HREF));
               if (href != null) {
                 entitySet.setNext(URI.create(href.getValue()));
               }
             }
             if (Constants.NS_DELTA_LINK_REL.equals(rel.getValue())) {
-              final Attribute href = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_HREF));
+              Attribute href = event.asStartElement().getAttributeByName(QName.valueOf(Constants.ATTR_HREF));
               if (href != null) {
                 entitySet.setDeltaLink(URI.create(href.getValue()));
               }
@@ -678,11 +678,11 @@ public class ODataXmlDeserializer implements ODataDeserializer {
   }
 
   @Override
-  public DeserializerResult entityCollection(final InputStream input, final EdmEntityType edmEntityType)
+  public DeserializerResult entityCollection(InputStream input, EdmEntityType edmEntityType)
       throws DeserializerException {
     try {
-      final XMLEventReader reader = getReader(input);
-      final StartElement start = skipBeforeFirstStartElement(reader);
+      XMLEventReader reader = getReader(input);
+      StartElement start = skipBeforeFirstStartElement(reader);
       EntityCollection entityCollection = entitySet(reader, start, edmEntityType);
       if (entityCollection != null) {
         for (Entity entity : entityCollection.getEntities()) {
@@ -690,22 +690,22 @@ public class ODataXmlDeserializer implements ODataDeserializer {
         }
       }
       return DeserializerResultImpl.with().entityCollection(entityCollection).build();
-    } catch (final XMLStreamException e) {
+    } catch (XMLStreamException e) {
       throw new DeserializerException(e.getMessage(), e, DeserializerException.MessageKeys.IO_EXCEPTION);
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       throw new DeserializerException(e.getMessage(), e,
           DeserializerException.MessageKeys.INVALID_VALUE_FOR_PROPERTY);
     }
   }
 
   @Override
-  public DeserializerResult entityReferences(final InputStream stream) throws DeserializerException {
+  public DeserializerResult entityReferences(InputStream stream) throws DeserializerException {
     try {
       XMLEventReader reader = getReader(stream);
       ArrayList<URI> references = new ArrayList<URI>();
 
       while (reader.hasNext()) {
-        final XMLEvent event = reader.nextEvent();
+        XMLEvent event = reader.nextEvent();
         if (event.isStartElement()) {
           StartElement start = event.asStartElement();
           if (entryRefQName.equals(start.getName())) {
@@ -722,7 +722,7 @@ public class ODataXmlDeserializer implements ODataDeserializer {
   }
 
   @Override
-  public DeserializerResult actionParameters(final InputStream stream, final EdmAction edmAction)
+  public DeserializerResult actionParameters(InputStream stream, EdmAction edmAction)
       throws DeserializerException {
     Map<String, Parameter> parameters = new LinkedHashMap<String, Parameter>();
     if (edmAction.getParameterNames() == null || edmAction.getParameterNames().isEmpty()
@@ -732,18 +732,18 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     }
 
     try {
-      final XMLEventReader reader = getReader(stream);
+      XMLEventReader reader = getReader(stream);
       while (reader.hasNext()) {
-        final XMLEvent event = reader.nextEvent();
+        XMLEvent event = reader.nextEvent();
         if (event.isStartElement() && parametersQName.equals(event.asStartElement().getName())) {
           consumeParameters(edmAction, reader, event.asStartElement(), parameters);
         }
       }
       // EDM checks.
-      for (final String param : edmAction.getParameterNames()) {
+      for (String param : edmAction.getParameterNames()) {
         Parameter parameter = parameters.get(param);
         if (parameter == null) {
-          final EdmParameter edmParameter = edmAction.getParameter(param);
+          EdmParameter edmParameter = edmAction.getParameter(param);
           if (!edmParameter.isNullable()) {
             throw new DeserializerException("Non-nullable parameter not present or null: " + param,
                 MessageKeys.INVALID_NULL_PARAMETER, param);
@@ -763,14 +763,14 @@ public class ODataXmlDeserializer implements ODataDeserializer {
           .build();
     } catch (XMLStreamException e) {
       throw new DeserializerException(e.getMessage(), e, DeserializerException.MessageKeys.IO_EXCEPTION);
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       throw new DeserializerException(e.getMessage(), e,
           DeserializerException.MessageKeys.INVALID_VALUE_FOR_PROPERTY);
     }
   }
 
-  private void consumeParameters(final EdmAction edmAction, final XMLEventReader reader,
-      final StartElement start, final Map<String, Parameter> parameters) throws DeserializerException,
+  private void consumeParameters(EdmAction edmAction, XMLEventReader reader,
+                                 StartElement start, Map<String, Parameter> parameters) throws DeserializerException,
       EdmPrimitiveTypeException, XMLStreamException {
 
     List<String> parameterNames = edmAction.getParameterNames();
@@ -781,7 +781,7 @@ public class ODataXmlDeserializer implements ODataDeserializer {
 
     boolean foundEndElement = false;
     while (reader.hasNext() && !foundEndElement) {
-      final XMLEvent event = reader.nextEvent();
+      XMLEvent event = reader.nextEvent();
       if (event.isStartElement()) {
         boolean found = false;
         for (String paramName : parameterNames) {
@@ -808,8 +808,8 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     }
   }
 
-  private Parameter createParameter(final XMLEventReader reader, final StartElement start, final String paramName,
-      final EdmParameter edmParameter) throws DeserializerException, EdmPrimitiveTypeException, XMLStreamException {
+  private Parameter createParameter(XMLEventReader reader, StartElement start, String paramName,
+                                    EdmParameter edmParameter) throws DeserializerException, EdmPrimitiveTypeException, XMLStreamException {
 
     Parameter parameter = new Parameter();
     parameter.setName(paramName);
@@ -830,10 +830,10 @@ public class ODataXmlDeserializer implements ODataDeserializer {
       break;
     case ENTITY:
       if (edmParameter.isCollection()) {
-        final EntityCollection entityCollection = entitySet(reader, start, (EdmEntityType) edmParameter.getType());
+        EntityCollection entityCollection = entitySet(reader, start, (EdmEntityType) edmParameter.getType());
         parameter.setValue(ValueType.COLLECTION_ENTITY, entityCollection);
       } else {
-        final Entity entity = entity(reader, start, (EdmEntityType) edmParameter.getType());
+        Entity entity = entity(reader, start, (EdmEntityType) edmParameter.getType());
         parameter.setValue(ValueType.ENTITY, entity);
       }
       break;
@@ -845,13 +845,13 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return parameter;
   }
   
-  private EdmType getDerivedType(final EdmStructuredType edmType, String odataType)
+  private EdmType getDerivedType(EdmStructuredType edmType, String odataType)
       throws DeserializerException {
     if (odataType != null && !odataType.isEmpty()) {
       
       if (odataType.equalsIgnoreCase(edmType.getFullQualifiedName().getFullQualifiedNameAsString())) {
         return edmType;
-      } else if (this.serviceMetadata == null) {
+      } else if (serviceMetadata == null) {
         throw new DeserializerException(
             "Failed to resolve Odata type " + odataType + " due to metadata is not available",
             DeserializerException.MessageKeys.UNKNOWN_CONTENT);
@@ -876,8 +876,8 @@ public class ODataXmlDeserializer implements ODataDeserializer {
     return edmType;
   }
 
-  private boolean isAssignable(final EdmStructuredType edmStructuredType,
-      final EdmStructuredType edmStructuredTypeToAssign) {
+  private boolean isAssignable(EdmStructuredType edmStructuredType,
+                               EdmStructuredType edmStructuredTypeToAssign) {
     if (edmStructuredTypeToAssign == null) {
       return false;
     } else if (edmStructuredType.getFullQualifiedName()

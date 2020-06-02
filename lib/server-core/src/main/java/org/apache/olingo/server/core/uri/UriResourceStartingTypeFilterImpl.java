@@ -25,7 +25,7 @@ public class UriResourceStartingTypeFilterImpl extends UriResourceWithKeysImpl {
   private final EdmType type;
   private final boolean isCollection;
 
-  public UriResourceStartingTypeFilterImpl(final EdmType type, final boolean isCollection) {
+  public UriResourceStartingTypeFilterImpl(EdmType type, boolean isCollection) {
     super(null);
     this.type = type;
     this.isCollection = isCollection;

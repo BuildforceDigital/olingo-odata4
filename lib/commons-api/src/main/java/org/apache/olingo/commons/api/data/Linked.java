@@ -30,7 +30,7 @@ public abstract class Linked extends AbstractODataObject {
   private final List<Link> navigationLinks = new ArrayList<Link>();
   private final List<Link> bindingLinks = new ArrayList<Link>();
 
-  protected Link getOneByTitle(final String name, final List<Link> links) {
+  protected Link getOneByTitle(String name, List<Link> links) {
     Link result = null;
 
     for (Link link : links) {
@@ -48,7 +48,7 @@ public abstract class Linked extends AbstractODataObject {
    * @param name candidate link name
    * @return association link with given name, if available, otherwise <tt>null</tt>
    */
-  public Link getAssociationLink(final String name) {
+  public Link getAssociationLink(String name) {
     return getOneByTitle(name, associationLinks);
   }
 
@@ -67,7 +67,7 @@ public abstract class Linked extends AbstractODataObject {
    * @param name candidate link name
    * @return navigation link with given name, if available, otherwise <tt>null</tt>
    */
-  public Link getNavigationLink(final String name) {
+  public Link getNavigationLink(String name) {
     return getOneByTitle(name, navigationLinks);
   }
 
@@ -85,7 +85,7 @@ public abstract class Linked extends AbstractODataObject {
    * @param name candidate link name
    * @return binding link with given name, if available, otherwise <tt>null</tt>
    */
-  public Link getNavigationBinding(final String name) {
+  public Link getNavigationBinding(String name) {
     return getOneByTitle(name, bindingLinks);
   }
 
@@ -99,7 +99,7 @@ public abstract class Linked extends AbstractODataObject {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     return super.equals(o)
         && associationLinks.equals(((Linked) o).associationLinks)
         && navigationLinks.equals(((Linked) o).navigationLinks)

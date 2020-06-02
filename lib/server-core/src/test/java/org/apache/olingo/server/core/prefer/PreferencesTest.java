@@ -38,7 +38,7 @@ public class PreferencesTest {
 
   @Test
   public void empty() {
-    final Preferences preferences = new PreferencesImpl(null);
+    Preferences preferences = new PreferencesImpl(null);
     assertFalse(preferences.hasAllowEntityReferences());
     assertNull(preferences.getCallback());
     assertFalse(preferences.hasContinueOnError());
@@ -51,7 +51,7 @@ public class PreferencesTest {
 
   @Test
   public void all() {
-    final Preferences preferences = new PreferencesImpl(Collections.singleton(
+    Preferences preferences = new PreferencesImpl(Collections.singleton(
         "odata.allow-entityreferences, odata.callback;url=\"callbackURI\","
             + "odata.continue-on-error, odata.include-annotations=\"*\", odata.maxpagesize=42,"
             + "odata.track-changes, return=representation, respond-async, wait=12345"));
@@ -72,7 +72,7 @@ public class PreferencesTest {
 
   @Test
   public void caseSensitivity() {
-    final Preferences preferences = new PreferencesImpl(Collections.singleton(
+    Preferences preferences = new PreferencesImpl(Collections.singleton(
         "OData.Callback;URL=\"callbackURI\", return=REPRESENTATION, Wait=42"));
     assertEquals(URI.create("callbackURI"), preferences.getCallback());
     assertNull(preferences.getReturn());
@@ -81,7 +81,7 @@ public class PreferencesTest {
 
   @Test
   public void multipleValues() {
-    final Preferences preferences = new PreferencesImpl(Collections.singleton(
+    Preferences preferences = new PreferencesImpl(Collections.singleton(
         ",return=minimal, ,, return=representation, wait=1, wait=2, wait=3,"));
     assertEquals(Return.MINIMAL, preferences.getReturn());
     assertEquals(Integer.valueOf(1), preferences.getWait());
@@ -89,7 +89,7 @@ public class PreferencesTest {
 
   @Test
   public void multipleValuesDifferentHeaders() {
-    final Preferences preferences = new PreferencesImpl(Arrays.asList(
+    Preferences preferences = new PreferencesImpl(Arrays.asList(
         null, "",
         "return=representation, wait=1",
         "return=minimal, wait=2",
@@ -100,11 +100,11 @@ public class PreferencesTest {
 
   @Test
   public void multipleParameters() {
-    final Preferences preferences = new PreferencesImpl(Collections.singleton(
+    Preferences preferences = new PreferencesImpl(Collections.singleton(
         "preference=a;;b=c; d = e; f;; ; g; h=\"i\";, wait=42"));
-    final Preference preference = preferences.getPreference("preference");
+    Preference preference = preferences.getPreference("preference");
     assertEquals("a", preference.getValue());
-    final Map<String, String> parameters = preference.getParameters();
+    Map<String, String> parameters = preference.getParameters();
     assertEquals(5, parameters.size());
     assertEquals("c", parameters.get("b"));
     assertEquals("e", parameters.get("d"));
@@ -118,7 +118,7 @@ public class PreferencesTest {
 
   @Test
   public void quotedValue() {
-    final Preferences preferences = new PreferencesImpl(Collections.singleton(
+    Preferences preferences = new PreferencesImpl(Collections.singleton(
         "strangePreference=\"x\\\\y,\\\"abc\\\"z\", wait=42"));
     assertEquals("x\\y,\"abc\"z", preferences.getPreference("strangePreference").getValue());
     assertEquals(Integer.valueOf(42), preferences.getWait());
@@ -126,7 +126,7 @@ public class PreferencesTest {
 
   @Test
   public void specialCharacters() {
-    final Preferences preferences = new PreferencesImpl(Collections.singleton(
+    Preferences preferences = new PreferencesImpl(Collections.singleton(
         "!#$%&'*+-.^_`|~ = \"!#$%&'()*+,-./:;<=>?@[]^_`{|}~¡\u00FF\", wait=42"));
     assertEquals("!#$%&'()*+,-./:;<=>?@[]^_`{|}~¡\u00FF",
         preferences.getPreference("!#$%&'*+-.^_`|~").getValue());
@@ -135,7 +135,7 @@ public class PreferencesTest {
 
   @Test
   public void wrongContent() {
-    final Preferences preferences = new PreferencesImpl(Arrays.asList(
+    Preferences preferences = new PreferencesImpl(Arrays.asList(
         "odata.callback;url=\":\"",
         "odata.maxpagesize=12345678901234567890",
         "return=something",
@@ -152,7 +152,7 @@ public class PreferencesTest {
 
   @Test
   public void wrongFormat() {
-    final Preferences preferences = new PreferencesImpl(Arrays.asList(
+    Preferences preferences = new PreferencesImpl(Arrays.asList(
         "return=, wait=1",
         "return=;, wait=2",
         "return=representation=, wait=3",

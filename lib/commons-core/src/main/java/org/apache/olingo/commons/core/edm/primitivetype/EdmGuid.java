@@ -41,21 +41,21 @@ public final class EdmGuid extends SingletonPrimitiveType {
   }
 
   @Override
-  public boolean validate(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) {
+  public boolean validate(String value,
+                          Boolean isNullable, Integer maxLength, Integer precision,
+                          Integer scale, Boolean isUnicode) {
     return value == null ? isNullable == null || isNullable : validateLiteral(value);
   }
 
-  private boolean validateLiteral(final String value) {
+  private boolean validateLiteral(String value) {
     return value.matches(PATTERN);
   }
 
   @Override
-  protected <T> T internalValueOfString(final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode,
-      final Class<T> returnType) throws EdmPrimitiveTypeException {
+  protected <T> T internalValueOfString(String value,
+                                        Boolean isNullable, Integer maxLength, Integer precision,
+                                        Integer scale, Boolean isUnicode,
+                                        Class<T> returnType) throws EdmPrimitiveTypeException {
 
     UUID result;
     if (validateLiteral(value)) {
@@ -72,9 +72,9 @@ public final class EdmGuid extends SingletonPrimitiveType {
   }
 
   @Override
-  protected <T> String internalValueToString(final T value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  protected <T> String internalValueToString(T value,
+                                             Boolean isNullable, Integer maxLength, Integer precision,
+                                             Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     if (value instanceof UUID) {
       return ((UUID) value).toString();

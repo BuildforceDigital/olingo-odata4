@@ -27,7 +27,7 @@ public class UriResourcePrimitivePropertyImpl extends UriResourceTypedImpl imple
 
   private final EdmProperty property;
 
-  public UriResourcePrimitivePropertyImpl(final EdmProperty property) {
+  public UriResourcePrimitivePropertyImpl(EdmProperty property) {
     super(UriResourceKind.primitiveProperty);
     this.property = property;
   }

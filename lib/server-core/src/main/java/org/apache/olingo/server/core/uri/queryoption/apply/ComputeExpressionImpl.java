@@ -34,7 +34,7 @@ public class ComputeExpressionImpl implements ComputeExpression {
     return expression;
   }
 
-  public ComputeExpressionImpl setExpression(final Expression expression) {
+  public ComputeExpressionImpl setExpression(Expression expression) {
     this.expression = expression;
     return this;
   }
@@ -44,7 +44,7 @@ public class ComputeExpressionImpl implements ComputeExpression {
     return alias;
   }
 
-  public ComputeExpressionImpl setAlias(final String alias) {
+  public ComputeExpressionImpl setAlias(String alias) {
     this.alias = alias;
     return this;
   }

@@ -28,12 +28,12 @@ import org.apache.olingo.commons.api.edm.provider.CsdlComplexType;
 
 public class EdmComplexTypeImpl extends AbstractEdmStructuredType implements EdmComplexType {
 
-  public EdmComplexTypeImpl(final Edm edm, final FullQualifiedName name, final CsdlComplexType complexType) {
+  public EdmComplexTypeImpl(Edm edm, FullQualifiedName name, CsdlComplexType complexType) {
     super(edm, name, EdmTypeKind.COMPLEX, complexType);
   }
 
   @Override
-  protected EdmStructuredType buildBaseType(final FullQualifiedName baseTypeName) {
+  protected EdmStructuredType buildBaseType(FullQualifiedName baseTypeName) {
     EdmComplexType baseType = null;
     if (baseTypeName != null) {
       baseType = edm.getComplexType(baseTypeName);

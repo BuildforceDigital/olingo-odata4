@@ -31,7 +31,7 @@ public class DebugTabServer implements DebugTab {
 
   private final Map<String, String> serverEnvironmentVariables;
 
-  public DebugTabServer(final Map<String, String> serverEnvironmentVariables) {
+  public DebugTabServer(Map<String, String> serverEnvironmentVariables) {
     this.serverEnvironmentVariables = serverEnvironmentVariables;
   }
 
@@ -41,12 +41,12 @@ public class DebugTabServer implements DebugTab {
   }
 
   @Override
-  public void appendJson(final JsonGenerator gen) throws IOException {
+  public void appendJson(JsonGenerator gen) throws IOException {
     DebugResponseHelperImpl.appendJsonTable(gen, serverEnvironmentVariables);
   }
 
   @Override
-  public void appendHtml(final Writer writer) throws IOException {
+  public void appendHtml(Writer writer) throws IOException {
     writer.append("<h2>Library Version</h2>\n")
     .append("<p>").append(DebugResponseHelperImpl.getVersion()).append("</p>\n")
     .append("<h2>Server Environment</h2>\n");

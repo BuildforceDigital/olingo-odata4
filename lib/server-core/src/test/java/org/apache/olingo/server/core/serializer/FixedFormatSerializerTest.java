@@ -53,7 +53,7 @@ public class FixedFormatSerializerTest {
 
   @Test
   public void primitiveValue() throws Exception {
-    final EdmPrimitiveType type = OData.newInstance().createPrimitiveTypeInstance(EdmPrimitiveTypeKind.Int32);
+    EdmPrimitiveType type = OData.newInstance().createPrimitiveTypeInstance(EdmPrimitiveTypeKind.Int32);
     assertEquals("42", IOUtils.toString(serializer.primitiveValue(type, 42,
         PrimitiveValueSerializerOptions.with().nullable(true).build())));
   }

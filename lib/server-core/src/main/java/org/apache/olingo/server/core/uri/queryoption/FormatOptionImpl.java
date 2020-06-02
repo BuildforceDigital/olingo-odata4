@@ -27,7 +27,7 @@ public class FormatOptionImpl extends SystemQueryOptionImpl implements FormatOpt
     setKind(SystemQueryOptionKind.FORMAT);
   }
 
-  public FormatOptionImpl setFormat(final String value) {
+  public FormatOptionImpl setFormat(String value) {
     setText(value);
     return this;
   }

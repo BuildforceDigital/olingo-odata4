@@ -36,7 +36,7 @@ public class BatchRequestPart {
    * @param isChangeSet True, if this instance represents a change set
    * @param requests A list of {@link ODataRequest}
    */
-  public BatchRequestPart(final boolean isChangeSet, final List<ODataRequest> requests) {
+  public BatchRequestPart(boolean isChangeSet, List<ODataRequest> requests) {
     this.isChangeSet = isChangeSet;
     this.requests = requests;
   }
@@ -46,7 +46,7 @@ public class BatchRequestPart {
    * @param isChangeSet True, if this instance represents a change set
    * @param request A single {@link ODataRequest}
    */
-  public BatchRequestPart(final boolean isChangeSet, final ODataRequest request) {
+  public BatchRequestPart(boolean isChangeSet, ODataRequest request) {
     this.isChangeSet = isChangeSet;
     requests = new ArrayList<>();
     requests.add(request);

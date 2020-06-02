@@ -52,19 +52,19 @@ public class EdmEntitySetImplTest {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
 
-    final FullQualifiedName typeName = new FullQualifiedName("ns", "entityType");
-    final CsdlEntityType entityTypeProvider = new CsdlEntityType()
+    FullQualifiedName typeName = new FullQualifiedName("ns", "entityType");
+    CsdlEntityType entityTypeProvider = new CsdlEntityType()
         .setName(typeName.getName())
         .setKey(Arrays.asList(new CsdlPropertyRef().setName("Id")));
     when(provider.getEntityType(typeName)).thenReturn(entityTypeProvider);
 
-    final FullQualifiedName containerName = new FullQualifiedName("ns", "container");
-    final CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
+    FullQualifiedName containerName = new FullQualifiedName("ns", "container");
+    CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
     when(provider.getEntityContainerInfo(containerName)).thenReturn(containerInfo);
-    final EdmEntityContainer entityContainer = new EdmEntityContainerImpl(edm, provider, containerInfo);
+    EdmEntityContainer entityContainer = new EdmEntityContainerImpl(edm, provider, containerInfo);
 
     final String entitySetName = "entitySet";
-    final CsdlEntitySet entitySetProvider = new CsdlEntitySet()
+    CsdlEntitySet entitySetProvider = new CsdlEntitySet()
         .setName(entitySetName)
         .setTitle("title")
         .setType(typeName)
@@ -73,16 +73,16 @@ public class EdmEntitySetImplTest {
                 .setTarget(containerName.getFullQualifiedNameAsString() + "/" + entitySetName)));
     when(provider.getEntitySet(containerName, entitySetName)).thenReturn(entitySetProvider);
 
-    final EdmEntitySet entitySet = new EdmEntitySetImpl(edm, entityContainer, entitySetProvider);
+    EdmEntitySet entitySet = new EdmEntitySetImpl(edm, entityContainer, entitySetProvider);
     assertEquals(entitySetName, entityContainer.getEntitySet(entitySetName).getName());
     assertEquals(entitySetName, entitySet.getName());
     assertEquals("title", entitySet.getTitle());
-    final EdmEntityType entityType = entitySet.getEntityType();
+    EdmEntityType entityType = entitySet.getEntityType();
     assertEquals(typeName.getNamespace(), entityType.getNamespace());
     assertEquals(typeName.getName(), entityType.getName());
     assertEquals(entityContainer, entitySet.getEntityContainer());
     assertNull(entitySet.getRelatedBindingTarget(null));
-    final EdmBindingTarget target = entitySet.getRelatedBindingTarget("path");
+    EdmBindingTarget target = entitySet.getRelatedBindingTarget("path");
     assertEquals(entitySetName, target.getName());
     assertTrue(entitySet.isIncludeInServiceDocument());
   }
@@ -92,19 +92,19 @@ public class EdmEntitySetImplTest {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
 
-    final FullQualifiedName containerName = new FullQualifiedName("ns", "container");
-    final CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
+    FullQualifiedName containerName = new FullQualifiedName("ns", "container");
+    CsdlEntityContainerInfo containerInfo = new CsdlEntityContainerInfo().setContainerName(containerName);
     when(provider.getEntityContainerInfo(containerName)).thenReturn(containerInfo);
-    final EdmEntityContainer entityContainer = new EdmEntityContainerImpl(edm, provider, containerInfo);
+    EdmEntityContainer entityContainer = new EdmEntityContainerImpl(edm, provider, containerInfo);
 
     final String entitySetName = "entitySet";
-    final CsdlEntitySet entitySetProvider = new CsdlEntitySet()
+    CsdlEntitySet entitySetProvider = new CsdlEntitySet()
         .setName(entitySetName)
         .setType("invalid.invalid")
         .setIncludeInServiceDocument(false);
     when(provider.getEntitySet(containerName, entitySetName)).thenReturn(entitySetProvider);
 
-    final EdmEntitySet entitySet = new EdmEntitySetImpl(edm, entityContainer, entitySetProvider);
+    EdmEntitySet entitySet = new EdmEntitySetImpl(edm, entityContainer, entitySetProvider);
     assertFalse(entitySet.isIncludeInServiceDocument());
 
     try {

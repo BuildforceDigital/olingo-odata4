@@ -57,11 +57,11 @@ public class SearchTokenizer {
 
     public State() {}
 
-    public State(final Token t) {
+    public State(Token t) {
       token = t;
     }
 
-    public State(final Token t, final boolean finished) {
+    public State(Token t, boolean finished) {
       this(t);
       this.finished = finished;
     }
@@ -69,11 +69,11 @@ public class SearchTokenizer {
     protected abstract State nextChar(char c) throws SearchTokenizerException;
 
     /** @param c allowed character */
-    public State allowed(final char c) {
+    public State allowed(char c) {
       return this;
     }
 
-    public State forbidden(final char c) throws SearchTokenizerException {
+    public State forbidden(char c) throws SearchTokenizerException {
       throw new SearchTokenizerException("Forbidden character in state " + token + "->" + c,
           SearchTokenizerException.MessageKeys.FORBIDDEN_CHARACTER, "" + c);
     }
@@ -88,7 +88,7 @@ public class SearchTokenizer {
       return this;
     }
 
-    public State finishAs(final Token token) {
+    public State finishAs(Token token) {
       finished = true;
       return changeToken(token);
     }
@@ -113,12 +113,12 @@ public class SearchTokenizer {
       return this;
     }
 
-    protected State changeToken(final Token token) {
+    protected State changeToken(Token token) {
       this.token = token;
       return this;
     }
 
-    static boolean isAllowedWord(final char character) {
+    static boolean isAllowedWord(char character) {
       return Character.isUnicodeIdentifierStart(character)
           || isUnreserved(character)
           || isOtherDelimsForWord(character);
@@ -165,7 +165,7 @@ public class SearchTokenizer {
      * @param character which is checked
      * @return true if character is allowed for a phrase
      */
-    static boolean isAllowedPhrase(final char character) {
+    static boolean isAllowedPhrase(char character) {
       // the '%' is allowed because it is assumed that it was percent encoded and is now decoded
       return isQCharUnescaped(character) || character == '%';
     }
@@ -175,7 +175,7 @@ public class SearchTokenizer {
      * @param character which is checked
      * @return true if character is allowed
      */
-    private static boolean isQCharUnescaped(final char character) {
+    private static boolean isQCharUnescaped(char character) {
       return isUnreserved(character)
           || isOtherDelims(character)
           || character == ':'
@@ -191,7 +191,7 @@ public class SearchTokenizer {
      * @param character which is checked
      * @return true if character is allowed
      */
-    private static boolean isOtherDelims(final char character) {
+    private static boolean isOtherDelims(char character) {
       return character == '!'
           || character == '('
           || character == ')'
@@ -206,7 +206,7 @@ public class SearchTokenizer {
      * @param character which is checked
      * @return true if character is allowed
      */
-    private static boolean isOtherDelimsForWord(final char character) {
+    private static boolean isOtherDelimsForWord(char character) {
       return character == '!'
           || character == '*'
           || character == '+'
@@ -226,7 +226,7 @@ public class SearchTokenizer {
      * @param character which is checked
      * @return true if character is allowed
      */
-    private static boolean isUnreserved(final char character) {
+    private static boolean isUnreserved(char character) {
       return isAlphaOrDigit(character)
           || character == '-'
           || character == '.'
@@ -240,7 +240,7 @@ public class SearchTokenizer {
      * @param character which is checked
      * @return true if character is allowed
      */
-    private static boolean isAlphaOrDigit(final char character) {
+    private static boolean isAlphaOrDigit(char character) {
       return 'A' <= character && character <= 'Z' // case A..Z
           || 'a' <= character && character <= 'z' // case a..z
           || '0' <= character && character <= '9'; // case 0..9
@@ -248,7 +248,7 @@ public class SearchTokenizer {
 
     // BWS = *( SP / HTAB / "%20" / "%09" ) ; "bad" whitespace
     // RWS = 1*( SP / HTAB / "%20" / "%09" ) ; "required" whitespace
-    static boolean isWhitespace(final char character) {
+    static boolean isWhitespace(char character) {
       return character == ' ' || character == '\t';
     }
 
@@ -267,21 +267,20 @@ public class SearchTokenizer {
     protected final StringBuilder literal = new StringBuilder();
 
     public LiteralState() {
-      super();
     }
 
-    public LiteralState(final Token t, final char c) throws SearchTokenizerException {
+    public LiteralState(Token t, char c) throws SearchTokenizerException {
       super(t);
       init(c);
     }
 
-    public LiteralState(final Token t, final String initLiteral) {
+    public LiteralState(Token t, String initLiteral) {
       super(t);
       literal.append(initLiteral);
     }
 
     @Override
-    public State allowed(final char c) {
+    public State allowed(char c) {
       literal.append(c);
       return this;
     }
@@ -291,7 +290,7 @@ public class SearchTokenizer {
       return literal.toString();
     }
 
-    public State init(final char c) throws SearchTokenizerException {
+    public State init(char c) throws SearchTokenizerException {
       if (isFinished()) {
         throw new SearchTokenizerException(toString() + " is already finished.",
             SearchTokenizerException.MessageKeys.ALREADY_FINISHED, getTokenName());
@@ -303,7 +302,7 @@ public class SearchTokenizer {
 
   private class SearchExpressionState extends LiteralState {
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (c == CHAR_OPEN) {
         return new OpenState();
       } else if (isWhitespace(c)) {
@@ -316,14 +315,14 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State init(final char c) throws SearchTokenizerException {
+    public State init(char c) throws SearchTokenizerException {
       return nextChar(c);
     }
   }
 
   private class SearchTermState extends LiteralState {
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (c == CHAR_N) {
         return new NotState(c);
       } else if (c == QUOTATION_MARK) {
@@ -335,7 +334,7 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State init(final char c) throws SearchTokenizerException {
+    public State init(char c) throws SearchTokenizerException {
       return nextChar(c);
     }
   }
@@ -349,14 +348,14 @@ public class SearchTokenizer {
    * L or N using UTF-8 and percent-encoding.
    */
   private class SearchWordState extends LiteralState {
-    public SearchWordState(final char c) throws SearchTokenizerException {
+    public SearchWordState(char c) throws SearchTokenizerException {
       super(Token.WORD, c);
       if (!isAllowedWord(c)) {
         forbidden(c);
       }
     }
 
-    public SearchWordState(final State toConsume) throws SearchTokenizerException {
+    public SearchWordState(State toConsume) throws SearchTokenizerException {
       super(Token.WORD, toConsume.getLiteral());
       for (int i = 0; i < literal.length(); i++) {
         if (!isAllowedWord(literal.charAt(i))) {
@@ -366,7 +365,7 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (isAllowedWord(c)) {
         return allowed(c);
       } else if (c == CHAR_CLOSE) {
@@ -404,7 +403,7 @@ public class SearchTokenizer {
     private boolean closed = false;
     private boolean escaped = false;
 
-    public SearchPhraseState(final char c) throws SearchTokenizerException {
+    public SearchPhraseState(char c) throws SearchTokenizerException {
       super(Token.PHRASE, c);
       if (c != QUOTATION_MARK) {
         forbidden(c);
@@ -412,7 +411,7 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (closed) {
         finish();
         if (c == CHAR_CLOSE) {
@@ -459,7 +458,7 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       finish();
       if (isWhitespace(c)) {
         return forbidden(c);
@@ -474,13 +473,13 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       return new SearchExpressionState().init(c);
     }
   }
 
   private class NotState extends LiteralState {
-    public NotState(final char c) throws SearchTokenizerException {
+    public NotState(char c) throws SearchTokenizerException {
       super(Token.NOT, c);
       if (c != CHAR_N) {
         forbidden(c);
@@ -488,7 +487,7 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (literal.length() == 1 && c == CHAR_O) {
         return allowed(c);
       } else if (literal.length() == 2 && c == CHAR_T) {
@@ -514,7 +513,7 @@ public class SearchTokenizer {
   }
 
   private class AndState extends LiteralState {
-    public AndState(final char c) throws SearchTokenizerException {
+    public AndState(char c) throws SearchTokenizerException {
       super(Token.AND, c);
       if (c != CHAR_A) {
         forbidden(c);
@@ -522,7 +521,7 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (literal.length() == 1 && c == CHAR_N) {
         return allowed(c);
       } else if (literal.length() == 2 && c == CHAR_D) {
@@ -548,7 +547,7 @@ public class SearchTokenizer {
   }
 
   private class OrState extends LiteralState {
-    public OrState(final char c) throws SearchTokenizerException {
+    public OrState(char c) throws SearchTokenizerException {
       super(Token.OR, c);
       if (c != CHAR_O) {
         forbidden(c);
@@ -556,7 +555,7 @@ public class SearchTokenizer {
     }
 
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (literal.length() == 1 && (c == CHAR_R)) {
         return allowed(c);
       } else if (literal.length() == 2 && isWhitespace(c)) {
@@ -583,7 +582,7 @@ public class SearchTokenizer {
   // RWS [ 'AND' RWS ] searchExpr
   private class BeforeSearchExpressionRwsState extends State {
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (isWhitespace(c)) {
         return allowed(c);
       } else {
@@ -594,7 +593,7 @@ public class SearchTokenizer {
 
   private class BeforePhraseOrWordRwsState extends State {
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (isWhitespace(c)) {
         return allowed(c);
       } else if (c == QUOTATION_MARK) {
@@ -607,7 +606,7 @@ public class SearchTokenizer {
 
   private class RwsState extends State {
     @Override
-    public State nextChar(final char c) throws SearchTokenizerException {
+    public State nextChar(char c) throws SearchTokenizerException {
       if (isWhitespace(c)) {
         return allowed(c);
       } else if (c == CHAR_O) {
@@ -628,7 +627,7 @@ public class SearchTokenizer {
    * @return list of tokens
    * @throws SearchTokenizerException if something in query is not valid (based on OData search query ABNF)
    */
-  public List<SearchQueryToken> tokenize(final String searchQuery) throws SearchTokenizerException {
+  public List<SearchQueryToken> tokenize(String searchQuery) throws SearchTokenizerException {
 
     if (searchQuery.contains("%28") || searchQuery.contains("%29") || searchQuery.contains("%22")) {
       throw new SearchTokenizerException("Invalid Token in Query string '",

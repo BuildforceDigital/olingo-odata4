@@ -49,7 +49,7 @@ public class CsdlEnumType extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param name the name
    * @return the name
    */
-  public CsdlEnumType setName(final String name) {
+  public CsdlEnumType setName(String name) {
     this.name = name;
     return this;
   }
@@ -69,7 +69,7 @@ public class CsdlEnumType extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param isFlags the is flags
    * @return the flags
    */
-  public CsdlEnumType setFlags(final boolean isFlags) {
+  public CsdlEnumType setFlags(boolean isFlags) {
     this.isFlags = isFlags;
     return this;
   }
@@ -92,7 +92,7 @@ public class CsdlEnumType extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param underlyingType the underlying type
    * @return the underlying type
    */
-  public CsdlEnumType setUnderlyingType(final String underlyingType) {
+  public CsdlEnumType setUnderlyingType(String underlyingType) {
     this.underlyingType = new FullQualifiedName(underlyingType);
     return this;
   }
@@ -103,7 +103,7 @@ public class CsdlEnumType extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param underlyingType the underlying type
    * @return the underlying type
    */
-  public CsdlEnumType setUnderlyingType(final FullQualifiedName underlyingType) {
+  public CsdlEnumType setUnderlyingType(FullQualifiedName underlyingType) {
     this.underlyingType = underlyingType;
     return this;
   }
@@ -123,7 +123,7 @@ public class CsdlEnumType extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param name the name
    * @return the member
    */
-  public CsdlEnumMember getMember(final String name) {
+  public CsdlEnumMember getMember(String name) {
     CsdlEnumMember result = null;
     if (getMembers() != null) {
       for (CsdlEnumMember member : getMembers()) {
@@ -141,7 +141,7 @@ public class CsdlEnumType extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param value the value
    * @return the member
    */
-  public CsdlEnumMember getMember(final Integer value) {
+  public CsdlEnumMember getMember(Integer value) {
     CsdlEnumMember result = null;
     if (getMembers() != null) {
       for (CsdlEnumMember member : getMembers()) {
@@ -159,7 +159,7 @@ public class CsdlEnumType extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param members the members
    * @return the members
    */
-  public CsdlEnumType setMembers(final List<CsdlEnumMember> members) {
+  public CsdlEnumType setMembers(List<CsdlEnumMember> members) {
     this.members = members;
     return this;
   }
@@ -174,7 +174,7 @@ public class CsdlEnumType extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlEnumType setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlEnumType setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

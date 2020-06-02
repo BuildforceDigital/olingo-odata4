@@ -37,7 +37,7 @@ public class MemberImpl implements Member {
   private final UriInfoResource path;
   private final EdmType startTypeFilter;
 
-  public MemberImpl(final UriInfoResource path, final EdmType startTypeFilter) {
+  public MemberImpl(UriInfoResource path, EdmType startTypeFilter) {
     this.path = path;
     this.startTypeFilter = startTypeFilter;
   }
@@ -53,7 +53,7 @@ public class MemberImpl implements Member {
   }
 
   @Override
-  public <T> T accept(final ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
+  public <T> T accept(ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
     return visitor.visitMember(this);
   }
 

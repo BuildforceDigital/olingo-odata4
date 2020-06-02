@@ -31,7 +31,7 @@ public class EdmReturnTypeImpl implements EdmReturnType {
   private final Edm edm;
   private EdmType typeImpl;
 
-  public EdmReturnTypeImpl(final Edm edm, final CsdlReturnType returnType) {
+  public EdmReturnTypeImpl(Edm edm, CsdlReturnType returnType) {
     this.edm = edm;
     this.returnType = returnType;
   }

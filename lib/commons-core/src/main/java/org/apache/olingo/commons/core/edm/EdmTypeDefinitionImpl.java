@@ -35,8 +35,8 @@ public class EdmTypeDefinitionImpl extends EdmTypeImpl implements EdmTypeDefinit
   private CsdlTypeDefinition typeDefinition;
   private EdmPrimitiveType edmPrimitiveTypeInstance;
 
-  public EdmTypeDefinitionImpl(final Edm edm, final FullQualifiedName typeDefinitionName,
-      final CsdlTypeDefinition typeDefinition) {
+  public EdmTypeDefinitionImpl(Edm edm, FullQualifiedName typeDefinitionName,
+                               CsdlTypeDefinition typeDefinition) {
     super(edm, typeDefinitionName, EdmTypeKind.DEFINITION, typeDefinition);
     this.typeDefinition = typeDefinition;
   }
@@ -84,7 +84,7 @@ public class EdmTypeDefinitionImpl extends EdmTypeImpl implements EdmTypeDefinit
   }
 
   @Override
-  public boolean isCompatible(final EdmPrimitiveType primitiveType) {
+  public boolean isCompatible(EdmPrimitiveType primitiveType) {
     return this == primitiveType || getUnderlyingType().isCompatible(primitiveType);
   }
 
@@ -94,8 +94,8 @@ public class EdmTypeDefinitionImpl extends EdmTypeImpl implements EdmTypeDefinit
   }
 
   @Override
-  public boolean validate(final String value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode) {
+  public boolean validate(String value, Boolean isNullable, Integer maxLength,
+                          Integer precision, Integer scale, Boolean isUnicode) {
     return getUnderlyingType().validate(value, isNullable,
         maxLength == null ? getMaxLength() : maxLength,
         precision == null ? getPrecision() : precision,
@@ -104,8 +104,8 @@ public class EdmTypeDefinitionImpl extends EdmTypeImpl implements EdmTypeDefinit
   }
 
   @Override
-  public <T> T valueOfString(final String value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode, final Class<T> returnType)
+  public <T> T valueOfString(String value, Boolean isNullable, Integer maxLength,
+                             Integer precision, Integer scale, Boolean isUnicode, Class<T> returnType)
       throws EdmPrimitiveTypeException {
     return getUnderlyingType().valueOfString(value, isNullable,
         maxLength == null ? getMaxLength() : maxLength,
@@ -116,8 +116,8 @@ public class EdmTypeDefinitionImpl extends EdmTypeImpl implements EdmTypeDefinit
   }
 
   @Override
-  public String valueToString(final Object value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  public String valueToString(Object value, Boolean isNullable, Integer maxLength,
+                              Integer precision, Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
     return getUnderlyingType().valueToString(value, isNullable,
         maxLength == null ? getMaxLength() : maxLength,
         precision == null ? getPrecision() : precision,
@@ -126,12 +126,12 @@ public class EdmTypeDefinitionImpl extends EdmTypeImpl implements EdmTypeDefinit
   }
 
   @Override
-  public String toUriLiteral(final String literal) {
+  public String toUriLiteral(String literal) {
     return getUnderlyingType().toUriLiteral(literal);
   }
 
   @Override
-  public String fromUriLiteral(final String literal) throws EdmPrimitiveTypeException {
+  public String fromUriLiteral(String literal) throws EdmPrimitiveTypeException {
     return getUnderlyingType().fromUriLiteral(literal);
   }
 }

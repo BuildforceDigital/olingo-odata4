@@ -95,32 +95,32 @@ public class DeserializerResultImpl implements DeserializerResult {
       return result;
     }
 
-    public DeserializerResultBuilder entity(final Entity entity) {
+    public DeserializerResultBuilder entity(Entity entity) {
       this.entity = entity;
       return this;
     }
 
-    public DeserializerResultBuilder entityCollection(final EntityCollection entitySet) {
+    public DeserializerResultBuilder entityCollection(EntityCollection entitySet) {
       this.entitySet = entitySet;
       return this;
     }
 
-    public DeserializerResultBuilder expandOption(final ExpandOption expandOption) {
+    public DeserializerResultBuilder expandOption(ExpandOption expandOption) {
       this.expandOption = expandOption;
       return this;
     }
 
-    public DeserializerResultBuilder property(final Property property) {
+    public DeserializerResultBuilder property(Property property) {
       this.property = property;
       return this;
     }
 
-    public DeserializerResultBuilder entityReferences(final List<URI> entityReferences) {
+    public DeserializerResultBuilder entityReferences(List<URI> entityReferences) {
       this.entityReferences = entityReferences;
       return this;
     }
 
-    public DeserializerResultBuilder actionParameters(final Map<String, Parameter> actionParameters) {
+    public DeserializerResultBuilder actionParameters(Map<String, Parameter> actionParameters) {
       this.actionParameters = actionParameters;
       return this;
     }

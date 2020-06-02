@@ -44,7 +44,7 @@ public class CsdlEntityContainerInfo {
    * @param containerName the container name
    * @return the container name
    */
-  public CsdlEntityContainerInfo setContainerName(final FullQualifiedName containerName) {
+  public CsdlEntityContainerInfo setContainerName(FullQualifiedName containerName) {
     this.containerName = containerName;
     return this;
   }
@@ -64,7 +64,7 @@ public class CsdlEntityContainerInfo {
    * @param extendsContainer the extends container
    * @return the extends container
    */
-  public CsdlEntityContainerInfo setExtendsContainer(final FullQualifiedName extendsContainer) {
+  public CsdlEntityContainerInfo setExtendsContainer(FullQualifiedName extendsContainer) {
     this.extendsContainer = extendsContainer;
     return this;
   }

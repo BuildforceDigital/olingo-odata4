@@ -61,7 +61,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param name the name
    * @return the name
    */
-  public CsdlParameter setName(final String name) {
+  public CsdlParameter setName(String name) {
     this.name = name;
     return this;
   }
@@ -90,7 +90,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param type the type
    * @return the type
    */
-  public CsdlParameter setType(final String type) {
+  public CsdlParameter setType(String type) {
     this.type = type;
     return this;
   }
@@ -101,7 +101,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param type the type
    * @return the type
    */
-  public CsdlParameter setType(final FullQualifiedName type) {
+  public CsdlParameter setType(FullQualifiedName type) {
     this.type = type.getFullQualifiedNameAsString();
     return this;
   }
@@ -121,7 +121,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param isCollection the is collection
    * @return the collection
    */
-  public CsdlParameter setCollection(final boolean isCollection) {
+  public CsdlParameter setCollection(boolean isCollection) {
     this.isCollection = isCollection;
     return this;
   }
@@ -141,7 +141,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param nullable the nullable
    * @return the nullable
    */
-  public CsdlParameter setNullable(final boolean nullable) {
+  public CsdlParameter setNullable(boolean nullable) {
     this.nullable = nullable;
     return this;
   }
@@ -161,7 +161,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param maxLength the max length
    * @return the max length
    */
-  public CsdlParameter setMaxLength(final Integer maxLength) {
+  public CsdlParameter setMaxLength(Integer maxLength) {
     this.maxLength = maxLength;
     return this;
   }
@@ -181,7 +181,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param precision the precision
    * @return the precision
    */
-  public CsdlParameter setPrecision(final Integer precision) {
+  public CsdlParameter setPrecision(Integer precision) {
     this.precision = precision;
     return this;
   }
@@ -201,7 +201,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param scale the scale
    * @return the scale
    */
-  public CsdlParameter setScale(final Integer scale) {
+  public CsdlParameter setScale(Integer scale) {
     this.scale = scale;
     return this;
   }
@@ -236,7 +236,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlParameter setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlParameter setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }
@@ -256,7 +256,7 @@ public class CsdlParameter extends CsdlAbstractEdmItem implements CsdlNamed, Csd
    * @param mapping the mapping
    * @return the mapping
    */
-  public CsdlParameter setMapping(final CsdlMapping mapping) {
+  public CsdlParameter setMapping(CsdlMapping mapping) {
     this.mapping = mapping;
     return this;
   }

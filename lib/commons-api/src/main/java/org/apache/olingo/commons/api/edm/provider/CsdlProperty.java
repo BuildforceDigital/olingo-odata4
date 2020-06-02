@@ -67,7 +67,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param name the name
    * @return the name
    */
-  public CsdlProperty setName(final String name) {
+  public CsdlProperty setName(String name) {
     this.name = name;
     return this;
   }
@@ -87,7 +87,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param type the type
    * @return the type
    */
-  public CsdlProperty setType(final String type) {
+  public CsdlProperty setType(String type) {
     this.type = type;
     return this;
   }
@@ -107,7 +107,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param fqnName the fqn name
    * @return the type
    */
-  public CsdlProperty setType(final FullQualifiedName fqnName) {
+  public CsdlProperty setType(FullQualifiedName fqnName) {
     type = fqnName.getFullQualifiedNameAsString();
     return this;
   }
@@ -127,7 +127,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param isCollection the is collection
    * @return the collection
    */
-  public CsdlProperty setCollection(final boolean isCollection) {
+  public CsdlProperty setCollection(boolean isCollection) {
     collection = isCollection;
     return this;
   }
@@ -147,7 +147,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param defaultValue the default value
    * @return the default value
    */
-  public CsdlProperty setDefaultValue(final String defaultValue) {
+  public CsdlProperty setDefaultValue(String defaultValue) {
     this.defaultValue = defaultValue;
     return this;
   }
@@ -167,7 +167,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param nullable the nullable
    * @return the nullable
    */
-  public CsdlProperty setNullable(final boolean nullable) {
+  public CsdlProperty setNullable(boolean nullable) {
     this.nullable = nullable;
     return this;
   }
@@ -187,7 +187,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param maxLength the max length
    * @return the max length
    */
-  public CsdlProperty setMaxLength(final Integer maxLength) {
+  public CsdlProperty setMaxLength(Integer maxLength) {
     this.maxLength = maxLength;
     return this;
   }
@@ -207,7 +207,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param precision the precision
    * @return the precision
    */
-  public CsdlProperty setPrecision(final Integer precision) {
+  public CsdlProperty setPrecision(Integer precision) {
     this.precision = precision;
     return this;
   }
@@ -227,7 +227,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param scale the scale
    * @return the scale
    */
-  public CsdlProperty setScale(final Integer scale) {
+  public CsdlProperty setScale(Integer scale) {
     this.scale = scale;
     return this;
   }
@@ -247,7 +247,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param unicode the unicode
    * @return the unicode
    */
-  public CsdlProperty setUnicode(final boolean unicode) {
+  public CsdlProperty setUnicode(boolean unicode) {
     this.unicode = unicode;
     return this;
   }
@@ -267,7 +267,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param mimeType the mime type
    * @return the mime type
    */
-  public CsdlProperty setMimeType(final String mimeType) {
+  public CsdlProperty setMimeType(String mimeType) {
     this.mimeType = mimeType;
     return this;
   }
@@ -287,7 +287,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param mapping the mapping
    * @return the mapping
    */
-  public CsdlProperty setMapping(final CsdlMapping mapping) {
+  public CsdlProperty setMapping(CsdlMapping mapping) {
     this.mapping = mapping;
     return this;
   }
@@ -302,7 +302,7 @@ public class CsdlProperty extends CsdlAbstractEdmItem implements CsdlNamed, Csdl
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlProperty setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlProperty setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

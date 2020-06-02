@@ -49,12 +49,12 @@ public class SelectParser {
 
   private final Edm edm;
 
-  public SelectParser(final Edm edm) {
+  public SelectParser(Edm edm) {
     this.edm = edm;
   }
 
-  public SelectOption parse(UriTokenizer tokenizer, final EdmStructuredType referencedType,
-      final boolean referencedIsCollection) throws UriParserException, UriValidationException {
+  public SelectOption parse(UriTokenizer tokenizer, EdmStructuredType referencedType,
+      boolean referencedIsCollection) throws UriParserException, UriValidationException {
     List<SelectItem> selectItems = new ArrayList<>();
     SelectItem item;
     do {
@@ -66,20 +66,20 @@ public class SelectParser {
   }
 
   private SelectItem parseItem(UriTokenizer tokenizer,
-      final EdmStructuredType referencedType, final boolean referencedIsCollection) throws UriParserException {
+      EdmStructuredType referencedType, boolean referencedIsCollection) throws UriParserException {
     SelectItemImpl item = new SelectItemImpl();
     if (tokenizer.next(TokenKind.STAR)) {
       item.setStar(true);
 
     } else if (tokenizer.next(TokenKind.QualifiedName)) {
       // The namespace or its alias could consist of dot-separated OData identifiers.
-      final FullQualifiedName allOperationsInSchema = parseAllOperationsInSchema(tokenizer);
+      FullQualifiedName allOperationsInSchema = parseAllOperationsInSchema(tokenizer);
       if (allOperationsInSchema != null) {
         item.addAllOperationsInSchema(allOperationsInSchema);
 
       } else {
         ensureReferencedTypeNotNull(referencedType);
-        final FullQualifiedName qualifiedName = new FullQualifiedName(tokenizer.getText());
+        FullQualifiedName qualifiedName = new FullQualifiedName(tokenizer.getText());
         EdmStructuredType type = edm.getEntityType(qualifiedName);
         if (type == null) {
           type = edm.getComplexType(qualifiedName);
@@ -107,7 +107,7 @@ public class SelectParser {
     } else {
       ParserHelper.requireNext(tokenizer, TokenKind.ODataIdentifier);
       // The namespace or its alias could be a single OData identifier.
-      final FullQualifiedName allOperationsInSchema = parseAllOperationsInSchema(tokenizer);
+      FullQualifiedName allOperationsInSchema = parseAllOperationsInSchema(tokenizer);
       if (allOperationsInSchema != null) {
         item.addAllOperationsInSchema(allOperationsInSchema);
 
@@ -123,7 +123,7 @@ public class SelectParser {
   }
 
   private FullQualifiedName parseAllOperationsInSchema(UriTokenizer tokenizer) throws UriParserException {
-    final String namespace = tokenizer.getText();
+    String namespace = tokenizer.getText();
     if (tokenizer.next(TokenKind.DOT)) {
       if (tokenizer.next(TokenKind.STAR)) {
         // Validate the namespace.  Currently a namespace from a non-default schema is not supported.
@@ -142,21 +142,21 @@ public class SelectParser {
     return null;
   }
 
-  private void ensureReferencedTypeNotNull(final EdmStructuredType referencedType) throws UriParserException {
+  private void ensureReferencedTypeNotNull(EdmStructuredType referencedType) throws UriParserException {
     if (referencedType == null) {
       throw new UriParserSemanticException("The referenced part is not typed.",
           UriParserSemanticException.MessageKeys.ONLY_FOR_TYPED_PARTS, "select");
     }
   }
 
-  private UriResourcePartTyped parseBoundOperation(UriTokenizer tokenizer, final FullQualifiedName qualifiedName,
-      final EdmStructuredType referencedType, final boolean referencedIsCollection) throws UriParserException {
-    final EdmAction boundAction = edm.getBoundAction(qualifiedName,
+  private UriResourcePartTyped parseBoundOperation(UriTokenizer tokenizer, FullQualifiedName qualifiedName,
+      EdmStructuredType referencedType, boolean referencedIsCollection) throws UriParserException {
+    EdmAction boundAction = edm.getBoundAction(qualifiedName,
         referencedType.getFullQualifiedName(),
         referencedIsCollection);
     if (boundAction == null) {
-      final List<String> parameterNames = parseFunctionParameterNames(tokenizer);
-      final EdmFunction boundFunction = edm.getBoundFunction(qualifiedName,
+      List<String> parameterNames = parseFunctionParameterNames(tokenizer);
+      EdmFunction boundFunction = edm.getBoundFunction(qualifiedName,
           referencedType.getFullQualifiedName(), referencedIsCollection, parameterNames);
       if (boundFunction == null) {
         throw new UriParserSemanticException("Function not found.",
@@ -181,13 +181,13 @@ public class SelectParser {
     return names;
   }
 
-  private void addSelectPath(UriTokenizer tokenizer, final EdmStructuredType referencedType, UriInfoImpl resource)
+  private void addSelectPath(UriTokenizer tokenizer, EdmStructuredType referencedType, UriInfoImpl resource)
       throws UriParserException {
-    final String name = tokenizer.getText();
-    final EdmProperty property = referencedType.getStructuralProperty(name);
+    String name = tokenizer.getText();
+    EdmProperty property = referencedType.getStructuralProperty(name);
 
     if (property == null) {
-      final EdmNavigationProperty navigationProperty = referencedType.getNavigationProperty(name);
+      EdmNavigationProperty navigationProperty = referencedType.getNavigationProperty(name);
       if (navigationProperty == null) {
         throw new UriParserSemanticException("Selected property not found.",
             UriParserSemanticException.MessageKeys.EXPRESSION_PROPERTY_NOT_IN_TYPE,
@@ -206,8 +206,8 @@ public class SelectParser {
       resource.addResourcePart(complexPart);
       if (tokenizer.next(TokenKind.SLASH)) {
         if (tokenizer.next(TokenKind.QualifiedName)) {
-          final FullQualifiedName qualifiedName = new FullQualifiedName(tokenizer.getText());
-          final EdmComplexType type = edm.getComplexType(qualifiedName);
+          FullQualifiedName qualifiedName = new FullQualifiedName(tokenizer.getText());
+          EdmComplexType type = edm.getComplexType(qualifiedName);
           if (type == null) {
             throw new UriParserSemanticException("Type not found.",
                 UriParserSemanticException.MessageKeys.UNKNOWN_TYPE, qualifiedName.getFullQualifiedNameAsString());

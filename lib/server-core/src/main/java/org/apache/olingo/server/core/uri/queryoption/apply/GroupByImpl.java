@@ -43,7 +43,7 @@ public class GroupByImpl implements GroupBy {
     return applyOption;
   }
 
-  public GroupByImpl setApplyOption(final ApplyOption applyOption) {
+  public GroupByImpl setApplyOption(ApplyOption applyOption) {
     this.applyOption = applyOption;
     return this;
   }
@@ -53,7 +53,7 @@ public class GroupByImpl implements GroupBy {
     return groupByItems;
   }
 
-  public GroupByImpl addGroupByItem(final GroupByItem groupByItem) {
+  public GroupByImpl addGroupByItem(GroupByItem groupByItem) {
     groupByItems.add(groupByItem);
     return this;
   }

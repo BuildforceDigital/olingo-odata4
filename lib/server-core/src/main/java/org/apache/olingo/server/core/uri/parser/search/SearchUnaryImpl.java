@@ -25,7 +25,7 @@ import org.apache.olingo.server.api.uri.queryoption.search.SearchUnaryOperatorKi
 public class SearchUnaryImpl extends SearchExpressionImpl implements SearchUnary {
   private final SearchTerm operand;
 
-  public SearchUnaryImpl(final SearchTerm operand) {
+  public SearchUnaryImpl(SearchTerm operand) {
     this.operand = operand;
   }
 

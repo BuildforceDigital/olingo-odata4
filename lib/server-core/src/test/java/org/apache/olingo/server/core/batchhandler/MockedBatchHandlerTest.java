@@ -71,7 +71,7 @@ public class MockedBatchHandlerTest {
 
   @Before
   public void setup() {
-    final BatchProcessor batchProcessor = new BatchTestProcessorImpl();
+    BatchProcessor batchProcessor = new BatchTestProcessorImpl();
     batchProcessor.init(OData.newInstance(), null);
 
     entityCounter = 1;
@@ -141,16 +141,16 @@ public class MockedBatchHandlerTest {
         + "--changeset_12345--" + CRLF
         + CRLF
         + "--batch_12345--";
-    final Map<String, List<String>> header = getMimeHeader();
-    final ODataResponse response = new ODataResponse();
-    final ODataRequest request = buildODataRequest(content, header);
+    Map<String, List<String>> header = getMimeHeader();
+    ODataResponse response = new ODataResponse();
+    ODataRequest request = buildODataRequest(content, header);
 
     batchHandler.process(request, response, true);
 
     BatchLineReader reader =
         new BatchLineReader(response.getContent());
 
-    final List<String> responseContent = reader.toList();
+    List<String> responseContent = reader.toList();
     reader.close();
 
     int line = 0;
@@ -214,16 +214,16 @@ public class MockedBatchHandlerTest {
         + CRLF
         + "--batch_12345--";
 
-    final Map<String, List<String>> header = getMimeHeader();
-    final ODataResponse response = new ODataResponse();
-    final ODataRequest request = buildODataRequest(content, header);
+    Map<String, List<String>> header = getMimeHeader();
+    ODataResponse response = new ODataResponse();
+    ODataRequest request = buildODataRequest(content, header);
 
     batchHandler.process(request, response, true);
 
     BatchLineReader reader =
         new BatchLineReader(response.getContent());
 
-    final List<String> responseContent = reader.toList();
+    List<String> responseContent = reader.toList();
     int line = 0;
 
     assertEquals(9, responseContent.size());
@@ -293,16 +293,16 @@ public class MockedBatchHandlerTest {
 
         + CRLF
         + "--batch_12345--";
-    final Map<String, List<String>> header = getMimeHeader();
-    final ODataResponse response = new ODataResponse();
-    final ODataRequest request = buildODataRequest(content, header);
+    Map<String, List<String>> header = getMimeHeader();
+    ODataResponse response = new ODataResponse();
+    ODataRequest request = buildODataRequest(content, header);
 
     batchHandler.process(request, response, true);
 
     BatchLineReader reader =
         new BatchLineReader(response.getContent());
 
-    final List<String> responseContent = reader.toList();
+    List<String> responseContent = reader.toList();
     reader.close();
 
     int line = 0;
@@ -411,16 +411,16 @@ public class MockedBatchHandlerTest {
         + CRLF
         + "--batch_12345--";
 
-    final Map<String, List<String>> header = getMimeHeader();
-    final ODataResponse response = new ODataResponse();
-    final ODataRequest request = buildODataRequest(content, header);
+    Map<String, List<String>> header = getMimeHeader();
+    ODataResponse response = new ODataResponse();
+    ODataRequest request = buildODataRequest(content, header);
 
     batchHandler.process(request, response, true);
 
     BatchLineReader reader =
         new BatchLineReader(response.getContent());
 
-    final List<String> responseContent = reader.toList();
+    List<String> responseContent = reader.toList();
     reader.close();
 
     int line = 0;
@@ -490,9 +490,9 @@ public class MockedBatchHandlerTest {
         + CRLF
         + "--batch_12345--";
 
-    final Map<String, List<String>> header = getMimeHeader();
-    final ODataResponse response = new ODataResponse();
-    final ODataRequest request = buildODataRequest(content, header);
+    Map<String, List<String>> header = getMimeHeader();
+    ODataResponse response = new ODataResponse();
+    ODataRequest request = buildODataRequest(content, header);
     request.setMethod(HttpMethod.GET);
 
     batchHandler.process(request, response, true);
@@ -517,10 +517,10 @@ public class MockedBatchHandlerTest {
         + CRLF
         + "--batch_12345--";
 
-    final Map<String, List<String>> header = new HashMap<>();
+    Map<String, List<String>> header = new HashMap<>();
     header.put(HttpHeader.CONTENT_TYPE, Collections.singletonList("application/http"));
-    final ODataResponse response = new ODataResponse();
-    final ODataRequest request = buildODataRequest(content, header);
+    ODataResponse response = new ODataResponse();
+    ODataRequest request = buildODataRequest(content, header);
 
     batchHandler.process(request, response, true);
   }
@@ -528,7 +528,7 @@ public class MockedBatchHandlerTest {
   /*
    * Helper methods
    */
-  private String checkChangeSetPartHeader(final List<String> response, final int line) {
+  private String checkChangeSetPartHeader(List<String> response, int line) {
     int lineNumber = line;
     assertEquals(CRLF, response.get(lineNumber++));
     assertTrue(response.get(lineNumber++).contains("--changeset_"));
@@ -548,10 +548,10 @@ public class MockedBatchHandlerTest {
     return Collections.singletonMap(HttpHeader.CONTENT_TYPE, Collections.singletonList(BATCH_CONTENT_TYPE));
   }
 
-  private ODataRequest buildODataRequest(final String content, final Map<String, List<String>> header) {
-    final ODataRequest request = new ODataRequest();
+  private ODataRequest buildODataRequest(String content, Map<String, List<String>> header) {
+    ODataRequest request = new ODataRequest();
 
-    for (final String key : header.keySet()) {
+    for (String key : header.keySet()) {
       request.addHeader(key, header.get(key));
     }
 
@@ -575,18 +575,18 @@ public class MockedBatchHandlerTest {
     private OData odata;
 
     @Override
-    public void init(final OData odata, final ServiceMetadata serviceMetadata) {
+    public void init(OData odata, ServiceMetadata serviceMetadata) {
       this.odata = odata;
     }
 
     @Override
-    public ODataResponsePart processChangeSet(final BatchFacade facade, final List<ODataRequest> requests) {
+    public ODataResponsePart processChangeSet(BatchFacade facade, List<ODataRequest> requests) {
       List<ODataResponse> responses = new ArrayList<>();
 
       for (ODataRequest request : requests) {
         try {
           responses.add(facade.handleODataRequest(request));
-        } catch (final ODataException e) {
+        } catch (ODataException e) {
           fail();
         }
       }
@@ -595,16 +595,16 @@ public class MockedBatchHandlerTest {
     }
 
     @Override
-    public void processBatch(final BatchFacade fascade, final ODataRequest request, final ODataResponse response)
+    public void processBatch(BatchFacade fascade, ODataRequest request, ODataResponse response)
         throws ODataApplicationException, ODataLibraryException {
-      final String boundary = getBoundary(request.getHeader(HttpHeader.CONTENT_TYPE));
-      final BatchOptions options = BatchOptions.with().isStrict(true).rawBaseUri(BASE_URI).build();
-      final List<BatchRequestPart> parts =
+      String boundary = getBoundary(request.getHeader(HttpHeader.CONTENT_TYPE));
+      BatchOptions options = BatchOptions.with().isStrict(true).rawBaseUri(BASE_URI).build();
+      List<BatchRequestPart> parts =
           odata.createFixedFormatDeserializer().parseBatchRequest(request.getBody(), boundary, options);
-      final List<ODataResponsePart> responseParts = new ArrayList<>();
+      List<ODataResponsePart> responseParts = new ArrayList<>();
 
       for (BatchRequestPart part : parts) {
-        for (final ODataRequest oDataRequest : part.getRequests()) {
+        for (ODataRequest oDataRequest : part.getRequests()) {
           // Mock the processor for a given requests
           when(oDataHandler.process(oDataRequest)).then((Answer<ODataResponse>) invocation -> {
             Object[] arguments = invocation.getArguments();
@@ -616,8 +616,8 @@ public class MockedBatchHandlerTest {
         responseParts.add(fascade.handleBatchRequest(part));
       }
 
-      final String responeBoundary = "batch_" + UUID.randomUUID().toString();
-      final InputStream responseStream =
+      String responeBoundary = "batch_" + UUID.randomUUID().toString();
+      InputStream responseStream =
           odata.createFixedFormatSerializer().batchResponse(responseParts, responeBoundary);
 
       response.setStatusCode(HttpStatusCode.ACCEPTED.getStatusCode());
@@ -625,13 +625,13 @@ public class MockedBatchHandlerTest {
       response.setContent(responseStream);
     }
 
-    private String getBoundary(final String contentType) throws BatchDeserializerException {
+    private String getBoundary(String contentType) throws BatchDeserializerException {
       return BatchParserCommon.getBoundary(contentType, 0);
     }
   }
 
-  private ODataResponse buildResponse(final ODataRequest request) {
-    final ODataResponse oDataResponse = new ODataResponse();
+  private ODataResponse buildResponse(ODataRequest request) {
+    ODataResponse oDataResponse = new ODataResponse();
 
     if (request.getMethod() == HttpMethod.POST) {
       oDataResponse.setStatusCode(HttpStatusCode.CREATED.getStatusCode());
@@ -640,7 +640,7 @@ public class MockedBatchHandlerTest {
       oDataResponse.setStatusCode(HttpStatusCode.OK.getStatusCode());
     }
 
-    final String contentId = request.getHeader(HttpHeader.CONTENT_ID);
+    String contentId = request.getHeader(HttpHeader.CONTENT_ID);
     if (contentId != null) {
       oDataResponse.setHeader(HttpHeader.CONTENT_ID, contentId);
     }
@@ -648,8 +648,8 @@ public class MockedBatchHandlerTest {
     return oDataResponse;
   }
 
-  private String createResourceUri(final ODataRequest request) {
-    final String[] parts = request.getRawODataPath().split("/");
+  private String createResourceUri(ODataRequest request) {
+    String[] parts = request.getRawODataPath().split("/");
     String oDataPath = "";
 
     if (parts.length == 2) {
@@ -658,7 +658,7 @@ public class MockedBatchHandlerTest {
     } else {
       // Navigation property
 
-      final String navProperty = parts[parts.length - 1];
+      String navProperty = parts[parts.length - 1];
         switch (navProperty) {
             case "NavPropertyETTwoPrimMany":
             case "NavPropertyETTwoPrimOne":

@@ -72,31 +72,31 @@ public class EntitySerializerOptions {
     }
 
     /** Sets the {@link ContextURL}. */
-    public Builder contextURL(final ContextURL contextURL) {
+    public Builder contextURL(ContextURL contextURL) {
       options.contextURL = contextURL;
       return this;
     }
 
     /** Sets the $expand system query option. */
-    public Builder expand(final ExpandOption expand) {
+    public Builder expand(ExpandOption expand) {
       options.expand = expand;
       return this;
     }
 
     /** Sets the $select system query option. */
-    public Builder select(final SelectOption select) {
+    public Builder select(SelectOption select) {
       options.select = select;
       return this;
     }
 
     /** Sets to serialize only references */
-    public Builder writeOnlyReferences(final boolean ref) {
+    public Builder writeOnlyReferences(boolean ref) {
       options.writeOnlyReferences = ref;
       return this;
     }
     
     /** set the replacement string for xml 1.0 unicode controlled characters that are not allowed */
-    public Builder xml10InvalidCharReplacement(final String replacement) {
+    public Builder xml10InvalidCharReplacement(String replacement) {
       options.xml10InvalidCharReplacement = replacement;
       return this;
     } 

@@ -43,7 +43,7 @@ public class AbstractEdmNamedTest {
 
   private class EdmNamedImplTester extends AbstractEdmNamed {
 
-    public EdmNamedImplTester(final String name) {
+    public EdmNamedImplTester(String name) {
       super(null, name, new AnnoTester());
     }
   }

@@ -66,13 +66,13 @@ public class ResourcePathParser {
   private final Map<String, AliasQueryOption> aliases;
   private UriTokenizer tokenizer;
 
-  public ResourcePathParser(final Edm edm, final Map<String, AliasQueryOption> aliases) {
+  public ResourcePathParser(Edm edm, Map<String, AliasQueryOption> aliases) {
     this.edm = edm;
     this.aliases = aliases;
     edmEntityContainer = edm.getEntityContainer();
   }
 
-  public UriResource parsePathSegment(final String pathSegment, UriResource previous)
+  public UriResource parsePathSegment(String pathSegment, UriResource previous)
       throws UriParserException, UriValidationException {
     tokenizer = new UriTokenizer(pathSegment);
 
@@ -106,12 +106,12 @@ public class ResourcePathParser {
         UriParserSyntaxException.MessageKeys.SYNTAX);
   }
 
-  public EdmEntityType parseDollarEntityTypeCast(final String pathSegment) throws UriParserException {
+  public EdmEntityType parseDollarEntityTypeCast(String pathSegment) throws UriParserException {
     tokenizer = new UriTokenizer(pathSegment);
     ParserHelper.requireNext(tokenizer, TokenKind.QualifiedName);
-    final String name = tokenizer.getText();
+    String name = tokenizer.getText();
     ParserHelper.requireTokenEnd(tokenizer);
-    final EdmEntityType type = edm.getEntityType(new FullQualifiedName(name));
+    EdmEntityType type = edm.getEntityType(new FullQualifiedName(name));
     if (type == null) {
       throw new UriParserSemanticException("Type '" + name + "' not found.",
           UriParserSemanticException.MessageKeys.UNKNOWN_TYPE, name);
@@ -119,7 +119,7 @@ public class ResourcePathParser {
     return type;
   }
 
-  public List<String> parseCrossjoinSegment(final String pathSegment) throws UriParserException {
+  public List<String> parseCrossjoinSegment(String pathSegment) throws UriParserException {
     tokenizer = new UriTokenizer(pathSegment);
     ParserHelper.requireNext(tokenizer, TokenKind.CROSSJOIN);
     ParserHelper.requireNext(tokenizer, TokenKind.OPEN);
@@ -127,8 +127,8 @@ public class ResourcePathParser {
     List<String> entitySetNames = new ArrayList<>();
     do {
       ParserHelper.requireNext(tokenizer, TokenKind.ODataIdentifier);
-      final String name = tokenizer.getText();
-      final EdmEntitySet edmEntitySet = edmEntityContainer.getEntitySet(name);
+      String name = tokenizer.getText();
+      EdmEntitySet edmEntitySet = edmEntityContainer.getEntitySet(name);
       if (edmEntitySet == null) {
         throw new UriParserSemanticException("Expected Entity Set Name.",
             UriParserSemanticException.MessageKeys.UNKNOWN_PART, name);
@@ -141,7 +141,7 @@ public class ResourcePathParser {
     return entitySetNames;
   }
 
-  private UriResource ref(final UriResource previous) throws UriParserException {
+  private UriResource ref(UriResource previous) throws UriParserException {
     ParserHelper.requireTokenEnd(tokenizer);
     requireTyped(previous, "$ref");
     if (((UriResourcePartTyped) previous).getType() instanceof EdmEntityType) {
@@ -152,7 +152,7 @@ public class ResourcePathParser {
     }
   }
 
-  private UriResource value(final UriResource previous) throws UriParserException {
+  private UriResource value(UriResource previous) throws UriParserException {
     ParserHelper.requireTokenEnd(tokenizer);
     requireTyped(previous, "$value");
     if (!((UriResourcePartTyped) previous).isCollection()) {
@@ -184,7 +184,7 @@ public class ResourcePathParser {
     }
   }
 
-  private UriResource count(final UriResource previous) throws UriParserException {
+  private UriResource count(UriResource previous) throws UriParserException {
     ParserHelper.requireTokenEnd(tokenizer);
     requireTyped(previous, "$count");
     if (((UriResourcePartTyped) previous).isCollection()) {
@@ -196,14 +196,14 @@ public class ResourcePathParser {
   }
 
   private UriResource leadingResourcePathSegment() throws UriParserException, UriValidationException {
-    final String oDataIdentifier = tokenizer.getText();
+    String oDataIdentifier = tokenizer.getText();
 
-    final EdmEntitySet edmEntitySet = edmEntityContainer.getEntitySet(oDataIdentifier);
+    EdmEntitySet edmEntitySet = edmEntityContainer.getEntitySet(oDataIdentifier);
     if (edmEntitySet != null) {
-      final UriResourceEntitySetImpl entitySetResource = new UriResourceEntitySetImpl(edmEntitySet);
+      UriResourceEntitySetImpl entitySetResource = new UriResourceEntitySetImpl(edmEntitySet);
 
       if (tokenizer.next(TokenKind.OPEN)) {
-        final List<UriParameter> keyPredicates =
+        List<UriParameter> keyPredicates =
             ParserHelper.parseKeyPredicate(tokenizer, entitySetResource.getEntityType(), null, edm, null, aliases);
         entitySetResource.setKeyPredicates(keyPredicates);
       }
@@ -212,19 +212,19 @@ public class ResourcePathParser {
       return entitySetResource;
     }
 
-    final EdmSingleton edmSingleton = edmEntityContainer.getSingleton(oDataIdentifier);
+    EdmSingleton edmSingleton = edmEntityContainer.getSingleton(oDataIdentifier);
     if (edmSingleton != null) {
       ParserHelper.requireTokenEnd(tokenizer);
       return new UriResourceSingletonImpl(edmSingleton);
     }
 
-    final EdmActionImport edmActionImport = edmEntityContainer.getActionImport(oDataIdentifier);
+    EdmActionImport edmActionImport = edmEntityContainer.getActionImport(oDataIdentifier);
     if (edmActionImport != null) {
       ParserHelper.requireTokenEnd(tokenizer);
       return new UriResourceActionImpl(edmActionImport);
     }
 
-    final EdmFunctionImport edmFunctionImport = edmEntityContainer.getFunctionImport(oDataIdentifier);
+    EdmFunctionImport edmFunctionImport = edmEntityContainer.getFunctionImport(oDataIdentifier);
     if (edmFunctionImport != null) {
       return functionCall(edmFunctionImport, null, null, false);
     }
@@ -238,16 +238,16 @@ public class ResourcePathParser {
     }
   }
 
-  private UriResource navigationOrProperty(final UriResource previous)
+  private UriResource navigationOrProperty(UriResource previous)
       throws UriParserException, UriValidationException {
-    final String name = tokenizer.getText();
+    String name = tokenizer.getText();
 
     UriResourcePartTyped previousTyped = null;
     EdmStructuredType structType = null;
     requireTyped(previous, name);
     if (((UriResourcePartTyped) previous).getType() instanceof EdmStructuredType) {
       previousTyped = (UriResourcePartTyped) previous;
-      final EdmType previousTypeFilter = getPreviousTypeFilter(previousTyped);
+      EdmType previousTypeFilter = getPreviousTypeFilter(previousTyped);
       structType = (EdmStructuredType) (previousTypeFilter == null ? previousTyped.getType() : previousTypeFilter);
     } else {
       throw new UriParserSemanticException(
@@ -260,7 +260,7 @@ public class ResourcePathParser {
           UriParserSemanticException.MessageKeys.PROPERTY_AFTER_COLLECTION, name);
     }
 
-    final EdmProperty property = structType.getStructuralProperty(name);
+    EdmProperty property = structType.getStructuralProperty(name);
     if (property != null) {
       return property.isPrimitive()
           || property.getType().getKind() == EdmTypeKind.ENUM
@@ -268,7 +268,7 @@ public class ResourcePathParser {
           new UriResourcePrimitivePropertyImpl(property) :
           new UriResourceComplexPropertyImpl(property);
     }
-    final EdmNavigationProperty navigationProperty = structType.getNavigationProperty(name);
+    EdmNavigationProperty navigationProperty = structType.getNavigationProperty(name);
     if (navigationProperty == null) {
       throw new UriParserSemanticException("Property '" + name + "' not found in type '"
           + structType.getFullQualifiedName().getFullQualifiedNameAsString() + "'",
@@ -284,14 +284,14 @@ public class ResourcePathParser {
 
   private UriResource boundOperationOrTypeCast(UriResource previous)
       throws UriParserException, UriValidationException {
-    final FullQualifiedName name = new FullQualifiedName(tokenizer.getText());
+    FullQualifiedName name = new FullQualifiedName(tokenizer.getText());
     requireTyped(previous, name.getFullQualifiedNameAsString());
-    final UriResourcePartTyped previousTyped = (UriResourcePartTyped) previous;
-    final EdmType previousTypeFilter = getPreviousTypeFilter(previousTyped);
-    final EdmType previousType = previousTypeFilter == null ? previousTyped.getType() : previousTypeFilter;
+    UriResourcePartTyped previousTyped = (UriResourcePartTyped) previous;
+    EdmType previousTypeFilter = getPreviousTypeFilter(previousTyped);
+    EdmType previousType = previousTypeFilter == null ? previousTyped.getType() : previousTypeFilter;
 
     // We check for bound actions first because they cannot be followed by anything.
-    final EdmAction boundAction =
+    EdmAction boundAction =
         edm.getBoundAction(name, previousType.getFullQualifiedName(), previousTyped.isCollection());
     if (boundAction != null) {
       ParserHelper.requireTokenEnd(tokenizer);
@@ -300,7 +300,7 @@ public class ResourcePathParser {
 
     // Type casts can be syntactically indistinguishable from bound function calls in the case of additional keys.
     // But normally they are shorter, so they come next.
-    final EdmStructuredType type = previousTyped.getType() instanceof EdmEntityType ?
+    EdmStructuredType type = previousTyped.getType() instanceof EdmEntityType ?
         edm.getEntityType(name) :
         edm.getComplexType(name);
     if (type != null) {
@@ -315,15 +315,15 @@ public class ResourcePathParser {
     return functionCall(null, name, previousType.getFullQualifiedName(), previousTyped.isCollection());
   }
 
-  private void requireTyped(final UriResource previous, final String forWhat) throws UriParserException {
+  private void requireTyped(UriResource previous, String forWhat) throws UriParserException {
     if (!(previous instanceof UriResourcePartTyped)) {
       throw new UriParserSemanticException("Path segment before '" + forWhat + "' is not typed.",
           UriParserSemanticException.MessageKeys.PREVIOUS_PART_NOT_TYPED, forWhat);
     }
   }
 
-  private UriResource typeCast(final FullQualifiedName name, final EdmStructuredType type,
-      final UriResourcePartTyped previousTyped) throws UriParserException, UriValidationException {
+  private UriResource typeCast(FullQualifiedName name, EdmStructuredType type,
+                               UriResourcePartTyped previousTyped) throws UriParserException, UriValidationException {
     if (type.compatibleTo(previousTyped.getType())) {
       EdmType previousTypeFilter = null;
       if (previousTyped instanceof UriResourceWithKeysImpl) {
@@ -345,7 +345,7 @@ public class ResourcePathParser {
           ((UriResourceWithKeysImpl) previousTyped).setEntryTypeFilter(type);
         }
         if (tokenizer.next(TokenKind.OPEN)) {
-          final List<UriParameter> keys =
+          List<UriParameter> keys =
               ParserHelper.parseKeyPredicate(tokenizer, (EdmEntityType) type, null, edm, null, aliases);
           if (previousTyped.isCollection()) {
             ((UriResourceWithKeysImpl) previousTyped).setKeyPredicates(keys);
@@ -372,7 +372,7 @@ public class ResourcePathParser {
     }
   }
 
-  private EdmType getPreviousTypeFilter(final UriResourcePartTyped previousTyped) {
+  private EdmType getPreviousTypeFilter(UriResourcePartTyped previousTyped) {
     if (previousTyped instanceof UriResourceWithKeysImpl) {
       return ((UriResourceWithKeysImpl) previousTyped).getTypeFilterOnEntry() == null ?
           ((UriResourceWithKeysImpl) previousTyped).getTypeFilterOnCollection() :
@@ -382,11 +382,11 @@ public class ResourcePathParser {
     }
   }
 
-  private UriResource functionCall(final EdmFunctionImport edmFunctionImport,
-      final FullQualifiedName boundFunctionName, final FullQualifiedName bindingParameterTypeName,
-      final boolean isBindingParameterCollection) throws UriParserException, UriValidationException {
-    final List<UriParameter> parameters = ParserHelper.parseFunctionParameters(tokenizer, edm, null, false, aliases);
-    final List<String> names = ParserHelper.getParameterNames(parameters);
+  private UriResource functionCall(EdmFunctionImport edmFunctionImport,
+                                   FullQualifiedName boundFunctionName, FullQualifiedName bindingParameterTypeName,
+                                   boolean isBindingParameterCollection) throws UriParserException, UriValidationException {
+    List<UriParameter> parameters = ParserHelper.parseFunctionParameters(tokenizer, edm, null, false, aliases);
+    List<String> names = ParserHelper.getParameterNames(parameters);
     EdmFunction function = null;
     if (edmFunctionImport != null) {
       function = edmFunctionImport.getUnboundFunction(names);

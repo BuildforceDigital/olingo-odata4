@@ -33,9 +33,9 @@ public class EdmCastImpl extends AbstractEdmAnnotatableDynamicExpression impleme
   private EdmExpression value;
   private EdmType type;
 
-  public EdmCastImpl(final Edm edm, final CsdlCast csdlExp) {
+  public EdmCastImpl(Edm edm, CsdlCast csdlExp) {
     super(edm, "Cast", csdlExp);
-    this.cast = csdlExp;
+      cast = csdlExp;
   }
 
   @Override
@@ -64,7 +64,7 @@ public class EdmCastImpl extends AbstractEdmAnnotatableDynamicExpression impleme
       if (cast.getType() == null) {
         throw new EdmException("Must specify a type for a Cast expression.");
       }
-      final EdmTypeInfo typeInfo = new EdmTypeInfo.Builder().setEdm(edm).setTypeExpression(cast.getType()).build();
+      EdmTypeInfo typeInfo = new EdmTypeInfo.Builder().setEdm(edm).setTypeExpression(cast.getType()).build();
       type = typeInfo.getType();
     }
     return type;

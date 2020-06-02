@@ -41,7 +41,7 @@ public class ExceptionHelperTest {
 
   @Test
   public void withRuntimeException() {
-    final Exception e = new NullPointerException();
+    Exception e = new NullPointerException();
     ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e);
     assertEquals(HttpStatusCode.INTERNAL_SERVER_ERROR.getStatusCode(), serverError.getStatusCode());
     assertEquals("OData Library: An exception without message text was thrown.", serverError.getMessage());
@@ -50,7 +50,7 @@ public class ExceptionHelperTest {
 
   @Test
   public void withRuntimeExceptionAndText() {
-    final Exception e = new NullPointerException("Text");
+    Exception e = new NullPointerException("Text");
     ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e);
     assertEquals(HttpStatusCode.INTERNAL_SERVER_ERROR.getStatusCode(), serverError.getStatusCode());
     assertEquals("Text", serverError.getMessage());
@@ -60,7 +60,7 @@ public class ExceptionHelperTest {
   @Test
   public void uriValidatorExceptionMustLeadToBadRequest() {
     for (MessageKey key : UriValidationException.MessageKeys.values()) {
-      final UriValidationException e = new UriValidationException(DEV_MSG, key);
+      UriValidationException e = new UriValidationException(DEV_MSG, key);
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       checkStatusCode(serverError, HttpStatusCode.BAD_REQUEST, e);
     }
@@ -69,7 +69,7 @@ public class ExceptionHelperTest {
   @Test
   public void deserializerExceptionMustLeadToBadRequest() {
     for (MessageKey key : DeserializerException.MessageKeys.values()) {
-      final DeserializerException e = new DeserializerException(DEV_MSG, key);
+      DeserializerException e = new DeserializerException(DEV_MSG, key);
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       checkStatusCode(serverError, HttpStatusCode.BAD_REQUEST, e);
     }
@@ -78,7 +78,7 @@ public class ExceptionHelperTest {
   @Test
   public void serializerExceptionMustLeadToBadRequest() {
     for (MessageKey key : SerializerException.MessageKeys.values()) {
-      final SerializerException e = new SerializerException(DEV_MSG, key);
+      SerializerException e = new SerializerException(DEV_MSG, key);
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       checkStatusCode(serverError, HttpStatusCode.BAD_REQUEST, e);
     }
@@ -97,7 +97,7 @@ public class ExceptionHelperTest {
   @Test
   public void contentNegotiatorExceptionMustLeadToNotAcceptable() {
     for (MessageKey key : ContentNegotiatorException.MessageKeys.values()) {
-      final ContentNegotiatorException e = new ContentNegotiatorException(DEV_MSG, key);
+      ContentNegotiatorException e = new ContentNegotiatorException(DEV_MSG, key);
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       checkStatusCode(serverError, HttpStatusCode.NOT_ACCEPTABLE, e);
     }
@@ -106,7 +106,7 @@ public class ExceptionHelperTest {
   @Test
   public void preconditionRequiredTesting() {
     for (MessageKey key : PreconditionException.MessageKeys.values()) {
-      final PreconditionException e = new PreconditionException(DEV_MSG, key);
+      PreconditionException e = new PreconditionException(DEV_MSG, key);
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       if (e.getMessageKey().equals(PreconditionException.MessageKeys.FAILED)) {
         checkStatusCode(serverError, HttpStatusCode.PRECONDITION_FAILED, e);
@@ -123,7 +123,7 @@ public class ExceptionHelperTest {
   @Test
   public void httpHandlerExceptions() {
     for (MessageKey key : ODataHandlerException.MessageKeys.values()) {
-      final ODataHandlerException e = new ODataHandlerException(DEV_MSG, key);
+      ODataHandlerException e = new ODataHandlerException(DEV_MSG, key);
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
 
       if (key.equals(ODataHandlerException.MessageKeys.FUNCTIONALITY_NOT_IMPLEMENTED)
@@ -139,7 +139,7 @@ public class ExceptionHelperTest {
 
   @Test
   public void withNotImplementedException() {
-    final UriParserSemanticException  e = new UriParserSemanticException("Exception", 
+    UriParserSemanticException  e = new UriParserSemanticException("Exception",
         UriParserSemanticException.MessageKeys.NOT_IMPLEMENTED, "Method");
     ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, Locale.ENGLISH);
     assertEquals(HttpStatusCode.NOT_IMPLEMENTED.getStatusCode(), serverError.getStatusCode());
@@ -149,7 +149,7 @@ public class ExceptionHelperTest {
   
   @Test
   public void uriParserException() {
-    final UriParserException  e = new UriParserSemanticException("Exception", 
+    UriParserException  e = new UriParserSemanticException("Exception",
         UriParserSemanticException.MessageKeys.NOT_IMPLEMENTED, "Method");
     ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, Locale.ENGLISH);
     assertEquals(HttpStatusCode.BAD_REQUEST.getStatusCode(), serverError.getStatusCode());
@@ -159,7 +159,7 @@ public class ExceptionHelperTest {
   
   @Test
   public void acceptHeaderException() {
-    final AcceptHeaderContentNegotiatorException   e = new AcceptHeaderContentNegotiatorException ("Exception", 
+    AcceptHeaderContentNegotiatorException   e = new AcceptHeaderContentNegotiatorException ("Exception",
         UriParserSemanticException.MessageKeys.INVALID_KEY_VALUE, "Method");
     ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, Locale.ENGLISH);
     assertEquals(HttpStatusCode.BAD_REQUEST.getStatusCode(), serverError.getStatusCode());
@@ -167,8 +167,8 @@ public class ExceptionHelperTest {
     assertEquals(e, serverError.getException());
   }
   
-  private void checkStatusCode(final ODataServerError serverError, final HttpStatusCode statusCode,
-      final ODataLibraryException exception) {
+  private void checkStatusCode(ODataServerError serverError, HttpStatusCode statusCode,
+                               ODataLibraryException exception) {
     assertEquals("FailedKey: " + exception.getMessageKey().getKey(),
         statusCode.getStatusCode(), serverError.getStatusCode());
   }

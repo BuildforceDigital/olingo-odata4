@@ -32,7 +32,7 @@ public class DeltaTokenOptionImpl extends SystemQueryOptionImpl implements Delta
     return getText();
   }
 
-  public DeltaTokenOptionImpl setValue(final String deltaTokenValue) {
+  public DeltaTokenOptionImpl setValue(String deltaTokenValue) {
     setText(deltaTokenValue);
     return this;
   }

@@ -57,7 +57,7 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
     return type;
   }
 
-  public CsdlCast setType(final String type) {
+  public CsdlCast setType(String type) {
     this.type = type;
     return this;
   }
@@ -70,7 +70,7 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
     return maxLength;
   }
 
-  public CsdlCast setMaxLength(final Integer maxLength) {
+  public CsdlCast setMaxLength(Integer maxLength) {
     this.maxLength = maxLength;
     return this;
   }
@@ -83,7 +83,7 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
     return precision;
   }
 
-  public CsdlCast setPrecision(final Integer precision) {
+  public CsdlCast setPrecision(Integer precision) {
     this.precision = precision;
     return this;
   }
@@ -96,7 +96,7 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
     return scale;
   }
 
-  public CsdlCast setScale(final Integer scale) {
+  public CsdlCast setScale(Integer scale) {
     this.scale = scale;
     return this;
   }
@@ -121,7 +121,7 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
     return value;
   }
 
-  public CsdlCast setValue(final CsdlExpression value) {
+  public CsdlCast setValue(CsdlExpression value) {
     this.value = value;
     return this;
   }
@@ -135,19 +135,19 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
       return false;
     }
     CsdlCast csdlCast = (CsdlCast) obj;
-    return (this.getValue() == null ? csdlCast.getValue() == null :
-      this.getValue().equals(csdlCast.getValue()))
-        && (this.getType() == null ? csdlCast.getType() == null :
-        this.getType().equals(csdlCast.getType()))
-        && (this.getMaxLength() == null ? csdlCast.getMaxLength() == null :
-          this.getMaxLength().equals(csdlCast.getMaxLength()))
-        && (this.getPrecision() == null ? csdlCast.getPrecision() == null :
-          this.getPrecision().equals(csdlCast.getPrecision()))
-        && (this.getScale() == null ? csdlCast.getScale() == null :
-         this.getScale().equals(csdlCast.getScale()))
+    return (getValue() == null ? csdlCast.getValue() == null :
+            getValue().equals(csdlCast.getValue()))
+        && (getType() == null ? csdlCast.getType() == null :
+            getType().equals(csdlCast.getType()))
+        && (getMaxLength() == null ? csdlCast.getMaxLength() == null :
+            getMaxLength().equals(csdlCast.getMaxLength()))
+        && (getPrecision() == null ? csdlCast.getPrecision() == null :
+            getPrecision().equals(csdlCast.getPrecision()))
+        && (getScale() == null ? csdlCast.getScale() == null :
+            getScale().equals(csdlCast.getScale()))
         /*&& (this.getSrid() == null ? csdlCast.getSrid() == null :
           String.valueOf(this.getSrid()).equals(String.valueOf(csdlCast.getSrid())))*/
-        && (this.getAnnotations() == null ? csdlCast.getAnnotations() == null :
+        && (getAnnotations() == null ? csdlCast.getAnnotations() == null :
           checkAnnotations(csdlCast.getAnnotations()));
   }
   
@@ -155,9 +155,9 @@ public class CsdlCast extends CsdlDynamicExpression implements CsdlAnnotatable {
     if (csdlCastAnnotations == null) {
       return false;
     }
-    if (this.getAnnotations().size() == csdlCastAnnotations.size()) {
-      for (int i = 0; i < this.getAnnotations().size(); i++) {
-        if (!this.getAnnotations().get(i).equals(csdlCastAnnotations.get(i))) {
+    if (getAnnotations().size() == csdlCastAnnotations.size()) {
+      for (int i = 0; i < getAnnotations().size(); i++) {
+        if (!getAnnotations().get(i).equals(csdlCastAnnotations.get(i))) {
           return false;
         }
       }

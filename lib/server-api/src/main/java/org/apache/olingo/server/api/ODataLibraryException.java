@@ -46,16 +46,16 @@ public abstract class ODataLibraryException extends ODataException {
   private MessageKey messageKey;
   private Object[] parameters;
 
-  protected ODataLibraryException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  protected ODataLibraryException(String developmentMessage, MessageKey messageKey,
+                                  String... parameters) {
     super(developmentMessage);
     this.messageKey = messageKey;
     this.parameters = parameters;
   }
 
-  protected ODataLibraryException(final String developmentMessage, final Throwable cause,
-      final MessageKey messageKey,
-      final String... parameters) {
+  protected ODataLibraryException(String developmentMessage, Throwable cause,
+                                  MessageKey messageKey,
+                                  String... parameters) {
     super(developmentMessage, cause);
     this.messageKey = messageKey;
     this.parameters = parameters;
@@ -82,7 +82,7 @@ public abstract class ODataLibraryException extends ODataException {
    * @param locale the preferred {@link Locale}
    * @return the error message
    */
-  public ODataErrorMessage getTranslatedMessage(final Locale locale) {
+  public ODataErrorMessage getTranslatedMessage(Locale locale) {
     if (messageKey == null) {
       return new ODataErrorMessage(getMessage(), DEFAULT_LOCALE);
     }
@@ -102,15 +102,15 @@ public abstract class ODataLibraryException extends ODataException {
    */
   protected abstract String getBundleName();
 
-  private ResourceBundle createResourceBundle(final Locale locale) {
+  private ResourceBundle createResourceBundle(Locale locale) {
     try {
       return ResourceBundle.getBundle(getBundleName(), locale == null ? DEFAULT_LOCALE : locale);
-    } catch (final MissingResourceException e) {
+    } catch (MissingResourceException e) {
       return null;
     }
   }
 
-  private ODataErrorMessage buildMessage(final ResourceBundle bundle, final Locale locale) {
+  private ODataErrorMessage buildMessage(ResourceBundle bundle, Locale locale) {
     String message = null;
     StringBuilder builder = new StringBuilder();
     Formatter f = new Formatter(builder, locale);
@@ -137,7 +137,7 @@ public abstract class ODataLibraryException extends ODataException {
     private String message;
     private Locale locale;
 
-    public ODataErrorMessage(final String message, final Locale usedLocale) {
+    public ODataErrorMessage(String message, Locale usedLocale) {
       this.message = message;
       locale = usedLocale;
     }

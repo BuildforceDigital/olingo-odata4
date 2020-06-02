@@ -82,7 +82,7 @@ public class CsdlConstantExpression extends CsdlExpression {
      * @param value Type as string
      * @return Type type
      */
-    public static ConstantExpressionType fromString(final String value) {
+    public static ConstantExpressionType fromString(String value) {
       ConstantExpressionType result = null;
       try {
         result = valueOf(value);
@@ -123,7 +123,7 @@ public class CsdlConstantExpression extends CsdlExpression {
    * @param value value of the constant expression
    * @return this for method chaining
    */
-  public CsdlConstantExpression setValue(final String value) {
+  public CsdlConstantExpression setValue(String value) {
     this.value = value;
     return this;
   }
@@ -138,10 +138,10 @@ public class CsdlConstantExpression extends CsdlExpression {
     }
     CsdlConstantExpression csdlConstExp = (CsdlConstantExpression) obj;
     
-    return (this.getValue() == null ? csdlConstExp.getValue() == null :
-      this.getValue().equals(csdlConstExp.getValue()))
-        && (this.getType() == null ? csdlConstExp.getType() == null :
-          this.getType().equals(csdlConstExp.getType()));
+    return (getValue() == null ? csdlConstExp.getValue() == null :
+            getValue().equals(csdlConstExp.getValue()))
+        && (getType() == null ? csdlConstExp.getType() == null :
+            getType().equals(csdlConstExp.getType()));
   }
   
   @Override

@@ -69,7 +69,7 @@ public class ODataHandlerImpl implements ODataHandler {
   private UriInfo uriInfo;
   private Exception lastThrownException;
 
-  public ODataHandlerImpl(final OData odata, final ServiceMetadata serviceMetadata, final ServerCoreDebugger debugger) {
+  public ODataHandlerImpl(OData odata, ServiceMetadata serviceMetadata, ServerCoreDebugger debugger) {
     this.odata = odata;
     this.serviceMetadata = serviceMetadata;
     this.debugger = debugger;
@@ -78,21 +78,21 @@ public class ODataHandlerImpl implements ODataHandler {
     register(new DefaultProcessor());
   }
 
-  public ODataResponse process(final ODataRequest request) {
+  public ODataResponse process(ODataRequest request) {
     ODataResponse response = new ODataResponse();
-    final int responseHandle = debugger.startRuntimeMeasurement("ODataHandler", "process");
+    int responseHandle = debugger.startRuntimeMeasurement("ODataHandler", "process");
     try {
       processInternal(request, response);
-    } catch (final UriValidationException e) {
+    } catch (UriValidationException e) {
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       handleException(request, response, serverError, e);
-    } catch (final UriParserSemanticException e) {
+    } catch (UriParserSemanticException e) {
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       handleException(request, response, serverError, e);
-    } catch (final UriParserSyntaxException e) {
+    } catch (UriParserSyntaxException e) {
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       handleException(request, response, serverError, e);
-    } catch (final UriParserException e) {
+    } catch (UriParserException e) {
       ODataServerError serverError = ODataExceptionHelper.createServerErrorObject(e, null);
       handleException(request, response, serverError, e);
     } catch (AcceptHeaderContentNegotiatorException e) {
@@ -124,42 +124,42 @@ public class ODataHandlerImpl implements ODataHandler {
     return response;
   }
 
-  private void processInternal(final ODataRequest request, final ODataResponse response)
+  private void processInternal(ODataRequest request, ODataResponse response)
       throws ODataApplicationException, ODataLibraryException {
-    final int measurementHandle = debugger.startRuntimeMeasurement("ODataHandler", "processInternal");
+    int measurementHandle = debugger.startRuntimeMeasurement("ODataHandler", "processInternal");
 
     response.setHeader(HttpHeader.ODATA_VERSION, ODataServiceVersion.V40.toString());
     
     try {
       validateODataVersion(request);
-    } catch (final ODataHandlerException e) {
+    } catch (ODataHandlerException e) {
       debugger.stopRuntimeMeasurement(measurementHandle);
       throw e;
     }
 
-    final int measurementUriParser = debugger.startRuntimeMeasurement("Parser", "parseUri");
+    int measurementUriParser = debugger.startRuntimeMeasurement("Parser", "parseUri");
     try {
       uriInfo = new Parser(serviceMetadata.getEdm(), odata)
           .parseUri(request.getRawODataPath(), request.getRawQueryPath(), null, request.getRawBaseUri());
-    } catch (final ODataLibraryException e) {
+    } catch (ODataLibraryException e) {
       debugger.stopRuntimeMeasurement(measurementUriParser);
       debugger.stopRuntimeMeasurement(measurementHandle);
       throw e;
     }
     debugger.stopRuntimeMeasurement(measurementUriParser);
 
-    final int measurementUriValidator = debugger.startRuntimeMeasurement("UriValidator", "validate");
-    final HttpMethod method = request.getMethod();
+    int measurementUriValidator = debugger.startRuntimeMeasurement("UriValidator", "validate");
+    HttpMethod method = request.getMethod();
     try {
       new UriValidator().validate(uriInfo, method);
-    } catch (final UriValidationException e) {
+    } catch (UriValidationException e) {
       debugger.stopRuntimeMeasurement(measurementUriValidator);
       debugger.stopRuntimeMeasurement(measurementHandle);
       throw e;
     }
     debugger.stopRuntimeMeasurement(measurementUriValidator);
 
-    final int measurementDispatcher = debugger.startRuntimeMeasurement("ODataDispatcher", "dispatch");
+    int measurementDispatcher = debugger.startRuntimeMeasurement("ODataDispatcher", "dispatch");
     try {
       new ODataDispatcher(uriInfo, this).dispatch(request, response);
     } finally {
@@ -168,9 +168,9 @@ public class ODataHandlerImpl implements ODataHandler {
     }
   }
 
-  public void handleException(final ODataRequest request, final ODataResponse response,
-      final ODataServerError serverError, final Exception exception) {
-    final int measurementHandle = debugger.startRuntimeMeasurement("ODataHandler", "handleException");
+  public void handleException(ODataRequest request, ODataResponse response,
+                              ODataServerError serverError, Exception exception) {
+    int measurementHandle = debugger.startRuntimeMeasurement("ODataHandler", "handleException");
     lastThrownException = exception;
     ErrorProcessor exceptionProcessor;
     try {
@@ -181,15 +181,15 @@ public class ODataHandlerImpl implements ODataHandler {
     }
     ContentType requestedContentType;
     try {
-      final FormatOption formatOption = getFormatOption(request, uriInfo);
+      FormatOption formatOption = getFormatOption(request, uriInfo);
       requestedContentType = ContentNegotiator.doContentNegotiation(formatOption, request,
           getCustomContentTypeSupport(), RepresentationType.ERROR);
-    } catch (final AcceptHeaderContentNegotiatorException e) {
+    } catch (AcceptHeaderContentNegotiatorException e) {
       requestedContentType = ContentType.JSON;
-    } catch (final ContentNegotiatorException e) {
+    } catch (ContentNegotiatorException e) {
       requestedContentType = ContentType.JSON;
     }
-    final int measurementError = debugger.startRuntimeMeasurement("ErrorProcessor", "processError");
+    int measurementError = debugger.startRuntimeMeasurement("ErrorProcessor", "processError");
     exceptionProcessor.processError(request, response, serverError, requestedContentType);
     debugger.stopRuntimeMeasurement(measurementError);
     debugger.stopRuntimeMeasurement(measurementHandle);
@@ -204,14 +204,14 @@ public class ODataHandlerImpl implements ODataHandler {
    * @param uriInfo uriInfo which is checked
    * @return the evaluated format option or <code>NULL</code>.
    */
-  private FormatOption getFormatOption(final ODataRequest request, final UriInfo uriInfo) {
+  private FormatOption getFormatOption(ODataRequest request, UriInfo uriInfo) {
     if(uriInfo == null) {
       String query = request.getRawQueryPath();
       if(query == null) {
         return null;
       }
 
-      final String formatOption = SystemQueryOptionKind.FORMAT.toString();
+      String formatOption = SystemQueryOptionKind.FORMAT.toString();
       int index = query.indexOf(formatOption);
       int endIndex = query.indexOf('&', index);
       if(endIndex == -1) {
@@ -226,22 +226,22 @@ public class ODataHandlerImpl implements ODataHandler {
     return uriInfo.getFormatOption();
   }
 
-  private void validateODataVersion(final ODataRequest request) throws ODataHandlerException {
-    final String odataVersion = request.getHeader(HttpHeader.ODATA_VERSION);
+  private void validateODataVersion(ODataRequest request) throws ODataHandlerException {
+    String odataVersion = request.getHeader(HttpHeader.ODATA_VERSION);
    if (odataVersion != null && !ODataServiceVersion.isValidODataVersion(odataVersion)) {
       throw new ODataHandlerException("ODataVersion not supported: " + odataVersion,
           ODataHandlerException.MessageKeys.ODATA_VERSION_NOT_SUPPORTED, odataVersion);
     }
     
-    final String maxVersion = request.getHeader(HttpHeader.ODATA_MAX_VERSION);
+    String maxVersion = request.getHeader(HttpHeader.ODATA_MAX_VERSION);
     if (maxVersion != null && !ODataServiceVersion.isValidMaxODataVersion(maxVersion)) {
         throw new ODataHandlerException("ODataVersion not supported: " + maxVersion,
             ODataHandlerException.MessageKeys.ODATA_VERSION_NOT_SUPPORTED, maxVersion);
       }
   }
 
-  <T extends Processor> T selectProcessor(final Class<T> cls) throws ODataHandlerException {
-    for (final Processor processor : processors) {
+  <T extends Processor> T selectProcessor(Class<T> cls) throws ODataHandlerException {
+    for (Processor processor : processors) {
       if (cls.isAssignableFrom(processor.getClass())) {
         processor.init(odata, serviceMetadata);
         return cls.cast(processor);
@@ -251,16 +251,16 @@ public class ODataHandlerImpl implements ODataHandler {
         ODataHandlerException.MessageKeys.PROCESSOR_NOT_IMPLEMENTED, cls.getSimpleName());
   }
 
-  public void register(final Processor processor) {
+  public void register(Processor processor) {
     processors.add(0, processor);
   }
 
   @Override
   public void register(OlingoExtension extension) {
     if(extension instanceof CustomContentTypeSupport) {
-      this.customContentTypeSupport = (CustomContentTypeSupport) extension;
+      customContentTypeSupport = (CustomContentTypeSupport) extension;
     } else if(extension instanceof CustomETagSupport) {
-      this.customETagSupport = (CustomETagSupport) extension;
+      customETagSupport = (CustomETagSupport) extension;
     } else {
       throw new ODataRuntimeException("Got not supported exception with class name " +
           extension.getClass().getSimpleName());

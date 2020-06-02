@@ -40,4 +40,5 @@ public interface CountPrimitiveCollectionProcessor extends PrimitiveCollectionPr
    */
   void countPrimitiveCollection(ODataRequest request, ODataResponse response, UriInfo uriInfo)
       throws ODataApplicationException, ODataLibraryException;
+
 }

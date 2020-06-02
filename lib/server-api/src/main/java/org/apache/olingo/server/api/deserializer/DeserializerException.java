@@ -74,8 +74,8 @@ public class DeserializerException extends ODataLibraryException {
    * @param messageKey one of the {@link MessageKeys} for the exception text in the resource bundle
    * @param parameters parameters for the exception text
    */
-  public DeserializerException(final String developmentMessage,
-      final MessageKey messageKey, final String... parameters) {
+  public DeserializerException(String developmentMessage,
+                               MessageKey messageKey, String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
@@ -86,8 +86,8 @@ public class DeserializerException extends ODataLibraryException {
    * @param messageKey one of the {@link MessageKeys} for the exception text in the resource bundle
    * @param parameters parameters for the exception text
    */
-  public DeserializerException(final String developmentMessage, final Throwable cause,
-      final MessageKey messageKey, final String... parameters) {
+  public DeserializerException(String developmentMessage, Throwable cause,
+                               MessageKey messageKey, String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 

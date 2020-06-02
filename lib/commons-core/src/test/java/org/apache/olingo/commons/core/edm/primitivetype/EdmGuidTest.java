@@ -44,7 +44,7 @@ public class EdmGuidTest extends PrimitiveTypeBaseTest {
 
   @Test
   public void valueToString() throws Exception {
-    final UUID uuid = UUID.randomUUID();
+    UUID uuid = UUID.randomUUID();
     assertEquals(uuid.toString(), instance.valueToString(uuid, null, null, null, null, null));
 
     expectTypeErrorInValueToString(instance, 'A');
@@ -52,7 +52,7 @@ public class EdmGuidTest extends PrimitiveTypeBaseTest {
 
   @Test
   public void valueOfString() throws Exception {
-    final UUID uuid = UUID.fromString("aabbccdd-aabb-ccdd-eeff-aabbccddeeff");
+    UUID uuid = UUID.fromString("aabbccdd-aabb-ccdd-eeff-aabbccddeeff");
 
     assertEquals(uuid, instance.valueOfString("aabbccdd-aabb-ccdd-eeff-aabbccddeeff", null, null, null, null, null,
         UUID.class));

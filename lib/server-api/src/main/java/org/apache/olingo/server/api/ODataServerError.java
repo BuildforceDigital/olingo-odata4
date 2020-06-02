@@ -46,7 +46,7 @@ public class ODataServerError extends ODataError {
    * Sets the locale.
    * @return this for method chaining
    */
-  public ODataServerError setLocale(final Locale locale) {
+  public ODataServerError setLocale(Locale locale) {
     this.locale = locale;
     return this;
   }
@@ -63,7 +63,7 @@ public class ODataServerError extends ODataError {
    * Sets the exception.
    * @return this for method chaining
    */
-  public ODataServerError setException(final Exception exception) {
+  public ODataServerError setException(Exception exception) {
     this.exception = exception;
     return this;
   }
@@ -81,7 +81,7 @@ public class ODataServerError extends ODataError {
    * @param statusCode the status code which this error results in
    * @return this for method chaining
    */
-  public ODataServerError setStatusCode(final int statusCode) {
+  public ODataServerError setStatusCode(int statusCode) {
     this.statusCode = statusCode;
     return this;
   }
@@ -93,7 +93,7 @@ public class ODataServerError extends ODataError {
    * @return this for method chaining
    */
   @Override
-  public ODataServerError setCode(final String code) {
+  public ODataServerError setCode(String code) {
     super.setCode(code);
     return this;
   }
@@ -104,7 +104,7 @@ public class ODataServerError extends ODataError {
    * @return this for method chaining
    */
   @Override
-  public ODataServerError setMessage(final String message) {
+  public ODataServerError setMessage(String message) {
     super.setMessage(message);
     return this;
   }
@@ -115,7 +115,7 @@ public class ODataServerError extends ODataError {
    * @return this for method chaining
    */
   @Override
-  public ODataServerError setTarget(final String target) {
+  public ODataServerError setTarget(String target) {
     super.setTarget(target);
     return this;
   }
@@ -125,7 +125,7 @@ public class ODataServerError extends ODataError {
    * @return this for method chaining.
    */
   @Override
-  public ODataServerError setDetails(final List<ODataErrorDetail> details) {
+  public ODataServerError setDetails(List<ODataErrorDetail> details) {
     super.setDetails(details);
     return this;
   }
@@ -135,7 +135,7 @@ public class ODataServerError extends ODataError {
    * @return this for method chaining.
    */
   @Override
-  public ODataServerError setInnerError(final Map<String, String> innerError) {
+  public ODataServerError setInnerError(Map<String, String> innerError) {
     super.setInnerError(innerError);
     return this;
   }
@@ -145,7 +145,7 @@ public class ODataServerError extends ODataError {
    * @return this for method chaining.
    */
   @Override
-  public ODataServerError setAdditionalProperties(final Map<String, Object> additionalProperties) {
+  public ODataServerError setAdditionalProperties(Map<String, Object> additionalProperties) {
     super.setAdditionalProperties(additionalProperties);
     return this;
   }

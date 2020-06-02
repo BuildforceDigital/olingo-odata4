@@ -37,17 +37,17 @@ public class OrderByParser {
   private final Edm edm;
   private final OData odata;
 
-  public OrderByParser(final Edm edm, final OData odata) {
+  public OrderByParser(Edm edm, OData odata) {
     this.edm = edm;
     this.odata = odata;
   }
 
-  public OrderByOption parse(UriTokenizer tokenizer, final EdmStructuredType referencedType,
-      final Collection<String> crossjoinEntitySetNames, final Map<String, AliasQueryOption> aliases)
+  public OrderByOption parse(UriTokenizer tokenizer, EdmStructuredType referencedType,
+      Collection<String> crossjoinEntitySetNames, Map<String, AliasQueryOption> aliases)
       throws UriParserException, UriValidationException {
     OrderByOptionImpl orderByOption = new OrderByOptionImpl();
     do {
-      final Expression orderByExpression = new ExpressionParser(edm, odata)
+      Expression orderByExpression = new ExpressionParser(edm, odata)
           .parse(tokenizer, referencedType, crossjoinEntitySetNames, aliases);
       OrderByItemImpl item = new OrderByItemImpl();
       item.setExpression(orderByExpression);

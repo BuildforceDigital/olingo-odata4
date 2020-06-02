@@ -27,7 +27,7 @@ public class LambdaRefImpl implements LambdaRef {
 
   private final String variableText;
 
-  public LambdaRefImpl(final String text) {
+  public LambdaRefImpl(String text) {
     variableText = text;
   }
 
@@ -37,7 +37,7 @@ public class LambdaRefImpl implements LambdaRef {
   }
 
   @Override
-  public <T> T accept(final ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
+  public <T> T accept(ExpressionVisitor<T> visitor) throws ExpressionVisitException, ODataApplicationException {
     return visitor.visitLambdaReference(variableText);
   }
 

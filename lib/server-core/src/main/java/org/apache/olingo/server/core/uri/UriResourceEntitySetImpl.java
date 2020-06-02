@@ -28,7 +28,7 @@ public class UriResourceEntitySetImpl extends UriResourceWithKeysImpl implements
 
   private final EdmEntitySet edmEntitySet;
 
-  public UriResourceEntitySetImpl(final EdmEntitySet edmEntitySet) {
+  public UriResourceEntitySetImpl(EdmEntitySet edmEntitySet) {
     super(UriResourceKind.entitySet);
     this.edmEntitySet = edmEntitySet;
   }

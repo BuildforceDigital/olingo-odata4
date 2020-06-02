@@ -33,7 +33,7 @@ public class EdmAnnotationImpl extends AbstractEdmAnnotatable implements EdmAnno
   private EdmTerm term;
   private EdmExpression expression;
 
-  public EdmAnnotationImpl(final Edm edm, final CsdlAnnotation annotation) {
+  public EdmAnnotationImpl(Edm edm, CsdlAnnotation annotation) {
     super(edm, annotation);
     this.annotation = annotation;
   }

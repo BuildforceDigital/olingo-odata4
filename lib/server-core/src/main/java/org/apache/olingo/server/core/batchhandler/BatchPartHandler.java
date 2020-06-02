@@ -37,30 +37,30 @@ public class BatchPartHandler {
   private final BatchFacade batchFacade;
   private final BatchReferenceRewriter rewriter;
 
-  public BatchPartHandler(final ODataHandler oDataHandler, final BatchProcessor processor,
-                          final BatchFacade batchFacade) {
+  public BatchPartHandler(ODataHandler oDataHandler, BatchProcessor processor,
+                          BatchFacade batchFacade) {
     this.oDataHandler = oDataHandler;
     batchProcessor = processor;
     this.batchFacade = batchFacade;
     rewriter = new BatchReferenceRewriter();
   }
 
-  public ODataResponse handleODataRequest(final ODataRequest request) throws BatchDeserializerException {
+  public ODataResponse handleODataRequest(ODataRequest request) throws BatchDeserializerException {
     return handle(request, true);
   }
 
-  public ODataResponsePart handleBatchRequest(final BatchRequestPart request)
+  public ODataResponsePart handleBatchRequest(BatchRequestPart request)
       throws ODataApplicationException, ODataLibraryException {
     if (request.isChangeSet()) {
       return handleChangeSet(request);
     } else {
-      final ODataResponse response = handle(request.getRequests().get(0), false);
+      ODataResponse response = handle(request.getRequests().get(0), false);
 
       return new ODataResponsePart(response, false);
     }
   }
 
-  public ODataResponse handle(final ODataRequest request, final boolean isChangeSet)
+  public ODataResponse handle(ODataRequest request, boolean isChangeSet)
       throws BatchDeserializerException {
     ODataResponse response;
 
@@ -75,7 +75,7 @@ public class BatchPartHandler {
     }
 
     // Add content id to response
-    final String contentId = request.getHeader(HttpHeader.CONTENT_ID);
+    String contentId = request.getHeader(HttpHeader.CONTENT_ID);
     if (contentId != null) {
       response.setHeader(HttpHeader.CONTENT_ID, contentId);
     }
@@ -83,7 +83,7 @@ public class BatchPartHandler {
     return response;
   }
 
-  private ODataResponsePart handleChangeSet(final BatchRequestPart request) throws ODataApplicationException,
+  private ODataResponsePart handleChangeSet(BatchRequestPart request) throws ODataApplicationException,
   ODataLibraryException {
     return batchProcessor.processChangeSet(batchFacade, request.getRequests());
   }

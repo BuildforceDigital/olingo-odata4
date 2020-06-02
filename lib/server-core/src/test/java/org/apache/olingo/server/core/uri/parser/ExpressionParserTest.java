@@ -289,7 +289,7 @@ public class ExpressionParserTest {
   
   private void parseMethodWithParametersWithoutAlias(TokenKind kind, String... parameters) 
       throws UriParserException, UriValidationException {
-    final String methodName = kind.name().substring(0, kind.name().indexOf("Method")).toLowerCase(Locale.ROOT)
+    String methodName = kind.name().substring(0, kind.name().indexOf("Method")).toLowerCase(Locale.ROOT)
         .replace("geo", "geo.");
     String expressionString = methodName + '(';
     expressionString += "@word1";
@@ -301,10 +301,10 @@ public class ExpressionParserTest {
     Map<String, AliasQueryOption> alias = new HashMap<String, AliasQueryOption>();
     AliasQueryOptionImpl aliasQueryOption = new AliasQueryOptionImpl();
     aliasQueryOption.setName("@word");
-    aliasQueryOption.setText("\'a\'");
+    aliasQueryOption.setText("'a'");
     alias.put("@word", aliasQueryOption);
     UriTokenizer tokenizer = new UriTokenizer(expressionString);
-    final Expression expression = new ExpressionParser(mock(Edm.class), odata).parse(tokenizer, null, null, alias);
+    Expression expression = new ExpressionParser(mock(Edm.class), odata).parse(tokenizer, null, null, alias);
     assertNotNull(expression);
     
     assertEquals('{' + methodName + ' ' + "[@word1, " + parameters[1] + ']' + '}',
@@ -314,7 +314,7 @@ public class ExpressionParserTest {
 
   private void parseMethodWithParametersWithAlias(TokenKind kind, 
       String... parameters) throws UriParserException, UriValidationException {
-    final String methodName = kind.name().substring(0, kind.name().indexOf("Method")).toLowerCase(Locale.ROOT)
+    String methodName = kind.name().substring(0, kind.name().indexOf("Method")).toLowerCase(Locale.ROOT)
         .replace("geo", "geo.");
     String expressionString = methodName + '(';
     expressionString += "@word";
@@ -326,10 +326,10 @@ public class ExpressionParserTest {
     Map<String, AliasQueryOption> alias = new HashMap<String, AliasQueryOption>();
     AliasQueryOptionImpl aliasQueryOption = new AliasQueryOptionImpl();
     aliasQueryOption.setName("@word");
-    aliasQueryOption.setText("\'a\'");
+    aliasQueryOption.setText("'a'");
     alias.put("@word", aliasQueryOption);
     UriTokenizer tokenizer = new UriTokenizer(expressionString);
-    final Expression expression = new ExpressionParser(mock(Edm.class), odata).parse(tokenizer, null, null, alias);
+    Expression expression = new ExpressionParser(mock(Edm.class), odata).parse(tokenizer, null, null, alias);
     assertNotNull(expression);
     
     assertEquals('{' + methodName + ' ' + "[@word, " + parameters[1] + ']' + '}',
@@ -338,11 +338,11 @@ public class ExpressionParserTest {
   }
 
   private void parseMethod(TokenKind kind, String... parameters) throws UriParserException, UriValidationException {
-    final String methodName = kind.name().substring(0, kind.name().indexOf("Method")).toLowerCase(Locale.ROOT)
+    String methodName = kind.name().substring(0, kind.name().indexOf("Method")).toLowerCase(Locale.ROOT)
         .replace("geo", "geo.");
     String expressionString = methodName + '(';
     boolean first = true;
-    for (final String parameter : parameters) {
+    for (String parameter : parameters) {
       if (first) {
         first = false;
       } else {
@@ -352,27 +352,27 @@ public class ExpressionParserTest {
     }
     expressionString += ')';
 
-    final Expression expression = parseExpression(expressionString);
+    Expression expression = parseExpression(expressionString);
     assertEquals('{' + methodName + ' ' + Arrays.toString(parameters) + '}',
         expression.toString());
   }
 
-  private Expression parseExpression(final String expressionString)
+  private Expression parseExpression(String expressionString)
       throws UriParserException, UriValidationException {
     UriTokenizer tokenizer = new UriTokenizer(expressionString);
-    final Expression expression = new ExpressionParser(mock(Edm.class), odata).parse(tokenizer, null, null, null);
+    Expression expression = new ExpressionParser(mock(Edm.class), odata).parse(tokenizer, null, null, null);
     assertNotNull(expression);
     assertTrue(tokenizer.next(TokenKind.EOF));
     return expression;
   }
 
-  private void wrongExpression(final String expressionString) {
+  private void wrongExpression(String expressionString) {
     try {
       parseExpression(expressionString);
       fail("Expected exception not thrown.");
-    } catch (final UriParserException e) {
+    } catch (UriParserException e) {
       assertNotNull(e);
-    } catch (final UriValidationException e) {
+    } catch (UriValidationException e) {
       assertNotNull(e);
     }
   }
@@ -392,19 +392,19 @@ public class ExpressionParserTest {
     Edm mockedEdm = Mockito.mock(Edm.class);
     Mockito.when(mockedEdm.getEntityContainer()).thenReturn(container);
     
-    UriTokenizer tokenizer = new UriTokenizer("a eq \'abc\'");
+    UriTokenizer tokenizer = new UriTokenizer("a eq 'abc'");
     Expression expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer, 
         entityType, null, null);
     assertNotNull(expression);
-    assertEquals("{[a] EQ \'abc\'}", expression.toString());
+    assertEquals("{[a] EQ 'abc'}", expression.toString());
     
-    tokenizer = new UriTokenizer("a in (\'abc\', \'xyz\')");
+    tokenizer = new UriTokenizer("a in ('abc', 'xyz')");
     expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer, 
         entityType, null, null);
     assertNotNull(expression);
-    assertEquals("{[a] IN [\'abc\', \'xyz\']}", expression.toString());
+    assertEquals("{[a] IN ['abc', 'xyz']}", expression.toString());
     try {
-      tokenizer = new UriTokenizer("a in (\'abc\', 10)");
+      tokenizer = new UriTokenizer("a in ('abc', 10)");
       expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer, 
           entityType, null, null);
     } catch (UriParserSemanticException e) {
@@ -417,7 +417,7 @@ public class ExpressionParserTest {
    * @param keyPropertyRef
    * @return
    */
-  private EdmEntityType mockEntityType(final String keyPropertyName, EdmKeyPropertyRef keyPropertyRef) {
+  private EdmEntityType mockEntityType(String keyPropertyName, EdmKeyPropertyRef keyPropertyRef) {
     EdmEntityType entityType = Mockito.mock(EdmEntityType.class);
     Mockito.when(entityType.getKeyPredicateNames()).thenReturn(Collections.singletonList(keyPropertyName));
     Mockito.when(entityType.getKeyPropertyRefs()).thenReturn(Collections.singletonList(keyPropertyRef));
@@ -429,7 +429,7 @@ public class ExpressionParserTest {
    * @param keyProperty
    * @return
    */
-  private EdmKeyPropertyRef mockKeyPropertyRef(final String keyPropertyName, EdmProperty keyProperty) {
+  private EdmKeyPropertyRef mockKeyPropertyRef(String keyPropertyName, EdmProperty keyProperty) {
     EdmKeyPropertyRef keyPropertyRef = Mockito.mock(EdmKeyPropertyRef.class);
     Mockito.when(keyPropertyRef.getName()).thenReturn(keyPropertyName);
     Mockito.when(keyPropertyRef.getProperty()).thenReturn(keyProperty);
@@ -440,7 +440,7 @@ public class ExpressionParserTest {
    * @param propertyName
    * @return
    */
-  private EdmProperty mockProperty(final String propertyName, final EdmType type) {
+  private EdmProperty mockProperty(String propertyName, EdmType type) {
     EdmProperty keyProperty = Mockito.mock(EdmProperty.class);
     Mockito.when(keyProperty.getType()).thenReturn(type);
     Mockito.when(keyProperty.getDefaultValue()).thenReturn("");
@@ -463,7 +463,7 @@ public class ExpressionParserTest {
     Edm mockedEdm = Mockito.mock(Edm.class);
     Mockito.when(mockedEdm.getEntityContainer()).thenReturn(container);
     
-    UriTokenizer tokenizer = new UriTokenizer("a eq \'abc\'");
+    UriTokenizer tokenizer = new UriTokenizer("a eq 'abc'");
     new ExpressionParser(mockedEdm, odata).parse(tokenizer, null, null, null);
   }
   
@@ -481,7 +481,7 @@ public class ExpressionParserTest {
     Edm mockedEdm = Mockito.mock(Edm.class);
     Mockito.when(mockedEdm.getEntityContainer()).thenReturn(container);
     
-    UriTokenizer tokenizer = new UriTokenizer("a eq \'abc\'");
+    UriTokenizer tokenizer = new UriTokenizer("a eq 'abc'");
     new ExpressionParser(mockedEdm, odata).parse(tokenizer, entityType, null, null);
   }
 
@@ -490,7 +490,7 @@ public class ExpressionParserTest {
    * @param entitySet
    * @return
    */
-  private EdmEntityContainer mockContainer(final String entitySetName, EdmEntitySet entitySet) {
+  private EdmEntityContainer mockContainer(String entitySetName, EdmEntitySet entitySet) {
     EdmEntityContainer container = Mockito.mock(EdmEntityContainer.class);
     Mockito.when(container.getEntitySet(entitySetName)).thenReturn(entitySet);
     return container;
@@ -501,7 +501,7 @@ public class ExpressionParserTest {
    * @param entityType
    * @return
    */
-  private EdmEntitySet mockEntitySet(final String entitySetName, EdmEntityType entityType) {
+  private EdmEntitySet mockEntitySet(String entitySetName, EdmEntityType entityType) {
     EdmEntitySet entitySet = Mockito.mock(EdmEntitySet.class);
     Mockito.when(entitySet.getName()).thenReturn(entitySetName);
     Mockito.when(entitySet.getEntityType()).thenReturn(entityType);
@@ -532,17 +532,17 @@ public class ExpressionParserTest {
     Edm mockedEdm = Mockito.mock(Edm.class);
     Mockito.when(mockedEdm.getEntityContainer()).thenReturn(container);
     
-    UriTokenizer tokenizer = new UriTokenizer("comp/prop eq \'abc\'");
+    UriTokenizer tokenizer = new UriTokenizer("comp/prop eq 'abc'");
     Expression expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer, 
         entityType, null, null);
     assertNotNull(expression);
-    assertEquals("{[comp, prop] EQ \'abc\'}", expression.toString());
+    assertEquals("{[comp, prop] EQ 'abc'}", expression.toString());
     
-    tokenizer = new UriTokenizer("comp/prop in (\'abc\','xyz')");
+    tokenizer = new UriTokenizer("comp/prop in ('abc','xyz')");
     expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer, 
         entityType, null, null);
     assertNotNull(expression);
-    assertEquals("{[comp, prop] IN [\'abc\', \'xyz\']}", expression.toString());
+    assertEquals("{[comp, prop] IN ['abc', 'xyz']}", expression.toString());
   }
 
   /**
@@ -550,7 +550,7 @@ public class ExpressionParserTest {
    * @param property
    * @return
    */
-  private EdmComplexType mockComplexType(final String propertyName, EdmProperty property) {
+  private EdmComplexType mockComplexType(String propertyName, EdmProperty property) {
     EdmComplexType complexType = Mockito.mock(EdmComplexType.class);
     Mockito.when(complexType.getPropertyNames()).thenReturn(Collections.singletonList(propertyName));
     Mockito.when(complexType.getProperty(propertyName)).thenReturn(property);
@@ -562,7 +562,7 @@ public class ExpressionParserTest {
    * @param property
    * @return
    */
-  private EdmComplexType mockComplexType(final String propertyName, EdmNavigationProperty property) {
+  private EdmComplexType mockComplexType(String propertyName, EdmNavigationProperty property) {
     EdmComplexType complexType = Mockito.mock(EdmComplexType.class);
     Mockito.when(complexType.getPropertyNames()).thenReturn(Collections.singletonList(propertyName));
     Mockito.when(complexType.getProperty(propertyName)).thenReturn(property);
@@ -595,13 +595,13 @@ public class ExpressionParserTest {
     Edm mockedEdm = Mockito.mock(Edm.class);
     Mockito.when(mockedEdm.getEntityContainer()).thenReturn(container);
     
-    UriTokenizer tokenizer = new UriTokenizer("comp/any(d:d/prop eq \'abc\')");
+    UriTokenizer tokenizer = new UriTokenizer("comp/any(d:d/prop eq 'abc')");
     Expression expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer, 
         entityType, null, null);
     assertNotNull(expression);
     assertEquals("[comp, any]", expression.toString());
     
-    tokenizer = new UriTokenizer("comp/all(d:d/prop eq \'abc\')");
+    tokenizer = new UriTokenizer("comp/all(d:d/prop eq 'abc')");
     expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer, 
         entityType, null, null);
     assertNotNull(expression);
@@ -637,7 +637,7 @@ public class ExpressionParserTest {
     Mockito.when(mockedEdm.getEntityContainer()).thenReturn(container);
     
     UriTokenizer tokenizer = new UriTokenizer("comp/navProp");
-    final Expression expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer, 
+    Expression expression = new ExpressionParser(mockedEdm, odata).parse(tokenizer,
         startEntityType, null, null);
     assertNotNull(expression);
     assertEquals("[comp, navProp]", expression.toString());
@@ -648,7 +648,7 @@ public class ExpressionParserTest {
    * @param entityType
    * @return
    */
-  private EdmNavigationProperty mockNavigationProperty(final String propertyName, EdmEntityType entityType) {
+  private EdmNavigationProperty mockNavigationProperty(String propertyName, EdmEntityType entityType) {
     EdmNavigationProperty navProperty = Mockito.mock(EdmNavigationProperty.class);
     Mockito.when(navProperty.getName()).thenReturn(propertyName);
     Mockito.when(navProperty.getType()).thenReturn(entityType);
@@ -700,4 +700,5 @@ public class ExpressionParserTest {
     assertNotNull(expression);
     assertEquals("[navProp]", expression.toString());
   }
+
 }

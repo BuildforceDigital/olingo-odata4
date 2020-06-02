@@ -150,7 +150,7 @@ public class HeaderTest {
     header.addHeader(HttpHeader.CONTENT_TYPE, ContentType.APPLICATION_ATOM_SVC.toContentTypeString(), 2);
     header.addHeader(HttpHeader.CONTENT_TYPE, ContentType.APPLICATION_ATOM_XML.toContentTypeString(), 3);
 
-    final String fullHeaderString =
+    String fullHeaderString =
         ContentType.MULTIPART_MIXED + ", " + ContentType.APPLICATION_ATOM_SVC + ", "
             + ContentType.APPLICATION_ATOM_XML;
 

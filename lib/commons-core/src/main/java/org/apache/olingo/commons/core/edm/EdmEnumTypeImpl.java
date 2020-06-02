@@ -47,13 +47,13 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
   private List<String> memberNames;
   private Map<String, EdmMember> membersMap;
 
-  public EdmEnumTypeImpl(final Edm edm, final FullQualifiedName enumName, final CsdlEnumType enumType) {
+  public EdmEnumTypeImpl(Edm edm, FullQualifiedName enumName, CsdlEnumType enumType) {
     super(edm, enumName, EdmTypeKind.ENUM, enumType);
 
     if (enumType.getUnderlyingType() == null) {
       underlyingType = EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Int32);
     } else {
-      final EdmPrimitiveTypeKind underlyingTypeKind = EdmPrimitiveTypeKind.valueOfFQN(enumType.getUnderlyingType());
+      EdmPrimitiveTypeKind underlyingTypeKind = EdmPrimitiveTypeKind.valueOfFQN(enumType.getUnderlyingType());
       if (underlyingTypeKind == EdmPrimitiveTypeKind.Byte
           || underlyingTypeKind == EdmPrimitiveTypeKind.SByte
           || underlyingTypeKind == EdmPrimitiveTypeKind.Int16
@@ -75,7 +75,7 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
   }
 
   @Override
-  public EdmMember getMember(final String name) {
+  public EdmMember getMember(String name) {
     if (membersMap == null) {
       createEdmMembers();
     }
@@ -95,10 +95,10 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
    * preserving the order for the case of implicit value assignments.
    */
   private void createEdmMembers() {
-    final Map<String, EdmMember> membersMapLocal = new LinkedHashMap<String, EdmMember>();
-    final List<String> memberNamesLocal = new ArrayList<String>();
+    Map<String, EdmMember> membersMapLocal = new LinkedHashMap<String, EdmMember>();
+    List<String> memberNamesLocal = new ArrayList<String>();
     if (enumType.getMembers() != null) {
-      for (final CsdlEnumMember member : enumType.getMembers()) {
+      for (CsdlEnumMember member : enumType.getMembers()) {
         membersMapLocal.put(member.getName(), new EdmMemberImpl(edm, member));
         memberNamesLocal.add(member.getName());
       }
@@ -109,7 +109,7 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
   }
 
   @Override
-  public boolean isCompatible(final EdmPrimitiveType primitiveType) {
+  public boolean isCompatible(EdmPrimitiveType primitiveType) {
     return equals(primitiveType);
   }
 
@@ -119,23 +119,23 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
   }
 
   @Override
-  public boolean validate(final String value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode) {
+  public boolean validate(String value, Boolean isNullable, Integer maxLength,
+                          Integer precision, Integer scale, Boolean isUnicode) {
 
     try {
       valueOfString(value, isNullable, maxLength, precision, scale, isUnicode, getDefaultType());
       return true;
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       return false;
     }
   }
 
-  private Long parseEnumValue(final String value) throws EdmPrimitiveTypeException {
+  private Long parseEnumValue(String value) throws EdmPrimitiveTypeException {
     Long result = null;
-    for (final String memberValue : value.split(",", isFlags() ? -1 : 1)) {
+    for (String memberValue : value.split(",", isFlags() ? -1 : 1)) {
       Long memberValueLong = null;
       long count = 0;
-      for (final EdmMember member : getMembers()) {
+      for (EdmMember member : getMembers()) {
         count++;
         if (memberValue.equals(member.getName()) || memberValue.equals(member.getValue())) {
           memberValueLong = member.getValue() == null ? count - 1 : Long.decode(member.getValue());
@@ -150,8 +150,8 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
   }
 
   @Override
-  public <T> T valueOfString(final String value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode, final Class<T> returnType)
+  public <T> T valueOfString(String value, Boolean isNullable, Integer maxLength,
+                             Integer precision, Integer scale, Boolean isUnicode, Class<T> returnType)
       throws EdmPrimitiveTypeException {
 
     if (value == null) {
@@ -163,21 +163,21 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
 
     try {
       return EdmInt64.convertNumber(parseEnumValue(value), returnType);
-    } catch (final IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       throw new EdmPrimitiveTypeException("The literal '" + value
           + "' cannot be converted to value type " + returnType + ".", e);
-    } catch (final ClassCastException e) {
+    } catch (ClassCastException e) {
       throw new EdmPrimitiveTypeException("The value type " + returnType + " is not supported.", e);
     }
   }
 
-  private String constructEnumValue(final long value) throws EdmPrimitiveTypeException {
+  private String constructEnumValue(long value) throws EdmPrimitiveTypeException {
     long remaining = value;
     StringBuilder result = new StringBuilder();
 
-    final boolean flags = isFlags();
+    boolean flags = isFlags();
     long memberValue = -1;
-    for (final EdmMember member : getMembers()) {
+    for (EdmMember member : getMembers()) {
       memberValue = member.getValue() == null ? memberValue + 1 : Long.parseLong(member.getValue());
       if (flags) {
         if ((memberValue & remaining) == memberValue) {
@@ -208,8 +208,8 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
   }
 
   @Override
-  public String valueToString(final Object value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode) throws EdmPrimitiveTypeException {
+  public String valueToString(Object value, Boolean isNullable, Integer maxLength,
+                              Integer precision, Integer scale, Boolean isUnicode) throws EdmPrimitiveTypeException {
 
     if (value == null) {
       if (isNullable != null && !isNullable) {
@@ -225,12 +225,12 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
   }
 
   @Override
-  public String toUriLiteral(final String literal) {
+  public String toUriLiteral(String literal) {
     return literal == null ? null : enumName.getFullQualifiedNameAsString() + "'" + literal + "'";
   }
 
   @Override
-  public String fromUriLiteral(final String literal) throws EdmPrimitiveTypeException {
+  public String fromUriLiteral(String literal) throws EdmPrimitiveTypeException {
     if (literal == null) {
       return null;
     } else {
@@ -279,7 +279,7 @@ public class EdmEnumTypeImpl extends EdmTypeImpl implements EdmEnumType {
   }
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     return obj != null
         && (obj == this
         || obj instanceof EdmEnumType

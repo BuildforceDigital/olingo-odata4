@@ -50,7 +50,7 @@ public abstract class CsdlOperationImport extends CsdlAbstractEdmItem implements
    * @param name the name
    * @return the name
    */
-  public CsdlOperationImport setName(final String name) {
+  public CsdlOperationImport setName(String name) {
     this.name = name;
     return this;
   }
@@ -70,7 +70,7 @@ public abstract class CsdlOperationImport extends CsdlAbstractEdmItem implements
    * @param entitySet the entity set
    * @return the entity set
    */
-  public CsdlOperationImport setEntitySet(final String entitySet) {
+  public CsdlOperationImport setEntitySet(String entitySet) {
     this.entitySet = entitySet;
     return this;
   }
@@ -85,7 +85,7 @@ public abstract class CsdlOperationImport extends CsdlAbstractEdmItem implements
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlOperationImport setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlOperationImport setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }

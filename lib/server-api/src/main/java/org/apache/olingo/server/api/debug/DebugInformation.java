@@ -46,7 +46,7 @@ public class DebugInformation {
     return request;
   }
 
-  public void setRequest(final ODataRequest request) {
+  public void setRequest(ODataRequest request) {
     this.request = request;
   }
 
@@ -59,7 +59,7 @@ public class DebugInformation {
     return applicationResponse;
   }
 
-  public void setApplicationResponse(final ODataResponse applicationResponse) {
+  public void setApplicationResponse(ODataResponse applicationResponse) {
     this.applicationResponse = applicationResponse;
   }
 
@@ -72,7 +72,7 @@ public class DebugInformation {
     return uriInfo;
   }
 
-  public void setUriInfo(final UriInfo uriInfo) {
+  public void setUriInfo(UriInfo uriInfo) {
     this.uriInfo = uriInfo;
   }
 
@@ -85,7 +85,7 @@ public class DebugInformation {
     return exception;
   }
 
-  public void setException(final Exception exception) {
+  public void setException(Exception exception) {
     this.exception = exception;
   }
 
@@ -98,7 +98,7 @@ public class DebugInformation {
     return serverEnvironmentVariables;
   }
 
-  public void setServerEnvironmentVariables(final Map<String, String> serverEnvironmentVariables) {
+  public void setServerEnvironmentVariables(Map<String, String> serverEnvironmentVariables) {
     this.serverEnvironmentVariables = serverEnvironmentVariables;
   }
 
@@ -111,7 +111,7 @@ public class DebugInformation {
     return runtimeInformation;
   }
 
-  public void setRuntimeInformation(final List<RuntimeMeasurement> runtimeInformation) {
+  public void setRuntimeInformation(List<RuntimeMeasurement> runtimeInformation) {
     this.runtimeInformation = runtimeInformation;
   }
 

@@ -34,7 +34,7 @@ public class CsdlLabeledElementReference extends CsdlDynamicExpression {
     return value;
   }
 
-  public CsdlLabeledElementReference setValue(final String value) {
+  public CsdlLabeledElementReference setValue(String value) {
     this.value = value;
     return this;
   }
@@ -48,8 +48,8 @@ public class CsdlLabeledElementReference extends CsdlDynamicExpression {
       return false;
     }
     CsdlLabeledElementReference csdlLabelledEleRef = (CsdlLabeledElementReference) obj;
-    return (this.getValue() == null ? csdlLabelledEleRef.getValue() == null :
-        this.getValue().equals(csdlLabelledEleRef.getValue()));
+    return (getValue() == null ? csdlLabelledEleRef.getValue() == null :
+            getValue().equals(csdlLabelledEleRef.getValue()));
   }
   
   @Override

@@ -34,15 +34,15 @@ public class UriResourceActionImpl extends UriResourceImpl implements UriResourc
   private final EdmActionImport actionImport;
   private final EdmAction action;
 
-  public UriResourceActionImpl(final EdmActionImport actionImport) {
+  public UriResourceActionImpl(EdmActionImport actionImport) {
     super(UriResourceKind.action);
     this.actionImport = actionImport;
-    this.action = actionImport.getUnboundAction();
+      action = actionImport.getUnboundAction();
   }
 
-  public UriResourceActionImpl(final EdmAction action) {
+  public UriResourceActionImpl(EdmAction action) {
     super(UriResourceKind.action);
-    this.actionImport = null;
+      actionImport = null;
     this.action = action;
   }
 
@@ -67,7 +67,7 @@ public class UriResourceActionImpl extends UriResourceImpl implements UriResourc
   }
 
   @Override
-  public String getSegmentValue(final boolean includeFilters) {
+  public String getSegmentValue(boolean includeFilters) {
     return actionImport == null ? (action == null ? "" : action.getName()) : actionImport.getName();
   }
 
@@ -77,7 +77,7 @@ public class UriResourceActionImpl extends UriResourceImpl implements UriResourc
   }
 
   @Override
-  public String toString(final boolean includeFilters) {
+  public String toString(boolean includeFilters) {
     return getSegmentValue(includeFilters);
   }
 }

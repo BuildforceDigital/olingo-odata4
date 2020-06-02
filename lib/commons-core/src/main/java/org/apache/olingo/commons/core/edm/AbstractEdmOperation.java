@@ -43,15 +43,15 @@ public abstract class AbstractEdmOperation extends EdmTypeImpl implements EdmOpe
   private List<String> parameterNames;
   private EdmReturnType returnType;
 
-  protected AbstractEdmOperation(final Edm edm, final FullQualifiedName name, final CsdlOperation operation,
-      final EdmTypeKind kind) {
+  protected AbstractEdmOperation(Edm edm, FullQualifiedName name, CsdlOperation operation,
+                                 EdmTypeKind kind) {
 
     super(edm, name, kind, operation);
     this.operation = operation;
   }
 
   @Override
-  public EdmParameter getParameter(final String name) {
+  public EdmParameter getParameter(String name) {
     if (parameters == null) {
       createParameters();
     }
@@ -68,10 +68,10 @@ public abstract class AbstractEdmOperation extends EdmTypeImpl implements EdmOpe
 
   private void createParameters() {
     if (parameters == null) {
-      final Map<String, EdmParameter> parametersLocal = new LinkedHashMap<String, EdmParameter>();
-      final List<CsdlParameter> providerParameters = operation.getParameters();
+      Map<String, EdmParameter> parametersLocal = new LinkedHashMap<String, EdmParameter>();
+      List<CsdlParameter> providerParameters = operation.getParameters();
       if (providerParameters != null) {
-        final List<String> parameterNamesLocal = new ArrayList<String>(providerParameters.size());
+        List<String> parameterNamesLocal = new ArrayList<String>(providerParameters.size());
         for (CsdlParameter parameter : providerParameters) {
           parametersLocal.put(parameter.getName(), new EdmParameterImpl(edm, parameter));
           parameterNamesLocal.add(parameter.getName());
@@ -86,10 +86,10 @@ public abstract class AbstractEdmOperation extends EdmTypeImpl implements EdmOpe
   }
 
   @Override
-  public EdmEntitySet getReturnedEntitySet(final EdmEntitySet bindingParameterEntitySet) {
+  public EdmEntitySet getReturnedEntitySet(EdmEntitySet bindingParameterEntitySet) {
     EdmEntitySet returnedEntitySet = null;
     if (bindingParameterEntitySet != null && operation.getEntitySetPath() != null) {
-      final EdmBindingTarget relatedBindingTarget =
+      EdmBindingTarget relatedBindingTarget =
           bindingParameterEntitySet.getRelatedBindingTarget(operation.getEntitySetPath());
       if (relatedBindingTarget == null) {
         throw new EdmException("Cannot find entity set with path: " + operation.getEntitySetPath());

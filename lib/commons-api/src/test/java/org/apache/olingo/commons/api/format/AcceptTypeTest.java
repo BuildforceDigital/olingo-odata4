@@ -106,7 +106,7 @@ public class AcceptTypeTest {
     List<AcceptType> acceptTypes = AcceptType.create("application/json;q=0.2");
 
     assertEquals(1, acceptTypes.size());
-    final AcceptType acceptType = acceptTypes.get(0);
+    AcceptType acceptType = acceptTypes.get(0);
     assertEquals("application", acceptType.getType());
     assertEquals("json", acceptType.getSubtype());
     assertEquals("0.2", acceptType.getParameters().get(TypeUtil.PARAMETER_Q));
@@ -159,17 +159,17 @@ public class AcceptTypeTest {
 
   @Test
   public void fromContentType() {
-    final List<AcceptType> acceptType = AcceptType.fromContentType(ContentType.APPLICATION_JSON);
+    List<AcceptType> acceptType = AcceptType.fromContentType(ContentType.APPLICATION_JSON);
     assertNotNull(acceptType);
     assertEquals(1, acceptType.size());
     assertEquals(ContentType.APPLICATION_JSON.toContentTypeString(), acceptType.get(0).toString());
   }
 
-  private void expectCreateError(final String value) {
+  private void expectCreateError(String value) {
     try {
       AcceptType.create(value);
       fail("Expected exception not thrown.");
-    } catch (final IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       assertNotNull(e);
     }
   }
@@ -179,7 +179,7 @@ public class AcceptTypeTest {
     List<AcceptType> acceptTypes = AcceptType.create("application/json;q=0.2,application/json;q=0.2");
 
     assertEquals(2, acceptTypes.size());
-    final AcceptType acceptType = acceptTypes.get(0);
+    AcceptType acceptType = acceptTypes.get(0);
     assertEquals("application", acceptType.getType());
     assertEquals("json", acceptType.getSubtype());
     assertEquals("0.2", acceptType.getParameters().get(TypeUtil.PARAMETER_Q));
@@ -193,7 +193,7 @@ public class AcceptTypeTest {
     List<AcceptType> acceptTypes = AcceptType.create("application/json;q=0.2,abc/xyz");
 
     assertEquals(2, acceptTypes.size());
-    final AcceptType acceptType = acceptTypes.get(1);
+    AcceptType acceptType = acceptTypes.get(1);
     assertEquals("application", acceptType.getType());
     assertEquals("json", acceptType.getSubtype());
     assertEquals("0.2", acceptType.getParameters().get(TypeUtil.PARAMETER_Q));
@@ -226,7 +226,7 @@ public class AcceptTypeTest {
   public void withCharset() {
     List<AcceptType> acceptTypes = AcceptType.create("application/json;charset=utf-8");
     assertEquals(1, acceptTypes.size());
-    final AcceptType acceptType = acceptTypes.get(0);
+    AcceptType acceptType = acceptTypes.get(0);
     assertEquals("application", acceptType.getType());
     assertEquals("json", acceptType.getSubtype());
     assertEquals("utf-8", acceptType.getParameter(ContentType.PARAMETER_CHARSET));
@@ -243,11 +243,11 @@ public class AcceptTypeTest {
   public void withSubtypeStar1() {
     List<AcceptType> acceptTypes = AcceptType.create("application/json,application/*");
     assertEquals(2, acceptTypes.size());
-    final AcceptType acceptType1 = acceptTypes.get(0);
+    AcceptType acceptType1 = acceptTypes.get(0);
     assertEquals("application", acceptType1.getType());
     assertEquals("json", acceptType1.getSubtype());
     
-    final AcceptType acceptType2 = acceptTypes.get(1);
+    AcceptType acceptType2 = acceptTypes.get(1);
     assertEquals("application", acceptType2.getType());
     assertEquals("*", acceptType2.getSubtype());
   }
@@ -256,11 +256,11 @@ public class AcceptTypeTest {
   public void withSubtypeStar2() {
     List<AcceptType> acceptTypes = AcceptType.create("application/*,application/json");
     assertEquals(2, acceptTypes.size());
-    final AcceptType acceptType1 = acceptTypes.get(0);
+    AcceptType acceptType1 = acceptTypes.get(0);
     assertEquals("application", acceptType1.getType());
     assertEquals("json", acceptType1.getSubtype());
     
-    final AcceptType acceptType2 = acceptTypes.get(1);
+    AcceptType acceptType2 = acceptTypes.get(1);
     assertEquals("application", acceptType2.getType());
     assertEquals("*", acceptType2.getSubtype());
   }

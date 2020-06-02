@@ -38,7 +38,7 @@ public class SearchImpl implements Search {
     return searchOption;
   }
 
-  public SearchImpl setSearchOption(final SearchOption searchOption) {
+  public SearchImpl setSearchOption(SearchOption searchOption) {
     this.searchOption = searchOption;
     return this;
   }

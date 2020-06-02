@@ -41,13 +41,13 @@ import org.apache.olingo.server.api.uri.queryoption.SelectOption;
 
 public abstract class ExpandSelectHelper {
 
-  public static boolean hasSelect(final SelectOption select) {
+  public static boolean hasSelect(SelectOption select) {
     return select != null && select.getSelectItems() != null && !select.getSelectItems().isEmpty();
   }
 
-  public static boolean isAll(final SelectOption select) {
+  public static boolean isAll(SelectOption select) {
     if (hasSelect(select)) {
-      for (final SelectItem item : select.getSelectItems()) {
+      for (SelectItem item : select.getSelectItems()) {
         if (item.isStar()) {
           return true;
         }
@@ -58,10 +58,10 @@ public abstract class ExpandSelectHelper {
     }
   }
 
-  public static Set<String> getSelectedPropertyNames(final List<SelectItem> selectItems) {
+  public static Set<String> getSelectedPropertyNames(List<SelectItem> selectItems) {
     Set<String> selected = new HashSet<>();
-    for (final SelectItem item : selectItems) {
-      final UriResource resource = item.getResourcePath().getUriResourceParts().get(0);
+    for (SelectItem item : selectItems) {
+      UriResource resource = item.getResourcePath().getUriResourceParts().get(0);
       if (resource instanceof UriResourceProperty) {
         selected.add(((UriResourceProperty) resource).getProperty().getName());
       } else if (resource instanceof UriResourceNavigation) {
@@ -83,11 +83,11 @@ public abstract class ExpandSelectHelper {
    * @return Set<List<String>> return a list of selected paths
    */
   public static Set<List<String>> getSelectedPathsWithTypeCasts(
-      final List<SelectItem> selectItems, final String propertyName) {
+      List<SelectItem> selectItems, String propertyName) {
     Set<List<String>> selectedPaths = new HashSet<>();
-    for (final SelectItem item : selectItems) {
-      final List<UriResource> parts = item.getResourcePath().getUriResourceParts();
-      final UriResource resource = parts.get(0);
+    for (SelectItem item : selectItems) {
+      List<UriResource> parts = item.getResourcePath().getUriResourceParts();
+      UriResource resource = parts.get(0);
       if (resource instanceof UriResourceProperty
           && propertyName.equals(((UriResourceProperty) resource).getProperty().getName())) {
         List<String> path = new ArrayList<>();
@@ -122,10 +122,10 @@ public abstract class ExpandSelectHelper {
    * @param path
    */
   private static Set<List<String>> extractPathsFromResourceParts(
-      Set<List<String>> selectedPaths, final List<UriResource> parts,
+      Set<List<String>> selectedPaths, List<UriResource> parts,
       List<String> path) {
     if (parts.size() > 1) {
-      for (final UriResource part : parts.subList(1, parts.size())) {
+      for (UriResource part : parts.subList(1, parts.size())) {
         if (part instanceof UriResourceProperty) {
           path.add(((UriResourceProperty) part).getProperty().getName());
         } else if (part instanceof UriResourceNavigation) {
@@ -146,16 +146,16 @@ public abstract class ExpandSelectHelper {
     return selectedPaths.isEmpty() ? null : selectedPaths;
   }
 
-  public static Set<List<String>> getSelectedPaths(final List<SelectItem> selectItems, final String propertyName) {
+  public static Set<List<String>> getSelectedPaths(List<SelectItem> selectItems, String propertyName) {
     Set<List<String>> selectedPaths = new HashSet<>();
-    for (final SelectItem item : selectItems) {
-      final List<UriResource> parts = item.getResourcePath().getUriResourceParts();
-      final UriResource resource = parts.get(0);
+    for (SelectItem item : selectItems) {
+      List<UriResource> parts = item.getResourcePath().getUriResourceParts();
+      UriResource resource = parts.get(0);
       if (resource instanceof UriResourceProperty
           && propertyName.equals(((UriResourceProperty) resource).getProperty().getName())) {
         if (parts.size() > 1) {
           List<String> path = new ArrayList<>();
-          for (final UriResource part : parts.subList(1, parts.size())) {
+          for (UriResource part : parts.subList(1, parts.size())) {
             if (part instanceof UriResourceProperty) {
               path.add(((UriResourceProperty) part).getProperty().getName());
             } else if (part instanceof UriResourceNavigation) {
@@ -171,15 +171,15 @@ public abstract class ExpandSelectHelper {
     return selectedPaths.isEmpty() ? null : selectedPaths;
   }
 
-  public static Set<List<String>> getSelectedPaths(final List<SelectItem> selectItems) {
+  public static Set<List<String>> getSelectedPaths(List<SelectItem> selectItems) {
     Set<List<String>> selectedPaths = new HashSet<>();
-    for (final SelectItem item : selectItems) {
-      final List<UriResource> parts = item.getResourcePath().getUriResourceParts();
-      final UriResource resource = parts.get(0);
+    for (SelectItem item : selectItems) {
+      List<UriResource> parts = item.getResourcePath().getUriResourceParts();
+      UriResource resource = parts.get(0);
       if (resource instanceof UriResourceProperty) {
         if (!parts.isEmpty()) {
           List<String> path = new ArrayList<>();
-          for (final UriResource part : parts.subList(0, parts.size())) {
+          for (UriResource part : parts.subList(0, parts.size())) {
             if (part instanceof UriResourceProperty) {
               path.add(((UriResourceProperty) part).getProperty().getName());
             }
@@ -193,8 +193,8 @@ public abstract class ExpandSelectHelper {
     return selectedPaths.isEmpty() ? null : selectedPaths;
   }
   
-  public static boolean isSelected(final Set<List<String>> selectedPaths, final String propertyName) {
-    for (final List<String> path : selectedPaths) {
+  public static boolean isSelected(Set<List<String>> selectedPaths, String propertyName) {
+    for (List<String> path : selectedPaths) {
       if (propertyName.equals(path.get(0))) {
         return true;
       }
@@ -202,10 +202,10 @@ public abstract class ExpandSelectHelper {
     return false;
   }
 
-  public static Set<List<String>> getReducedSelectedPaths(final Set<List<String>> selectedPaths,
-      final String propertyName) {
+  public static Set<List<String>> getReducedSelectedPaths(Set<List<String>> selectedPaths,
+                                                          String propertyName) {
     Set<List<String>> reducedPaths = new HashSet<>();
-    for (final List<String> path : selectedPaths) {
+    for (List<String> path : selectedPaths) {
       if (propertyName.equals(path.get(0))) {
         if (path.size() > 1) {
           reducedPaths.add(path.subList(1, path.size()));
@@ -217,12 +217,12 @@ public abstract class ExpandSelectHelper {
     return reducedPaths.isEmpty() ? null : reducedPaths;
   }
 
-  public static boolean hasExpand(final ExpandOption expand) {
+  public static boolean hasExpand(ExpandOption expand) {
     return expand != null && expand.getExpandItems() != null && !expand.getExpandItems().isEmpty();
   }
 
-  public static ExpandItem getExpandAll(final ExpandOption expand) {
-      for (final ExpandItem item : expand.getExpandItems()) {
+  public static ExpandItem getExpandAll(ExpandOption expand) {
+      for (ExpandItem item : expand.getExpandItems()) {
         if (item.isStar()) {
           return item;
         } 
@@ -230,12 +230,12 @@ public abstract class ExpandSelectHelper {
       return null;
     }
   
-  public static Set<String> getExpandedPropertyNames(final List<ExpandItem> expandItems)
+  public static Set<String> getExpandedPropertyNames(List<ExpandItem> expandItems)
       throws SerializerException {
     Set<String> expanded = new HashSet<>();
-    for (final ExpandItem item : expandItems) {
-      final List<UriResource> resourceParts = item.getResourcePath().getUriResourceParts();
-      final UriResource resource = resourceParts.get(0);
+    for (ExpandItem item : expandItems) {
+      List<UriResource> resourceParts = item.getResourcePath().getUriResourceParts();
+      UriResource resource = resourceParts.get(0);
       if (resource instanceof UriResourceNavigation) {
         expanded.add(((UriResourceNavigation) resource).getProperty().getName());
       }
@@ -243,12 +243,12 @@ public abstract class ExpandSelectHelper {
     return expanded;
   }
 
-  public static ExpandItem getExpandItem(final List<ExpandItem> expandItems, final String propertyName) {
-    for (final ExpandItem item : expandItems) {
+  public static ExpandItem getExpandItem(List<ExpandItem> expandItems, String propertyName) {
+    for (ExpandItem item : expandItems) {
       if (item.isStar()) {
           continue;
       }
-      final List<UriResource> resourceParts = item.getResourcePath().getUriResourceParts();
+      List<UriResource> resourceParts = item.getResourcePath().getUriResourceParts();
       UriResource resource = null;
       if (resourceParts.get(resourceParts.size() - 1) instanceof UriResourceRef ||
           resourceParts.get(resourceParts.size() - 1) instanceof UriResourceCount) {
@@ -291,10 +291,10 @@ public abstract class ExpandSelectHelper {
     return expandPaths;
   }
   
-  public static Set<List<String>> getReducedExpandItemsPaths(final Set<List<String>> expandItemsPaths,
-      final String propertyName) {
+  public static Set<List<String>> getReducedExpandItemsPaths(Set<List<String>> expandItemsPaths,
+                                                             String propertyName) {
     Set<List<String>> reducedPaths = new HashSet<>();
-    for (final List<String> path : expandItemsPaths) {
+    for (List<String> path : expandItemsPaths) {
       if (propertyName.equals(path.get(0))) {
         if (path.size() > 1) {
           reducedPaths.add(path.subList(1, path.size()));
@@ -314,15 +314,15 @@ public abstract class ExpandSelectHelper {
    * @param resourceName
    * @return
    */
-  public static ExpandItem getExpandItemBasedOnType(final List<ExpandItem> expandItems, 
-      final String propertyName, final EdmStructuredType type, String resourceName) {
+  public static ExpandItem getExpandItemBasedOnType(List<ExpandItem> expandItems,
+                                                    String propertyName, EdmStructuredType type, String resourceName) {
     ExpandItem expandItem = null;
-    for (final ExpandItem item : expandItems) {
+    for (ExpandItem item : expandItems) {
       boolean matched = false;
       if (item.isStar()) {
           continue;
       }
-      final List<UriResource> resourceParts = item.getResourcePath().getUriResourceParts();
+      List<UriResource> resourceParts = item.getResourcePath().getUriResourceParts();
       UriResource resource = null;
       if (resourceParts.size() == 1) {
         resource = resourceParts.get(0);
@@ -359,8 +359,8 @@ public abstract class ExpandSelectHelper {
    * @param matched
    * @param resource
    */
-  private static ExpandItem getMatchedExpandItem(final String propertyName, final ExpandItem item, boolean matched,
-      UriResource resource) {
+  private static ExpandItem getMatchedExpandItem(String propertyName, ExpandItem item, boolean matched,
+                                                 UriResource resource) {
     if (matched && ((resource instanceof UriResourceNavigation
         && propertyName.equals(((UriResourceNavigation) resource).getProperty().getName())) ||
         resource instanceof UriResourceProperty
@@ -376,8 +376,8 @@ public abstract class ExpandSelectHelper {
    * @param resource
    * @return
    */
-  private static boolean isFoundExpandItem(final EdmStructuredType type, 
-      boolean matched, UriResource resource) {
+  private static boolean isFoundExpandItem(EdmStructuredType type,
+                                           boolean matched, UriResource resource) {
     if (!matched) {
       if ((resource instanceof UriResourceProperty && 
               type.compatibleTo(((UriResourceProperty) resource).getType())) ||

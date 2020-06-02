@@ -38,8 +38,8 @@ public class ServiceMetadataImpl implements ServiceMetadata {
   private final List<EdmxReference> references;
   private final ServiceMetadataETagSupport serviceMetadataETagSupport;
 
-  public ServiceMetadataImpl(final CsdlEdmProvider edmProvider, final List<EdmxReference> references,
-      final ServiceMetadataETagSupport serviceMetadataETagSupport) {
+  public ServiceMetadataImpl(CsdlEdmProvider edmProvider, List<EdmxReference> references,
+                             ServiceMetadataETagSupport serviceMetadataETagSupport) {
     edm = new EdmProviderImpl(edmProvider);
     this.references = new ArrayList<>();
     this.references.addAll(references);

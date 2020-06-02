@@ -288,7 +288,7 @@ public class EdmImplCachingTest {
   private class LocalEdm extends AbstractEdm {
 
     @Override
-    public EdmEntityContainer createEntityContainer(final FullQualifiedName fqn) {
+    public EdmEntityContainer createEntityContainer(FullQualifiedName fqn) {
       if (NAME1.equals(fqn) || fqn == null) {
         EdmEntityContainer container = mock(EdmEntityContainer.class);
         when(container.getNamespace()).thenReturn(NAME1.getNamespace());
@@ -304,7 +304,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    public EdmEnumType createEnumType(final FullQualifiedName fqn) {
+    public EdmEnumType createEnumType(FullQualifiedName fqn) {
       if (NAME1.equals(fqn) || NAME2.equals(fqn)) {
         EdmEnumType enumType = mock(EdmEnumType.class);
         when(enumType.getNamespace()).thenReturn(fqn.getNamespace());
@@ -315,7 +315,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    public EdmTypeDefinition createTypeDefinition(final FullQualifiedName fqn) {
+    public EdmTypeDefinition createTypeDefinition(FullQualifiedName fqn) {
       if (NAME1.equals(fqn) || NAME2.equals(fqn)) {
         EdmTypeDefinition typeDefinition = mock(EdmTypeDefinition.class);
         when(typeDefinition.getNamespace()).thenReturn(fqn.getNamespace());
@@ -326,7 +326,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    public EdmEntityType createEntityType(final FullQualifiedName fqn) {
+    public EdmEntityType createEntityType(FullQualifiedName fqn) {
       if (NAME1.equals(fqn) || NAME2.equals(fqn)) {
         EdmEntityType entityType = mock(EdmEntityType.class);
         when(entityType.getNamespace()).thenReturn(fqn.getNamespace());
@@ -337,7 +337,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    public EdmComplexType createComplexType(final FullQualifiedName fqn) {
+    public EdmComplexType createComplexType(FullQualifiedName fqn) {
       if (NAME1.equals(fqn) || NAME2.equals(fqn)) {
         EdmComplexType complexType = mock(EdmComplexType.class);
         when(complexType.getNamespace()).thenReturn(fqn.getNamespace());
@@ -348,8 +348,8 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    public EdmAction createBoundAction(final FullQualifiedName fqn, final FullQualifiedName bindingParameterTypeName,
-        final Boolean isBindingParameterCollection) {
+    public EdmAction createBoundAction(FullQualifiedName fqn, FullQualifiedName bindingParameterTypeName,
+                                       Boolean isBindingParameterCollection) {
       if (NAME1.equals(fqn)) {
         EdmAction action = mock(EdmAction.class);
         when(action.getNamespace()).thenReturn(fqn.getNamespace());
@@ -365,9 +365,9 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    public EdmFunction createBoundFunction(final FullQualifiedName fqn,
-        final FullQualifiedName bindingParameterTypeName,
-        final Boolean isBindingParameterCollection, final List<String> bindingParameterNames) {
+    public EdmFunction createBoundFunction(FullQualifiedName fqn,
+                                           FullQualifiedName bindingParameterTypeName,
+                                           Boolean isBindingParameterCollection, List<String> bindingParameterNames) {
       if (NAME1.equals(fqn)) {
         EdmFunction function = mock(EdmFunction.class);
         when(function.getNamespace()).thenReturn(fqn.getNamespace());
@@ -388,7 +388,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    protected EdmAction createUnboundAction(final FullQualifiedName fqn) {
+    protected EdmAction createUnboundAction(FullQualifiedName fqn) {
       if (NAME1.equals(fqn)) {
         EdmAction action = mock(EdmAction.class);
         when(action.getNamespace()).thenReturn(fqn.getNamespace());
@@ -404,7 +404,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    protected List<EdmFunction> createUnboundFunctions(final FullQualifiedName fqn) {
+    protected List<EdmFunction> createUnboundFunctions(FullQualifiedName fqn) {
       if (NAME1.equals(fqn)) {
         EdmFunction function = mock(EdmFunction.class);
         when(function.getNamespace()).thenReturn(fqn.getNamespace());
@@ -420,7 +420,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    protected EdmFunction createUnboundFunction(final FullQualifiedName fqn, final List<String> parameterNames) {
+    protected EdmFunction createUnboundFunction(FullQualifiedName fqn, List<String> parameterNames) {
       if (NAME1.equals(fqn)) {
         EdmFunction function = mock(EdmFunction.class);
         when(function.getNamespace()).thenReturn(fqn.getNamespace());
@@ -437,7 +437,7 @@ public class EdmImplCachingTest {
 
     @Override
     protected Map<String, EdmSchema> createSchemas() {
-      final EdmSchema schema = mock(EdmSchema.class);
+      EdmSchema schema = mock(EdmSchema.class);
       when(schema.getNamespace()).thenReturn(NAME1.getNamespace());
       return new HashMap<String, EdmSchema>() {
         private static final long serialVersionUID = 3109256773218160485L;
@@ -449,7 +449,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    protected EdmTerm createTerm(final FullQualifiedName termName) {
+    protected EdmTerm createTerm(FullQualifiedName termName) {
       if(NAME1.equals(termName) || NAME2.equals(termName)){
         EdmTerm term = mock(EdmTerm.class);
         when(term.getFullQualifiedName()).thenReturn(termName);
@@ -459,7 +459,7 @@ public class EdmImplCachingTest {
     }
 
     @Override
-    protected EdmAnnotations createAnnotationGroup(final FullQualifiedName target, String qualifier) {
+    protected EdmAnnotations createAnnotationGroup(FullQualifiedName target, String qualifier) {
       if(NAME1.equals(target) && qualifier == null){
         EdmAnnotations annotationGroup = mock(EdmAnnotations.class);
         when(annotationGroup.getQualifier()).thenReturn(null);

@@ -38,7 +38,7 @@ public abstract class AbstractEdmAnnotatableDynamicExpression extends AbstractEd
   }
 
   @Override
-  public EdmAnnotation getAnnotation(final EdmTerm term, String qualifier) {
+  public EdmAnnotation getAnnotation(EdmTerm term, String qualifier) {
     return helper.getAnnotation(term, qualifier);
   }
 

@@ -51,7 +51,7 @@ public class EdmNavigationPropertyImplTest {
   public void navigationProperty() throws Exception {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
-    final FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
+    FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
     CsdlEntityType entityTypeProvider = new CsdlEntityType();
     entityTypeProvider.setKey(Collections.<CsdlPropertyRef> emptyList());
     when(provider.getEntityType(entityTypeName)).thenReturn(entityTypeProvider);
@@ -78,7 +78,7 @@ public class EdmNavigationPropertyImplTest {
   public void navigationPropertyWithReferntialConstraint() throws Exception {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
-    final FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
+    FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
     CsdlEntityType entityTypeProvider = new CsdlEntityType();
     entityTypeProvider.setKey(Collections.<CsdlPropertyRef> emptyList());
     when(provider.getEntityType(entityTypeName)).thenReturn(entityTypeProvider);
@@ -107,7 +107,7 @@ public class EdmNavigationPropertyImplTest {
   public void navigationPropertyWithPartner() throws Exception {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
-    final FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
+    FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
     CsdlEntityType entityTypeProvider = new CsdlEntityType();
     entityTypeProvider.setKey(Collections.<CsdlPropertyRef> emptyList());
 
@@ -131,7 +131,7 @@ public class EdmNavigationPropertyImplTest {
   public void navigationPropertyWithNonexistentPartner() throws Exception {
     CsdlEdmProvider provider = mock(CsdlEdmProvider.class);
     EdmProviderImpl edm = new EdmProviderImpl(provider);
-    final FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
+    FullQualifiedName entityTypeName = new FullQualifiedName("ns", "entity");
     CsdlEntityType entityTypeProvider = new CsdlEntityType();
     entityTypeProvider.setKey(Collections.<CsdlPropertyRef> emptyList());
 
@@ -154,4 +154,5 @@ public class EdmNavigationPropertyImplTest {
     EdmNavigationProperty property = new EdmNavigationPropertyImpl(edm, propertyProvider);
     property.getType();
   }
+
 }

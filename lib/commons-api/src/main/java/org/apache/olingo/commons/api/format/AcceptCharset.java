@@ -38,7 +38,7 @@ public class AcceptCharset {
   private static final String UTF8_CHARSET = "utf8";
   private static final String UTF8_CHARSET1 = "utf-8";
   
-  private AcceptCharset(final String charset) {
+  private AcceptCharset(String charset) {
     parameters = TypeUtil.createParameterMap();
     this.charset = parse(charset, parameters);
     
@@ -55,7 +55,7 @@ public class AcceptCharset {
         throw new IllegalArgumentException("Illegal parameters in accept charset header:" + charset);
       }
     }
-    final String q = parameters.get(TypeUtil.PARAMETER_Q);
+    String q = parameters.get(TypeUtil.PARAMETER_Q);
     if (q == null) {
       quality = 1F;
     } else if (Q_PATTERN.matcher(q).matches()) {
@@ -66,9 +66,9 @@ public class AcceptCharset {
   }
 
   private String parse(String acceptCharset, Map<String, String> parameters) {
-    final String[] charsetAndParameters = acceptCharset.split(TypeUtil.PARAMETER_SEPARATOR, 2);
+    String[] charsetAndParameters = acceptCharset.split(TypeUtil.PARAMETER_SEPARATOR, 2);
     acceptCharset = charsetAndParameters[0];
-    final String params = (charsetAndParameters.length > 1 ? charsetAndParameters[1] : null);
+    String params = (charsetAndParameters.length > 1 ? charsetAndParameters[1] : null);
     TypeUtil.parseParameters(params, parameters);
     return acceptCharset;
   }
@@ -80,7 +80,7 @@ public class AcceptCharset {
    * @throws Exception 
    * @throws IllegalArgumentException if input string is not parseable
    */
-  public static List<AcceptCharset> create(final String acceptCharsets) {
+  public static List<AcceptCharset> create(String acceptCharsets) {
     if (acceptCharsets == null) {
       throw new IllegalArgumentException("Type parameter MUST NOT be null.");
     }
@@ -110,11 +110,7 @@ public class AcceptCharset {
       }
     }
     for (Exception ex : exceptionList) {
-      if (ex instanceof UnsupportedCharsetException) {
-        continue;
-      } else {
-        throw new IllegalArgumentException(ex.getMessage());
-      }
+      if (!(ex instanceof UnsupportedCharsetException)) throw new IllegalArgumentException(ex.getMessage());
     }
     sort(result);
     
@@ -129,7 +125,7 @@ public class AcceptCharset {
     return Collections.unmodifiableMap(parameters);
   }
 
-  public String getParameter(final String name) {
+  public String getParameter(String name) {
     return parameters.get(name.toLowerCase(Locale.ROOT));
   }
 
@@ -141,7 +137,7 @@ public class AcceptCharset {
   public String toString() {
     StringBuilder result = new StringBuilder();
     result.append(charset);
-    for (final Map.Entry<String, String> entry : parameters.entrySet()) {
+    for (Map.Entry<String, String> entry : parameters.entrySet()) {
       result.append(';').append(entry.getKey()).append('=').append(entry.getValue());
     }
 
@@ -158,7 +154,7 @@ public class AcceptCharset {
     Collections.sort(toSort,
         new Comparator<AcceptCharset>() {
       @Override
-      public int compare(final AcceptCharset a1, final AcceptCharset a2) {
+      public int compare(AcceptCharset a1, AcceptCharset a2) {
         int compare = a2.getQuality().compareTo(a1.getQuality());
         if (compare != 0) {
           return compare;
@@ -167,4 +163,5 @@ public class AcceptCharset {
       }
     });
   }
+
 }

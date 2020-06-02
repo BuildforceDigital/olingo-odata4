@@ -54,13 +54,13 @@ public class ODataHandlerException extends ODataLibraryException {
     }
   }
 
-  public ODataHandlerException(final String developmentMessage, final MessageKey messageKey,
-      final String... parameters) {
+  public ODataHandlerException(String developmentMessage, MessageKey messageKey,
+                               String... parameters) {
     super(developmentMessage, messageKey, parameters);
   }
 
-  public ODataHandlerException(final String developmentMessage, final Throwable cause, final MessageKey messageKey,
-      final String... parameters) {
+  public ODataHandlerException(String developmentMessage, Throwable cause, MessageKey messageKey,
+                               String... parameters) {
     super(developmentMessage, cause, messageKey, parameters);
   }
 

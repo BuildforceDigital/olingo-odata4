@@ -40,9 +40,9 @@ public class Property extends Valuable {
    * @param type  String representation of type (can be null)
    * @param name  Name of the property
    */
-  public Property(final String type, final String name) {
+  public Property(String type, String name) {
     this.name = name;
-    super.setType(type);
+    setType(type);
   }
   
   /**
@@ -53,7 +53,7 @@ public class Property extends Valuable {
    * @param valueType   Kind of the property e.g. primitive property, complex property
    * @param value       Value of the property.
    */
-  public Property(final String type, final String name, final ValueType valueType, final Object value) {
+  public Property(String type, String name, ValueType valueType, Object value) {
     this(type, name);
     setValue(valueType, value);
   }
@@ -70,7 +70,7 @@ public class Property extends Valuable {
    * Set name of property.
    * @param name name of property
    */
-  public void setName(final String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
@@ -94,7 +94,7 @@ public class Property extends Valuable {
   }  
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     return super.equals(o)
         && (name == null ? ((Property) o).name == null : name.equals(((Property) o).name));
   }

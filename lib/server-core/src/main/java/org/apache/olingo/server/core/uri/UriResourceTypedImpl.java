@@ -27,7 +27,7 @@ public abstract class UriResourceTypedImpl extends UriResourceImpl implements Ur
 
   private EdmType typeFilter = null;
 
-  public UriResourceTypedImpl(final UriResourceKind kind) {
+  public UriResourceTypedImpl(UriResourceKind kind) {
     super(kind);
   }
 
@@ -35,20 +35,20 @@ public abstract class UriResourceTypedImpl extends UriResourceImpl implements Ur
     return typeFilter;
   }
 
-  public UriResourceTypedImpl setTypeFilter(final EdmStructuredType typeFilter) {
+  public UriResourceTypedImpl setTypeFilter(EdmStructuredType typeFilter) {
     this.typeFilter = typeFilter;
     return this;
   }
 
   @Override
-  public String getSegmentValue(final boolean includeFilters) {
+  public String getSegmentValue(boolean includeFilters) {
     return includeFilters && typeFilter != null ?
         getSegmentValue() + "/" + typeFilter.getFullQualifiedName().getFullQualifiedNameAsString() :
         getSegmentValue();
   }
 
   @Override
-  public String toString(final boolean includeFilters) {
+  public String toString(boolean includeFilters) {
     return getSegmentValue(includeFilters);
   }
 }

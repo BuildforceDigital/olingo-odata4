@@ -55,7 +55,7 @@ public class Entity extends Linked {
    * Sets ETag
    * @param eTag ETag
    */
-  public void setETag(final String eTag) {
+  public void setETag(String eTag) {
     this.eTag = eTag;
   }
 
@@ -73,7 +73,7 @@ public class Entity extends Linked {
    *
    * @param type entity type.
    */
-  public void setType(final String type) {
+  public void setType(String type) {
     this.type = type;
   }
 
@@ -91,7 +91,7 @@ public class Entity extends Linked {
    *
    * @param selfLink self link.
    */
-  public void setSelfLink(final Link selfLink) {
+  public void setSelfLink(Link selfLink) {
     readLink = selfLink;
   }
 
@@ -109,7 +109,7 @@ public class Entity extends Linked {
    *
    * @param editLink edit link.
    */
-  public void setEditLink(final Link editLink) {
+  public void setEditLink(Link editLink) {
     this.editLink = editLink;
   }
 
@@ -137,7 +137,7 @@ public class Entity extends Linked {
    * @param property property which is added
    * @return this Entity for fluid/flow adding
    */
-  public Entity addProperty(final Property property) {
+  public Entity addProperty(Property property) {
     properties.add(property);
     return this;
   }
@@ -157,7 +157,7 @@ public class Entity extends Linked {
    * @param name property name
    * @return property with given name if found, null otherwise
    */
-  public Property getProperty(final String name) {
+  public Property getProperty(String name) {
     Property result = null;
 
     for (Property property : properties) {
@@ -184,7 +184,7 @@ public class Entity extends Linked {
    *
    * @param mediaContentType media content type.
    */
-  public void setMediaContentType(final String mediaContentType) {
+  public void setMediaContentType(String mediaContentType) {
     this.mediaContentType = mediaContentType;
   }
 
@@ -202,7 +202,7 @@ public class Entity extends Linked {
    *
    * @param mediaContentSource media content source.
    */
-  public void setMediaContentSource(final URI mediaContentSource) {
+  public void setMediaContentSource(URI mediaContentSource) {
     this.mediaContentSource = mediaContentSource;
   }
 
@@ -220,7 +220,7 @@ public class Entity extends Linked {
    *
    * @param eTag media ETag value
    */
-  public void setMediaETag(final String eTag) {
+  public void setMediaETag(String eTag) {
     mediaETag = eTag;
   }
 
@@ -234,7 +234,7 @@ public class Entity extends Linked {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     return super.equals(o)
         && (eTag == null ? ((Entity) o).eTag == null : eTag.equals(((Entity) o).eTag))
         && (type == null ? ((Entity) o).type == null : type.equals(((Entity) o).type))

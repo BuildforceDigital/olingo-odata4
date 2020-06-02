@@ -81,10 +81,10 @@ public class UriDecoderTest {
     UriDecoder.splitAndDecodePath("%wrong");
   }
 
-  private void checkOption(final String query, final String name, final String value)
+  private void checkOption(String query, String name, String value)
       throws UriParserSyntaxException {
-    final List<QueryOption> options = UriDecoder.splitAndDecodeOptions(query);
-    for (final QueryOption option : options) {
+    List<QueryOption> options = UriDecoder.splitAndDecodeOptions(query);
+    for (QueryOption option : options) {
       if (option.getName().equals(name)) {
         assertEquals(value, option.getText());
         return;

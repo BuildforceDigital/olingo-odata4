@@ -131,7 +131,7 @@ public class MetadataDocumentJsonSerializer {
   private static final String ON_DELETE = "OnDelete";
   private static final String ON_DELETE_PROPERTY = "Action";
 
-  public MetadataDocumentJsonSerializer(final ServiceMetadata serviceMetadata) throws SerializerException {
+  public MetadataDocumentJsonSerializer(ServiceMetadata serviceMetadata) throws SerializerException {
     if (serviceMetadata == null || serviceMetadata.getEdm() == null) {
       throw new SerializerException("Service Metadata and EDM must not be null for a service.",
           SerializerException.MessageKeys.NULL_METADATA_OR_EDM);
@@ -139,7 +139,7 @@ public class MetadataDocumentJsonSerializer {
     this.serviceMetadata = serviceMetadata;
   }
   
-  public void writeMetadataDocument(final JsonGenerator json) throws SerializerException, IOException {
+  public void writeMetadataDocument(JsonGenerator json) throws SerializerException, IOException {
     json.writeStartObject();
     json.writeStringField(VERSION, "4.01");
     if (!serviceMetadata.getReferences().isEmpty()) {
@@ -195,8 +195,8 @@ public class MetadataDocumentJsonSerializer {
     json.writeEndObject();
   }
 
-  private void appendAnnotationGroups(final JsonGenerator json, 
-      final List<EdmAnnotations> annotationGroups) throws SerializerException, IOException {
+  private void appendAnnotationGroups(JsonGenerator json,
+                                      List<EdmAnnotations> annotationGroups) throws SerializerException, IOException {
     if (!annotationGroups.isEmpty()) {
       json.writeObjectFieldStart(ANNOTATION);
     }
@@ -208,8 +208,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendAnnotationGroup(final JsonGenerator json, 
-      final EdmAnnotations annotationGroup) throws SerializerException, IOException {
+  private void appendAnnotationGroup(JsonGenerator json,
+                                     EdmAnnotations annotationGroup) throws SerializerException, IOException {
     String targetPath = annotationGroup.getTargetPath();
     if (annotationGroup.getQualifier() != null) {
       json.writeObjectFieldStart(targetPath + "#" + annotationGroup.getQualifier());
@@ -220,8 +220,8 @@ public class MetadataDocumentJsonSerializer {
     json.writeEndObject();
   }
 
-  private void appendEntityContainer(final JsonGenerator json, 
-      final EdmEntityContainer container) throws SerializerException, IOException {
+  private void appendEntityContainer(JsonGenerator json,
+                                     EdmEntityContainer container) throws SerializerException, IOException {
     if (container != null) {
       json.writeObjectFieldStart(container.getName());
       json.writeStringField(KIND, Kind.EntityContainer.name());
@@ -267,8 +267,8 @@ public class MetadataDocumentJsonSerializer {
     
   }
 
-  private void appendSingletons(final JsonGenerator json, 
-      final List<EdmSingleton> singletons) throws SerializerException, IOException {
+  private void appendSingletons(JsonGenerator json,
+                                List<EdmSingleton> singletons) throws SerializerException, IOException {
     for (EdmSingleton singleton : singletons) {
       json.writeObjectFieldStart(singleton.getName());
       json.writeStringField(KIND, Kind.Singleton.name());
@@ -280,8 +280,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendFunctionImports(final JsonGenerator json, final List<EdmFunctionImport> functionImports,
-      final String containerNamespace) throws SerializerException, IOException {
+  private void appendFunctionImports(JsonGenerator json, List<EdmFunctionImport> functionImports,
+                                     String containerNamespace) throws SerializerException, IOException {
     for (EdmFunctionImport functionImport : functionImports) {
       json.writeObjectFieldStart(functionImport.getName());
 
@@ -309,8 +309,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendActionImports(final JsonGenerator json, 
-      final List<EdmActionImport> actionImports, String containerNamespace) 
+  private void appendActionImports(JsonGenerator json,
+                                   List<EdmActionImport> actionImports, String containerNamespace)
           throws SerializerException, IOException {
     for (EdmActionImport actionImport : actionImports) {
       json.writeObjectFieldStart(actionImport.getName());
@@ -326,8 +326,8 @@ public class MetadataDocumentJsonSerializer {
     
   }
 
-  private void appendEntitySets(final JsonGenerator json, 
-      final List<EdmEntitySet> entitySets) throws SerializerException, IOException {
+  private void appendEntitySets(JsonGenerator json,
+                                List<EdmEntitySet> entitySets) throws SerializerException, IOException {
     for (EdmEntitySet entitySet : entitySets) {
       json.writeObjectFieldStart(entitySet.getName());
       json.writeStringField(KIND, Kind.EntitySet.name());
@@ -342,8 +342,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendNavigationPropertyBindings(final JsonGenerator json, 
-      final EdmBindingTarget bindingTarget) throws IOException {
+  private void appendNavigationPropertyBindings(JsonGenerator json,
+                                                EdmBindingTarget bindingTarget) throws IOException {
     if (bindingTarget.getNavigationPropertyBindings() != null && 
         !bindingTarget.getNavigationPropertyBindings().isEmpty()) {
       json.writeObjectFieldStart(NAVIGATION_PROPERTY_BINDING);
@@ -354,7 +354,7 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendTerms(final JsonGenerator json, final List<EdmTerm> terms) 
+  private void appendTerms(JsonGenerator json, List<EdmTerm> terms)
       throws SerializerException, IOException {
     for (EdmTerm term : terms) {
       json.writeObjectFieldStart(term.getName());
@@ -407,8 +407,8 @@ public class MetadataDocumentJsonSerializer {
     
   }
 
-  private void appendFunctions(final JsonGenerator json, 
-      final List<EdmFunction> functions) throws SerializerException, IOException {
+  private void appendFunctions(JsonGenerator json,
+                               List<EdmFunction> functions) throws SerializerException, IOException {
     Map<String, List<EdmFunction>> functionsMap = new HashMap<>();
     for (EdmFunction function : functions) {
       if (functionsMap.containsKey(function.getName())) {
@@ -451,8 +451,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendActions(final JsonGenerator json, 
-      final List<EdmAction> actions) throws SerializerException, IOException {
+  private void appendActions(JsonGenerator json,
+                             List<EdmAction> actions) throws SerializerException, IOException {
     Map<String, List<EdmAction>> actionsMap = new HashMap<>();
     for (EdmAction action : actions) {
       if (actionsMap.containsKey(action.getName())) {
@@ -488,8 +488,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendOperationReturnType(final JsonGenerator json, 
-      final EdmOperation operation) throws SerializerException, IOException {
+  private void appendOperationReturnType(JsonGenerator json,
+                                         EdmOperation operation) throws SerializerException, IOException {
     EdmReturnType returnType = operation.getReturnType();
     if (returnType != null) {
       json.writeObjectFieldStart(RETURN_TYPE);
@@ -509,8 +509,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendReturnTypeFacets(final JsonGenerator json, 
-      final EdmReturnType returnType) throws IOException {
+  private void appendReturnTypeFacets(JsonGenerator json,
+                                      EdmReturnType returnType) throws IOException {
     if (!returnType.isNullable()) {
       json.writeBooleanField(NULLABLE, returnType.isNullable());
     }
@@ -525,8 +525,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendOperationParameters(final JsonGenerator json, 
-      final EdmOperation operation) throws SerializerException, IOException {
+  private void appendOperationParameters(JsonGenerator json,
+                                         EdmOperation operation) throws SerializerException, IOException {
     if (!operation.getParameterNames().isEmpty()) {
       json.writeArrayFieldStart(PARAMETER);
     }
@@ -555,8 +555,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendParameterFacets(final JsonGenerator json, 
-      final EdmParameter parameter) throws IOException {
+  private void appendParameterFacets(JsonGenerator json,
+                                     EdmParameter parameter) throws IOException {
     if (!parameter.isNullable()) {
       json.writeBooleanField(NULLABLE, parameter.isNullable());
     }
@@ -571,8 +571,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendComplexTypes(final JsonGenerator json, 
-      final List<EdmComplexType> complexTypes) throws SerializerException, IOException {
+  private void appendComplexTypes(JsonGenerator json,
+                                  List<EdmComplexType> complexTypes) throws SerializerException, IOException {
     for (EdmComplexType complexType : complexTypes) {
       json.writeObjectFieldStart(complexType.getName());
 
@@ -624,8 +624,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendNavigationProperties(final JsonGenerator json, 
-      final EdmStructuredType type) throws SerializerException, IOException {
+  private void appendNavigationProperties(JsonGenerator json,
+                                          EdmStructuredType type) throws SerializerException, IOException {
     List<String> navigationPropertyNames = new ArrayList<>(type.getNavigationPropertyNames());
     if (type.getBaseType() != null) {
       navigationPropertyNames.removeAll(type.getBaseType().getNavigationPropertyNames());
@@ -677,8 +677,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendProperties(final JsonGenerator json, 
-      final EdmStructuredType type) throws SerializerException, IOException {
+  private void appendProperties(JsonGenerator json,
+                                EdmStructuredType type) throws SerializerException, IOException {
     List<String> propertyNames = new ArrayList<>(type.getPropertyNames());
     if (type.getBaseType() != null) {
       propertyNames.removeAll(type.getBaseType().getPropertyNames());
@@ -731,8 +731,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendKey(final JsonGenerator json, 
-      final EdmEntityType entityType) throws IOException {
+  private void appendKey(JsonGenerator json,
+                         EdmEntityType entityType) throws IOException {
     List<EdmKeyPropertyRef> keyPropertyRefs = entityType.getKeyPropertyRefs();
     if (keyPropertyRefs != null && !keyPropertyRefs.isEmpty()) {
       // Resolve Base Type key as it is shown in derived type
@@ -755,13 +755,13 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private String getAliasedFullQualifiedName(final EdmType type) {
+  private String getAliasedFullQualifiedName(EdmType type) {
     FullQualifiedName fqn = type.getFullQualifiedName();
     return getAliasedFullQualifiedName(fqn);
   }
   
-  private void appendTypeDefinitions(final JsonGenerator json, 
-      final List<EdmTypeDefinition> typeDefinitions) throws SerializerException, IOException {
+  private void appendTypeDefinitions(JsonGenerator json,
+                                     List<EdmTypeDefinition> typeDefinitions) throws SerializerException, IOException {
     for (EdmTypeDefinition definition : typeDefinitions) {
       json.writeObjectFieldStart(definition.getName());
       json.writeStringField(KIND, definition.getKind().name());
@@ -811,7 +811,7 @@ public class MetadataDocumentJsonSerializer {
   }
   
   private void appendAnnotations(JsonGenerator json, 
-      final EdmAnnotatable annotatable, String memberName) throws SerializerException, IOException {
+      EdmAnnotatable annotatable, String memberName) throws SerializerException, IOException {
     List<EdmAnnotation> annotations = annotatable.getAnnotations();
     if (annotations != null && !annotations.isEmpty()) {
       for (EdmAnnotation annotation : annotations) {
@@ -832,8 +832,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
   
-  private void appendExpression(final JsonGenerator json,
-      final EdmExpression expression, String termName) throws SerializerException, IOException {
+  private void appendExpression(JsonGenerator json,
+                                EdmExpression expression, String termName) throws SerializerException, IOException {
     if (expression == null) {
       return;
     }
@@ -1030,7 +1030,7 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private void appendNotExpression(final JsonGenerator json, final EdmNot exp) 
+  private void appendNotExpression(JsonGenerator json, EdmNot exp)
       throws SerializerException, IOException {
     json.writeStartObject();
     appendExpression(json, exp.getLeftExpression(), DOLLAR + exp.getExpressionName());
@@ -1038,8 +1038,8 @@ public class MetadataDocumentJsonSerializer {
     json.writeEndObject();
   }
 
-  private void appendLogicalOrComparisonExpression(final JsonGenerator json, 
-      final EdmLogicalOrComparisonExpression exp) throws SerializerException, IOException {
+  private void appendLogicalOrComparisonExpression(JsonGenerator json,
+                                                   EdmLogicalOrComparisonExpression exp) throws SerializerException, IOException {
     json.writeStartObject();
     json.writeArrayFieldStart(DOLLAR + exp.getExpressionName());
     appendExpression(json, exp.getLeftExpression(), null);
@@ -1049,8 +1049,8 @@ public class MetadataDocumentJsonSerializer {
     json.writeEndObject();
   }
 
-  private void appendConstantExpression(final JsonGenerator json, 
-      final EdmConstantExpression constExp, String termName) throws IOException {
+  private void appendConstantExpression(JsonGenerator json,
+                                        EdmConstantExpression constExp, String termName) throws IOException {
     switch (constExp.getExpressionType()) {
     case Binary:
       case TimeOfDay:
@@ -1090,8 +1090,8 @@ public class MetadataDocumentJsonSerializer {
     }
   }
 
-  private String getAliasedFullQualifiedName(final FullQualifiedName fqn) {
-    final String name;
+  private String getAliasedFullQualifiedName(FullQualifiedName fqn) {
+    String name;
     if (namespaceToAlias.get(fqn.getNamespace()) != null) {
       name = namespaceToAlias.get(fqn.getNamespace()) + "." + fqn.getName();
     } else {
@@ -1101,13 +1101,13 @@ public class MetadataDocumentJsonSerializer {
     return name;
   }
   
-  private String getFullQualifiedName(final EdmType type) {
+  private String getFullQualifiedName(EdmType type) {
     return type.getFullQualifiedName().getFullQualifiedNameAsString();
   }
 
   private void appendReference(JsonGenerator json) throws SerializerException, IOException {
     json.writeObjectFieldStart(REFERENCES);
-    for (final EdmxReference reference : serviceMetadata.getReferences()) {
+    for (EdmxReference reference : serviceMetadata.getReferences()) {
       json.writeObjectFieldStart(reference.getUri().toASCIIString());
 
       List<EdmxReferenceInclude> includes = reference.getIncludes();

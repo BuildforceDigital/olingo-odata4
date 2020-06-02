@@ -32,13 +32,13 @@ public class ExpandTreeBuilderImpl extends ExpandTreeBuilder {
   private final ExpandItemImpl parentItem;
   private ExpandOptionImpl expandOption = null;
 
-  private ExpandTreeBuilderImpl(final ExpandItemImpl parentItem) {
+  private ExpandTreeBuilderImpl(ExpandItemImpl parentItem) {
     this.parentItem = parentItem;
   }
   
   
   @Override
-  public ExpandTreeBuilder expand(final EdmNavigationProperty edmNavigationProperty) {
+  public ExpandTreeBuilder expand(EdmNavigationProperty edmNavigationProperty) {
     if (expandOption == null) {
       expandOption = new ExpandOptionImpl();
       if(parentItem != null && parentItem.getExpandOption() == null){

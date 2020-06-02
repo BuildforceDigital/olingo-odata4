@@ -41,4 +41,5 @@ public interface ActionPrimitiveProcessor extends Processor {
    */
   void processActionPrimitive(ODataRequest request, ODataResponse response, UriInfo uriInfo,
       ContentType requestFormat, ContentType responseFormat) throws ODataApplicationException, ODataLibraryException;
+
 }

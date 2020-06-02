@@ -19,9 +19,9 @@
 package org.apache.olingo.commons.core.edm.primitivetype;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.time.ZoneId;
@@ -35,89 +35,89 @@ import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeException;
 
 public abstract class PrimitiveTypeBaseTest {
 
-private void expectErrorInValueToString(final EdmPrimitiveType instance,
-      final Object value, final Boolean isNullable, final Integer maxLength,
-      final Integer precision, final Integer scale, final Boolean isUnicode,
-      final String message) {
+private void expectErrorInValueToString(EdmPrimitiveType instance,
+                                        Object value, Boolean isNullable, Integer maxLength,
+                                        Integer precision, Integer scale, Boolean isUnicode,
+                                        String message) {
     try {
       instance.valueToString(value, isNullable, maxLength, precision, scale, isUnicode);
       fail("Expected exception not thrown");
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       assertNotNull(e.getLocalizedMessage());
       assertThat(e.getLocalizedMessage(), containsString(message));
     }
   }
 
-  private void expectErrorInValueToString(final EdmPrimitiveType instance, final Object value, final String message) {
+  private void expectErrorInValueToString(EdmPrimitiveType instance, Object value, String message) {
     expectErrorInValueToString(instance, value, null, null, null, null, null, message);
   }
 
-  protected void expectTypeErrorInValueToString(final EdmPrimitiveType instance, final Object value) {
+  protected void expectTypeErrorInValueToString(EdmPrimitiveType instance, Object value) {
     expectErrorInValueToString(instance, value, "value type");
   }
 
-  protected void expectContentErrorInValueToString(final EdmPrimitiveType instance, final Object value) {
+  protected void expectContentErrorInValueToString(EdmPrimitiveType instance, Object value) {
     expectErrorInValueToString(instance, value, "' is not valid.");
   }
 
-  protected void expectFacetsErrorInValueToString(final EdmPrimitiveType instance, final Object value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) {
+  protected void expectFacetsErrorInValueToString(EdmPrimitiveType instance, Object value,
+                                                  Boolean isNullable, Integer maxLength, Integer precision,
+                                                  Integer scale, Boolean isUnicode) {
     expectErrorInValueToString(instance, value, isNullable, maxLength, precision, scale, isUnicode,
         "facets' constraints");
   }
 
-  protected void expectNullErrorInValueToString(final EdmPrimitiveType instance) {
+  protected void expectNullErrorInValueToString(EdmPrimitiveType instance) {
     expectErrorInValueToString(instance, null, false, null, null, null, null, "The value NULL is not allowed.");
   }
 
-  private void expectErrorInValueOfString(final EdmPrimitiveType instance,
-      final String value, final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode, final Class<?> returnType,
-      final String message) {
+  private void expectErrorInValueOfString(EdmPrimitiveType instance,
+                                          String value, Boolean isNullable, Integer maxLength, Integer precision,
+                                          Integer scale, Boolean isUnicode, Class<?> returnType,
+                                          String message) {
 
     try {
       instance.valueOfString(value, isNullable, maxLength, precision, scale, isUnicode, returnType);
       fail("Expected exception not thrown");
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       assertNotNull(e.getLocalizedMessage());
       assertThat(e.getLocalizedMessage(), containsString(message));
     }
   }
 
-  protected void expectTypeErrorInValueOfString(final EdmPrimitiveType instance, final String value) {
+  protected void expectTypeErrorInValueOfString(EdmPrimitiveType instance, String value) {
     expectErrorInValueOfString(instance, value, null, null, null, null, null, Class.class,
         "The value type class java.lang.Class is not supported.");
   }
 
-  protected void expectUnconvertibleErrorInValueOfString(final EdmPrimitiveType instance, final String value,
-      final Class<?> type) {
+  protected void expectUnconvertibleErrorInValueOfString(EdmPrimitiveType instance, String value,
+                                                         Class<?> type) {
     expectErrorInValueOfString(instance, value, true, Integer.MAX_VALUE, Integer.MAX_VALUE, null, true,
         type, "cannot be converted to");
   }
 
-  protected void expectContentErrorInValueOfString(final EdmPrimitiveType instance, final String value) {
+  protected void expectContentErrorInValueOfString(EdmPrimitiveType instance, String value) {
     expectErrorInValueOfString(instance, value, null, null, null, null, null, instance.getDefaultType(),
         "illegal content");
   }
 
-  protected void expectFacetsErrorInValueOfString(final EdmPrimitiveType instance, final String value,
-      final Boolean isNullable, final Integer maxLength, final Integer precision,
-      final Integer scale, final Boolean isUnicode) {
+  protected void expectFacetsErrorInValueOfString(EdmPrimitiveType instance, String value,
+                                                  Boolean isNullable, Integer maxLength, Integer precision,
+                                                  Integer scale, Boolean isUnicode) {
     expectErrorInValueOfString(instance, value, isNullable, maxLength, precision, scale, isUnicode,
         instance.getDefaultType(), "facets' constraints");
   }
 
-  protected void expectNullErrorInValueOfString(final EdmPrimitiveType instance) {
+  protected void expectNullErrorInValueOfString(EdmPrimitiveType instance) {
     expectErrorInValueOfString(instance, null, false, null, null, null, null, instance.getDefaultType(),
         "The literal 'null' is not allowed.");
   }
 
-  protected void expectErrorInFromUriLiteral(final EdmPrimitiveType instance, final String value) {
+  protected void expectErrorInFromUriLiteral(EdmPrimitiveType instance, String value) {
     try {
       instance.fromUriLiteral(value);
       fail("Expected exception not thrown");
-    } catch (final EdmPrimitiveTypeException e) {
+    } catch (EdmPrimitiveTypeException e) {
       assertNotNull(e.getLocalizedMessage());
       assertThat(e.getLocalizedMessage(), containsString("' has illegal content."));
     }

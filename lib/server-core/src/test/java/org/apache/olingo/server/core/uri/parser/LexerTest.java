@@ -289,22 +289,22 @@ public class LexerTest {
     private UriTokenizer tokenizer = null;
     private String curText = null;
 
-    public TokenValidator run(final String uri) {
+    public TokenValidator run(String uri) {
       input = uri;
       tokenizer = new UriTokenizer(uri);
       curText = "";
       return this;
     }
 
-    public TokenValidator has(final TokenKind... expected) {
-      for (final TokenKind kind : expected) {
+    public TokenValidator has(TokenKind... expected) {
+      for (TokenKind kind : expected) {
         assertTrue(tokenizer.next(kind));
         curText += tokenizer.getText();
       }
       return this;
     }
 
-    public TokenValidator isText(final String expected) {
+    public TokenValidator isText(String expected) {
       assertEquals(expected, tokenizer.getText());
       return this;
     }

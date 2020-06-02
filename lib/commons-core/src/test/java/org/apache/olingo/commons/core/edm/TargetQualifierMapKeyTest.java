@@ -96,7 +96,7 @@ public class TargetQualifierMapKeyTest {
     assertNotSame(key1.hashCode(), key2.hashCode());
   }
 
-  private void createAndCheckForEdmException(final FullQualifiedName fqn, final String qualifier) {
+  private void createAndCheckForEdmException(FullQualifiedName fqn, String qualifier) {
     try {
       new TargetQualifierMapKey(fqn, qualifier);
     } catch (EdmException e) {

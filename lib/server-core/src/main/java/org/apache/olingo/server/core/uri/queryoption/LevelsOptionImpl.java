@@ -29,7 +29,7 @@ public class LevelsOptionImpl extends SystemQueryOptionImpl implements LevelsExp
     setKind(SystemQueryOptionKind.LEVELS);
   }
 
-  public LevelsOptionImpl setValue(final int value) {
+  public LevelsOptionImpl setValue(int value) {
     this.value = value;
     return this;
   }

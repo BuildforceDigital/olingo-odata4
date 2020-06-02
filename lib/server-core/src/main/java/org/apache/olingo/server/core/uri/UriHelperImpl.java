@@ -49,27 +49,27 @@ import org.apache.olingo.server.core.uri.parser.Parser;
 public class UriHelperImpl implements UriHelper {
 
   @Override
-  public String buildContextURLSelectList(final EdmStructuredType type,
-      final ExpandOption expand, final SelectOption select) throws SerializerException {
+  public String buildContextURLSelectList(EdmStructuredType type,
+                                          ExpandOption expand, SelectOption select) throws SerializerException {
     return ContextURLHelper.buildSelectList(type, expand, select);
   }
 
   @Override
-  public String buildContextURLKeyPredicate(final List<UriParameter> keys) throws SerializerException {
+  public String buildContextURLKeyPredicate(List<UriParameter> keys) throws SerializerException {
     return ContextURLHelper.buildKeyPredicate(keys);
   }
 
   @Override
-  public String buildCanonicalURL(final EdmEntitySet edmEntitySet, final Entity entity) throws SerializerException {
+  public String buildCanonicalURL(EdmEntitySet edmEntitySet, Entity entity) throws SerializerException {
     return edmEntitySet.getName() + '(' + buildKeyPredicate(edmEntitySet.getEntityType(), entity) + ')';
   }
 
   @Override
-  public String buildKeyPredicate(final EdmEntityType edmEntityType, final Entity entity) throws SerializerException {
+  public String buildKeyPredicate(EdmEntityType edmEntityType, Entity entity) throws SerializerException {
     StringBuilder result = new StringBuilder();
-    final List<String> keyNames = edmEntityType.getKeyPredicateNames();
+    List<String> keyNames = edmEntityType.getKeyPredicateNames();
     boolean first = true;
-    for (final String keyName : keyNames) {
+    for (String keyName : keyNames) {
       EdmKeyPropertyRef refType = edmEntityType.getKeyPropertyRef(keyName);
       if (first) {
         first = false;
@@ -79,20 +79,20 @@ public class UriHelperImpl implements UriHelper {
       if (keyNames.size() > 1) {
         result.append(Encoder.encode(keyName)).append('=');
       }
-      final EdmProperty edmProperty =  refType.getProperty();
+      EdmProperty edmProperty =  refType.getProperty();
       if (edmProperty == null) {
         throw new SerializerException("Property not found (possibly an alias): " + keyName,
             SerializerException.MessageKeys.MISSING_PROPERTY, keyName);
       }
-      final EdmPrimitiveType type = (EdmPrimitiveType) edmProperty.getType();
-      final Object propertyValue = findPropertyRefValue(entity, refType);
+      EdmPrimitiveType type = (EdmPrimitiveType) edmProperty.getType();
+      Object propertyValue = findPropertyRefValue(entity, refType);
       try {
-        final String value = type.toUriLiteral(
+        String value = type.toUriLiteral(
             type.valueToString(propertyValue,
                 edmProperty.isNullable(), edmProperty.getMaxLength(),
                 edmProperty.getPrecision(), edmProperty.getScale(), edmProperty.isUnicode()));
         result.append(Encoder.encode(value));
-      } catch (final EdmPrimitiveTypeException e) {
+      } catch (EdmPrimitiveTypeException e) {
         throw new SerializerException("Wrong key value!", e,
             SerializerException.MessageKeys.WRONG_PROPERTY_VALUE, edmProperty.getName(), 
             propertyValue != null ? propertyValue.toString(): null);
@@ -103,7 +103,7 @@ public class UriHelperImpl implements UriHelper {
   
   private Object findPropertyRefValue(Entity entity, EdmKeyPropertyRef refType) throws SerializerException {
     final int INDEX_ERROR_CODE = -1;
-    final String propertyPath = refType.getName();
+    String propertyPath = refType.getName();
     String tmpPropertyName;
     int lastIndex;
     int index = propertyPath.indexOf('/');
@@ -130,8 +130,8 @@ public class UriHelperImpl implements UriHelper {
     return prop.getValue();
   }
 
-  private Property findProperty(final String propertyName, final List<Property> properties) {
-    for (final Property property : properties) {
+  private Property findProperty(String propertyName, List<Property> properties) {
+    for (Property property : properties) {
       if (propertyName.equals(property.getName())) {
         return property;
       }
@@ -140,7 +140,7 @@ public class UriHelperImpl implements UriHelper {
   }
   
   @Override
-  public UriResourceEntitySet parseEntityId(final Edm edm, final String entityId, final String rawServiceRoot)
+  public UriResourceEntitySet parseEntityId(Edm edm, String entityId, String rawServiceRoot)
       throws DeserializerException {
 
     String oDataPath = entityId;
@@ -150,17 +150,17 @@ public class UriHelperImpl implements UriHelper {
     oDataPath = oDataPath.startsWith("/") ? oDataPath : "/" + oDataPath;
 
     try {
-      final List<UriResource> uriResourceParts =
+      List<UriResource> uriResourceParts =
           new Parser(edm, new ODataImpl()).parseUri(oDataPath, null, null, rawServiceRoot).getUriResourceParts();
       if (uriResourceParts.size() == 1 && uriResourceParts.get(0).getKind() == UriResourceKind.entitySet) {
-        final UriResourceEntitySet entityUriResource = (UriResourceEntitySet) uriResourceParts.get(0);
+        UriResourceEntitySet entityUriResource = (UriResourceEntitySet) uriResourceParts.get(0);
 
         return entityUriResource;
       }
 
       throw new DeserializerException("Invalid entity binding link", MessageKeys.INVALID_ENTITY_BINDING_LINK,
           entityId);
-    } catch (final ODataLibraryException e) {
+    } catch (ODataLibraryException e) {
       throw new DeserializerException("Invalid entity binding link", e, MessageKeys.INVALID_ENTITY_BINDING_LINK,
           entityId);
     }

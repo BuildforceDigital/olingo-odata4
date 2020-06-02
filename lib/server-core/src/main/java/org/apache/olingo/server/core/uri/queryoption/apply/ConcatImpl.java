@@ -41,7 +41,7 @@ public class ConcatImpl implements Concat {
     return options;
   }
 
-  public ConcatImpl addApplyOption(final ApplyOption option) {
+  public ConcatImpl addApplyOption(ApplyOption option) {
     options.add(option);
     return this;
   }

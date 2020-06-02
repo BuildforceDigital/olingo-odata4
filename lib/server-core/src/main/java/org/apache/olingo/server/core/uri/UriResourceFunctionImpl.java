@@ -37,10 +37,10 @@ public class UriResourceFunctionImpl extends UriResourceWithKeysImpl implements 
   private final EdmFunction function;
   private final List<UriParameter> parameters;
 
-  public UriResourceFunctionImpl(final EdmFunctionImport edmFunctionImport, final EdmFunction function,
-      final List<UriParameter> parameters) {
+  public UriResourceFunctionImpl(EdmFunctionImport edmFunctionImport, EdmFunction function,
+                                 List<UriParameter> parameters) {
     super(UriResourceKind.function);
-    this.functionImport = edmFunctionImport;
+    functionImport = edmFunctionImport;
     this.function = function;
     this.parameters = parameters;
   }

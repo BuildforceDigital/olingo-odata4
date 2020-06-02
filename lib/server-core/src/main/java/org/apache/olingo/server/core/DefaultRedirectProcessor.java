@@ -28,12 +28,12 @@ import org.apache.olingo.server.api.ServiceMetadata;
 public class DefaultRedirectProcessor implements RedirectProcessor {
 
   @Override
-  public void init(final OData odata, final ServiceMetadata serviceMetadata) {
+  public void init(OData odata, ServiceMetadata serviceMetadata) {
     // No init needed
   }
 
   @Override
-  public void redirect(final ODataRequest request, final ODataResponse response) {
+  public void redirect(ODataRequest request, ODataResponse response) {
     response.setStatusCode(HttpStatusCode.TEMPORARY_REDIRECT.getStatusCode());
 
     String location;

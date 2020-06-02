@@ -41,7 +41,7 @@ public class AggregateImpl implements Aggregate {
     return expressions;
   }
 
-  public AggregateImpl addExpression(final AggregateExpression expression) {
+  public AggregateImpl addExpression(AggregateExpression expression) {
     expressions.add(expression);
     return this;
   }

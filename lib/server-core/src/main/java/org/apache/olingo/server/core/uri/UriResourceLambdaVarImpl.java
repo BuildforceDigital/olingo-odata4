@@ -27,7 +27,7 @@ public class UriResourceLambdaVarImpl extends UriResourceTypedImpl implements Ur
   private final String variableText;
   private final EdmType type;
 
-  public UriResourceLambdaVarImpl(final String variableText, final EdmType type) {
+  public UriResourceLambdaVarImpl(String variableText, EdmType type) {
     super(UriResourceKind.lambdaVariable);
     this.variableText = variableText;
     this.type = type;

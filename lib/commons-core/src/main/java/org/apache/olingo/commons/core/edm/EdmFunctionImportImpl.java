@@ -31,8 +31,8 @@ public class EdmFunctionImportImpl extends AbstractEdmOperationImport implements
 
   private final CsdlFunctionImport functionImport;
 
-  public EdmFunctionImportImpl(final Edm edm, final EdmEntityContainer container,
-      final CsdlFunctionImport functionImport) {
+  public EdmFunctionImportImpl(Edm edm, EdmEntityContainer container,
+                               CsdlFunctionImport functionImport) {
     super(edm, container, functionImport);
     this.functionImport = functionImport;
   }
@@ -43,7 +43,7 @@ public class EdmFunctionImportImpl extends AbstractEdmOperationImport implements
   }
 
   @Override
-  public EdmFunction getUnboundFunction(final List<String> parameterNames) {
+  public EdmFunction getUnboundFunction(List<String> parameterNames) {
     return edm.getUnboundFunction(getFunctionFqn(), parameterNames);
   }
 

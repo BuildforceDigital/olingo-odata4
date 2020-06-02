@@ -48,7 +48,7 @@ public class CsdlAnnotation extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * Sets the annotated expression
    * @param annotationExpression annotated expression
    */
-  public CsdlAnnotation setExpression(final CsdlExpression annotationExpression) {
+  public CsdlAnnotation setExpression(CsdlExpression annotationExpression) {
     this.annotationExpression = annotationExpression;
     return this;
   }
@@ -66,7 +66,7 @@ public class CsdlAnnotation extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param term term
    * @return this instance
    */
-  public CsdlAnnotation setTerm(final String term) {
+  public CsdlAnnotation setTerm(String term) {
     this.term = term;
     return this;
   }
@@ -84,7 +84,7 @@ public class CsdlAnnotation extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param qualifier annotated qualifier
    * @return this instance
    */
-  public CsdlAnnotation setQualifier(final String qualifier) {
+  public CsdlAnnotation setQualifier(String qualifier) {
     this.qualifier = qualifier;
     return this;
   }
@@ -94,7 +94,7 @@ public class CsdlAnnotation extends CsdlAbstractEdmItem implements CsdlAnnotatab
    * @param annotations list of annotations
    * @return this instance
    */
-  public CsdlAnnotation setAnnotations(final List<CsdlAnnotation> annotations) {
+  public CsdlAnnotation setAnnotations(List<CsdlAnnotation> annotations) {
     this.annotations = annotations;
     return this;
   }
@@ -113,13 +113,13 @@ public class CsdlAnnotation extends CsdlAbstractEdmItem implements CsdlAnnotatab
       return false;
     }
     CsdlAnnotation csdlAnnot = (CsdlAnnotation) obj;
-    return (this.getTerm() == null ? csdlAnnot.getTerm() == null : 
-      this.getTerm().equals(csdlAnnot.getTerm()))
-        && (this.getQualifier() == null ? csdlAnnot.getQualifier() == null :
-          this.getQualifier().equals(csdlAnnot.getQualifier()))
-        && (this.getExpression() == null ? csdlAnnot.getExpression() == null :
-          this.getExpression().equals(csdlAnnot.getExpression()))
-        && (this.getAnnotations() == null ? csdlAnnot.getAnnotations() == null : 
+    return (getTerm() == null ? csdlAnnot.getTerm() == null :
+            getTerm().equals(csdlAnnot.getTerm()))
+        && (getQualifier() == null ? csdlAnnot.getQualifier() == null :
+            getQualifier().equals(csdlAnnot.getQualifier()))
+        && (getExpression() == null ? csdlAnnot.getExpression() == null :
+            getExpression().equals(csdlAnnot.getExpression()))
+        && (getAnnotations() == null ? csdlAnnot.getAnnotations() == null :
           checkAnnotations(csdlAnnot.getAnnotations()));
   }
   
@@ -127,9 +127,9 @@ public class CsdlAnnotation extends CsdlAbstractEdmItem implements CsdlAnnotatab
     if (csdlAnnots == null) {
       return false;
     }
-    if (this.getAnnotations().size() == csdlAnnots.size()) {
-      for (int i = 0; i < this.getAnnotations().size(); i++) {
-        if (!this.getAnnotations().get(i).equals(csdlAnnots.get(i))) {
+    if (getAnnotations().size() == csdlAnnots.size()) {
+      for (int i = 0; i < getAnnotations().size(); i++) {
+        if (!getAnnotations().get(i).equals(csdlAnnots.get(i))) {
           return false;
         }
       }

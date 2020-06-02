@@ -117,7 +117,7 @@ public class MetadataDocumentXmlSerializerTest {
 
   @Test
   public void writeMetadataWithEmptyMockedEdm() throws Exception {
-    final Edm edm = mock(Edm.class);
+    Edm edm = mock(Edm.class);
     ServiceMetadata metadata = mock(ServiceMetadata.class);
     when(metadata.getEdm()).thenReturn(edm);
 
@@ -256,13 +256,13 @@ public class MetadataDocumentXmlSerializerTest {
     edmxReferences.add(referenceWithAllAndNull);
 
     ServiceMetadata serviceMetadata = mock(ServiceMetadata.class);
-    final Edm edm = mock(Edm.class);
+    Edm edm = mock(Edm.class);
     when(serviceMetadata.getEdm()).thenReturn(edm);
     when(serviceMetadata.getReferences()).thenReturn(edmxReferences);
 
     InputStream metadata = serializer.metadataDocument(serviceMetadata).getContent();
     assertNotNull(metadata);
-    final String metadataString = IOUtils.toString(metadata);
+    String metadataString = IOUtils.toString(metadata);
     // edmx reference
     assertTrue(metadataString.contains(
         "<edmx:Reference Uri=\"http://example.com\"></edmx:Reference>"));
@@ -447,7 +447,7 @@ public class MetadataDocumentXmlSerializerTest {
     when(complexType.getName()).thenReturn(name.getName());
     when(complexType.isOpenType()).thenReturn(true);
 
-    final EdmPrimitiveType stringType = OData.newInstance().createPrimitiveTypeInstance(EdmPrimitiveTypeKind.String);
+    EdmPrimitiveType stringType = OData.newInstance().createPrimitiveTypeInstance(EdmPrimitiveTypeKind.String);
     when(complexType.getPropertyNames()).thenReturn(Arrays.asList("prop1", "prop2"));
     EdmProperty prop1 = mock(EdmProperty.class);
     when(prop1.isPrimitive()).thenReturn(true);
@@ -527,7 +527,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlEnumType getEnumType(final FullQualifiedName enumTypeName) throws ODataException {
+    public CsdlEnumType getEnumType(FullQualifiedName enumTypeName) throws ODataException {
       if (nameENString.equals(enumTypeName)) {
         return new CsdlEnumType()
         .setName(nameENString.getName())
@@ -539,7 +539,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlEntityType getEntityType(final FullQualifiedName entityTypeName) throws ODataException {
+    public CsdlEntityType getEntityType(FullQualifiedName entityTypeName) throws ODataException {
       if (entityTypeName.equals(nameETAbstract)) {
         return new CsdlEntityType()
         .setName("ETAbstract")
@@ -563,7 +563,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlComplexType getComplexType(final FullQualifiedName complexTypeName) throws ODataException {
+    public CsdlComplexType getComplexType(FullQualifiedName complexTypeName) throws ODataException {
       if (complexTypeName.equals(nameCTTwoPrim)) {
         return new CsdlComplexType()
         .setName("CTTwoPrim")
@@ -581,7 +581,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public List<CsdlAction> getActions(final FullQualifiedName actionName) throws ODataException {
+    public List<CsdlAction> getActions(FullQualifiedName actionName) throws ODataException {
       if (actionName.equals(nameUARTPrimParam)) {
         return Collections.singletonList(
             new CsdlAction().setName("UARTPrimParam")
@@ -601,7 +601,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public List<CsdlFunction> getFunctions(final FullQualifiedName functionName) throws ODataException {
+    public List<CsdlFunction> getFunctions(FullQualifiedName functionName) throws ODataException {
       if (functionName.equals(nameUFNRTInt16)) {
         return Collections.singletonList(
             new CsdlFunction()
@@ -619,7 +619,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlEntitySet getEntitySet(final FullQualifiedName entityContainer, final String entitySetName)
+    public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName)
         throws ODataException {
       if (entitySetName.equals("ESAllPrim")) {
         return new CsdlEntitySet()
@@ -634,7 +634,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlSingleton getSingleton(final FullQualifiedName entityContainer, final String singletonName)
+    public CsdlSingleton getSingleton(FullQualifiedName entityContainer, String singletonName)
         throws ODataException {
       if (singletonName.equals("SI")) {
         return new CsdlSingleton()
@@ -645,7 +645,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlActionImport getActionImport(final FullQualifiedName entityContainer, final String actionImportName)
+    public CsdlActionImport getActionImport(FullQualifiedName entityContainer, String actionImportName)
         throws ODataException {
       if (entityContainer.equals(nameContainer)) {
           switch (actionImportName) {
@@ -673,8 +673,8 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlFunctionImport getFunctionImport(final FullQualifiedName entityContainer,
-        final String functionImportName)
+    public CsdlFunctionImport getFunctionImport(FullQualifiedName entityContainer,
+                                                String functionImportName)
             throws ODataException {
       if (entityContainer.equals(nameContainer)) {
         if (functionImportName.equals("FINRTInt16")) {
@@ -758,7 +758,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlEntityContainerInfo getEntityContainerInfo(final FullQualifiedName entityContainerName)
+    public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName)
         throws ODataException {
       if (entityContainerName == null) {
         return new CsdlEntityContainerInfo().setContainerName(new FullQualifiedName("org.olingo", "container"));
@@ -801,12 +801,12 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlTypeDefinition getTypeDefinition(final FullQualifiedName typeDefinitionName) throws ODataException {
+    public CsdlTypeDefinition getTypeDefinition(FullQualifiedName typeDefinitionName) throws ODataException {
       return null;
     }
 
     @Override
-    public CsdlTerm getTerm(final FullQualifiedName termName) throws ODataException {
+    public CsdlTerm getTerm(FullQualifiedName termName) throws ODataException {
       if (new FullQualifiedName("ns", "term").equals(termName)) {
         return new CsdlTerm().setType("Edm.String").setName("term");
 
@@ -832,7 +832,7 @@ public class MetadataDocumentXmlSerializerTest {
     }
 
     @Override
-    public CsdlAnnotations getAnnotationsGroup(final FullQualifiedName targetName, final String qualifier)
+    public CsdlAnnotations getAnnotationsGroup(FullQualifiedName targetName, String qualifier)
         throws ODataException {
       if (new FullQualifiedName("Alias", "ETAbstract").equals(targetName) && "Tablett".equals(qualifier)) {
         CsdlAnnotations annoGroup = new CsdlAnnotations();

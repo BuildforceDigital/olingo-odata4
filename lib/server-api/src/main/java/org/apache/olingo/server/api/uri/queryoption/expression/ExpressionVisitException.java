@@ -27,15 +27,15 @@ public class ExpressionVisitException extends ODataException {
 
   private static final long serialVersionUID = 1L;
 
-  public ExpressionVisitException(final String msg) {
+  public ExpressionVisitException(String msg) {
     super(msg);
   }
 
-  public ExpressionVisitException(final String msg, final Throwable cause) {
+  public ExpressionVisitException(String msg, Throwable cause) {
     super(msg, cause);
   }
 
-  public ExpressionVisitException(final Throwable cause) {
+  public ExpressionVisitException(Throwable cause) {
     super(cause);
   }
 }

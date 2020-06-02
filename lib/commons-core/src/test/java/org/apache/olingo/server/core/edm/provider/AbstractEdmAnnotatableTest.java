@@ -85,7 +85,7 @@ public class AbstractEdmAnnotatableTest {
   }
   
   private class EdmAnnotatableTester extends AbstractEdmAnnotatable {
-    public EdmAnnotatableTester(final Edm edm, final CsdlAnnotatable annotatable) {
+    public EdmAnnotatableTester(Edm edm, CsdlAnnotatable annotatable) {
       super(edm, annotatable);
     }
   }

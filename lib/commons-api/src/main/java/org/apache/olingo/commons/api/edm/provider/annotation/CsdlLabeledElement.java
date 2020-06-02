@@ -51,7 +51,7 @@ public class CsdlLabeledElement extends CsdlDynamicExpression implements CsdlAnn
     return name;
   }
 
-  public CsdlLabeledElement setName(final String name) {
+  public CsdlLabeledElement setName(String name) {
     this.name = name;
     return this;
   }
@@ -65,7 +65,7 @@ public class CsdlLabeledElement extends CsdlDynamicExpression implements CsdlAnn
     return value;
   }
 
-  public CsdlLabeledElement setValue(final CsdlExpression value) {
+  public CsdlLabeledElement setValue(CsdlExpression value) {
     this.value = value;
     return this;
   }
@@ -79,11 +79,11 @@ public class CsdlLabeledElement extends CsdlDynamicExpression implements CsdlAnn
       return false;
     }
     CsdlLabeledElement csdlLabelledEle = (CsdlLabeledElement) obj;
-    return (this.getName() == null ? csdlLabelledEle.getName() == null :
-      this.getName().equals(csdlLabelledEle.getName()))
-        && (this.getValue() == null ? csdlLabelledEle.getValue() == null :
-          this.getValue().equals(csdlLabelledEle.getValue()))
-        && (this.getAnnotations() == null ? csdlLabelledEle.getAnnotations() == null :
+    return (getName() == null ? csdlLabelledEle.getName() == null :
+            getName().equals(csdlLabelledEle.getName()))
+        && (getValue() == null ? csdlLabelledEle.getValue() == null :
+            getValue().equals(csdlLabelledEle.getValue()))
+        && (getAnnotations() == null ? csdlLabelledEle.getAnnotations() == null :
             checkAnnotations(csdlLabelledEle.getAnnotations()));
   }
   
@@ -91,9 +91,9 @@ public class CsdlLabeledElement extends CsdlDynamicExpression implements CsdlAnn
     if (csdlLabelledEleAnnotations == null) {
       return false;
     }
-    if (this.getAnnotations().size() == csdlLabelledEleAnnotations.size()) {
-      for (int i = 0; i < this.getAnnotations().size() ; i++) {
-        if (!this.getAnnotations().get(i).equals(
+    if (getAnnotations().size() == csdlLabelledEleAnnotations.size()) {
+      for (int i = 0; i < getAnnotations().size() ; i++) {
+        if (!getAnnotations().get(i).equals(
             csdlLabelledEleAnnotations.get(i))) {
           return false;
         }

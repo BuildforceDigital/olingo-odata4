@@ -30,7 +30,7 @@ public class FilterOptionImpl extends SystemQueryOptionImpl implements FilterOpt
     setKind(SystemQueryOptionKind.FILTER);
   }
 
-  public FilterOptionImpl setExpression(final Expression expression) {
+  public FilterOptionImpl setExpression(Expression expression) {
     this.expression = expression;
     return this;
   }

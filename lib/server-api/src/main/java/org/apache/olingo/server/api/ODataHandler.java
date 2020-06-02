@@ -37,7 +37,7 @@ public interface ODataHandler {
    * @param request the OData request
    * @return OData response
    */
-  ODataResponse process(final ODataRequest request);
+  ODataResponse process(ODataRequest request);
 
   /**
    * <p>Registers additional custom processor implementations for handling OData requests.</p>
