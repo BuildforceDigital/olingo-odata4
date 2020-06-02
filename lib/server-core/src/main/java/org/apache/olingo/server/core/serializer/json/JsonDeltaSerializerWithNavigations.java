@@ -362,10 +362,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
               property.getName(), property.getValue().toString());
         }
         break;
-      case COLLECTION_GEOSPATIAL:
-        throw new SerializerException("Property type not yet supported!",
-            SerializerException.MessageKeys.UNSUPPORTED_PROPERTY_TYPE, property.getName());
-      default:
+        default:
         throw new SerializerException("Property type not yet supported!",
             SerializerException.MessageKeys.UNSUPPORTED_PROPERTY_TYPE, property.getName());
       }

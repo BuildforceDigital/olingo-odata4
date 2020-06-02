@@ -18,18 +18,14 @@
  */
 package org.apache.olingo.server.core.deserializer.batch;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class BatchLineReaderTest {
 
@@ -198,7 +194,7 @@ public class BatchLineReaderTest {
     Line l3 = new Line("The second line", 2);
 
     assertEquals(l1, l2);
-    assertFalse(l1.equals(l3));
+    assertNotEquals(l1, l3);
     assertTrue(l1.hashCode() != l3.hashCode());
   }
 

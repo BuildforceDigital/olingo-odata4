@@ -901,10 +901,7 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
         writePrimitiveValue(type, value, isNullable, maxLength, precision,
             scale, isUnicode, xml10InvalidCharReplacement, writer);
         break;
-      case COLLECTION_GEOSPATIAL:
-        throw new SerializerException("Property type not yet supported!",
-            SerializerException.MessageKeys.UNSUPPORTED_PROPERTY_TYPE, property.getName());
-      default:
+        default:
         throw new SerializerException("Property type not yet supported!",
             SerializerException.MessageKeys.UNSUPPORTED_PROPERTY_TYPE, property.getName());
       }

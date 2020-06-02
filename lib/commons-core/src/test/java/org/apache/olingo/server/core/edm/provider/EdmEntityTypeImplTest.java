@@ -18,11 +18,7 @@
  */
 package org.apache.olingo.server.core.edm.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -370,16 +366,16 @@ public class EdmEntityTypeImplTest {
   @Test
   public void propertyCaching() {
     EdmElement property = typeWithBaseType.getProperty("Id");
-    assertTrue(property == typeWithBaseType.getProperty("Id"));
+      assertSame(property, typeWithBaseType.getProperty("Id"));
 
     property = typeWithBaseType.getProperty("address");
-    assertTrue(property == typeWithBaseType.getProperty("address"));
+      assertSame(property, typeWithBaseType.getProperty("address"));
 
     property = typeWithBaseType.getProperty("nav1");
-    assertTrue(property == typeWithBaseType.getProperty("nav1"));
+      assertSame(property, typeWithBaseType.getProperty("nav1"));
 
     property = typeWithBaseType.getProperty("nav2");
-    assertTrue(property == typeWithBaseType.getProperty("nav2"));
+      assertSame(property, typeWithBaseType.getProperty("nav2"));
   }
 
   @Test

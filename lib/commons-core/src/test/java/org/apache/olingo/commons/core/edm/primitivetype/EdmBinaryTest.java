@@ -18,15 +18,13 @@
  */
 package org.apache.olingo.commons.core.edm.primitivetype;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 
 import org.apache.olingo.commons.api.edm.EdmPrimitiveType;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class EdmBinaryTest extends PrimitiveTypeBaseTest {
 
@@ -82,23 +80,23 @@ public class EdmBinaryTest extends PrimitiveTypeBaseTest {
   public void valueOfString() throws Exception {
     byte[] binary = new byte[] { (byte) 0xAA, (byte) 0xBB, (byte) 0xCC, (byte) 0xDD, (byte) 0xEE, (byte) 0xFF };
 
-    assertTrue(Arrays.equals(binary, instance.valueOfString("qrvM3e7_", null, null, null, null, null, byte[].class)));
-    assertTrue(Arrays.equals(new Byte[] { binary[0], binary[1], binary[2] }, instance.valueOfString("qrvM", null, null,
-        null, null, null, Byte[].class)));
+      assertArrayEquals(binary, instance.valueOfString("qrvM3e7_", null, null, null, null, null, byte[].class));
+      assertArrayEquals(new Byte[]{binary[0], binary[1], binary[2]}, instance.valueOfString("qrvM", null, null,
+              null, null, null, Byte[].class));
 
-    assertTrue(Arrays.equals(binary, instance.valueOfString("qrvM3e7_", null, 6, null, null, null, byte[].class)));
-    assertTrue(Arrays.equals(new byte[] { 42 }, instance.valueOfString("Kg==", null, 1, null, null, null,
-        byte[].class)));
-    assertTrue(Arrays.equals(new byte[] { 42 }, instance.valueOfString("Kg", null, 1, null, null, null,
-        byte[].class)));
-    assertTrue(Arrays.equals(new byte[] { 1, 2 }, instance.valueOfString("AQI=", null, 2, null, null, null,
-        byte[].class)));
-    assertTrue(Arrays.equals(binary, instance.valueOfString("qrvM3e7_", null, 6, null, null, null,
-        byte[].class)));
-    assertTrue(Arrays.equals(binary, instance.valueOfString("qrvM3e7_", null, Integer.MAX_VALUE, null, null, null,
-        byte[].class)));
-    assertTrue(Arrays.equals(binary, instance.valueOfString("\nqrvM\n3e7_\r\n", null, 6, null, null, null,
-        byte[].class)));
+      assertArrayEquals(binary, instance.valueOfString("qrvM3e7_", null, 6, null, null, null, byte[].class));
+      assertArrayEquals(new byte[]{42}, instance.valueOfString("Kg==", null, 1, null, null, null,
+              byte[].class));
+      assertArrayEquals(new byte[]{42}, instance.valueOfString("Kg", null, 1, null, null, null,
+              byte[].class));
+      assertArrayEquals(new byte[]{1, 2}, instance.valueOfString("AQI=", null, 2, null, null, null,
+              byte[].class));
+      assertArrayEquals(binary, instance.valueOfString("qrvM3e7_", null, 6, null, null, null,
+              byte[].class));
+      assertArrayEquals(binary, instance.valueOfString("qrvM3e7_", null, Integer.MAX_VALUE, null, null, null,
+              byte[].class));
+      assertArrayEquals(binary, instance.valueOfString("\nqrvM\n3e7_\r\n", null, 6, null, null, null,
+              byte[].class));
 
     expectFacetsErrorInValueOfString(instance, "qrvM3e7_", null, 3, null, null, null);
     expectContentErrorInValueOfString(instance, "@");

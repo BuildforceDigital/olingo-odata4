@@ -55,11 +55,20 @@ public class MethodImpl implements Method {
     case STARTSWITH:
     case ENDSWITH:
     case SUBSTRINGOF:
-      kind = EdmPrimitiveTypeKind.Boolean;
+      case ISOF:
+      case GEOINTERSECTS:
+        kind = EdmPrimitiveTypeKind.Boolean;
       break;
     case LENGTH:
     case INDEXOF:
-      kind = EdmPrimitiveTypeKind.Int32;
+      case TOTALOFFSETMINUTES:
+      case YEAR:
+      case MONTH:
+      case DAY:
+      case HOUR:
+      case MINUTE:
+      case SECOND:
+        kind = EdmPrimitiveTypeKind.Int32;
       break;
     case SUBSTRING:
     case TOLOWER:
@@ -68,15 +77,7 @@ public class MethodImpl implements Method {
     case CONCAT:
       kind = EdmPrimitiveTypeKind.String;
       break;
-    case YEAR:
-    case MONTH:
-    case DAY:
-    case HOUR:
-    case MINUTE:
-    case SECOND:
-      kind = EdmPrimitiveTypeKind.Int32;
-      break;
-    case FRACTIONALSECONDS:
+      case FRACTIONALSECONDS:
     case TOTALSECONDS:
       kind = EdmPrimitiveTypeKind.Decimal;
       break;
@@ -86,10 +87,7 @@ public class MethodImpl implements Method {
     case TIME:
       kind = EdmPrimitiveTypeKind.TimeOfDay;
       break;
-    case TOTALOFFSETMINUTES:
-      kind = EdmPrimitiveTypeKind.Int32;
-      break;
-    case MINDATETIME:
+      case MINDATETIME:
     case MAXDATETIME:
     case NOW:
       kind = EdmPrimitiveTypeKind.DateTimeOffset;
@@ -97,21 +95,13 @@ public class MethodImpl implements Method {
     case ROUND:
     case FLOOR:
     case CEILING:
-      // Needs to be refined if Decimal must be distinguished from Double.
+      case GEODISTANCE:
+      case GEOLENGTH:
+        // Needs to be refined if Decimal must be distinguished from Double.
       kind = EdmPrimitiveTypeKind.Double;
       break;
-    case GEODISTANCE:
-    case GEOLENGTH:
-      kind = EdmPrimitiveTypeKind.Double;
-      break;
-    case GEOINTERSECTS:
-      kind = EdmPrimitiveTypeKind.Boolean;
-      break;
-    case CAST:
+      case CAST:
       return ((TypeLiteral) parameters.get(parameters.size() - 1)).getType();
-    case ISOF:
-      kind = EdmPrimitiveTypeKind.Boolean;
-      break;
     }
     return new ODataImpl().createPrimitiveTypeInstance(kind);
   }

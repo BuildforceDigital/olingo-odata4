@@ -64,9 +64,6 @@ public class Line {
     } else if (!content.equals(other.content)) {
       return false;
     }
-    if (lineNumber != other.lineNumber) {
-      return false;
-    }
-    return true;
+    return lineNumber == other.lineNumber;
   }
 }

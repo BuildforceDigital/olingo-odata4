@@ -161,8 +161,7 @@ public class ExpandParser {
         if(lastPart instanceof UriResourcePrimitivePropertyImpl){     
           item.setResourcePath(resource);
         }else{
-        EdmStructuredType newReferencedType = typeCastSuffix != null ? typeCastSuffix
-          : (EdmStructuredType) lastPart.getType();
+        EdmStructuredType newReferencedType = typeCastSuffix != null ? typeCastSuffix : (EdmStructuredType) lastPart.getType();
         boolean newReferencedIsCollection = lastPart.isCollection();
         if (hasSlash || tokenizer.next(TokenKind.SLASH)) {
           if (tokenizer.next(TokenKind.REF)) {

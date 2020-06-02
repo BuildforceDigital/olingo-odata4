@@ -18,11 +18,7 @@
  */
 package org.apache.olingo.server.core.edm.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -170,7 +166,7 @@ public class EdmEntityContainerImplTest {
     assertNotNull(functionImport);
     assertEquals("functionImportName", functionImport.getName());
     // Caching
-    assertTrue(functionImport == container.getFunctionImport("functionImportName"));
+    assertSame(functionImport, container.getFunctionImport("functionImportName"));
   }
 
   @Test
@@ -184,7 +180,7 @@ public class EdmEntityContainerImplTest {
     assertNotNull(actionImport);
     assertEquals("actionImportName", actionImport.getName());
     // Caching
-    assertTrue(actionImport == container.getActionImport("actionImportName"));
+    assertSame(actionImport, container.getActionImport("actionImportName"));
   }
 
   @Test
@@ -198,7 +194,7 @@ public class EdmEntityContainerImplTest {
     assertNotNull(singleton);
     assertEquals("singletonName", singleton.getName());
     // Caching
-    assertTrue(singleton == container.getSingleton("singletonName"));
+    assertSame(singleton, container.getSingleton("singletonName"));
   }
 
   @Test
@@ -212,7 +208,7 @@ public class EdmEntityContainerImplTest {
     assertNotNull(entitySet);
     assertEquals("entitySetName", entitySet.getName());
     // Caching
-    assertTrue(entitySet == container.getEntitySet("entitySetName"));
+    assertSame(entitySet, container.getEntitySet("entitySetName"));
   }
 
   @Test
@@ -220,7 +216,7 @@ public class EdmEntityContainerImplTest {
     assertNull(container.getEntitySet(null));
   }
 
-  private class CustomProvider extends CsdlAbstractEdmProvider {
+  private static class CustomProvider extends CsdlAbstractEdmProvider {
     @Override
     public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName)
         throws ODataException {

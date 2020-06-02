@@ -22,10 +22,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.codec.DecoderException;
@@ -216,7 +214,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
         writeEntitySet(metadata, entityType, entitySet,
             options.getExpand(), null, options.getSelect(), options.getWriteOnlyReferences(), null, name, json);
       }
-      writeNextLink(entitySet, json, pagination);
+      writeNextLink(entitySet, json);
       writeDeltaLink(entitySet, json, pagination);
 
       json.close();
@@ -265,7 +263,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
             options.getExpand(), null, options.getSelect(), options.getWriteOnlyReferences(), null, name, json);
       }
       // next link support for streaming results
-      writeNextLink(entitySet, json, pagination);
+      writeNextLink(entitySet, json);
 
       json.close();
     } catch (IOException | DecoderException e) {
@@ -1326,7 +1324,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
       }
       json.writeEndArray();
 
-      writeNextLink(entityCollection, json, pagination);
+      writeNextLink(entityCollection, json);
 
       json.writeEndObject();
 
@@ -1369,13 +1367,10 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
     }
   }
 
-  void writeNextLink(AbstractEntityCollection entitySet, JsonGenerator json, boolean pagination)
+  void writeNextLink(AbstractEntityCollection entitySet, JsonGenerator json)
       throws IOException {
     if (entitySet.getNext() != null) {
-      pagination = true;
       json.writeStringField(constants.getNextLink(), entitySet.getNext().toASCIIString());
-    }else{
-      pagination = false;
     }
   }
   

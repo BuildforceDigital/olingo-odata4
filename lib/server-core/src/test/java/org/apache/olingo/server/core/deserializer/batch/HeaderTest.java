@@ -18,11 +18,6 @@
  */
 package org.apache.olingo.server.core.deserializer.batch;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +25,8 @@ import java.util.List;
 import org.apache.olingo.commons.api.format.ContentType;
 import org.apache.olingo.commons.api.http.HttpHeader;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class HeaderTest {
 
@@ -97,8 +94,8 @@ public class HeaderTest {
     assertEquals(header.getHeader(HttpHeader.CONTENT_TYPE), copy.getHeader(HttpHeader.CONTENT_TYPE));
     assertEquals(header.getHeaderField(HttpHeader.CONTENT_TYPE), copy.getHeaderField(HttpHeader.CONTENT_TYPE));
 
-    assertTrue(header.getHeaders(HttpHeader.CONTENT_TYPE) != copy.getHeaders(HttpHeader.CONTENT_TYPE));
-    assertTrue(header.getHeaderField(HttpHeader.CONTENT_TYPE) != copy.getHeaderField(HttpHeader.CONTENT_TYPE));
+      assertNotSame(header.getHeaders(HttpHeader.CONTENT_TYPE), copy.getHeaders(HttpHeader.CONTENT_TYPE));
+      assertNotSame(header.getHeaderField(HttpHeader.CONTENT_TYPE), copy.getHeaderField(HttpHeader.CONTENT_TYPE));
   }
 
   @Test
@@ -113,7 +110,7 @@ public class HeaderTest {
     assertEquals(field.getLineNumber(), clone.getLineNumber());
     assertEquals(field.getValues(), clone.getValues());
 
-    assertTrue(field.getValues() != clone.getValues());
+      assertNotSame(field.getValues(), clone.getValues());
   }
 
   @Test

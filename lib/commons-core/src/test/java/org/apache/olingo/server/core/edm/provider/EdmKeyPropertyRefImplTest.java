@@ -18,10 +18,7 @@
  */
 package org.apache.olingo.server.core.edm.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,8 +46,8 @@ public class EdmKeyPropertyRefImplTest {
 
     EdmProperty property = ref.getProperty();
     assertNotNull(property);
-    assertTrue(property == keyPropertyMock);
-    assertTrue(property == ref.getProperty());
+      assertSame(property, keyPropertyMock);
+      assertSame(property, ref.getProperty());
   }
 
   @Test
@@ -68,7 +65,7 @@ public class EdmKeyPropertyRefImplTest {
 
     EdmProperty property = ref.getProperty();
     assertNotNull(property);
-    assertTrue(property == keyPropertyMock);
+      assertSame(property, keyPropertyMock);
   }
 
   @Test(expected = EdmException.class)
@@ -115,7 +112,7 @@ public class EdmKeyPropertyRefImplTest {
 
     EdmProperty property = ref.getProperty();
     assertNotNull(property);
-    assertTrue(property == keyPropertyMock);
+      assertSame(property, keyPropertyMock);
   }
 
   @Test(expected = EdmException.class)

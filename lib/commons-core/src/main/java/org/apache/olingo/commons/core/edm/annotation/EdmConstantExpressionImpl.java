@@ -34,7 +34,6 @@ import org.apache.olingo.commons.core.edm.primitivetype.EdmPrimitiveTypeFactory;
 
 public class EdmConstantExpressionImpl extends AbstractEdmExpression implements EdmConstantExpression {
 
-  private EdmPrimitiveType type;
   private final CsdlConstantExpression csdlExp;
 
   private boolean built = false;
@@ -105,7 +104,7 @@ public class EdmConstantExpressionImpl extends AbstractEdmExpression implements 
       default:
         kind = EdmPrimitiveTypeKind.String;
       }
-      type = EdmPrimitiveTypeFactory.getInstance(kind);
+      EdmPrimitiveType type = EdmPrimitiveTypeFactory.getInstance(kind);
       try {
         primitive = type.valueOfString(csdlExp.getValue(), null, null, null, null, null, type.getDefaultType());
       } catch (EdmPrimitiveTypeException e) {

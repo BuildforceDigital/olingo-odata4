@@ -164,7 +164,7 @@ public class EdmImplCallCreateTest {
     EdmAnnotations annotationGroup = edm.getAnnotationGroup(FQN, null);
     assertNotNull(annotationGroup);
 
-    assertEquals(null, annotationGroup.getQualifier());
+      assertNull(annotationGroup.getQualifier());
 
     assertNull(edm.getAnnotationGroup(WRONG_FQN, null));
   }

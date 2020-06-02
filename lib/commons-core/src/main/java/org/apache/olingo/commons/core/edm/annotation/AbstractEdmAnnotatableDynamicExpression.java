@@ -47,7 +47,7 @@ public abstract class AbstractEdmAnnotatableDynamicExpression extends AbstractEd
     return helper.getAnnotations();
   }
 
-  private class AnnotationHelper extends AbstractEdmAnnotatable {
+  private static class AnnotationHelper extends AbstractEdmAnnotatable {
 
     public AnnotationHelper(Edm edm, CsdlAnnotatable annotatable) {
       super(edm, annotatable);

@@ -138,9 +138,7 @@ public class EdmEntityTypeImpl extends AbstractEdmStructuredType implements EdmE
   public boolean hasStream() {
     checkBaseType();
 
-    if (hasStream || entityBaseType != null && entityBaseType.hasStream()) {
-      return true;
-    }
-    return false;
+    return hasStream || entityBaseType != null && entityBaseType.hasStream();
   }
+
 }

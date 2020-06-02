@@ -51,7 +51,7 @@ public class EdmTypeImplTest {
     }
   }
 
-  private class AnnoTester implements CsdlAnnotatable {
+  private static class AnnoTester implements CsdlAnnotatable {
     @Override
     public List<CsdlAnnotation> getAnnotations() {
       CsdlAnnotation annotation = new CsdlAnnotation();

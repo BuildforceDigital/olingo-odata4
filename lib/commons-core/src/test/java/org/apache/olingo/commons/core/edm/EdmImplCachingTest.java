@@ -18,10 +18,7 @@
  */
 package org.apache.olingo.commons.core.edm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -73,13 +70,13 @@ public class EdmImplCachingTest {
     EdmEntityContainer cachedContainer = edm.getEntityContainer(NAME1);
     assertNotNull(entityContainer);
 
-    assertTrue(entityContainer == cachedContainer);
+      assertSame(entityContainer, cachedContainer);
     assertEquals(entityContainer, cachedContainer);
 
     cachedContainer = edm.getEntityContainer(NAME1);
     assertNotNull(cachedContainer);
 
-    assertTrue(entityContainer == cachedContainer);
+      assertSame(entityContainer, cachedContainer);
     assertEquals(entityContainer, cachedContainer);
 
     EdmEntityContainer entityContainer2 = edm.getEntityContainer(NAME2);
@@ -96,7 +93,7 @@ public class EdmImplCachingTest {
     EdmEnumType cachedType = edm.getEnumType(NAME1);
     assertNotNull(cachedType);
 
-    assertTrue(enumType == cachedType);
+      assertSame(enumType, cachedType);
     assertEquals(enumType, cachedType);
 
     EdmEnumType enumType2 = edm.getEnumType(NAME2);
@@ -113,7 +110,7 @@ public class EdmImplCachingTest {
     EdmTypeDefinition cachedDefinition = edm.getTypeDefinition(NAME1);
     assertNotNull(cachedDefinition);
 
-    assertTrue(typeDefinition == cachedDefinition);
+      assertSame(typeDefinition, cachedDefinition);
     assertEquals(typeDefinition, cachedDefinition);
 
     EdmTypeDefinition typeDefinition2 = edm.getTypeDefinition(NAME2);
@@ -130,7 +127,7 @@ public class EdmImplCachingTest {
     EdmEntityType cachedType = edm.getEntityType(NAME1);
     assertNotNull(cachedType);
 
-    assertTrue(entityType == cachedType);
+      assertSame(entityType, cachedType);
     assertEquals(entityType, cachedType);
 
     EdmEntityType entityType2 = edm.getEntityType(NAME2);
@@ -147,7 +144,7 @@ public class EdmImplCachingTest {
     EdmComplexType cachedType = edm.getComplexType(NAME1);
     assertNotNull(cachedType);
 
-    assertTrue(complexType == cachedType);
+      assertSame(complexType, cachedType);
     assertEquals(complexType, cachedType);
 
     EdmComplexType complexType2 = edm.getComplexType(NAME2);
@@ -164,7 +161,7 @@ public class EdmImplCachingTest {
     EdmAction cachedAction = edm.getUnboundAction(NAME1);
     assertNotNull(cachedAction);
 
-    assertTrue(action == cachedAction);
+      assertSame(action, cachedAction);
     assertEquals(action, cachedAction);
 
     EdmAction action2 = edm.getUnboundAction(NAME2);
@@ -180,7 +177,7 @@ public class EdmImplCachingTest {
     EdmAction cachedAction = edm.getBoundAction(NAME1, NAME2, true);
     assertNotNull(cachedAction);
 
-    assertTrue(action == cachedAction);
+      assertSame(action, cachedAction);
     assertEquals(action, cachedAction);
 
     EdmAction action2 = edm.getBoundAction(NAME2, NAME2, true);
@@ -197,7 +194,7 @@ public class EdmImplCachingTest {
     EdmFunction cachedfunction = edm.getUnboundFunction(NAME1, null);
     assertNotNull(cachedfunction);
 
-    assertTrue(function == cachedfunction);
+      assertSame(function, cachedfunction);
     assertEquals(function, cachedfunction);
 
     EdmFunction function2 = edm.getBoundFunction(NAME2, null, false, null);
@@ -214,7 +211,7 @@ public class EdmImplCachingTest {
     EdmFunction cachedfunction = edm.getBoundFunction(NAME1, NAME2, true, new ArrayList<String>());
     assertNotNull(cachedfunction);
 
-    assertTrue(function == cachedfunction);
+      assertSame(function, cachedfunction);
     assertEquals(function, cachedfunction);
 
     EdmFunction function2 = edm.getBoundFunction(NAME2, NAME2, true, new ArrayList<String>());
@@ -237,7 +234,7 @@ public class EdmImplCachingTest {
     EdmFunction cachedfunction = edm.getBoundFunction(NAME1, NAME2, true, parameters2);
     assertNotNull(cachedfunction);
 
-    assertTrue(function == cachedfunction);
+      assertSame(function, cachedfunction);
     assertEquals(function, cachedfunction);
 
     EdmFunction function2 = edm.getBoundFunction(NAME2, NAME2, true, new ArrayList<String>());
@@ -255,7 +252,7 @@ public class EdmImplCachingTest {
     assertNotNull(cachedTerm);
 
     assertEquals(term1, cachedTerm);
-    assertTrue(term1 == cachedTerm);
+      assertSame(term1, cachedTerm);
 
     EdmTerm term2 = edm.getTerm(NAME2);
     assertNotNull(term2);
@@ -272,7 +269,7 @@ public class EdmImplCachingTest {
     assertNotNull(cachedAnnotationGroup);
 
     assertEquals(annotationGroup1, cachedAnnotationGroup);
-    assertTrue(annotationGroup1 == cachedAnnotationGroup);
+      assertSame(annotationGroup1, cachedAnnotationGroup);
     
     EdmAnnotations annotationGroup2 = edm.getAnnotationGroup(NAME1, "");
     assertNotNull(annotationGroup2);

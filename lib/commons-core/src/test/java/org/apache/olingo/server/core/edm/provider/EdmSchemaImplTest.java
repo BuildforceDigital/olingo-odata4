@@ -18,9 +18,7 @@
  */
 package org.apache.olingo.server.core.edm.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -112,8 +110,8 @@ public class EdmSchemaImplTest {
     assertEquals(2, typeDefinitions.size());
 
     for (EdmTypeDefinition def : typeDefinitions) {
-      assertTrue(def == edm.getTypeDefinition(new FullQualifiedName(NAMESPACE, def.getName())));
-      assertTrue(def == edm.getTypeDefinition(new FullQualifiedName(ALIAS, def.getName())));
+      assertSame(def, edm.getTypeDefinition(new FullQualifiedName(NAMESPACE, def.getName())));
+      assertSame(def, edm.getTypeDefinition(new FullQualifiedName(ALIAS, def.getName())));
     }
   }
 
@@ -124,8 +122,8 @@ public class EdmSchemaImplTest {
     assertEquals(2, enumTypes.size());
 
     for (EdmEnumType enumType : enumTypes) {
-      assertTrue(enumType == edm.getEnumType(new FullQualifiedName(NAMESPACE, enumType.getName())));
-      assertTrue(enumType == edm.getEnumType(new FullQualifiedName(ALIAS, enumType.getName())));
+      assertSame(enumType, edm.getEnumType(new FullQualifiedName(NAMESPACE, enumType.getName())));
+      assertSame(enumType, edm.getEnumType(new FullQualifiedName(ALIAS, enumType.getName())));
     }
   }
 
@@ -136,8 +134,8 @@ public class EdmSchemaImplTest {
     assertEquals(2, entityTypes.size());
 
     for (EdmEntityType entityType : entityTypes) {
-      assertTrue(entityType == edm.getEntityType(new FullQualifiedName(NAMESPACE, entityType.getName())));
-      assertTrue(entityType == edm.getEntityType(new FullQualifiedName(ALIAS, entityType.getName())));
+      assertSame(entityType, edm.getEntityType(new FullQualifiedName(NAMESPACE, entityType.getName())));
+      assertSame(entityType, edm.getEntityType(new FullQualifiedName(ALIAS, entityType.getName())));
     }
   }
 
@@ -148,8 +146,8 @@ public class EdmSchemaImplTest {
     assertEquals(2, complexTypes.size());
 
     for (EdmComplexType complexType : complexTypes) {
-      assertTrue(complexType == edm.getComplexType(new FullQualifiedName(NAMESPACE, complexType.getName())));
-      assertTrue(complexType == edm.getComplexType(new FullQualifiedName(ALIAS, complexType.getName())));
+      assertSame(complexType, edm.getComplexType(new FullQualifiedName(NAMESPACE, complexType.getName())));
+      assertSame(complexType, edm.getComplexType(new FullQualifiedName(ALIAS, complexType.getName())));
     }
   }
 
@@ -160,8 +158,8 @@ public class EdmSchemaImplTest {
     assertEquals(2, actions.size());
 
     for (EdmAction action : actions) {
-      assertTrue(action == edm.getUnboundAction(new FullQualifiedName(NAMESPACE, action.getName())));
-      assertTrue(action == edm.getUnboundAction(new FullQualifiedName(ALIAS, action.getName())));
+      assertSame(action, edm.getUnboundAction(new FullQualifiedName(NAMESPACE, action.getName())));
+      assertSame(action, edm.getUnboundAction(new FullQualifiedName(ALIAS, action.getName())));
     }
   }
 
@@ -173,10 +171,10 @@ public class EdmSchemaImplTest {
 
     for (EdmFunction function : functions) {
       FullQualifiedName functionName = new FullQualifiedName(NAMESPACE, function.getName());
-      assertTrue(function == edm.getUnboundFunction(functionName, null));
+      assertSame(function, edm.getUnboundFunction(functionName, null));
 
       functionName = new FullQualifiedName(ALIAS, function.getName());
-      assertTrue(function == edm.getUnboundFunction(functionName, null));
+      assertSame(function, edm.getUnboundFunction(functionName, null));
     }
   }
 
@@ -188,9 +186,9 @@ public class EdmSchemaImplTest {
 
     for (EdmAnnotations annotationGroup : annotationGroups) {
       FullQualifiedName targetName = new FullQualifiedName(annotationGroup.getTargetPath());
-      assertTrue(annotationGroup == edm.getAnnotationGroup(targetName, null));
+      assertSame(annotationGroup, edm.getAnnotationGroup(targetName, null));
       targetName = new FullQualifiedName(annotationGroup.getTargetPath().replace(NAMESPACE, ALIAS));
-      assertTrue(annotationGroup == edm.getAnnotationGroup(targetName, null));
+      assertSame(annotationGroup, edm.getAnnotationGroup(targetName, null));
     }
   }
 
@@ -227,12 +225,12 @@ public class EdmSchemaImplTest {
       assertNotNull(obj.getFunctionFqn());
     }
 
-    assertTrue(container == edm.getEntityContainer(new FullQualifiedName(schema.getNamespace(), container.getName())));
-    assertTrue(container == edm.getEntityContainer(null));
-    assertTrue(container == edm.getEntityContainer());
+    assertSame(container, edm.getEntityContainer(new FullQualifiedName(schema.getNamespace(), container.getName())));
+    assertSame(container, edm.getEntityContainer(null));
+    assertSame(container, edm.getEntityContainer());
   }
 
-  private class LocalProvider implements CsdlEdmProvider {
+  private static class LocalProvider implements CsdlEdmProvider {
 
     @Override
     public CsdlEnumType getEnumType(FullQualifiedName enumTypeName) throws ODataException {

@@ -118,7 +118,7 @@ public class DebugTabRuntime implements DebugTab {
     }
   }
 
-  private class RuntimeNode {
+  private static class RuntimeNode {
 
     private String className;
     private String methodName;

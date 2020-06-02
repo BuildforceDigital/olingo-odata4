@@ -283,7 +283,7 @@ public class LexerTest {
 //    test.run("$format=" + cPCHAR + "/" + cPCHAR).has(TokenKind.FORMAT).isInput();
   }
 
-  public class TokenValidator {
+  public static class TokenValidator {
 
     private String input = null;
     private UriTokenizer tokenizer = null;

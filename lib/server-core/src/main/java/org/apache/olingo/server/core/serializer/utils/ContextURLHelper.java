@@ -65,7 +65,7 @@ public final class ContextURLHelper {
       handleSelect(type, select, result);
     }
 
-    if (ExpandSelectHelper.hasExpand(expand) && !(null != ExpandSelectHelper.getExpandAll(expand))) {
+    if (ExpandSelectHelper.hasExpand(expand) && null == ExpandSelectHelper.getExpandAll(expand)) {
       handleExpand(type, expand, result);
     }else if(expand != null && null != ExpandSelectHelper.getExpandAll(expand)){
       handleExpandAll(type, expand, result);
@@ -273,7 +273,7 @@ public final class ContextURLHelper {
 
         ExpandItem expandItem = ExpandSelectHelper.getExpandItem(expand.getExpandItems(), propertyName);
         if (ExpandSelectHelper.hasExpand(expandItem.getExpandOption())
-            && !(null != ExpandSelectHelper.getExpandAll(expandItem.getExpandOption()))
+            && null == ExpandSelectHelper.getExpandAll(expandItem.getExpandOption())
             || ExpandSelectHelper.hasSelect(expandItem.getSelectOption())) {
           String innerSelectList = buildSelectList(type.getNavigationProperty(propertyName).getType(),
               expandItem.getExpandOption(), expandItem.getSelectOption());
@@ -315,7 +315,7 @@ public final class ContextURLHelper {
     if (result.length() > 0) {
       result.append(',');
     }
-    result.append(Encoder.encode(propertyName) + "()");
+    result.append(Encoder.encode(propertyName)).append("()");
   }
 
   private static List<String> getPropertyPath(List<UriResource> path) {

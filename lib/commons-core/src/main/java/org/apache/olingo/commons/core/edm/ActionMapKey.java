@@ -58,11 +58,8 @@ public class ActionMapKey {
       return false;
     }
     ActionMapKey other = (ActionMapKey) obj;
-    if (actionName.equals(other.actionName) && bindingParameterTypeName.equals(other.bindingParameterTypeName)
-        && isBindingParameterCollection.equals(other.isBindingParameterCollection)) {
-      return true;
-    }
-    return false;
+    return actionName.equals(other.actionName) && bindingParameterTypeName.equals(other.bindingParameterTypeName)
+            && isBindingParameterCollection.equals(other.isBindingParameterCollection);
   }
 
 }

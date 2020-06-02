@@ -77,7 +77,7 @@ public class ContentTypeTest {
     assertEquals(ContentType.create("a/b;c=d;e=f"), ContentType.create(ct2, "e", "f"));
     assertEquals(ContentType.create("a/b;c=g"), ContentType.create(ct2, "c", "g"));
 
-    assertFalse(ContentType.create(ct2, "c", "g").equals(ct2));
+      assertNotEquals(ContentType.create(ct2, "c", "g"), ct2);
   }
 
   @Test

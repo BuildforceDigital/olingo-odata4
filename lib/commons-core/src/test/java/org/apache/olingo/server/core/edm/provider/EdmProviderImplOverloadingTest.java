@@ -18,12 +18,7 @@
  */
 package org.apache.olingo.server.core.edm.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -123,13 +118,13 @@ public class EdmProviderImplOverloadingTest {
     assertNotNull(action);
     assertEquals(operationName1.getNamespace(), action.getNamespace());
     assertEquals(operationName1.getName(), action.getName());
-    assertTrue(action == edm.getBoundAction(operationName1, operationType1, false));
+      assertSame(action, edm.getBoundAction(operationName1, operationType1, false));
 
     EdmAction action2 = edm.getBoundAction(operationName1, operationType1, true);
     assertNotNull(action2);
     assertEquals(operationName1.getNamespace(), action2.getNamespace());
     assertEquals(operationName1.getName(), action2.getName());
-    assertTrue(action2 == edm.getBoundAction(operationName1, operationType1, true));
+      assertSame(action2, edm.getBoundAction(operationName1, operationType1, true));
 
     assertNotSame(action, action2);
   }
@@ -165,14 +160,14 @@ public class EdmProviderImplOverloadingTest {
     assertNotNull(function1);
     assertFalse(function1.isBound());
 
-    assertFalse(function == function1);
+      assertNotSame(function, function1);
     assertNotSame(function, function1);
 
     EdmFunction function2 = edm.getUnboundFunction(operationName1, parameter2Names);
     assertNotNull(function2);
     assertFalse(function2.isBound());
 
-    assertFalse(function1 == function2);
+      assertNotSame(function1, function2);
     assertNotSame(function1, function2);
 
     EdmFunction function3 = edm.getBoundFunction(operationName1, operationType1, false, parameter2Names);
@@ -182,13 +177,13 @@ public class EdmProviderImplOverloadingTest {
     assertNotNull(function4);
     assertTrue(function4.isBound());
 
-    assertFalse(function3 == function4);
+      assertNotSame(function3, function4);
     assertNotSame(function3, function4);
 
-    assertFalse(function1 == function3);
-    assertFalse(function1 == function4);
-    assertFalse(function2 == function3);
-    assertFalse(function2 == function4);
+      assertNotSame(function1, function3);
+      assertNotSame(function1, function4);
+      assertNotSame(function2, function3);
+      assertNotSame(function2, function4);
     assertNotSame(function1, function3);
     assertNotSame(function1, function4);
     assertNotSame(function2, function3);

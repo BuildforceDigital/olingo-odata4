@@ -18,11 +18,7 @@
  */
 package org.apache.olingo.server.core.edm.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -71,7 +67,7 @@ public class EdmNavigationPropertyImplTest {
 
     // Test caching
     EdmType cachedType = property.getType();
-    assertTrue(type == cachedType);
+      assertSame(type, cachedType);
   }
 
   @Test
@@ -99,7 +95,7 @@ public class EdmNavigationPropertyImplTest {
     assertNotNull(property.getReferentialConstraints());
     List<EdmReferentialConstraint> edmReferentialConstraints = property.getReferentialConstraints();
     assertEquals(1, edmReferentialConstraints.size());
-    assertTrue(edmReferentialConstraints == property.getReferentialConstraints());
+      assertSame(edmReferentialConstraints, property.getReferentialConstraints());
     
   }
 
@@ -124,7 +120,7 @@ public class EdmNavigationPropertyImplTest {
     assertNotNull(partner);
 
     // Caching
-    assertTrue(partner == property.getPartner());
+      assertSame(partner, property.getPartner());
   }
 
   @Test(expected = EdmException.class)

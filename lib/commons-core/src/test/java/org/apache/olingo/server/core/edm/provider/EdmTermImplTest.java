@@ -150,9 +150,9 @@ public class EdmTermImplTest {
     // set facets
     assertFalse(derivedTerm.isNullable());
     assertEquals("abc", derivedTerm.getDefaultValue());
-    assertEquals(new Integer(15), derivedTerm.getMaxLength());
-    assertEquals(new Integer(14), derivedTerm.getPrecision());
-    assertEquals(new Integer(13), derivedTerm.getScale());
+    assertEquals(Integer.valueOf(15), derivedTerm.getMaxLength());
+    assertEquals(Integer.valueOf(14), derivedTerm.getPrecision());
+    assertEquals(Integer.valueOf(13), derivedTerm.getScale());
     // assertNull(derivedTerm.getSrid());
   }
 

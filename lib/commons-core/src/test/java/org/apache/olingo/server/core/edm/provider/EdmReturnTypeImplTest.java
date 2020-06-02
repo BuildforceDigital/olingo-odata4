@@ -18,11 +18,7 @@
  */
 package org.apache.olingo.server.core.edm.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -88,7 +84,7 @@ public class EdmReturnTypeImplTest {
     EdmType cachedType = typeImpl.getType();
     assertEquals(EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.String), cachedType);
     assertTrue(typeImpl.isCollection());
-    assertTrue(cachedType == typeImpl.getType());
+      assertSame(cachedType, typeImpl.getType());
   }
 
   @Test(expected = EdmException.class)

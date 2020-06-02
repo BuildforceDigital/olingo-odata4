@@ -67,9 +67,7 @@ public class ODataNettyHandlerImpl implements ODataNettyHandler {
   private static final String CONTEXT_PATH = "contextPath";
   private static final String SPLIT = "split";
 
-  private int split = 0;
-
-  public ODataNettyHandlerImpl(OData odata, ServiceMetadata serviceMetadata) {
+	public ODataNettyHandlerImpl(OData odata, ServiceMetadata serviceMetadata) {
     debugger = new ServerCoreDebugger(odata);
     handler = new ODataHandlerImpl(odata, serviceMetadata, debugger);
   }
@@ -306,7 +304,8 @@ public void processNettyRequest(HttpRequest request, HttpResponse response,
     int processMethodHandle =
     		debugger.startRuntimeMeasurement("ODataNettyHandlerImpl", "process");
     try {
-      fillODataRequest(odRequest, request, 
+		int split = 0;
+		fillODataRequest(odRequest, request,
           requestParameters.get(SPLIT) != null? Integer.parseInt(requestParameters.get(SPLIT)) : split, 
               requestParameters.get(CONTEXT_PATH));
 

@@ -63,13 +63,8 @@ public class TargetQualifierMapKey {
       return false;
     }
     if (targetName == null) {
-      if (other.targetName != null) {
-        return false;
-      }
-    } else if (!targetName.equals(other.targetName)) {
-      return false;
-    }
-    return true;
+      return other.targetName == null;
+    } else return targetName.equals(other.targetName);
   }
 
 }

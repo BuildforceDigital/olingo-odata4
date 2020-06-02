@@ -93,9 +93,9 @@ public class EdmCastImplTest extends AbstractAnnotationTest{
 
     EdmCast asIsOf = isOf.asDynamic().asCast();
 
-    assertEquals(new Integer(1), asIsOf.getMaxLength());
-    assertEquals(new Integer(2), asIsOf.getPrecision());
-    assertEquals(new Integer(3), asIsOf.getScale());
+    assertEquals(Integer.valueOf(1), asIsOf.getMaxLength());
+    assertEquals(Integer.valueOf(2), asIsOf.getPrecision());
+    assertEquals(Integer.valueOf(3), asIsOf.getScale());
 
     assertNotNull(asIsOf.getType());
     assertTrue(asIsOf.getType() instanceof EdmPrimitiveType);

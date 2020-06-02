@@ -84,7 +84,7 @@ public class AbstractEdmAnnotatableTest {
     assertNull(anno.getAnnotation(term, "qualifier"));
   }
   
-  private class EdmAnnotatableTester extends AbstractEdmAnnotatable {
+  private static class EdmAnnotatableTester extends AbstractEdmAnnotatable {
     public EdmAnnotatableTester(Edm edm, CsdlAnnotatable annotatable) {
       super(edm, annotatable);
     }
