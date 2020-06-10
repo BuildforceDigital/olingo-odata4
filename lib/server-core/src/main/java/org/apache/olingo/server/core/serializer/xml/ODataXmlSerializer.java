@@ -226,7 +226,7 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
 
     ContextURL contextURL = checkContextURL(options == null ? null : options.getContextURL());
     String name = contextURL == null ? null : contextURL.getEntitySetOrSingletonOrType();
-    if (options != null && options.getWriteOnlyReferences()) {
+    if (options.getWriteOnlyReferences()) {
       ReferenceCollectionSerializerOptions rso = ReferenceCollectionSerializerOptions.with()
           .contextURL(contextURL).build();
       return entityReferenceCollection(entitySet, rso);
@@ -248,28 +248,23 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
           ContextURLBuilder.create(contextURL).toASCIIString());
       writeMetadataETag(metadata, writer);
       writeOperations(entitySet.getOperations(), writer);
-      if (options != null && options.getId() != null) {
+      if (options.getId() != null) {
         writer.writeStartElement(ATOM, Constants.ATOM_ELEM_ID, NS_ATOM);
         writer.writeCharacters(options.getId());
         writer.writeEndElement();
       }
 
-      if (options != null && options.getCount() != null && options.getCount().getValue()
-          && entitySet.getCount() != null) {
+      if (options.getCount() != null && options.getCount().getValue() && entitySet.getCount() != null) {
         writeCount(entitySet, writer);
       }
       if (entitySet.getNext() != null) {
         writeNextLink(entitySet, writer);
       }
 
-      boolean writeOnlyRef = (options != null && options.getWriteOnlyReferences());
-      if (options == null) {
-        writeEntitySet(metadata, entityType, entitySet, null, null, null, null, writer, writeOnlyRef, name, null);
-      } else {
-        writeEntitySet(metadata, entityType, entitySet,
-            options.getExpand(), null, 
-            options.getSelect(), options.xml10InvalidCharReplacement(), writer, writeOnlyRef, name, null);
-      }
+      boolean writeOnlyRef = options.getWriteOnlyReferences();
+      writeEntitySet(metadata, entityType, entitySet,
+          options.getExpand(), null,
+          options.getSelect(), options.xml10InvalidCharReplacement(), writer, writeOnlyRef, name, null);
 
       writer.writeEndElement();
       writer.writeEndDocument();
@@ -310,27 +305,22 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
           ContextURLBuilder.create(contextURL).toASCIIString());
       writeMetadataETag(metadata, writer);
 
-      if (options != null && options.getId() != null) {
+      if (options.getId() != null) {
         writer.writeStartElement(ATOM, Constants.ATOM_ELEM_ID, NS_ATOM);
         writer.writeCharacters(options.getId());
         writer.writeEndElement();
       }
 
-      if (options != null && options.getCount() != null && options.getCount().getValue()
-          && entitySet.getCount() != null) {
+      if (options.getCount() != null && options.getCount().getValue() && entitySet.getCount() != null) {
         writeCount(entitySet, writer);
       }
       if (entitySet!=null && entitySet.getNext() != null) {
         writeNextLink(entitySet, writer);
       }
-      boolean writeOnlyRef = (options != null && options.getWriteOnlyReferences());
-      if (options == null) {
-        writeEntitySet(metadata, entityType, entitySet, null, null, null, null, writer, writeOnlyRef, name, null);
-      } else {
-        writeEntitySet(metadata, entityType, entitySet,
-            options.getExpand(), null, 
-            options.getSelect(), options.xml10InvalidCharReplacement(), writer, writeOnlyRef, name, null);
-      }
+      boolean writeOnlyRef = options.getWriteOnlyReferences();
+      writeEntitySet(metadata, entityType, entitySet,
+          options.getExpand(), null,
+          options.getSelect(), options.xml10InvalidCharReplacement(), writer, writeOnlyRef, name, null);
 
       writer.writeEndElement();
       writer.writeEndDocument();
@@ -354,7 +344,7 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
                                  Entity entity, EntitySerializerOptions options) throws SerializerException {
     ContextURL contextURL = checkContextURL(options == null ? null : options.getContextURL());
     String name = contextURL == null ? null : contextURL.getEntitySetOrSingletonOrType();
-    if (options != null && options.getWriteOnlyReferences()) {
+    if (options.getWriteOnlyReferences()) {
       return entityReference(entity,
           ReferenceSerializerOptions.with().contextURL(contextURL).build());
     }
@@ -367,10 +357,10 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
       XMLStreamWriter writer = XMLOutputFactory.newInstance().createXMLStreamWriter(outputStream, DEFAULT_CHARSET);
       writer.writeStartDocument(DEFAULT_CHARSET, "1.0");
       writeEntity(metadata, entityType, entity, contextURL,
-          options == null ? null : options.getExpand(),
+              options.getExpand(),
           null,
-          options == null ? null : options.getSelect(),
-          options == null ? null : options.xml10InvalidCharReplacement(),
+              options.getSelect(),
+              options.xml10InvalidCharReplacement(),
           writer, true, false, name, null);
       writer.writeEndDocument();
 
@@ -432,8 +422,7 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
    */
   private String getEntityId(Entity entity, EdmEntityType entityType, String name) throws SerializerException {
     if(entity.getId() == null) {
-      if((entity == null || entityType == null || entityType.getKeyPredicateNames() == null 
-          || name == null)) {
+      if(entityType == null || entityType.getKeyPredicateNames() == null || name == null) {
         throw new SerializerException("Entity id is null.", SerializerException.MessageKeys.MISSING_ID);
       }else{
         UriHelper uriHelper = new UriHelperImpl();
@@ -540,7 +529,7 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
       
       writer.writeEndElement(); // entry
     } finally {
-      if (!cycle && ancestors != null) {
+      if (ancestors != null) {
         ancestors.remove(getEntityId(entity, entityType, name));
       }
     }
@@ -936,12 +925,12 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
         writer.writeAttribute(METADATA, NS_METADATA, Constants.ATTR_TYPE, propertyType);
       }
       if(typeName!=null && !propertyType.equals(type.getFullQualifiedName().getFullQualifiedNameAsString())){
-        complexType = (EdmComplexType) (metadata.getEdm().getComplexType(new FullQualifiedName(propertyType)));
+        complexType = metadata.getEdm().getComplexType(new FullQualifiedName(propertyType));
       }else{
         complexType = type;
       }
       if (property.getValueType() == ValueType.COLLECTION_COMPLEX) {
-        expandedPaths = expandedPaths == null || expandedPaths.isEmpty() ? null :
+        expandedPaths = expandedPaths.isEmpty() ? null :
                 ExpandSelectHelper.getReducedExpandItemsPaths(expandedPaths, property.getName());
         writeComplexValue(metadata, complexType,
                 ((ComplexValue) value).getValue(), selectedPaths,
@@ -1055,12 +1044,12 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
         writer.writeAttribute(METADATA, NS_METADATA, Constants.ATTR_NULL, "true");
       } else {
         writePrimitive(type, property,
-            options == null ? null : options.isNullable(),
-            options == null ? null : options.getMaxLength(),
-            options == null ? null : options.getPrecision(),
-            options == null ? null : options.getScale(),
-            options == null ? null : options.isUnicode(),
-            options == null ? null : options.xml10InvalidCharReplacement(),
+                options.isNullable(),
+                options.getMaxLength(),
+                options.getPrecision(),
+                options.getScale(),
+                options.isUnicode(),
+                options.xml10InvalidCharReplacement(),
             writer);
       }
       writer.writeEndElement();
@@ -1127,10 +1116,10 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
         writer.writeAttribute(METADATA, NS_METADATA, Constants.ATTR_NULL, "true");
       } else {
         List<Property> values = property.asComplex().getValue();
-        writeProperties(metadata, resolvedType, values, 
-            options == null ? null : options.getSelect(),
-            options == null ? null : options.xml10InvalidCharReplacement(),
-            writer, property.asComplex(), options == null ? null : options.getExpand());
+        writeProperties(metadata, resolvedType, values,
+                options.getSelect(),
+                options.xml10InvalidCharReplacement(),
+            writer, property.asComplex(), options.getExpand());
       }
       writer.writeEndDocument();
       writer.flush();
@@ -1173,12 +1162,12 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
       writeMetadataETag(metadata, writer);
       writer.writeAttribute(METADATA, NS_METADATA, Constants.ATTR_TYPE, "#Collection(" + type.getName() + ")");
       writePrimitiveCollection(type, property,
-          options == null ? null : options.isNullable(),
-          options == null ? null : options.getMaxLength(),
-          options == null ? null : options.getPrecision(),
-          options == null ? null : options.getScale(),
-          options == null ? null : options.isUnicode(),
-          options == null ? null : options.xml10InvalidCharReplacement(),
+              options.isNullable(),
+              options.getMaxLength(),
+              options.getPrecision(),
+              options.getScale(),
+              options.isUnicode(),
+              options.xml10InvalidCharReplacement(),
           writer);
       writer.writeEndElement();
       writer.writeEndDocument();
@@ -1226,19 +1215,19 @@ public class ODataXmlSerializer extends AbstractODataSerializer {
           ContextURLBuilder.create(contextURL).toASCIIString());
       writeMetadataETag(metadata, writer);
       Set<List<String>> selectedPaths = null;
-      if (null != options && null != options.getSelect()) {
+      if (null != options.getSelect()) {
         boolean all = ExpandSelectHelper.isAll(options.getSelect());
         selectedPaths = all || property.isPrimitive() ? null : ExpandSelectHelper
             .getSelectedPaths(options.getSelect().getSelectItems());
       }
       Set<List<String>> expandPaths = null;
-      if (null != options && null != options.getExpand()) {
+      if (null != options.getExpand()) {
         expandPaths = ExpandSelectHelper.getExpandedItemsPath(options.getExpand());
       }
       
-      writeComplexCollection(metadata, type, property, selectedPaths, 
-          options == null ? null:options.xml10InvalidCharReplacement(), writer, expandPaths, null, 
-              options == null ? null : options.getExpand());
+      writeComplexCollection(metadata, type, property, selectedPaths,
+              options.xml10InvalidCharReplacement(), writer, expandPaths, null,
+              options.getExpand());
       writer.writeEndElement();
       writer.writeEndDocument();
       writer.flush();

@@ -347,7 +347,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
       throws IOException, SerializerException {
     json.writeStartObject();
     String derivedName = property.getType();
-    EdmComplexType resolvedType = resolveComplexType(metadata, (EdmComplexType) type, derivedName);
+    EdmComplexType resolvedType = resolveComplexType(metadata, type, derivedName);
     if (!isODataMetadataNone && !resolvedType.equals(type) || isODataMetadataFull) {
       json.writeStringField(Constants.JSON_TYPE, "#" + property.getType());
     }
@@ -565,8 +565,8 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
                                 AbstractEntityCollection entitySet, ExpandOption expand, SelectOption select,
                                 boolean onlyReference, String name, JsonGenerator json,
                                 boolean isFullRepresentation) throws IOException, SerializerException {
-    if (entitySet instanceof AbstractEntityCollection) {
-      AbstractEntityCollection entities = (AbstractEntityCollection)entitySet;
+    if (entitySet != null) {
+      AbstractEntityCollection entities = entitySet;
       json.writeStartArray();
       for (Entity entity : entities) {
         if (onlyReference) {
@@ -599,7 +599,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
         json.writeFieldName(property.getName());
         json.writeStartArray();
         json.writeEndArray();
-      } else if (navigationLink != null && navigationLink.getInlineEntitySet() != null) {
+      } else if (navigationLink.getInlineEntitySet() != null) {
         if (isFullRepresentation) {
           json.writeFieldName(property.getName());
         } else {
@@ -617,7 +617,7 @@ public class JsonDeltaSerializerWithNavigations implements EdmDeltaSerializer {
       }
       if (navigationLink == null || navigationLink.getInlineEntity() == null) {
         json.writeNull();
-      } else if (navigationLink != null && navigationLink.getInlineEntity() != null) {
+      } else if (navigationLink.getInlineEntity() != null) {
         if (navigationLink.getInlineEntity() instanceof DeletedEntity) {
           writeDeletedEntity(navigationLink.getInlineEntity(), json);
         } else {

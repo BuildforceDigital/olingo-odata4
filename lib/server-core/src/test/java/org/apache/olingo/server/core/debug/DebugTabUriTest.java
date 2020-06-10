@@ -114,7 +114,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
     EdmFunctionImport edmFunctionImport = mock(EdmFunctionImport.class);
     DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.resource)
         .addResourcePart(new UriResourceFunctionImpl(edmFunctionImport, edmFunction,
-                Collections.singletonList((UriParameter) new UriParameterImpl().setName("parameter1")))));
+                Collections.singletonList(new UriParameterImpl().setName("parameter1")))));
 
     assertEquals("{\"kind\":\"resource\",\"uriResourceParts\":["
         + "{\"uriResourceKind\":\"function\",\"segment\":null,\"isCollection\":false,"
@@ -240,7 +240,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
     when(edmProperty.getName()).thenReturn("property");
     DebugTabUri tab = new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
         .setSystemQueryOption(new SelectOptionImpl().setSelectItems(Arrays.asList(
-            (SelectItem) new SelectItemImpl().setStar(true),
+                new SelectItemImpl().setStar(true),
             new SelectItemImpl().setResourcePath(
                 new UriInfoImpl().setKind(UriInfoKind.resource)
                     .addResourcePart(new UriResourcePrimitivePropertyImpl(edmProperty)))))));
@@ -316,7 +316,7 @@ public class DebugTabUriTest extends AbstractDebugTabTest {
         createJson(new DebugTabUri(new UriInfoImpl().setKind(UriInfoKind.all)
             .setSystemQueryOption(new FilterOptionImpl().setExpression(
                 new MethodImpl(MethodKind.CEILING, Collections.singletonList(
-                        (Expression) new LiteralImpl("1.5",
+                        new LiteralImpl("1.5",
                                 EdmPrimitiveTypeFactory.getInstance(EdmPrimitiveTypeKind.Decimal)))))))));
 
     EdmEntityType edmEntityType = mock(EdmEntityType.class);

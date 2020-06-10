@@ -721,7 +721,7 @@ public class ExpressionParser {
   private EdmType getPrimitiveType(FullQualifiedName fullQualifiedName) {
     if (EdmPrimitiveType.EDM_NAMESPACE.equals(fullQualifiedName.getNamespace())) {
       EdmPrimitiveTypeKind primitiveTypeKind = EdmPrimitiveTypeKind.valueOf(fullQualifiedName.getName());
-      return primitiveTypeKind == null ? null : odata.createPrimitiveTypeInstance(primitiveTypeKind);
+      return odata.createPrimitiveTypeInstance(primitiveTypeKind);
     } else {
       return null;
     }
@@ -969,10 +969,10 @@ public class ExpressionParser {
               ParserHelper.parseNavigationKeyPredicate(tokenizer,
                   ((UriResourceNavigationPropertyImpl) lastResource).getProperty(), edm, referringType, aliases));
       } else if (lastResource instanceof UriResourceFunction
-          && ((UriResourceFunction) lastResource).getType() instanceof EdmEntityType) {
+          && lastResource.getType() instanceof EdmEntityType) {
         ((UriResourceFunctionImpl) lastResource).setKeyPredicates(
             ParserHelper.parseKeyPredicate(tokenizer,
-                (EdmEntityType) ((UriResourceFunction) lastResource).getType(),
+                (EdmEntityType) lastResource.getType(),
                 null,
                 edm,
                 referringType,
@@ -1205,7 +1205,7 @@ public class ExpressionParser {
     if (!isType(type, kinds)) {
       throw new UriParserSemanticException("Incompatible types.",
           UriParserSemanticException.MessageKeys.TYPES_NOT_COMPATIBLE,
-          type == null ? "" : type.getFullQualifiedName().getFullQualifiedNameAsString(),
+              type.getFullQualifiedName().getFullQualifiedNameAsString(),
           Arrays.deepToString(kinds));
     }
   }

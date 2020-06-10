@@ -229,7 +229,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
             options.getExpand(), null, options.getSelect(), options.getWriteOnlyReferences(), null, name, json);
       }
       writeNextLink(entitySet, json);
-      writeDeltaLink(entitySet, json, pagination);
+      writeDeltaLink(entitySet, json, false);
 
       json.close();
       return SerializerResultImpl.with().content(buffer.getInputStream()).build();
@@ -605,7 +605,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
       Property property = null;
       if (linked instanceof Entity) {
         Entity entity = (Entity) linked;
-        property = (Property) entity.getProperty(propertyName);
+        property = entity.getProperty(propertyName);
       } else if (linked instanceof ComplexValue) {
         List<Property> properties = ((ComplexValue) linked).getValue();
         for (Property prop : properties) {
@@ -879,7 +879,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
           json.writeStringField(constants.getType(), "#" +
                   derivedType.getFullQualifiedName().getFullQualifiedNameAsString());
         }
-        expandedPaths = expandedPaths == null || expandedPaths.isEmpty() ? null :
+        expandedPaths = expandedPaths.isEmpty() ? null :
                 ExpandSelectHelper.getReducedExpandItemsPaths(expandedPaths, property.getName());
         writeComplexValue(metadata, derivedType, ((ComplexValue) value).getValue(),
                 selectedPaths, json, expandedPaths, (ComplexValue) value, expand, property.getName());
@@ -1175,7 +1175,7 @@ public class ODataJsonSerializer extends AbstractODataSerializer {
       writeOperations(property.getOperations(), json);      
       List<Property> values =
           property.isNull() ? Collections.emptyList() : property.asComplex().getValue();
-      writeProperties(metadata, type, values, options == null ? null : options == null ? null : options.getSelect(), 
+      writeProperties(metadata, type, values, options == null ? null : options.getSelect(),
           json, 
           property.asComplex(), options == null ? null : options.getExpand());
       if (!property.isNull() && property.isComplex()) {

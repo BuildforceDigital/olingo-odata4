@@ -390,7 +390,7 @@ public class EdmAssistedJsonSerializer implements EdmAssistedSerializer {
       }
     }
 
-    for (Annotation annotation : ((Annotatable) valuable).getAnnotations()) {
+    for (Annotation annotation : valuable.getAnnotations()) {
       valuable(json, annotation, name + '@' + annotation.getTerm(), null, null);
     }
 

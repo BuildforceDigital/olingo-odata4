@@ -311,7 +311,7 @@ public class JsonDeltaSerializer implements EdmDeltaSerializer {
       throws IOException, SerializerException {
     json.writeStartObject();
     String derivedName = property.getType();
-    EdmComplexType resolvedType = resolveComplexType(metadata, (EdmComplexType) type, derivedName);
+    EdmComplexType resolvedType = resolveComplexType(metadata, type, derivedName);
     if (!isODataMetadataNone && !resolvedType.equals(type) || isODataMetadataFull) {
       json.writeStringField(Constants.JSON_TYPE, "#" + property.getType());
     }

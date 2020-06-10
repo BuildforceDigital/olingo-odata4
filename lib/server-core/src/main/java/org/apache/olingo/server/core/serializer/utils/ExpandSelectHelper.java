@@ -323,21 +323,21 @@ public abstract class ExpandSelectHelper {
       if (resourceParts.size() == 1) {
         resource = resourceParts.get(0);
         matched = true;
-        expandItem = getMatchedExpandItem(propertyName, item, matched, resource);
+        expandItem = getMatchedExpandItem(propertyName, item, true, resource);
       } else if (resourceParts.get(resourceParts.size() - 1) instanceof UriResourceRef ||
           resourceParts.get(resourceParts.size() - 1) instanceof UriResourceCount) {
         if (resourceParts.size() == 2) {
           resource = resourceParts.get(0);
           matched = true;
-          expandItem = getMatchedExpandItem(propertyName, item, matched, resource);
+          expandItem = getMatchedExpandItem(propertyName, item, true, resource);
         } else {
           resource = resourceParts.get(resourceParts.size() - 3);
-          matched = resource.getSegmentValue().equalsIgnoreCase(resourceName) && isFoundExpandItem(type, matched, resource);
+          matched = resource.getSegmentValue().equalsIgnoreCase(resourceName) && isFoundExpandItem(type, false, resource);
           expandItem = getMatchedExpandItem(propertyName, item, matched, resourceParts.get(resourceParts.size() - 2));
         }
       } else {
         resource = resourceParts.get(resourceParts.size() - 2);
-        matched = resource.getSegmentValue().equalsIgnoreCase(resourceName) && isFoundExpandItem(type, matched, resource);
+        matched = resource.getSegmentValue().equalsIgnoreCase(resourceName) && isFoundExpandItem(type, false, resource);
         expandItem = getMatchedExpandItem(propertyName, item, matched, resourceParts.get(resourceParts.size() - 1));
       }
       if (expandItem != null) {
